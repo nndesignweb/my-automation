@@ -1,0 +1,743 @@
+/* =========================================
+   THEME: STEALTH DARK & NEON CYAN (CLEAN V.4)
+   เน้นพื้นดำดุ ตัดเส้นขอบฟ้านีออน ถมสีเฉพาะปุ่มหลัก
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg-app: #0f0f12;      /* พื้นหลังแอป สีดำสนิท */
+  --bg-card: #18181b;     /* พื้นหลังการ์ด สีดำเทา */
+  --bg-input: #27272a;    /* พื้นหลังช่องกรอก */
+  --border: #333333;      /* สีเส้นขอบปกติ */
+  
+  --neon-cyan: #00f2fe;   /* สีหลัก: ฟ้านีออนสว่าง */
+  --neon-blue: #4facfe;   /* สีรอง: ฟ้าอิเล็กทริก */
+  
+  --text-main: #f4f4f5;
+  --text-dim: #a1a1aa;
+  --radius: 8px;
+}
+
+* { box-sizing: border-box; outline: none; }
+body {
+  margin: 0; padding: 0;
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  font-family: 'Sarabun', 'Inter', sans-serif;
+  font-size: 14px;
+  overflow-x: hidden;
+}
+
+/* =========================================
+   1. HEADER & LOGO
+   ========================================= */
+.app-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 16px; 
+  background: linear-gradient(180deg, #18181b 0%, #0f0f12 100%);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+}
+
+.brand-box { display: flex; align-items: center; gap: 14px; }
+
+.brand-logo {
+  width: 48px; height: 48px; 
+  background: var(--bg-app);
+  border: 2px solid var(--neon-cyan);
+  color: var(--neon-cyan); 
+  font-weight: 900; font-size: 28px; 
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 12px; 
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+  text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+}
+
+.brand-info h1 {
+  margin: 0; font-size: 18px; font-weight: 800; letter-spacing: 0.5px;
+  background: linear-gradient(90deg, #ffffff, #a5f3fc);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.brand-version {
+  font-size: 11px; color: var(--neon-cyan); font-weight: 700;
+  background: rgba(0, 242, 254, 0.1);
+  padding: 2px 8px; border-radius: 4px; 
+  border: 1px solid rgba(0, 242, 254, 0.2);
+  margin-top: 4px; display: inline-block;
+}
+
+.btn-icon { 
+  background: transparent; border: 1px solid var(--border); color: #aaa; 
+  width: 40px; height: 40px; border-radius: 10px; font-size: 20px; 
+  cursor: pointer; transition:0.2s; 
+}
+.btn-icon:hover { color: var(--neon-cyan); border-color: var(--neon-cyan); transform: rotate(90deg); }
+
+/* =========================================
+   2. MAIN TABS (Images / Video)
+   ========================================= */
+.nav-segment { display: flex; padding: 16px 16px 0; gap: 10px; }
+.segment-btn {
+  flex: 1; background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--text-dim); padding: 12px; border-radius: var(--radius);
+  font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.2s;
+}
+.segment-btn:hover { border-color: #666; color: #fff; }
+
+.segment-btn.active {
+  background: var(--bg-card);
+  color: var(--neon-cyan);
+  border: 1px solid var(--neon-cyan);
+  box-shadow: 0 4px 15px rgba(0, 242, 254, 0.15);
+  font-weight: 800; transform: translateY(-2px);
+}
+
+/* =========================================
+   3. BUTTONS (ถมสีเต็มเฉพาะปุ่มหลัก)
+   ========================================= */
+.btn-primary, .btn-video {
+  flex: 1; height: 48px; border-radius: var(--radius); border: none;
+  font-weight: 900; font-size: 15px; cursor: pointer; letter-spacing: 0.5px;
+  background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
+  color: #000000; /* ตัวหนังสือดำ */
+  box-shadow: 0 4px 20px rgba(0, 242, 254, 0.4);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: all 0.2s;
+}
+.btn-primary:hover, .btn-video:hover { filter: brightness(1.2); transform: translateY(-2px); }
+
+.btn-stop {
+  min-width: 80px; height: 48px; background: #ef4444; color: #fff;
+  border: 1px solid #dc2626; border-radius: var(--radius); 
+  font-weight: 800; font-size: 13px; cursor: pointer; display: none;
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4); transition: 0.2s;
+}
+.btn-stop:hover { background: #dc2626; transform: translateY(-1px); }
+
+/* ปุ่มสลับโหมด Human / Mascot */
+.mode-btn {
+  flex: 1; padding: 10px; border-radius: 8px; border: none;
+  background: transparent; color: #888; cursor: pointer; font-weight: 800; transition: 0.2s;
+}
+.mode-btn.active {
+  background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
+  color: #000000;
+  box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+}
+
+/* =========================================
+   4. ACTIVE CARDS & OPTIONS (ขอบเรืองแสง)
+   ========================================= */
+.char-card, .config-option, .voice-btn, .mascot-bg, .mascot-outfit, .mascot-card, .mascot-expression {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: #ccc; border-radius: 8px; cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center;
+}
+.char-card:hover, .config-option:hover, .voice-btn:hover {
+  background: #27272a; border-color: #666; color: #fff;
+}
+
+/* สถานะเมื่อถูกเลือก (ไม่ถมสี แต่เรืองแสงขอบ) */
+.char-tabs .char-tab-btn.active,
+.char-tab-btn.config-tab-btn.active,
+.char-card.active, .config-option.active, .voice-btn.active, 
+.mascot-bg.active, .mascot-outfit.active, .mascot-card.active, .mascot-expression.active {
+  background: var(--bg-card) !important;
+  border-color: var(--neon-cyan) !important;
+  color: var(--neon-cyan) !important;
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.2) !important;
+  transform: translateY(-1px);
+}
+
+/* จุดวงกลมบอกสถานะ Active */
+.char-card.active::after, .mascot-bg.active::after, .mascot-outfit.active::after {
+  content: '●';
+  position: absolute; right: 8px; font-size: 10px;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 5px rgba(0, 242, 254, 0.8);
+}
+
+/* ทำให้ไอคอนสว่างขึ้นเมื่อเลือก (เจาะจงเฉพาะปุ่ม ไม่กระทบข้อความอื่น) */
+.char-card.active .char-icon,
+.config-option.active .char-icon,
+.mascot-bg.active .char-icon,
+.mascot-outfit.active .char-icon,
+.mascot-card.active .char-icon,
+.voice-btn.active span {
+  filter: none !important; /* ❌ ปิดเอฟเฟกต์เงาเรืองแสงทั้งหมด */
+  transform: scale(1.1);
+}
+
+/* ล้างเงาตกค้างในข้อความธรรมดา (กันเหนียว) */
+.tab-pane span {
+  filter: none !important;
+  text-shadow: none !important;
+}
+
+/* =========================================
+   5. INPUTS & TOGGLES
+   ========================================= */
+input[type="text"], input[type="number"], select, textarea, .theme-input {
+  width: 100%; padding: 10px; border-radius: var(--radius); font-size: 14px;
+  background: var(--bg-input); border: 1px solid var(--border); color: #fff;
+  transition: 0.2s; box-sizing: border-box;
+}
+input:focus, select:focus, textarea:focus, .theme-input:focus {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.15);
+}
+
+.switch { position: relative; width: 40px; height: 22px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider {
+  position: absolute; inset: 0; background-color: var(--border); border-radius: 20px; transition: .3s;
+}
+.slider:before {
+  content: ""; position: absolute; height: 18px; width: 18px;
+  left: 2px; bottom: 2px; background: white; border-radius: 50%; transition: .3s;
+}
+.switch input:checked + .slider { 
+  background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue)); 
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
+}
+.switch input:checked + .slider:before { transform: translateX(18px); }
+
+/* =========================================
+   6. SMART AUTO & HIGHLIGHT BOXES
+   ========================================= */
+.smart-mode-highlight, .mascot-theme-box {
+  background: #121214;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--neon-cyan);
+  border-radius: 12px; padding: 14px; margin-bottom: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  transition: 0.3s;
+}
+.smart-mode-highlight:hover {
+  border-color: #555; border-left-color: var(--neon-cyan);
+}
+
+/* กล่องสุ่มแบบโปร่งแสง */
+#style-random-wrapper, #bg-random-wrapper, #outfit-random-wrapper, #video-random-style-wrapper {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px dashed var(--border);
+}
+
+/* =========================================
+   7. LAYOUT & STRUCTURAL (ห้ามลบ)
+   ========================================= */
+.app-body { padding: 16px 16px 80px; }
+.tab-pane { display: none; }
+.tab-pane.active { display: block; animation: fadeUp 0.3s ease; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+.section-title { font-size: 12px; font-weight: 700; color: #71717a; margin: 20px 0 10px; text-transform: uppercase; border-bottom: 1px solid #333; padding-bottom: 5px; }
+.input-group { margin-bottom: 14px; }
+.input-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.input-row label { font-size: 13px; color: #aaa; font-weight: 500; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.special-box { background: var(--bg-card); border: 1px solid var(--border); padding: 14px; border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
+
+/* Upload Zone */
+.upload-bar { display: flex; align-items: center; justify-content: space-between; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; cursor: pointer; transition: 0.2s; margin-bottom: 10px; }
+.upload-bar:hover { border-color: #aaa; background: #27272a; }
+.upload-left { display: flex; align-items: center; gap: 12px; }
+.badge-count { background: var(--border); color: #fff; padding: 2px 8px; border-radius: 6px; font-size: 12px; font-weight: 700; }
+
+/* Previews */
+.preview-strip { display: flex; flex-wrap: wrap; gap: 8px; padding-bottom: 10px; width: 100%; }
+.preview-item { position: relative; width: 50px !important; height: 50px !important; border-radius: 8px; border: 2px solid #333; overflow: hidden; background: #000; flex-shrink: 0; transition: transform 0.2s; }
+.preview-item img { width: 100%; height: 100%; object-fit: cover; }
+.preview-remove-btn { position: absolute; inset: 0; background: rgba(0,0,0,0.6); color: #fff; border: none; opacity: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.preview-item:hover .preview-remove-btn { opacity: 1; }
+
+/* Segment Row (รอบ/คลิป) */
+.segment-row { display: flex; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 4px; gap: 4px; margin-top: 5px; }
+.segment-opt { flex: 1; background: transparent; border: none; color: #888; padding: 8px 0; font-size: 12px; font-weight: 600; cursor: pointer; border-radius: 6px; transition: 0.2s; }
+.segment-opt.active { background: #3f3f46; color: #fff; }
+
+/* Grids */
+.char-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.style-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.char-card { position: relative; overflow: hidden; padding: 10px; font-size: 12px; gap: 8px; }
+.char-icon { font-size: 16px; filter: grayscale(0.5); }
+.config-option { padding: 10px 5px; font-size: 11px; justify-content: center; }
+
+/* Tabs */
+.char-tab-container { background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius); padding: 8px; }
+.char-tabs { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+.char-tab-btn { flex-grow: 1; background: transparent; border: 1px solid transparent; color: #888; padding: 6px 8px; font-size: 11px; font-weight: 600; cursor: pointer; border-radius: 6px; }
+.char-tab-btn:hover { background: rgba(255,255,255,0.05); color: #ccc; }
+
+/* Action Bar */
+.action-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(15,15,18,0.95); border-top: 1px solid var(--border); padding: 16px; display: flex; gap: 10px; z-index: 100; }
+
+/* Utils */
+.hidden { display: none; }
+.log-box { height: 100px; overflow-y: auto; background: #000; padding: 8px; font-family: monospace; font-size: 11px; color: #666; border: 1px solid #222; margin-top: 5px; }
+
+/* =========================================
+   8. TOAST NOTIFICATION
+   ========================================= */
+.toast {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
+    background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(5px); color: #fff;
+    padding: 25px 40px; border-radius: 16px; border: 2px solid #333;
+    font-size: 18px; font-weight: 700; text-align: center;
+    z-index: 999999; box-shadow: 0 0 0 100vw rgba(0,0,0,0.5), 0 20px 50px rgba(0,0,0,0.8); 
+    opacity: 0; visibility: hidden; transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex; flex-direction: column; align-items: center; gap: 15px; min-width: 320px;
+}
+.toast.show { transform: translate(-50%, -50%) scale(1); opacity: 1; visibility: visible; }
+.toast.success { border-color: #10b981; } .toast.success::before { content: '✅'; font-size: 40px; }
+.toast.error { border-color: #ef4444; } .toast.error::before { content: '❌'; font-size: 40px; }
+.toast.warning { border-color: #f59e0b; } .toast.warning::before { content: '⚠️'; font-size: 40px; }
+.disabled-section { opacity: 0.4; pointer-events: none; filter: grayscale(1); transition: all 0.3s; }
+
+
+/* =========================================
+   8. MODAL SETTINGS (แก้หน้าป๊อปอัปตั้งค่า)
+   ========================================= */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 99999;
+  display: none; align-items: center; justify-content: center;
+}
+.modal-overlay.show { display: flex; }
+.modal-content {
+  background: var(--bg-card); width: 320px; padding: 20px; border-radius: 12px;
+  border: 1px solid var(--neon-cyan); box-shadow: 0 0 30px rgba(0, 242, 254, 0.2);
+}
+.modal-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
+.modal-header h3 { margin: 0; color: var(--neon-cyan); font-size: 16px; }
+
+/* แต่งปุ่ม Cancel / Save ในหน้า Setting */
+#btn-cancel-settings {
+    background: transparent; border: 1px solid var(--border); color: #aaa;
+    padding: 8px 16px; border-radius: 6px; cursor: pointer; transition: 0.2s;
+}
+#btn-cancel-settings:hover { border-color: #fff; color: #fff; }
+
+#btn-save-settings {
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
+    color: #000; font-weight: bold; border: none;
+    padding: 8px 16px; border-radius: 6px; cursor: pointer; transition: 0.2s;
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
+}
+#btn-save-settings:hover { filter: brightness(1.2); }
+
+/* =========================================
+   🔥 FORCE OVERRIDE: บังคับทับสีที่ฝังใน HTML
+   ========================================= */
+#style-random-wrapper, #bg-random-wrapper, #outfit-random-wrapper, #video-random-style-wrapper {
+    background: rgba(0,0,0,0.4) !important;
+    border: 1px dashed var(--border) !important;
+}
+
+.smart-mode-highlight, .mascot-theme-box {
+    border: 1px solid var(--border) !important;
+    border-left: 3px solid var(--neon-cyan) !important;
+    background: #121214 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
+}
+
+#mascot-custom-wrapper, #mascot-custom-bg-wrapper, #mascot-custom-outfit-wrapper {
+    background: transparent !important;
+}
+
+/* =========================================
+   👑 EXPIRATION & VIP BADGE (ป้ายวันหมดอายุ)
+   ========================================= */
+.expire-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 800;
+    margin-top: 4px;
+    border: 1px solid transparent;
+    letter-spacing: 0.5px;
+}
+
+/* 👑 1. กรณีคีย์ถาวร (VIP สีทอง/เพชร) - ตัดกับพื้นดำได้สวยมาก */
+.expire-badge.lifetime {
+    background: linear-gradient(135deg, #f59e0b, #fbbf24);
+    color: #000;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+    border-color: #fcd34d;
+}
+
+/* 🟢 2. กรณีเหลือวันใช้งานเยอะ (สีเขียว) */
+.expire-badge.safe {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border-color: rgba(52, 211, 153, 0.4);
+}
+
+/* ⚠️ 3. กรณีใก้ลหมดอายุ < 3 วัน (สีเหลือง/ส้ม + กระพริบเตือน) */
+.expire-badge.warning {
+    background: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+    border-color: rgba(245, 158, 11, 0.4);
+    animation: pulseWarning 2s infinite;
+}
+
+/* ❌ 4. กรณีหมดอายุ (สีแดง) */
+.expire-badge.danger {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border-color: rgba(248, 113, 113, 0.5);
+}
+
+/* เอฟเฟกต์กระพริบเตือน */
+@keyframes pulseWarning {
+    0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+    70% { box-shadow: 0 0 0 5px rgba(245, 158, 11, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}
+
+/* =========================================
+   🎯 FINE-TUNING V.5: SHARP & CLEAR (คมชัด ไม่แสบตา)
+   ========================================= */
+
+/* -----------------------------------------
+   1. จัดการปุ่ม "ถมสีเต็ม" ให้มีขอบไล่สี ชมพู-ม่วง
+----------------------------------------- */
+.btn-primary,
+.btn-video,
+#btn-login,
+.mode-btn.active,
+.segment-btn.active[data-tab="banana"],
+.segment-btn.active[data-tab="video"] {
+    /* ถมสีพื้นเป็นฟ้านีออน และตั้งค่าเส้นขอบเป็น Gradient ชมพู-ม่วง */
+    background: 
+        linear-gradient(135deg, var(--neon-cyan), var(--neon-blue)) padding-box,
+        linear-gradient(135deg, #ec4899, #a855f7) border-box !important;
+    border: 3px solid transparent !important; /* ความหนาของเส้นขอบชมพู-ม่วง */
+    
+    color: #000000 !important;
+    box-shadow: none !important; /* ❌ ลบเงาฟุ้งแสบตาออกทั้งหมด */
+}
+
+/* -----------------------------------------
+   2. ทำให้แท็บเมนู Images / Video ด้านบน เด่นตะโกน!
+----------------------------------------- */
+.nav-segment {
+    gap: 15px; /* เพิ่มระยะห่างระหว่างแท็บ */
+}
+.segment-btn {
+    font-size: 16px !important; /* ขยายตัวหนังสือใหญ่ขึ้น */
+    padding: 15px !important;   /* ขยายปุ่มให้ใหญ่ขึ้น */
+    border-radius: 12px !important; /* มุมมนรับกับปุ่ม */
+    border: 2px solid #333 !important;
+}
+.segment-btn.active[data-tab="banana"],
+.segment-btn.active[data-tab="video"] {
+    font-size: 18px !important; /* แท็บที่เลือกจะใหญ่เป็นพิเศษ */
+    font-weight: 900 !important;
+    transform: translateY(-3px); /* ยกลอยขึ้นให้เด่นชัด */
+}
+
+/* -----------------------------------------
+   3. กล่อง Smart Auto และ Mascot (ต้องเด่น!)
+----------------------------------------- */
+.smart-mode-highlight, .mascot-theme-box {
+    /* พื้นหลังอมม่วงเข้มๆ ให้ตัดกับแอปสีดำ */
+    background: linear-gradient(135deg, #1e102f 0%, #120b1c 100%) !important;
+    border: 2px solid #d946ef !important; /* ขอบสีชมพูบานเย็นแบบคมๆ */
+    border-left: 8px solid #a855f7 !important; /* แถบด้านซ้ายหนาพิเศษ */
+    box-shadow: none !important; /* ❌ ลบเงาฟุ้ง */
+}
+/* ทำให้ตัวหนังสือในกล่องอัจฉริยะเด่นขึ้น */
+.smart-mode-highlight label, .mascot-theme-box label {
+    color: #f3e8ff !important;
+    font-size: 15px !important;
+}
+
+/* -----------------------------------------
+   4. ลบเงาฟุ้งออกจากปุ่มตัวเลือกทั้งหมด (Style, ฉาก, ชุด)
+----------------------------------------- */
+.char-tabs .char-tab-btn.active,
+.char-tab-btn.config-tab-btn.active,
+#config-content-style .char-card.config-option.active,
+#config-content-bg .config-option.active,
+#config-content-outfit .config-option.active,
+#workspace-human .char-group .char-card.active,
+.mascot-card.active, .mascot-bg.active, .mascot-outfit.active, .mascot-expression.active,
+.voice-btn.active, .custom-long-btn.active {
+    background: #18181b !important; /* พื้นเทาดำ */
+    border: 2px solid var(--neon-cyan) !important; /* 🟢 เส้นขอบฟ้านีออน คมกริบ */
+    box-shadow: none !important; /* ❌ ลบเงาฟุ้งแสบตาออกทั้งหมด */
+}
+
+/* -----------------------------------------
+   5. สวิตช์ เปิด/ปิด (ลบเงาฟุ้ง เพิ่มขอบ)
+----------------------------------------- */
+.switch input:checked + .slider { 
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue)) !important; 
+    box-shadow: none !important; /* ❌ ลบเงาฟุ้ง */
+    border: 2px solid #a855f7 !important; /* ขอบม่วงนิดๆ ให้เข้าคอนเซปต์ */
+}
+
+
+/* =========================================
+   ✨ V.6: PREMIUM COSMIC AI THEME (CLEAN & ELEGANT)
+   สีฟ้าอมม่วง เรียบหรู เส้นบาง สบายตา
+   ========================================= */
+
+:root {
+    --cosmic-1: #6366f1; /* สีฟ้าอมม่วง Indigo */
+    --cosmic-2: #d946ef; /* สีชมพูอมม่วง Fuchsia */
+    --cosmic-grad: linear-gradient(135deg, var(--cosmic-1), var(--cosmic-2));
+}
+
+/* -----------------------------------------
+   1. ปุ่มหลักทั้งหมด (Start, Login, โหมด)
+   ถมสีเต็ม ไม่มีเส้นขอบ ตัวหนังสือสีขาว สวยคลีน
+----------------------------------------- */
+.btn-primary, .btn-video, #btn-login, .mode-btn.active {
+    background: var(--cosmic-grad) !important;
+    border: none !important;
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.5px !important;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25) !important; /* เงาบางๆ ให้พอดูมีมิติ */
+}
+
+/* -----------------------------------------
+   2. แท็บ Images / Video (ใหญ่ เด่น ไม่มีขอบ)
+----------------------------------------- */
+.nav-segment { 
+    gap: 12px; 
+}
+.segment-btn {
+    font-size: 15px !important;
+    padding: 14px !important;
+    border-radius: 10px !important;
+    border: 1px solid #333 !important; /* ปกติขอบเทาบางๆ */
+    background: #18181b !important;
+    color: #888 !important;
+}
+.segment-btn.active[data-tab="banana"],
+.segment-btn.active[data-tab="video"] {
+    background: var(--cosmic-grad) !important;
+    color: #ffffff !important;
+    border: none !important; /* ถมสีเต็ม ไม่เอาขอบ */
+    font-weight: 800 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3) !important;
+}
+
+/* -----------------------------------------
+   3. กล่องตัวเลือก Active (สไตล์, ฉาก, ชุด, มาสคอต)
+   ใช้ "เส้นบาง 1px" สีฟ้าอมม่วง พื้นหลังเทาดำ
+----------------------------------------- */
+.char-tabs .char-tab-btn.active,
+.char-tab-btn.config-tab-btn.active,
+#config-content-style .char-card.config-option.active,
+#config-content-bg .config-option.active,
+#config-content-outfit .config-option.active,
+#workspace-human .char-group .char-card.active,
+.mascot-card.active, .mascot-bg.active, .mascot-outfit.active, .mascot-expression.active,
+.voice-btn.active, .custom-long-btn.active {
+    background: #18181b !important; 
+    border: 1px solid #818cf8 !important; /* 🟢 เส้นบาง 1px คมๆ */
+    color: #e0e7ff !important; /* ตัวหนังสือสีสว่างให้เข้ากับขอบ */
+    box-shadow: none !important; /* ❌ ไม่เอาแสงฟุ้งแยงตา */
+    font-weight: 600 !important;
+}
+
+/* เปลี่ยนสีจุดวงกลมด้านขวา */
+.char-card.active::after, .mascot-bg.active::after, .mascot-outfit.active::after {
+    color: #818cf8 !important;
+    text-shadow: none !important;
+}
+
+/* -----------------------------------------
+   4. กล่อง Smart Auto (เรียบหรู ดูแพง)
+----------------------------------------- */
+.smart-mode-highlight, .mascot-theme-box {
+    background: #121214 !important;
+    border: 1px solid #333 !important; /* ขอบปกติสีเทา */
+    border-left: 4px solid var(--cosmic-1) !important; /* 🟢 แถบซ้ายความหนากำลังดี */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+}
+.smart-mode-highlight label, .mascot-theme-box label {
+    color: #e0e7ff !important; /* สีข้อความสว่างขึ้นนิดนึง */
+}
+
+/* -----------------------------------------
+   5. สวิตช์ เปิด/ปิด และอื่นๆ
+----------------------------------------- */
+.switch input:checked + .slider { 
+    background: var(--cosmic-grad) !important; 
+    border: none !important;
+    box-shadow: none !important;
+}
+.brand-logo {
+    background: var(--bg-app) !important;
+    border: 2px solid var(--cosmic-1) !important;
+    color: var(--cosmic-1) !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+
+/* =========================================
+   🎙️ REDESIGN: VOICE BUTTONS (ทำปุ่มเสียงให้คลีน ทรงแคปซูล)
+   ========================================= */
+
+/* 1. สถานะปกติ: ไร้ขอบ ทรงมน พื้นใส */
+.voice-btn {
+    background: rgba(255, 255, 255, 0.05) !important; /* พื้นหลังสีเทาโปร่งแสง */
+    border: 1px solid transparent !important; /* ❌ ลบเส้นขอบทิ้ง */
+    border-radius: 20px !important; /* ทรงแคปซูล (Pill shape) */
+    padding: 8px 10px !important; /* เพิ่มช่องว่างภายในให้อ่านง่าย */
+    color: #a1a1aa !important;
+    font-size: 11px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important; /* จัดให้อยู่กึ่งกลางพอดี */
+    gap: 6px !important; /* ระยะห่างระหว่าง Emoji กับตัวหนังสือ */
+    box-shadow: none !important;
+}
+
+/* 2. ตอนเอาเมาส์ชี้ (Hover) */
+.voice-btn:hover {
+    background: rgba(255, 255, 255, 0.1) !important; /* สว่างขึ้นนิดนึง */
+    color: #fff !important;
+    transform: translateY(-1px);
+}
+
+/* 3. สถานะตอนถูกเลือก (Active): ถมสีเต็มเด่นๆ */
+.voice-btn.active {
+    background: var(--cosmic-grad) !important; /* ใช้สีหลักของธีม */
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    border: none !important;
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3) !important; /* เงาบางๆ */
+    transform: translateY(-2px);
+}
+
+/* ปิดจุดวงกลม (●) ที่อาจจะหลงเหลือจากโค้ดเก่าในปุ่มเสียง */
+.voice-btn.active::after {
+    display: none !important;
+}
+
+/* 4. ขยายระยะห่าง (Gap) ระหว่างปุ่มให้โล่งสบายตาขึ้น */
+#video-voice-gender-wrapper > div {
+    gap: 8px !important;
+    margin-top: 10px !important;
+}
+
+/* =========================================
+   🛠️ FIX: ปรับแท็บ Images / Video ให้นิ่งสนิท (เปลี่ยนแค่ความหนา)
+   ========================================= */
+
+/* 1. ตอนปกติ (ไม่ได้เลือก) */
+.segment-btn {
+    font-size: 14px !important;    /* 🟢 ล็อคขนาดฟอนต์ไว้เลย */
+    font-weight: 500 !important;   /* ตัวบางปกติ */
+    transition: background 0.2s, color 0.2s !important; /* ให้เปลี่ยนแค่สี สมูทๆ */
+}
+
+/* 2. ตอนที่ถูกเลือก (Active) */
+.segment-btn.active[data-tab="banana"],
+.segment-btn.active[data-tab="video"] {
+    font-size: 14px !important;    /* 🟢 ล็อคขนาดฟอนต์ให้เท่าเดิมเป๊ะ ห้ามขยาย! */
+    font-weight: 800 !important;   /* เปลี่ยนแค่ความหนาให้ดูเด่นขึ้น */
+    transform: none !important;    /* ❌ ปิดเอฟเฟกต์ปุ่มเด้งลอยขึ้น เพื่อความนิ่ง */
+}
+
+/* =========================================
+   🚀 UPGRADE: SMART AUTO (โหมดอัจฉริยะ) ให้เด่นแบบ Mascot
+   ========================================= */
+
+.smart-mode-highlight {
+    /* 1. ไล่สีพื้นหลังให้ดูพรีเมียม (ม่วง-ชมพู โปร่งแสง) ตัดกับพื้นดำ */
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(217, 70, 239, 0.15) 100%) !important;
+    
+    /* 2. ตีกรอบด้วยสีชมพูอมม่วง (Fuchsia) หนา 2px ให้คมและเด่นที่สุดในหน้า */
+    border: 2px solid var(--cosmic-2) !important;
+    
+    /* 3. เงาเรืองแสงรอบกล่องบางๆ ดึงสายตาผู้ใช้ */
+    box-shadow: 0 0 20px rgba(217, 70, 239, 0.25) !important;
+    
+    border-radius: 12px !important;
+    padding: 16px 14px !important; 
+    transition: all 0.3s ease !important;
+}
+
+/* เอฟเฟกต์ตอนเอาเมาส์ไปชี้กล่อง (Hover) */
+.smart-mode-highlight:hover {
+    border-color: var(--cosmic-1) !important; /* เปลี่ยนขอบเป็นสีฟ้าอมม่วง */
+    box-shadow: 0 0 25px rgba(99, 102, 241, 0.4) !important;
+    transform: translateY(-2px);
+}
+
+/* ปรับตัวหนังสือ "🚀 โหมดอัจฉริยะ (Smart Auto)" ให้เป็นสีขาวสว่าง ตัวหนาพิเศษ */
+.smart-mode-highlight .input-row label {
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    font-size: 15px !important;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
+}
+
+/* ปรับข้อความบรรทัดล่าง "AI คิดชุด/ฉาก/สไตล์ ให้เองอัตโนมัติ" ให้อ่านง่าย */
+.smart-mode-highlight > div:last-child {
+    color: #e0e7ff !important; /* สีฟ้าอ่อนสบายตา */
+    font-weight: 500 !important;
+    font-size: 12px !important;
+    margin-top: 4px;
+}
+
+/* =========================================
+   🔠 UPDATE: โลโก้ P (ถมสีเต็ม ตัวหนังสือขาว อ่านง่าย)
+   ========================================= */
+.brand-logo {
+    /* ใช้สีพื้นหลัง Gradient ม่วง-ชมพู (Cosmic) */
+    background: var(--cosmic-grad) !important;
+    
+    border: none !important; /* ลบเส้นขอบออก */
+    color: #ffffff !important; /* ตัวหนังสือสีขาวสว่าง */
+    font-weight: 900 !important;
+    
+    /* เพิ่มเงาให้ตัวกล่องและตัวหนังสือลอยขึ้นนิดๆ */
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4) !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* =========================================
+   🔠 UPDATE: โลโก้ P (พื้นดำ ขอบไล่สี ตัว P สีม่วง)
+   ========================================= */
+.brand-logo {
+    /* ใช้ทริคซ้อน Layer: พื้นในสีดำ ตัดกับขอบ Gradient */
+    background: 
+        linear-gradient(#0f0f12, #0f0f12) padding-box,
+        var(--cosmic-grad) border-box !important;
+    border: 2px solid transparent !important; /* ความหนาเส้นขอบ */
+    
+    color: #a855f7 !important; /* 🟣 ตัวอักษร P สีม่วงสว่าง */
+    font-weight: 900 !important;
+    
+    /* เงาเรืองแสงรอบโลโก้ให้ดูแพง */
+    box-shadow: 0 0 15px rgba(217, 70, 239, 0.4) !important;
+    text-shadow: none !important;
+}
+
+/* =========================================
+   🛑 FIX: จัดกึ่งกลางตัวหนังสือและไอคอนปุ่ม STOP
+   ========================================= */
+#banana-btn-stop, 
+#video-btn-stop {
+    display: flex !important;
+    justify-content: center !important; /* จัดให้อยู่กึ่งกลางแนวนอน */
+    align-items: center !important;     /* จัดให้อยู่กึ่งกลางแนวตั้ง */
+    text-align: center !important;
+    gap: 8px !important;                /* เพิ่มระยะห่างระหว่างไอคอน (-) กับคำว่า STOP นิดนึงให้สวยงาม */
+    padding: 12px 16px !important;      /* เพิ่มพื้นที่รอบๆ ให้ปุ่มดูสมส่วน ไม่บีบตัวหนังสือ */
+}
