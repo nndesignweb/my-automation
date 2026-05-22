@@ -54,6 +54,11 @@ setInterval(() => {
 
 // ฟังก์ชันสลับโหมด Human / Mascot (ฉบับปรับปรุง: เพิ่มระบบ Refresh UI ทันที)
 function switchAppMode(mode) {
+    if (mode === 'mascot' && window.FeatureGate && !FeatureGate.can('mascotMode')) {
+        showToast('ระบบมาสคอตใช้ได้เฉพาะ Premium', 'warning');
+        mode = 'human';
+    }
+
     const modeInput = document.getElementById('current-app-mode');
     if(modeInput) modeInput.value = mode;
 
@@ -83,6 +88,8 @@ function switchAppMode(mode) {
     }
 }
 
+window.switchAppMode = switchAppMode;
+
 // ============================================
 // 🟢 [DEBUGGED VERSION] ฟังก์ชันจัดการปุ่มกดหน้า Mascot
 // ============================================
@@ -106,6 +113,10 @@ function setupMascotEvents() {
             btn.parentNode.replaceChild(newBtn, btn);
 
             newBtn.addEventListener('click', () => {
+                if (newBtn.disabled || newBtn.classList.contains('is-locked')) {
+                    showToast('ตัวเลือกนี้ใช้ได้เฉพาะ Premium', 'warning');
+                    return;
+                }
                 console.log(`🖱️ Clicked: ${btnClass} -> Value: ${newBtn.dataset.value}`);
 
                 // 1. จัดการสถานะ Active บน UI
@@ -156,6 +167,11 @@ function setupMascotEvents() {
 
 // A. เปลี่ยนแท็บคาแรคเตอร์ (แก้ไข: รองรับ data-target="auto" ของปุ่มระบุเอง)
 function switchCharTab(tabName) {
+    if ((tabName === 'auto' || tabName === 'custom') && window.FeatureGate && !FeatureGate.can('customCharacter')) {
+        showToast('ตัวละครระบุเองใช้ได้เฉพาะ Premium', 'warning');
+        tabName = 'general';
+    }
+
     const tabs = document.querySelectorAll('.char-tab-btn');
     const groups = document.querySelectorAll('.char-group');
     
@@ -196,6 +212,11 @@ function switchCharTab(tabName) {
 
 // B. เลือกคาแรคเตอร์ (ฉบับอัปเดต: ล็อคชุดให้ Job และ Senior)
 function selectCharacter(element, value) {
+    if (element.disabled || element.classList.contains('is-locked')) {
+        showToast('ตัวเลือกนี้ใช้ได้เฉพาะ Premium', 'warning');
+        return;
+    }
+
     // 1. เก็บค่าลง Input หลัก
     const hiddenInput = document.getElementById('banana-character-select');
     if (hiddenInput) hiddenInput.value = value;
@@ -264,10 +285,35 @@ function toggleConfig(id) {
 }
 
 // D. Select Config Option (ฉบับอัปเดต: ปิดชุดให้ Fashion และกลุ่ม Close-up)
+function enableManualConfigMode(type) {
+    const randomSwitchMap = {
+        style: 'banana-random-style-switch',
+        bg: 'banana-random-bg-switch',
+        outfit: 'banana-random-outfit-switch'
+    };
+    const switchEl = document.getElementById(randomSwitchMap[type]);
+    const container = document.getElementById(`config-content-${type}`);
+
+    if (switchEl && switchEl.checked) {
+        switchEl.checked = false;
+        switchEl.dispatchEvent(new Event('change'));
+    }
+
+    if (container && container.classList.contains('disabled-section')) {
+        container.classList.remove('disabled-section');
+    }
+}
+
 function selectConfigOption(element) {
+    if (element.disabled || element.classList.contains('is-locked')) {
+        showToast('ตัวเลือกนี้ใช้ได้เฉพาะ Premium', 'warning');
+        return;
+    }
+
     const type = element.dataset.type;
     const value = element.dataset.value;
     const label = element.dataset.label;
+    enableManualConfigMode(type);
 
     // 1. อัปเดตค่าลง Input
     let input = document.getElementById(`banana-${type}-select`);
@@ -313,21 +359,26 @@ function selectConfigOption(element) {
         const fixedBgStyles = ['mirror']; // 🟢 บังคับฉากในร่ม (หน้ากระจก) -> ล็อคฉาก
 
         if (value === 'miniature') {
-            // 🏙️ สไตล์เมืองจิ๋ว: ล็อคเรียบ (คาแรคเตอร์, ฉาก, ชุด)
-            if (bgWrapper) bgWrapper.classList.add('disabled-section');
-            if (outfitWrapper) outfitWrapper.classList.add('disabled-section');
-            if (charWrapper) charWrapper.classList.add('disabled-section');
+            // 🏙️ สไตล์เมืองจิ๋ว: ตั้งค่าเริ่มต้นให้ แต่ยังให้เลือกฉากและชุดเองได้
+            if (bgWrapper) bgWrapper.classList.remove('disabled-section');
+            if (outfitWrapper) outfitWrapper.classList.remove('disabled-section');
+            if (charWrapper && typeof modelUploadedImages !== 'undefined' && modelUploadedImages.length > 0) {
+                charWrapper.classList.add('disabled-section');
+            } else if (charWrapper) {
+                charWrapper.classList.remove('disabled-section');
+            }
 
-            if (bgRandomSwitch) { bgRandomSwitch.checked = false; bgRandomSwitch.disabled = true; }
-            if (outfitRandomSwitch) { outfitRandomSwitch.checked = false; outfitRandomSwitch.disabled = true; }
+            if (bgRandomSwitch) { bgRandomSwitch.checked = false; bgRandomSwitch.disabled = false; }
+            if (outfitRandomSwitch) { outfitRandomSwitch.checked = false; outfitRandomSwitch.disabled = false; }
 
             const bgAutoBtn = document.querySelector('#config-content-bg .config-option[data-value="auto"]');
             const outfitAutoBtn = document.querySelector('#config-content-outfit .config-option[data-value="auto"]');
-            const charAutoBtn = document.querySelector('.char-tab-btn[data-target="auto"]'); 
+            const characterInput = document.getElementById('banana-character-select');
             
             if (bgAutoBtn) bgAutoBtn.click();
             if (outfitAutoBtn) outfitAutoBtn.click();
-            if (charAutoBtn) charAutoBtn.click();
+            if (characterInput) characterInput.value = 'office_lady';
+            if (typeof switchCharTab === 'function') switchCharTab('general');
             
             const charCustomInput = document.getElementById('banana-custom-character-input');
             if (charCustomInput) charCustomInput.value = '';
@@ -338,15 +389,20 @@ function selectConfigOption(element) {
             if (bgRandomSwitch) bgRandomSwitch.disabled = false;
 
             if (outfitWrapper) outfitWrapper.classList.add('disabled-section');
-            if (charWrapper) charWrapper.classList.add('disabled-section');
+            if (charWrapper && typeof modelUploadedImages !== 'undefined' && modelUploadedImages.length > 0) {
+                charWrapper.classList.add('disabled-section');
+            } else if (charWrapper) {
+                charWrapper.classList.remove('disabled-section');
+            }
 
             if (outfitRandomSwitch) { outfitRandomSwitch.checked = false; outfitRandomSwitch.disabled = true; }
 
             const outfitAutoBtn = document.querySelector('#config-content-outfit .config-option[data-value="auto"]');
-            const charAutoBtn = document.querySelector('.char-tab-btn[data-target="auto"]'); 
+            const characterInput = document.getElementById('banana-character-select');
             
             if (outfitAutoBtn) outfitAutoBtn.click();
-            if (charAutoBtn) charAutoBtn.click();
+            if (characterInput) characterInput.value = 'office_lady';
+            if (typeof switchCharTab === 'function') switchCharTab('general');
             
             const charCustomInput = document.getElementById('banana-custom-character-input');
             if (charCustomInput) charCustomInput.value = '';
@@ -396,8 +452,22 @@ function selectConfigOption(element) {
 
 // E. Switch Config Tab (ฉบับแก้ไข: รองรับ Custom Tab + Auto Focus)
 function switchConfigTab(element) {
+    if (element.disabled || element.classList.contains('is-locked')) {
+        showToast('ตัวเลือกนี้ใช้ได้เฉพาะ Premium', 'warning');
+        return;
+    }
+
     const type = element.dataset.type; // 'style', 'bg', 'outfit', 'vstyle'
     const groupName = element.dataset.group;
+    enableManualConfigMode(type);
+
+    if (groupName === 'custom' && window.FeatureGate) {
+        const featureName = type === 'bg' ? 'customScene' : (type === 'outfit' ? 'customOutfit' : null);
+        if (featureName && !FeatureGate.can(featureName)) {
+            showToast('โหมดระบุเองใช้ได้เฉพาะ Premium', 'warning');
+            return;
+        }
+    }
     
     const container = document.getElementById(`config-content-${type}`);
     if(!container) return;
@@ -463,11 +533,21 @@ function switchConfigTab(element) {
 
 // F. Select Segment (Rounds & Clips) - แก้ไขรองรับทั้ง Video และ Banana
 function selectSegment(element) {
+    if (element.disabled || element.classList.contains('is-locked')) {
+        showToast('ตัวเลือกนี้ใช้ได้เฉพาะ Premium', 'warning');
+        return;
+    }
     const type = element.dataset.type;   // 'rounds' หรือ 'clips'
     const value = element.dataset.value; // '1', '3', '5', 'custom'
 
     // 1. เช็คว่ากดมาจากหน้าไหน? (Video หรือ Banana)
     const isVideoTab = element.closest('#tab-content-video') !== null;
+    const isBasicPlan = window.FeatureGate && FeatureGate.getPlan && FeatureGate.getPlan() === 'basic';
+    if (isBasicPlan && type === 'rounds' && (value === '5' || value === 'custom')) {
+        showToast('Basic จำกัดรอบสูงสุด 3 รอบ', 'warning');
+        if (window.FeatureGate) FeatureGate.enforceBasicRoundLimit();
+        return;
+    }
     
     // 2. กำหนด ID เป้าหมายให้ถูกฝั่ง
     let mainInputId, customInputId;
@@ -611,9 +691,16 @@ document.addEventListener('DOMContentLoaded', () => {
 // 🟢 Tab Switching Logic
     const tabButtons = document.querySelectorAll('.segment-btn');
     const tabContents = document.querySelectorAll('.tab-pane');
+    const setActiveModeTheme = (mode) => {
+      document.body.dataset.activeMode = mode === 'video' ? 'video' : 'image';
+    };
+
+    const initialActiveTab = document.querySelector('.segment-btn.active')?.dataset.tab || 'banana';
+    setActiveModeTheme(initialActiveTab);
 
     tabButtons.forEach(btn => {
       btn.addEventListener('click', () => {
+        setActiveModeTheme(btn.dataset.tab);
         tabButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         
@@ -635,7 +722,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ============================================
 // 🛠️ ROBUST CLICK SYSTEM (เพิ่มเพื่อความเสถียร)
 // ============================================
-async function smartClick(tabId, selector, textMatch = null) {
+async function legacySmartClick(tabId, selector, textMatch = null) {
   return await chrome.scripting.executeScript({
     target: { tabId: tabId },
     func: (sel, txt) => {
@@ -683,89 +770,64 @@ async function smartClick(tabId, selector, textMatch = null) {
   //  return defaults[key] || 3000;
 //}
 
-function showToast(message, type = 'success') {
-  const existingToast = document.querySelector('.toast');
-  if (existingToast) existingToast.remove();
+function inferRunProgress(message, isRunning = false) {
+  const text = String(message || '').toLowerCase();
 
-  const toast = document.createElement('div');
-  toast.className = `toast ${type}`;
-  toast.textContent = message;
-  document.body.appendChild(toast);
+  if (!message || text.includes('ready')) return { percent: 0, step: 'assets' };
+  if (text.includes('เสร็จ') || text.includes('complete') || text.includes('mission complete')) {
+    return { percent: 100, step: 'run' };
+  }
+  if (text.includes('error') || text.includes('หยุด') || text.includes('stop')) {
+    return { percent: isRunning ? 55 : 0, step: 'run' };
+  }
+  if (text.includes('download') || text.includes('ดาวน์โหลด') || text.includes('ดูดไฟล์') || text.includes('บันทึก')) {
+    return { percent: 88, step: 'run' };
+  }
+  if (text.includes('รอ') || text.includes('generat') || text.includes('render') || text.includes('create') || text.includes('สร้าง')) {
+    return { percent: 68, step: 'run' };
+  }
+  if (text.includes('upload') || text.includes('อัพโหลด') || text.includes('เพิ่มลงพรอมต์')) {
+    return { percent: 38, step: 'assets' };
+  }
+  if (text.includes('prompt') || text.includes('พรอมต์') || text.includes('keyword') || text.includes('fill')) {
+    return { percent: 24, step: 'prompt' };
+  }
+  if (text.includes('style') || text.includes('เสียง') || text.includes('ตั้งค่า') || text.includes('mode')) {
+    return { percent: 12, step: 'creative' };
+  }
 
-  setTimeout(() => toast.classList.add('show'), 10);
-  setTimeout(() => {
-    toast.classList.remove('show');
-    setTimeout(() => toast.remove(), 300);
-  }, 3000);
+  return { percent: isRunning ? 12 : 0, step: isRunning ? 'run' : 'assets' };
 }
 
+function updateRunProgress(scope, percent, stepName) {
+  const safePercent = Math.max(0, Math.min(100, Number(percent) || 0));
+  const bar = document.getElementById(`${scope}-progress-bar`);
+  const text = document.getElementById(`${scope}-progress-text`);
+  const stepText = document.getElementById(`${scope}-step-text`);
+  const stepLabels = {
+    assets: 'เตรียมข้อมูลและรูปภาพ',
+    prompt: 'กำลังสร้าง Prompt',
+    creative: 'กำลังตั้งค่าสไตล์',
+    run: 'กำลังรันงาน',
+  };
 
+  if (bar) bar.style.width = `${safePercent}%`;
+  if (text) text.textContent = `${Math.round(safePercent)}%`;
+  if (stepText) stepText.textContent = `ขั้นตอน: ${stepLabels[stepName] || stepLabels.assets}`;
 
-
-// Get Gemini API Key
-function getGeminiApiKey() {
-  return localStorage.getItem('gemini_api_key') || '';
+  updateWorkflowTimeline(stepName, safePercent);
 }
 
-// Settings Modal Elements (Shared)
-const btnSettings = document.getElementById('btn-settings');
-const settingsModal = document.getElementById('settings-modal');
-const closeSettingsBtn = document.getElementById('close-settings');
-const cancelSettingsBtn = document.getElementById('btn-cancel-settings');
-const saveSettingsBtn = document.getElementById('btn-save-settings');
-const geminiApiKeyInput = document.getElementById('gemini-api-key');
+function updateWorkflowTimeline(activeStep = 'assets', percent = 0) {
+  const order = ['assets', 'prompt', 'creative', 'run'];
+  const activeIndex = Math.max(0, order.indexOf(activeStep));
 
-// Quota Modal Elements
-const quotaModal = document.getElementById('quota-modal');
-const closeQuotaModalBtn = document.getElementById('close-quota-modal');
-const btnCloseQuotaModal = document.getElementById('btn-close-quota-modal');
-
-
-
-
-
-
-
-
-
-const veo3AspectRatioSelect = document.getElementById('veo3-aspect-ratio');
-
-// Setup Settings Modal
-function setupSettingsModal() {
-  btnSettings.addEventListener('click', openSettingsModal);
-  closeSettingsBtn.addEventListener('click', closeSettingsModal);
-  cancelSettingsBtn.addEventListener('click', closeSettingsModal);
-  saveSettingsBtn.addEventListener('click', saveSettings);
-
-  settingsModal.addEventListener('click', (e) => {
-    if (e.target === settingsModal) {
-      closeSettingsModal();
-    }
+  document.querySelectorAll('.workflow-step').forEach((step) => {
+    const stepIndex = Math.max(0, order.indexOf(step.dataset.step));
+    step.classList.toggle('active', stepIndex === activeIndex);
+    step.classList.toggle('done', percent >= 100 || stepIndex < activeIndex);
   });
 }
-
-function openSettingsModal() {
-  const savedApiKey = localStorage.getItem('gemini_api_key') || '';
-  geminiApiKeyInput.value = savedApiKey;
-  const savedAspectRatio = localStorage.getItem('veo3_aspect_ratio') || '9:16';
-  veo3AspectRatioSelect.value = savedAspectRatio;
-  settingsModal.classList.add('show');
-}
-
-function closeSettingsModal() {
-  settingsModal.classList.remove('show');
-}
-
-function saveSettings() {
-  const apiKey = geminiApiKeyInput.value.trim();
-  const aspectRatio = veo3AspectRatioSelect.value;
-  localStorage.setItem('gemini_api_key', apiKey);
-  localStorage.setItem('veo3_aspect_ratio', aspectRatio);
-  closeSettingsModal();
-  showToast('Settings saved!', 'success');
-}
-
-
 
 // ============================================
 // 🛡️ ANTI-BOT PROMPT RANDOMIZER
@@ -783,7 +845,7 @@ function getAntiBotSeed() {
 
 
 // ============================================
-// VIDEO PROMPT&PLAY MODULE
+// VIDEO Prompt & Play Studio MODULE
 // ============================================
 
 // DOM Elements (Video Tab - prefix: video-)
@@ -819,7 +881,7 @@ let videoStatusTimeoutId = null;
 let videoLogs = [];
 
 
-// Video PROMPT&PLAY: Setup upload zone events
+// Video Prompt & Play Studio: Setup upload zone events
 function videoSetupUploadZone() {
   videoUploadZone.addEventListener('click', () => {
     videoFileInput.click();
@@ -927,7 +989,7 @@ function videoUpdateImageCount() {
   }
 }
 
-// Video PROMPT&PLAY: Update round info display
+// Video Prompt & Play Studio: Update round info display
 function videoUpdateRoundInfo() {
   const select = document.getElementById('video-round-count');
   const customInput = document.getElementById('video-custom-round-input');
@@ -958,28 +1020,31 @@ function videoUpdateRoundInfo() {
   }
 }
 
-// Video PROMPT&PLAY: Get rounds per image
+// Video Prompt & Play Studio: Get rounds per image
 function videoGetRoundsPerImage() {
   const select = document.getElementById('video-round-count');
   const customInput = document.getElementById('video-custom-round-input');
 
   if (!select) return 1;
+  const isBasicPlan = window.FeatureGate && FeatureGate.getPlan && FeatureGate.getPlan() === 'basic';
 
   if (select.value === 'custom' || (customInput && customInput.style.display === 'block')) {
       if (customInput) {
           const val = parseInt(customInput.value);
           // แก้ไข: ดักจับกรณีพิมพ์ตัวอักษร (NaN) หรือติดลบ ให้คืนค่า 1 เสมอ
-          return (!isNaN(val) && val > 0) ? val : 1; 
+          const safeVal = (!isNaN(val) && val > 0) ? val : 1;
+          return isBasicPlan ? Math.min(safeVal, 3) : safeVal;
       }
   }
 
   const rounds = parseInt(select.value);
-  return (!isNaN(rounds) && rounds > 0) ? rounds : 1;
+  const safeRounds = (!isNaN(rounds) && rounds > 0) ? rounds : 1;
+  return isBasicPlan ? Math.min(safeRounds, 3) : safeRounds;
 }
 
 
 
-// Video PROMPT&PLAY: Add log entry
+// Video Prompt & Play Studio: Add log entry
 function videoAddLog(message, type = 'info') {
   const timestamp = new Date().toLocaleTimeString('th-TH');
   const logEntry = {
@@ -1003,7 +1068,7 @@ function videoAddLog(message, type = 'info') {
   console[consoleMethod](`[${timestamp}] ${message}`);
 }
 
-// Video PROMPT&PLAY: Update log display
+// Video Prompt & Play Studio: Update log display
 function videoUpdateLogDisplay() {
   if (!videoLogContainer) return;
   
@@ -1031,13 +1096,13 @@ function videoUpdateLogDisplay() {
   videoLogContainer.scrollTop = videoLogContainer.scrollHeight;
 }
 
-// Video NPROMPT&PLAY: Clear logs
+// Video NPrompt & Play Studio: Clear logs
 function videoClearLogs() {
   videoLogs = [];
   videoUpdateLogDisplay();
 }
 
-// Video PROMPT&PLAY: Update status
+// Video Prompt & Play Studio: Update status
 function videoUpdateStatus(message, persistent = false) {
   if (videoStatusTimeoutId) {
     clearTimeout(videoStatusTimeoutId);
@@ -1045,6 +1110,8 @@ function videoUpdateStatus(message, persistent = false) {
   }
 
   videoStatusText.textContent = message;
+  const videoProgress = inferRunProgress(message, videoIsAutomationRunning);
+  updateRunProgress('video', videoProgress.percent, videoProgress.step);
   
   // Add to log
   videoAddLog(message, persistent ? 'step' : 'info');
@@ -1052,15 +1119,23 @@ function videoUpdateStatus(message, persistent = false) {
   if (!videoIsAutomationRunning && !persistent) {
     videoStatusTimeoutId = setTimeout(() => {
       videoStatusText.textContent = 'Ready to use';
+      updateRunProgress('video', 0, 'assets');
     }, 3000);
   }
 }
 
-// Video PROMPT&PLAY: Setup event listeners (Fix: แยกกลุ่มปุ่มเสียงให้กดพร้อมกันได้)
+// Video Prompt & Play Studio: Setup event listeners (Fix: แยกกลุ่มปุ่มเสียงให้กดพร้อมกันได้)
 function videoSetupEventListeners() {
     if (videoClearImagesBtn) videoClearImagesBtn.addEventListener('click', videoClearAllImages);
     if (videoBtnAutomation) videoBtnAutomation.addEventListener('click', videoRunAutomation);
     if (videoBtnStop) videoBtnStop.addEventListener('click', videoStopAutomation);
+    if (videoLogClearBtn) {
+        videoLogClearBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            videoClearLogs();
+        });
+    }
     
     // แก้ไข Logic ตรงนี้เพื่อให้แสดงผลสไตล์ตลอดเวลา แต่จางลงเมื่อเลือกสุ่ม
     const randomVStyleSwitch = document.getElementById('video-random-style-switch');
@@ -1153,7 +1228,7 @@ function videoSetupEventListeners() {
   }
 }
 
-// Video PROMPT&PLAY: Handle test fill - fills prompt result into target element
+// Video Prompt & Play Studio: Handle test fill - fills prompt result into target element
 async function videoHandleTestFill() {
   const generatedPrompt = videoPromptResult.textContent;
 
@@ -1208,7 +1283,7 @@ async function videoHandleTestFill() {
   }
 }
 
-// Video PROMPT&PLAY: Handle test upload - uploads images to target element
+// Video Prompt & Play Studio: Handle test upload - uploads images to target element
 async function videoHandleTestUpload() {
   if (videoUploadedImages.length === 0) {
     videoUpdateStatus('No images to upload');
@@ -1462,7 +1537,7 @@ async function videoHandleTestUpload() {
   }
 }
 
-// Video PROMPT&PLAY: Handle test create - clicks create button with retry
+// Video Prompt & Play Studio: Handle test create - clicks create button with retry
 async function videoHandleTestCreate() {
   videoUpdateStatus('Clicking create button...');
 
@@ -1513,26 +1588,7 @@ async function videoHandleTestCreate() {
   }
 }
 
-// Show toast notification (Shared)
-function showToast(message, type = 'success') {
-  const existingToast = document.querySelector('.toast');
-  if (existingToast) {
-    existingToast.remove();
-  }
-
-  const toast = document.createElement('div');
-  toast.className = `toast ${type}`;
-  toast.textContent = message;
-  document.body.appendChild(toast);
-
-  setTimeout(() => toast.classList.add('show'), 10);
-  setTimeout(() => {
-    toast.classList.remove('show');
-    setTimeout(() => toast.remove(), 300);
-  }, 3000);
-}
-
-// Video PROMPT&PLAY: Handle test download - hover video, click download button, then select 720p
+// Video Prompt & Play Studio: Handle test download - hover video, click download button, then select 720p
 async function videoHandleTestDownload() {
   videoUpdateStatus('Finding video...');
 
@@ -1633,7 +1689,7 @@ async function videoHandleTestDownload() {
   }
 }
 
-// Video PROMPT&PLAY: Handle test download multi - download selected number of videos
+// Video Prompt & Play Studio: Handle test download multi - download selected number of videos
 async function videoHandleTestDownloadMulti() {
   const maxDownloads = parseInt(videoDownloadCountAuto?.value || '1');
   videoUpdateStatus(`กำลังเตรียมดูดไฟล์ ${maxDownloads} คลิป...`);
@@ -1746,69 +1802,6 @@ async function videoHandleTestDownloadMulti() {
   }
 }
 
-// Setup Settings Modal
-function setupSettingsModal() {
-  // Open modal
-  btnSettings.addEventListener('click', openSettingsModal);
-
-  // Close modal
-  closeSettingsBtn.addEventListener('click', closeSettingsModal);
-  cancelSettingsBtn.addEventListener('click', closeSettingsModal);
-
-  // Save settings
-  saveSettingsBtn.addEventListener('click', saveSettings);
-
-  // Close on overlay click
-  settingsModal.addEventListener('click', (e) => {
-    if (e.target === settingsModal) {
-      closeSettingsModal();
-    }
-  });
-}
-
-// Open settings modal
-function openSettingsModal() {
-  const settingsModal = document.getElementById('settings-modal');
-  const veo3AspectRatioSelect = document.getElementById('veo3-aspect-ratio');
-  
-  // โหลดค่าสัดส่วนที่เคยบันทึกไว้ (ค่าเริ่มต้นคือ 9:16)
-  const savedAspectRatio = localStorage.getItem('veo3_aspect_ratio') || '9:16';
-  if (veo3AspectRatioSelect) veo3AspectRatioSelect.value = savedAspectRatio;
-
-  if (settingsModal) settingsModal.classList.add('show');
-}
-
-// Close settings modal
-function closeSettingsModal() {
-  const settingsModal = document.getElementById('settings-modal');
-  if (settingsModal) settingsModal.classList.remove('show');
-}
-
-// Save settings
-function saveSettings() {
-  const veo3AspectRatioSelect = document.getElementById('veo3-aspect-ratio');
-  
-  // บันทึกเฉพาะสัดส่วนภาพ
-  if (veo3AspectRatioSelect) {
-      const aspectRatio = veo3AspectRatioSelect.value;
-      localStorage.setItem('veo3_aspect_ratio', aspectRatio);
-  }
-
-  // ปิดหน้าต่างและแจ้งเตือน
-  closeSettingsModal();
-  showToast('บันทึกการตั้งค่าสำเร็จ!', 'success');
-}
-
-// Get Gemini API Key
-function getGeminiApiKey() {
-  return localStorage.getItem('gemini_api_key') || '';
-}
-
-// Get Veo3 Aspect Ratio (default to 9:16)
-function getVeo3AspectRatio() {
-  return localStorage.getItem('veo3_aspect_ratio') || '9:16';
-}
-
 // Parse YAML prompt to extract only values (without field names)
 function parseYAMLToPlainText(yamlText, isVideo = true) {
   if (!yamlText || typeof yamlText !== 'string') {
@@ -1900,7 +1893,7 @@ function parseYAMLToPlainText(yamlText, isVideo = true) {
 
 
 
-// Video PROMPT&PLAY: Handle Copy Prompt
+// Video Prompt & Play Studio: Handle Copy Prompt
 function videoHandleCopyPrompt() {
   const text = videoPromptResult.textContent;
   if (!text || text.includes('กำลังวิเคราะห์')) {
@@ -1923,7 +1916,7 @@ function videoHandleCopyPrompt() {
 // AUTOMATION FUNCTIONS
 // ============================================
 
-// Video PROMPT&PLAY: Sleep helper (ฉบับแก้: ตื่นทันทีที่กด Stop)
+// Video Prompt & Play Studio: Sleep helper (ฉบับแก้: ตื่นทันทีที่กด Stop)
 function videoSleep(ms) {
   return new Promise((resolve, reject) => {
     // เช็คก่อนเลย ถ้ากดหยุดแล้ว ให้ Reject ทันที
@@ -1948,7 +1941,7 @@ function videoSleep(ms) {
   });
 }
 
-// Video PROMPT&PLAY: Stop automation
+// Video Prompt & Play Studio: Stop automation
 function videoStopAutomation() {
   if (videoIsAutomationRunning) {
     videoShouldStopAutomation = true;
@@ -1961,7 +1954,7 @@ function videoStopAutomation() {
 
 
 // ============================================
-// 🎬 VIDEO PROMPT&PLAY: Run Automation (Standalone Version)
+// 🎬 VIDEO Prompt & Play Studio: Run Automation (Standalone Version)
 // ============================================
 async function videoRunAutomation() {
   if (!_0x99f || typeof AUTH === 'undefined') { _selfDestruct("E03: Illegal Execution"); return; }
@@ -2858,16 +2851,11 @@ async function videoRunAutomation() {
   }
 }
 
-// Video PROMPT&PLAY: Call Gemini API with retry for overloaded errors
+// Video Prompt & Play Studio: Call Gemini API with retry for overloaded errors
 
-
-// Get Veo3 Aspect Ratio (default to 9:16)
-function getVeo3AspectRatio() {
-  return localStorage.getItem('veo3_aspect_ratio') || '9:16';
-}
 
 // ============================================
-// BANANA PROMPT&PLAY MODULE
+// BANANA Prompt & Play Studio MODULE
 // ============================================
 
 // DOM Elements (Banana Tab - prefix: banana-)
@@ -2878,10 +2866,13 @@ const bananaClearImagesBtn = document.getElementById('banana-clear-images');
 const bananaStatusText = document.getElementById('banana-status-text');
 const bananaBtnAutomation = document.getElementById('banana-btn-automation');
 const bananaToVideoCheckbox = document.getElementById('banana-to-video-checkbox');
+const bananaToVideoStyleSelect = document.getElementById('banana-to-video-style-select');
+const bananaToVideoSummary = document.getElementById('banana-to-video-summary');
 const bananaDownloadCount = document.getElementById('banana-download-count');
 const bananaBtnStop = document.getElementById('banana-btn-stop');
 const bananaPromptStatus = document.getElementById('banana-prompt-status');
 const bananaRoundCountSelect = document.getElementById('banana-round-count');
+const bananaRoundDropdown = document.getElementById('banana-round-dropdown');
 const bananaCustomRoundInput = document.getElementById('banana-custom-round-input');
 const bananaRoundInfo = document.getElementById('banana-round-info');
 const bananaProductNameInput = document.getElementById('banana-product-name');
@@ -2907,7 +2898,7 @@ let bananaShouldStopAutomation = false;
 let bananaStatusTimeoutId = null;
 let bananaLogs = [];
 
-// Banana PROMPT&PLAY: Setup upload zone events
+// Banana Prompt & Play Studio: Setup upload zone events
 function bananaSetupUploadZone() {
   bananaUploadZone.addEventListener('click', () => {
     bananaFileInput.click();
@@ -3147,8 +3138,10 @@ function modelUpdateUI() {
     if (charUIBox) {
         if (hasImage && currentMode === 'human') {
             charUIBox.classList.add('disabled-section');
+            charUIBox.classList.add('model-ref-locked');
         } else {
             charUIBox.classList.remove('disabled-section');
+            charUIBox.classList.remove('model-ref-locked');
         }
     }
 
@@ -3171,13 +3164,18 @@ function modelUpdateUI() {
 
 
 
-// Banana PROMPT&PLAY: Update round info display
+// Banana Prompt & Play Studio: Update round info display
 function bananaUpdateRoundInfo() {
   const select = document.getElementById('banana-round-count');
+  const dropdown = document.getElementById('banana-round-dropdown');
   const customInput = document.getElementById('banana-custom-round-input');
   const roundInfo = document.getElementById('banana-round-info');
 
   if (!select) return;
+
+  if (dropdown && dropdown.value !== select.value) {
+    dropdown.value = select.value;
+  }
 
   const imageTotal = bananaUploadedImages.length;
   const selectValue = select.value;
@@ -3202,26 +3200,55 @@ function bananaUpdateRoundInfo() {
   }
 }
 
-// Banana PROMPT&PLAY: Get rounds per image
+// Banana Prompt & Play Studio: Get rounds per image
 function bananaGetRoundsPerImage() {
   const select = document.getElementById('banana-round-count');
   const customInput = document.getElementById('banana-custom-round-input');
 
   if (!select) return 1;
+  const isBasicPlan = window.FeatureGate && FeatureGate.getPlan && FeatureGate.getPlan() === 'basic';
 
   if (select.value === 'custom' || (customInput && customInput.style.display === 'block')) {
       if (customInput) {
           const val = parseInt(customInput.value);
           // แก้ไข: ดักจับความปลอดภัยของข้อมูล
-          return (!isNaN(val) && val > 0) ? val : 1;
+          const safeVal = (!isNaN(val) && val > 0) ? val : 1;
+          return isBasicPlan ? Math.min(safeVal, 3) : safeVal;
       }
   }
 
   const rounds = parseInt(select.value);
-  return (!isNaN(rounds) && rounds > 0) ? rounds : 1;
+  const safeRounds = (!isNaN(rounds) && rounds > 0) ? rounds : 1;
+  return isBasicPlan ? Math.min(safeRounds, 3) : safeRounds;
 }
 
-// Banana PROMPT&PLAY: Add log entry
+function bananaSyncRoundDropdown() {
+  const hiddenSelect = document.getElementById('banana-round-count');
+  const dropdown = document.getElementById('banana-round-dropdown');
+  const segmentRoot = document.getElementById('seg-rounds');
+  if (!hiddenSelect || !dropdown) return;
+
+  const selectedValue = dropdown.value;
+  const isBasicPlan = window.FeatureGate && FeatureGate.getPlan && FeatureGate.getPlan() === 'basic';
+  if (isBasicPlan && (selectedValue === '5' || selectedValue === 'custom')) {
+    dropdown.value = '3';
+    hiddenSelect.value = '3';
+    showToast('Basic จำกัดรอบสูงสุด 3 รอบ', 'warning');
+  } else {
+    hiddenSelect.value = selectedValue;
+  }
+
+  if (segmentRoot) {
+    segmentRoot.querySelectorAll('.segment-opt').forEach((button) => {
+      button.classList.toggle('active', button.dataset.value === hiddenSelect.value);
+    });
+  }
+
+  bananaUpdateRoundInfo();
+  bananaUpdateToVideoSummary();
+}
+
+// Banana Prompt & Play Studio: Add log entry
 function bananaAddLog(message, type = 'info') {
   const timestamp = new Date().toLocaleTimeString('th-TH');
   const logEntry = {
@@ -3245,7 +3272,7 @@ function bananaAddLog(message, type = 'info') {
   console[consoleMethod](`[${timestamp}] ${message}`);
 }
 
-// Banana PROMPT&PLAY: Update log display
+// Banana Prompt & Play Studio: Update log display
 function bananaUpdateLogDisplay() {
   if (!bananaLogContainer) return;
   
@@ -3273,13 +3300,13 @@ function bananaUpdateLogDisplay() {
   bananaLogContainer.scrollTop = bananaLogContainer.scrollHeight;
 }
 
-// Banana PROMPT&PLAY: Clear logs
+// Banana Prompt & Play Studio: Clear logs
 function bananaClearLogs() {
   bananaLogs = [];
   bananaUpdateLogDisplay();
 }
 
-// Banana PROMPT&PLAY: Update status
+// Banana Prompt & Play Studio: Update status
 function bananaUpdateStatus(message) {
   if (bananaStatusTimeoutId) {
     clearTimeout(bananaStatusTimeoutId);
@@ -3287,6 +3314,8 @@ function bananaUpdateStatus(message) {
   }
 
   bananaStatusText.textContent = message;
+  const bananaProgress = inferRunProgress(message, bananaIsAutomationRunning);
+  updateRunProgress('banana', bananaProgress.percent, bananaProgress.step);
   
   // Add to log
   bananaAddLog(message, 'info');
@@ -3294,26 +3323,27 @@ function bananaUpdateStatus(message) {
   if (!bananaIsAutomationRunning) {
     bananaStatusTimeoutId = setTimeout(() => {
       bananaStatusText.textContent = 'Ready to use';
+      updateRunProgress('banana', 0, 'assets');
     }, 3000);
   }
 }
 
-// Banana PROMPT&PLAY: Get Style Prompts
+// Banana Prompt & Play Studio: Get Style Prompts
 
 
-// Banana PROMPT&PLAY: Get Random Style ID
+// Banana Prompt & Play Studio: Get Random Style ID
 
 
-// Banana PROMPT&PLAY: Get UGC System Prompt (Image Prompt)
+// Banana Prompt & Play Studio: Get UGC System Prompt (Image Prompt)
 
 
-// Banana PROMPT&PLAY: Call Gemini API with retry for overloaded errors
+// Banana Prompt & Play Studio: Call Gemini API with retry for overloaded errors
 
 
-// Banana PROMPT&PLAY: Call Gemini API
+// Banana Prompt & Play Studio: Call Gemini API
 
 
-// Banana PROMPT&PLAY: Handle Copy Prompt
+// Banana Prompt & Play Studio: Handle Copy Prompt
 function bananaHandleCopyPrompt() {
   const text = bananaPromptResult.textContent;
   if (!text || text.includes('กำลังวิเคราะห์')) {
@@ -3332,7 +3362,7 @@ function bananaHandleCopyPrompt() {
   });
 }
 
-// Banana PROMPT&PLAY: Sleep helper (ฉบับแก้: ตื่นทันทีที่กด Stop)
+// Banana Prompt & Play Studio: Sleep helper (ฉบับแก้: ตื่นทันทีที่กด Stop)
 function bananaSleep(ms) {
   return new Promise((resolve, reject) => {
     if (bananaShouldStopAutomation) {
@@ -3355,7 +3385,7 @@ function bananaSleep(ms) {
   });
 }
 
-// Banana PROMPT&PLAY: Stop automation
+// Banana Prompt & Play Studio: Stop automation
 function bananaStopAutomation() {
   if (bananaIsAutomationRunning) {
     bananaShouldStopAutomation = true;
@@ -3364,7 +3394,7 @@ function bananaStopAutomation() {
   }
 }
 
-// Banana PROMPT&PLAY: Get generated images from page (แก้ไข: ดึงทั้งหมด + Scroll)
+// Banana Prompt & Play Studio: Get generated images from page (แก้ไข: ดึงทั้งหมด + Scroll)
 async function bananaGetGeneratedImages() {
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -3420,7 +3450,7 @@ async function bananaGetGeneratedImages() {
   }
 }
 
-// Banana PROMPT&PLAY: Convert image URL to data URL
+// Banana Prompt & Play Studio: Convert image URL to data URL
 async function bananaConvertImageToDataUrl(imageUrl) {
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -3521,14 +3551,94 @@ async function getAllPageImages() {
 }
 
 // 2. ฟังก์ชันหลัก: Banana -> Video (แก้ไขแล้ว)
+function bananaGetToVideoStyle() {
+  return bananaToVideoStyleSelect ? bananaToVideoStyleSelect.value : 'talk_ugc';
+}
+
+function bananaCleanVideoStyleLabel(text) {
+  return String(text || '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function bananaPopulateToVideoStyles() {
+  if (!bananaToVideoStyleSelect) return;
+
+  const existingValue = bananaToVideoStyleSelect.value || 'talk_ugc';
+  const options = Array.from(document.querySelectorAll('.config-option[data-type="vstyle"][data-value]'));
+  if (options.length === 0) return;
+
+  bananaToVideoStyleSelect.innerHTML = '';
+
+  options.forEach((button) => {
+    const option = document.createElement('option');
+    option.value = button.dataset.value;
+    option.textContent = bananaCleanVideoStyleLabel(button.dataset.label || button.textContent || button.dataset.value);
+    bananaToVideoStyleSelect.appendChild(option);
+  });
+
+  const hasExisting = Array.from(bananaToVideoStyleSelect.options).some((option) => option.value === existingValue);
+  bananaToVideoStyleSelect.value = hasExisting ? existingValue : 'talk_ugc';
+}
+
+function bananaUpdateToVideoSummary(message) {
+  if (!bananaToVideoSummary) return;
+  if (message) {
+    bananaToVideoSummary.textContent = message;
+    return;
+  }
+
+  const enabled = bananaToVideoCheckbox && bananaToVideoCheckbox.checked;
+  const rounds = typeof bananaGetRoundsPerImage === 'function' ? bananaGetRoundsPerImage() : 1;
+  const styleLabel = bananaToVideoStyleSelect
+    ? bananaToVideoStyleSelect.options[bananaToVideoStyleSelect.selectedIndex]?.textContent
+    : 'รีวิว UGC บ้าน ๆ';
+
+  bananaToVideoSummary.textContent = enabled
+    ? `เปิดอยู่: หลังสร้างภาพจะส่งต่อเป็นวิดีโอสไตล์ ${styleLabel} (${rounds} รอบ/ภาพ)`
+    : 'พร้อมส่งภาพที่สร้างเสร็จไปทำวิดีโออัตโนมัติ';
+}
+
+function bananaApplyToVideoStyle(styleValue) {
+  bananaPopulateToVideoStyles();
+  const targetStyle = styleValue || 'talk_ugc';
+  const vRandomCheckbox = document.getElementById('video-random-style-switch');
+  if (vRandomCheckbox) {
+    vRandomCheckbox.checked = false;
+    vRandomCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  const styleInput = document.getElementById('video-style-select');
+  if (styleInput) styleInput.value = targetStyle;
+
+  const styleOption = document.querySelector(`.config-option[data-type="vstyle"][data-value="${targetStyle}"]`)
+    || document.querySelector('.config-option[data-type="vstyle"].active')
+    || document.querySelector('.config-option[data-type="vstyle"]');
+
+  if (styleOption) {
+    styleOption.click();
+    return styleOption.dataset.label || styleOption.textContent.trim() || targetStyle;
+  }
+
+  return targetStyle;
+}
+
 async function bananaToVideoAutomation() {
+  if (window.FeatureGate && !FeatureGate.can('imageToVideo')) {
+    showToast('Image-to-Video Auto ใช้ได้เฉพาะ Premium', 'warning');
+    return;
+  }
+
   if (bananaIsAutomationRunning || videoIsAutomationRunning) {
     showToast('กำลังรันอยู่แล้ว กรุณารอสักครู่', 'error');
     return;
   }
 
   // ดึงค่า Config
-  const productName = bananaProductNameInput.value.trim();
+  const productName = bananaProductNameInput ? bananaProductNameInput.value.trim() : '';
+  const selectedVideoStyle = bananaGetToVideoStyle();
+  const bananaImageAutoDownloadCheckbox = document.getElementById('banana-auto-download-checkbox');
+  const previousImageAutoDownload = bananaImageAutoDownloadCheckbox ? bananaImageAutoDownloadCheckbox.checked : null;
   
   if (bananaUploadedImages.length === 0) {
     showToast('กรุณาอัพโหลดภาพสินค้าก่อน', 'error');
@@ -3536,20 +3646,22 @@ async function bananaToVideoAutomation() {
   }
 
   // Sync ค่าไปยังหน้า Video
-  videoProductNameInput.value = productName;
-  const bananaRoundValue = bananaRoundCountSelect.value;
-  videoRoundCountSelect.value = bananaRoundValue;
+  if (videoProductNameInput) videoProductNameInput.value = productName;
+  bananaUpdateToVideoSummary('เริ่มโหมด Image-to-Video: กำลังสร้างภาพก่อนส่งต่อ...');
+  const bananaRoundValue = bananaRoundCountSelect ? bananaRoundCountSelect.value : '1';
+  if (videoRoundCountSelect) videoRoundCountSelect.value = bananaRoundValue;
   
   if (bananaRoundValue === 'custom') {
-    videoCustomRoundInput.value = bananaCustomRoundInput.value;
-    videoCustomRoundInput.style.display = 'block';
-  } else {
+    if (videoCustomRoundInput && bananaCustomRoundInput) {
+      videoCustomRoundInput.value = bananaCustomRoundInput.value;
+      videoCustomRoundInput.style.display = 'block';
+    }
+  } else if (videoCustomRoundInput) {
     videoCustomRoundInput.style.display = 'none';
   }
 
-  if (videoDownloadCountAuto && bananaDownloadCount) {
-    videoDownloadCountAuto.value = bananaDownloadCount.value;
-  }
+  if (bananaImageAutoDownloadCheckbox) bananaImageAutoDownloadCheckbox.checked = true;
+  if (videoDownloadCountAuto) videoDownloadCountAuto.checked = true;
   
   videoUpdateRoundInfo();
 
@@ -3580,7 +3692,8 @@ await bananaHandleAutomation(true); // ส่งสัญญาณว่า "ก
     // -------------------------------------------------
    // 🕵️ [จุดที่แก้ไข] PHASE 3: ระบบตรวจสอบภาพใหม่แบบ "เจอแค่ไหนเอาแค่นั้น" (Non-Fatal Check)
     bananaUpdateStatus('🔍 กำลังรอรูปภาพใหม่ Render ให้สมบูรณ์...');
-    
+    let newImageUrls = [];
+
     for (let retry = 0; retry < 5; retry++) { 
         if (bananaShouldStopAutomation) throw new Error('STOPPED');
         await new Promise(resolve => setTimeout(resolve, 4000)); 
@@ -3652,7 +3765,9 @@ await bananaHandleAutomation(true); // ส่งสัญญาณว่า "ก
             await new Promise(resolve => setTimeout(resolve, 1000));
         }
     } else {
+        bananaUpdateStatus('ไม่พบภาพใหม่สำหรับส่งต่อไปทำวิดีโอ');
         bananaAddLog('⏭️ ไม่มีรูปใหม่ให้ส่งต่อ - ข้ามขั้นตอนการทำ Video', 'info');
+        return;
     }
 
 // -------------------------------------------------
@@ -3668,10 +3783,20 @@ await bananaHandleAutomation(true); // ส่งสัญญาณว่า "ก
     }
 
     // บังคับเลือกปุ่มสไตล์เบอร์ 16 (รีวิวบ้านๆ/UGC) เพื่อความชัวร์ก่อนรัน
-    const ugcOption = document.querySelector('.config-option[data-type="vstyle"][data-value="16"]');
+    const ugcOption = null && document.querySelector('.config-option[data-type="vstyle"][data-value="talk_ugc"]')
+        || document.querySelector('.config-option[data-type="vstyle"].active')
+        || document.querySelector('.config-option[data-type="vstyle"]');
     if (ugcOption) {
         ugcOption.click();
         bananaAddLog('🤳 บังคับใช้สไตล์: รีวิวบ้านๆ (UGC)', 'success');
+    }
+
+    const appliedStyleLabel = bananaApplyToVideoStyle(selectedVideoStyle);
+    bananaAddLog(`🎬 ใช้สไตล์วิดีโออัตโนมัติ: ${appliedStyleLabel}`, 'success');
+    bananaUpdateToVideoSummary(`ส่งต่อ ${videoUploadedImages.length} ภาพไปทำวิดีโอสไตล์ ${appliedStyleLabel}`);
+
+    if (videoUploadedImages.length === 0) {
+        throw new Error('ไม่พบภาพที่ส่งต่อไปยัง Video Mode');
     }
 
     await videoRunAutomation();
@@ -3700,6 +3825,10 @@ await bananaHandleAutomation(true); // ส่งสัญญาณว่า "ก
     if (bananaBtnStop) {
         bananaBtnStop.style.display = 'none';
     }
+    if (bananaImageAutoDownloadCheckbox && previousImageAutoDownload !== null) {
+        bananaImageAutoDownloadCheckbox.checked = previousImageAutoDownload;
+    }
+    bananaUpdateToVideoSummary();
   }
 }
 
@@ -3788,23 +3917,46 @@ function bananaSetupEventListeners() {
   }
   
   if(bananaClearImagesBtn) bananaClearImagesBtn.addEventListener('click', bananaClearAllImages);
+  bananaPopulateToVideoStyles();
+  if (bananaToVideoCheckbox) bananaToVideoCheckbox.addEventListener('change', () => bananaUpdateToVideoSummary());
+  if (bananaToVideoStyleSelect) bananaToVideoStyleSelect.addEventListener('change', () => bananaUpdateToVideoSummary());
+  if (bananaRoundCountSelect) bananaRoundCountSelect.addEventListener('change', () => bananaUpdateToVideoSummary());
+  if (bananaCustomRoundInput) bananaCustomRoundInput.addEventListener('input', () => bananaUpdateToVideoSummary());
+  bananaUpdateToVideoSummary();
   
   
   
 // ปุ่ม START (ฝั่งสร้างภาพอย่างเดียว)
   if(bananaBtnAutomation) {
       bananaBtnAutomation.addEventListener('click', async () => {
+          const shouldContinueToVideo = bananaToVideoCheckbox && bananaToVideoCheckbox.checked;
+          if (shouldContinueToVideo) {
+              if (window.FeatureGate && !FeatureGate.can('imageToVideo')) {
+                  bananaToVideoCheckbox.checked = false;
+                  showToast('Image-to-Video Auto ใช้ได้เฉพาะ Premium', 'warning');
+                  return;
+              }
+              await bananaToVideoAutomation();
+              return;
+          }
+
           await bananaHandleAutomation(false);  // สั่งรันแค่โหมดสร้างรูป แล้วจบเลย
       });
   }
 
   if(bananaBtnStop) bananaBtnStop.addEventListener('click', bananaStopAutomation);
   if(bananaRoundCountSelect) bananaRoundCountSelect.addEventListener('change', bananaUpdateRoundInfo);
+  if(bananaRoundDropdown) bananaRoundDropdown.addEventListener('change', bananaSyncRoundDropdown);
   if(bananaCustomRoundInput) bananaCustomRoundInput.addEventListener('input', bananaUpdateRoundInfo);
+  bananaSyncRoundDropdown();
  
   
   if (bananaLogClearBtn) {
-    bananaLogClearBtn.addEventListener('click', bananaClearLogs);
+    bananaLogClearBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      bananaClearLogs();
+    });
   }
   
   
@@ -4062,11 +4214,20 @@ async function bananaHandleAutomation(isContinuous = false) {
           let generatedPrompt = "";
           let currentAppMode = document.getElementById('current-app-mode') ? document.getElementById('current-app-mode').value : 'human';
           const isSmartAutoChecked = document.getElementById('banana-smart-auto-checkbox')?.checked;
+          if (currentAppMode === 'mascot' && window.FeatureGate && !FeatureGate.can('mascotMode')) {
+              currentAppMode = 'human';
+              showToast('ระบบมาสคอตใช้ได้เฉพาะ Premium', 'warning');
+          }
 
           if (currentAppMode === 'human') {
               // 🎯 ดึงแค่ "คาแรคเตอร์" อย่างเดียว (ไม่เอาชุด/ฉาก มาปนเผื่อไว้ให้โหมด Smart Auto)
               let charKey = document.getElementById('banana-character-select')?.value || 'auto';
               let charCustom = document.getElementById('banana-custom-character-input')?.value || "";
+              const canUseCustomCharacter = !window.FeatureGate || FeatureGate.can('customCharacter');
+              if (!canUseCustomCharacter) {
+                  if (charKey === 'auto' || charKey === 'custom') charKey = 'office_lady';
+                  charCustom = "";
+              }
             const charDict = {
                   // 👩‍🦰 ทั่วไป (หญิง)
                   'office_lady': 'smart professional Thai working woman', 
@@ -4163,10 +4324,20 @@ async function bananaHandleAutomation(isContinuous = false) {
                   let outfitKey = document.getElementById('banana-outfit-select')?.value || 'casual';
                   let outfitCustom = document.getElementById('banana-custom-outfit-input')?.value || "";
                   let isRandomOutfit = document.getElementById('banana-random-outfit-switch')?.checked;
+                  const canUseCustomOutfit = !window.FeatureGate || FeatureGate.can('customOutfit');
+                  if (!canUseCustomOutfit) {
+                      if (outfitKey === 'custom') outfitKey = 'casual';
+                      outfitCustom = "";
+                  }
 
                   let bgKey = document.getElementById('banana-bg-select')?.value || 'living_room';
                   let bgCustom = document.getElementById('banana-custom-bg-input')?.value || "";
                   let isRandomBg = document.getElementById('banana-random-bg-switch')?.checked;
+                  const canUseCustomScene = !window.FeatureGate || FeatureGate.can('customScene');
+                  if (!canUseCustomScene) {
+                      if (bgKey === 'custom') bgKey = 'living_room';
+                      bgCustom = "";
+                  }
 
                // 👗 ดิกชันนารี: หมวดหมู่ชุดแต่งกาย (16 ชุด ตรงตาม UI 100%)
                   const outfitDict = { 
@@ -4269,11 +4440,11 @@ async function bananaHandleAutomation(isContinuous = false) {
                       finalBg = bgDict[bgKey] || bgKey.replace(/_/g, ' ');
                   }
 
-                 let styleKey = document.getElementById('banana-style-select')?.value || 'model';
+                 let styleKey = document.getElementById('banana-style-select')?.value || 'ugc_basic';
                   let isRandomStyle = document.getElementById('banana-random-style-switch')?.checked;
                   
                   // อัปเดต Array สำหรับสุ่ม (เอาเฉพาะหมวดที่ใช้งานบ่อย เพื่อไม่ให้สุ่มไปเจอของแปลก)
-                  const styleKeys = ['model', 'influencer', 'studio', 'fashion', 'usage', 'texture', 'beauty', 'review', 'live', 'fancy'];
+                  const styleKeys = ['model', 'influencer', 'ugc_basic', 'studio', 'fashion', 'usage', 'texture', 'beauty', 'review', 'live', 'fancy'];
                   if (isRandomStyle) styleKey = styleKeys[Math.floor(Math.random() * styleKeys.length)];
 
                  // 🟢 อัปเดต: ระบบสุ่มหน้าตาท่าทางสำหรับโหมด "หัวโต" (Funny)
@@ -4313,6 +4484,7 @@ async function bananaHandleAutomation(isContinuous = false) {
                       // 👤 กลุ่ม 1: คน+สินค้า (Human)
                       'model': `Professional lifestyle photography. ${finalCharWithOutfit} interacting with [product]. Clean aesthetic setting. Soft lighting. Clean look. High quality, 8k resolution, photorealistic.`,
                       'influencer': `Authentic UGC (User-Generated Content) social media photography. Medium portrait shot of ${finalCharWithOutfit} ${randInfluencerPose}, naturally holding and presenting the [product] to the viewer. (CRITICAL RULE: The character is NOT holding the camera. NO selfie arms. BOTH hands must be visible and interacting naturally with the product). The character is looking directly at the lens with a friendly, approachable, and highly authentic smile. TikTok/YouTube lifestyle aesthetic. Unscripted, everyday casual setting, soft natural window lighting. Engaging and relatable vibe. (NOT heavy studio quality, NOT over-produced).`,
+                      'ugc_basic': `Cute Basic-style UGC review photo. ${finalCharWithOutfit} naturally holding and presenting [product] to the camera with a friendly everyday creator vibe. Bright approachable TikTok review thumbnail style, playful, charming, soft colorful lighting, relatable social-media composition, photorealistic, high quality.`,
 					'fashion': `High-end fashion lookbook photography. ${finalCharWithOutfit} is stylishly modeling and wearing the [product] as the main centerpiece of their outfit. Full body or medium-full shot clearly showcasing the fit, fabric, and design of the [product]. The model is posing confidently with a strong, professional fashion editorial presence. Stylish, modern, and trendy aesthetic. Professional lighting, photorealistic, 8k resolution, fashion magazine grade.`,
                       'beauty': `Beauty influencer photography. Close-up shot of ${finalCharWithOutfit} applying [product] to the skin. Showing texture and glow. Soft ring light. (Action: Swatching or applying). High quality, 8k resolution.`,
                      'studio': `Epic campaign advertising photography. ${finalCharWithOutfit} standing confidently and presenting the [product] within a spectacular and grand setting. The scene MUST BE transformed from a simple background into an spectacular and impactful promotional environment. Ensure the entire composition is grand and awe-inspiring, flawlessly integrating the character and product into an extravagant campaign poster. Dramatic epic lighting, stylized visual effects like glowing text, particle effects, or light flares that make the whole image look magnificent. A masterful and powerful composition that feels like a premium, master-piece advertising poster. The final image should look grand, powerful, and spectacular. Professional grade photography.`,
@@ -5179,7 +5351,7 @@ async function bananaHandleAutomation(isContinuous = false) {
 // ============================================
 // 🔒 SYSTEM LOCKER (ระบบล็อคหน้าจอเว็บ - ป้องกัน Error)
 // ============================================
-async function toggleWebPageLock(shouldLock) {
+async function legacyToggleWebPageLock(shouldLock) {
     try {
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
         
@@ -5248,7 +5420,7 @@ async function toggleWebPageLock(shouldLock) {
 // ============================================
 // 🔍 URL CHECKER (ระบบเช็คเว็บที่ถูกต้อง)
 // ============================================
-async function checkCorrectWebsite() {
+async function legacyCheckCorrectWebsite() {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     
     // ดึง URL มาเช็ค ถ้าไม่มี (เช่นอยู่หน้า New Tab) ให้เป็น string ว่าง

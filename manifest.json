@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "PROMPT&PLAY AUTO NEW GEN",
+  "name": "Prompt & Play Studio",
   "version": "1.0",
-"description": "เครื่องมือช่วยสร้างคอนเทนต์วิดีโอและรูปภาพอัตโนมัติด้วย AI (Auto Gen Tool รุ่น NEW) สำหรับพ่อค้าแม่ค้าออนไลน์",
+"description": "เครื่องมือช่วยสร้างคอนเทนต์รูปภาพและวิดีโออัตโนมัติด้วย AI สำหรับพ่อค้าแม่ค้าออนไลน์",
   "permissions": [
     "sidePanel",
     "activeTab",
@@ -18,7 +18,7 @@
   ],
 
   "action": {
-    "default_title": "Open PROMPT&PLAY",
+    "default_title": "Open Prompt & Play Studio",
     "default_icon": {
       "16": "icons/icon16.png",
       "32": "icons/icon32.png",

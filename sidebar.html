@@ -2,38 +2,53 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>PROMPT&PLAY AUTO NEW GEN</title>
+  <title>Prompt & Play Studio</title>
   <link rel="stylesheet" href="sidebar.css">
 </head>
 <body>
 
-<div id="auth-overlay" style="position:fixed; inset:0; background:#0f0f12; z-index:99999; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px; text-align:center;">
-      <div style="font-size:40px; margin-bottom:10px;">🔐</div>
-      <h3 style="color:#fff; margin:0 0 5px 0;">PROMPT&PLAY</h3>
-	  <h1 style="color:#fff; margin:0 0 8px 0;">AUTO NEW GEN รุ่น 1.0</h1>
-      <h3 style="color:#aaa; font-size:15px; margin-bottom:15px;">กรุณากรอก License Key เพื่อเข้าใช้งาน</h3>
-      
-      <input type="text" id="license-key-input" placeholder="XXXX-XXXX-XXXX-XXXX" 
-             style="width:100%; max-width:280px; padding:12px; border-radius:8px; border:1px solid #333; background:#222; color:#fff; text-align:center; margin-bottom:10px; font-family:monospace; font-size:14px;">
-      
-  <button id="btn-login" class="btn-primary" style="flex: none; height: 48px; width: 100%; max-width: 280px; margin-top: 10px;">เข้าสู่ระบบ</button>
-      
-      <div id="login-msg" style="margin-top:15px; font-size:12px; color:#f43f5e; height:20px;"></div>
-      
-      <div style="margin-top:30px; font-size:11px; color:#555;">
-          Device ID: <span id="display-device-id">...</span>
+<div id="auth-overlay">
+    <div class="login-card">
+      <div class="login-mark" aria-hidden="true"></div>
+      <div class="login-kicker">Prompt & Play Studio</div>
+      <h1>Prompt & Play Studio</h1>
+      <p class="login-subtitle">กรอก License Key เพื่อเข้าใช้งาน ระบบจะตรวจว่าเป็นรุ่น Basic หรือ Premium ให้อัตโนมัติ</p>
+
+      <div class="login-plan-preview">
+        <div class="login-plan-card basic">
+          <strong>Basic</strong>
+          <span>รุ่นพื้นฐาน ใช้งานตลอดชีพ สำหรับสร้างรูปและวิดีโอแบบมาตรฐาน</span>
+        </div>
+        <div class="login-plan-card vip">
+          <strong>Premium</strong>
+          <span>ปลดล็อก Image-to-Video, Mascot, Custom Script และโหมดขั้นสูง</span>
+        </div>
       </div>
+
+      <div class="login-field">
+        <label for="license-key-input">License Key</label>
+        <input type="text" id="license-key-input" placeholder="XXXX-XXXX-XXXX-XXXX">
+      </div>
+
+      <button id="btn-login" class="btn-primary">Enter Studio</button>
+      <div id="login-msg"></div>
+
+      <div class="device-card">
+        <span>Device ID</span>
+        <strong id="display-device-id">...</strong>
+      </div>
+    </div>
   </div>
 
 <div id="license-countdown" style="margin-top:10px; font-size:14px; color:#4ade80; font-weight:bold; display:none;"></div>
 
 <header class="app-header">
     <div class="brand-box">
-      <div class="brand-logo">P</div>
+      <div class="brand-logo" aria-hidden="true"></div>
       <div class="brand-info">
-        <h1>PROMPT&PLAY AUTO NEW GEN</h1>
+        <h1>Prompt & Play Studio</h1>
         <div style="display:flex; align-items:center; gap:8px;">
-            <span class="brand-version">1.0</span>
+            <span class="brand-version" id="plan-badge" data-plan="vip">Premium</span>
             
             <div id="header-expire-badge" class="expire-badge safe" style="display:none;">
                 <span id="header-expire-text">กำลังตรวจสอบ...</span>
@@ -42,19 +57,34 @@
       </div>
     </div>
     
-    <button id="btn-settings" class="btn-icon" title="ตั้งค่า">⚙️</button>
+    <div class="header-actions">
+      <button id="btn-switch-key" class="btn-header-action" title="เปลี่ยน License Key">Switch Key</button>
+      <button id="btn-settings" class="btn-icon" title="ตั้งค่า">⚙️</button>
+    </div>
   </header>
 
+  <div class="studio-mode-tabs">
+    <button type="button" class="studio-mode-tab active">
+      <span>Product Clip</span>
+      <small>ทำคลิปขายสินค้า</small>
+    </button>
+    <button type="button" class="studio-mode-tab is-coming-soon" disabled>
+      <span>Story Studio</span>
+      <small>เรื่องเล่า / นิทาน Coming Soon</small>
+    </button>
+  </div>
+
   <nav class="nav-segment">
-    <button class="segment-btn active" data-tab="banana">✨ Images</button>
-    <button class="segment-btn" data-tab="video">🎬 Video</button>
+    <button class="segment-btn active" data-tab="banana">สร้างรูป</button>
+    <button class="segment-btn" data-tab="video">สร้างวิดีโอ</button>
   </nav>
 
   <main class="app-body">
     
     <div class="tab-pane active" id="tab-content-banana">
       
-      <div class="section-title">1. Assets Upload</div>
+      <section class="studio-section studio-section-assets">
+      <div class="section-title">Assets Upload</div>
       
       <div class="upload-bar" id="banana-upload-zone">
         <div class="upload-left">
@@ -77,10 +107,12 @@
       </div>
       <input type="file" id="model-file-input" accept="image/*" hidden>
       <div class="preview-strip" id="model-preview-container"></div>
+      </section>
 	  
      
 
-	<div class="section-title">2. Configuration</div>
+      <section class="studio-section studio-section-config">
+	<div class="section-title">Configuration</div>
 
       <div class="input-group">
         <div class="input-row"><label>ชื่อสินค้า / Keyword</label></div>
@@ -108,7 +140,7 @@
       <div class="input-group" style="background:#18181b; padding:8px; border-radius:12px; border:1px solid #333; margin-bottom:15px; margin-top:15px;">
           <div style="display:flex; gap:5px;">
              <button id="btn-mode-human" class="mode-btn active">👤 รีวิวคน (Human)</button>
-             <button id="btn-mode-mascot" class="mode-btn">🧸 มาสคอต (Mascot 3D)</button>
+             <button id="btn-mode-mascot" class="mode-btn" data-feature="mascotMode">🧸 มาสคอต (Mascot 3D)</button>
           </div>
           <input type="hidden" id="current-app-mode" value="human">
       </div>
@@ -130,7 +162,7 @@
 
               <div class="input-group" style="margin: 10px 0; border-top: 1px dashed #333; padding-top: 10px;">
                   <label class="input-label" style="font-size:11px; color:#aaa;">✎ ระบุลักษณะตัวละครเอง (ถ้ามี):</label>
-                  <input type="text" id="banana-custom-character-input" class="config-input" placeholder="เช่น ผู้หญิงไทยอายุ 35 ปี...">
+                  <input type="text" id="banana-custom-character-input" class="config-input" data-feature="customCharacter" placeholder="เช่น ผู้หญิงไทยอายุ 35 ปี...">
               </div>
 
               <div id="char-group-general" class="char-group" style="display:none;">
@@ -208,9 +240,9 @@
                   <div class="input-row"><label>สไตล์ภาพ (Style)</label></div>
                   <div class="special-box" id="style-random-wrapper" style="margin-bottom: 8px; background: #2e1065; border: 1px solid #a855f7;">
                       <span style="color:#e9d5ff; font-weight:600; font-size:13px;">🎲 สุ่มสไตล์ (Random Style)</span>
-                      <label class="switch"><input type="checkbox" id="banana-random-style-switch" checked><span class="slider"></span></label>
+                      <label class="switch"><input type="checkbox" id="banana-random-style-switch"><span class="slider"></span></label>
                   </div>
-                  <input type="hidden" id="banana-style-select" value="model">
+                  <input type="hidden" id="banana-style-select" value="ugc_basic">
                   
                   <div class="char-tab-container" id="config-content-style" style="margin-top:5px;">
                       <div class="char-tabs">
@@ -221,7 +253,8 @@
                       </div>
                       <div class="char-content-area">
                           <div id="style-group-human" class="char-grid" style="display:grid; grid-template-columns:1fr 1fr;">
-                              <div class="char-card active config-option" data-type="style" data-value="model" data-label="💃 นายแบบ"><span class="char-icon">💃</span> นายแบบ (เต็มตัว)</div>
+                              <div class="char-card active config-option" data-type="style" data-value="ugc_basic" data-label="💬 UGC Basic Cute"><span class="char-icon">💬</span> UGC Basic Cute</div>
+                              <div class="char-card config-option" data-type="style" data-value="model" data-label="💃 นายแบบ"><span class="char-icon">💃</span> นายแบบ (เต็มตัว)</div>
                               <div class="char-card config-option" data-type="style" data-value="influencer" data-label="🤳 อินฟลูฯ"><span class="char-icon">🤳</span> อินฟลูฯ (Vlog)</div>        
                               <div class="char-card config-option" data-type="style" data-value="beauty" data-label="💄 บิวตี้"><span class="char-icon">💄</span> บิวตี้ (หน้าชัด)</div>
                               <div class="char-card config-option" data-type="style" data-value="studio" data-label="🔥 โปรโมท"><span class="char-icon">🔥</span> โปรโมทขั้นสุด</div>
@@ -255,7 +288,7 @@
                   <div class="input-row"><label>ฉากหลัง (Background)</label></div>
                   <div class="special-box" id="bg-random-wrapper" style="margin-bottom: 8px; background: #2e1065; border: 1px solid #a855f7;">
                       <span style="color:#e9d5ff; font-weight:600; font-size:13px;">🎲 สุ่มฉากหลัง (Random BG)</span>
-                      <label class="switch"><input type="checkbox" id="banana-random-bg-switch" checked><span class="slider"></span></label>
+                      <label class="switch"><input type="checkbox" id="banana-random-bg-switch"><span class="slider"></span></label>
                   </div>
                   <input type="hidden" id="banana-bg-select" value="living_room">
                   
@@ -268,7 +301,7 @@
                       </div>
                       
                       <div id="bg-group-custom" class="char-grid" style="display:none;">
-                          <input type="text" id="banana-custom-bg-input" placeholder="ระบุฉาก (เช่น: บนดวงจันทร์, ใต้มหาสมุทร)..." style="width:100%; padding:10px; background:#2e1065; border:1px solid #a855f7; color:#fff; border-radius:8px; font-size:12px; margin-top:5px;">
+                          <input type="text" id="banana-custom-bg-input" data-feature="customScene" placeholder="ระบุฉาก (เช่น: บนดวงจันทร์, ใต้มหาสมุทร)..." style="width:100%; padding:10px; background:#2e1065; border:1px solid #a855f7; color:#fff; border-radius:8px; font-size:12px; margin-top:5px;">
                       </div>
                       
                       <div class="char-content-area">
@@ -316,7 +349,7 @@
                   <div class="input-row"><label>ชุด (Outfit)</label></div>
                   <div class="special-box" id="outfit-random-wrapper" style="margin-bottom: 8px; background: #2e1065; border: 1px solid #a855f7;">
                       <span style="color:#e9d5ff; font-weight:600; font-size:13px;">🎲 สุ่มชุด (Random Outfit)</span>
-                      <label class="switch"><input type="checkbox" id="banana-random-outfit-switch" checked><span class="slider"></span></label>
+                      <label class="switch"><input type="checkbox" id="banana-random-outfit-switch"><span class="slider"></span></label>
                   </div>
                   <input type="hidden" id="banana-outfit-select" value="casual">
                   
@@ -329,7 +362,7 @@
                       </div>
                       
                       <div id="outfit-group-custom" class="char-grid" style="display:none;">
-                          <input type="text" id="banana-custom-outfit-input" placeholder="ระบุชุด (เช่น: ชุดนางเงือก, ชุดเกราะ)..." style="width:100%; padding:10px; background:#2e1065; border:1px solid #a855f7; color:#fff; border-radius:8px; font-size:12px; margin-top:5px;">
+                          <input type="text" id="banana-custom-outfit-input" data-feature="customOutfit" placeholder="ระบุชุด (เช่น: ชุดนางเงือก, ชุดเกราะ)..." style="width:100%; padding:10px; background:#2e1065; border:1px solid #a855f7; color:#fff; border-radius:8px; font-size:12px; margin-top:5px;">
                       </div>
                       
                       <div class="char-content-area">
@@ -485,48 +518,82 @@
 	  
 	  
 
-      <div class="grid-2">
-        <div class="input-group">
-          <label style="font-size:12px; color:#aaa;">จำนวนรอบต่อสินค้า (Variations)</label>
-          <input type="hidden" id="banana-round-count" value="1">
-          <div class="segment-row" id="seg-rounds">
+      <div class="output-setting-card">
+        <div class="output-setting-grid">
+          <div class="output-field">
+            <label for="banana-round-dropdown">จำนวนรอบต่อสินค้า</label>
+            <input type="hidden" id="banana-round-count" value="1">
+            <select id="banana-round-dropdown" class="theme-input output-select">
+              <option value="1">1 รอบ</option>
+              <option value="3">3 รอบ</option>
+              <option value="5" data-premium-option="advancedRounds">5 รอบ · Premium</option>
+              <option value="custom" data-premium-option="advancedRounds">กำหนดเอง · Premium</option>
+            </select>
+            <div class="segment-row legacy-round-segment" id="seg-rounds" aria-hidden="true">
               <button class="segment-opt active" data-type="rounds" data-value="1">1</button>
               <button class="segment-opt" data-type="rounds" data-value="3">3</button>
-              <button class="segment-opt" data-type="rounds" data-value="5">5</button>
-              <button class="segment-opt" data-type="rounds" data-value="custom">+</button>
-        </div>
-          <input type="number" id="banana-custom-round-input" class="hidden" style="margin-top:5px;" placeholder="จำนวนรอบ...">
-        </div>
-        
-        <div id="banana-round-info" style="font-size:11px; color:#4ade80; text-align:right; margin-top:8px; margin-bottom:10px;"></div>
+              <button class="segment-opt" data-type="rounds" data-value="5" data-feature="advancedRounds">5</button>
+              <button class="segment-opt" data-type="rounds" data-value="custom" data-feature="advancedRounds">+</button>
+            </div>
+            <input type="number" id="banana-custom-round-input" class="hidden output-custom-round" placeholder="จำนวนรอบ...">
+          </div>
 
-<div class="special-box" style="margin-top: 10px; margin-bottom: 10px;">
-  <span style="color:#ddd; font-weight:500; font-size:13px;">💾 บันทึกรูป?</span>
-  
-  <label class="switch">
-    <input type="checkbox" id="banana-auto-download-checkbox" >
-    <span class="slider"></span>
-  </label>
-</div>
+          <div class="output-field output-save-field">
+            <span class="output-label">บันทึกรูป<span class="output-save-hint">ปิดไว้จะทำงานเร็วขึ้น</span></span>
+            <label class="switch">
+              <input type="checkbox" id="banana-auto-download-checkbox">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+        <div id="banana-round-info" class="output-round-info"></div>
       </div>
-	    <span style="color:#ddd; font-weight:500; font-size:10px;"><center>*หากต้องการทำงานรวดเร็วขึ้นให้ปิดระบบบันทึกรูป</center></span>
 	  
-     <div class="special-box" style="display: none;">
-        <span style="color:#aaa; font-weight:500;">สร้างเสร็จ -> ทำวิดีโอต่อเลย?</span>
+     <div class="pipeline-card feature-vip" data-feature="imageToVideo">
+        <div>
+          <div class="pipeline-title">Image-to-Video Auto</div>
+          <div class="pipeline-controls">
+            <label for="banana-to-video-style-select">สไตล์วิดีโอหลังสร้างภาพ</label>
+            <select id="banana-to-video-style-select" class="mini-select">
+              <option value="talk_ugc">รีวิว UGC</option>
+              <option value="talk_excited">ตื่นเต้น / โปรโมท</option>
+              <option value="talk_cheerful">ร่าเริงสดใส</option>
+              <option value="talk_sassy">มั่นใจแอบแซ่บ</option>
+              <option value="talk_sincere">แนะนำจากใจ</option>
+              <option value="hook_comparison">เปรียบเทียบ</option>
+              <option value="hook_secret">เล่าความลับ</option>
+              <option value="broll_hero">Hero Shot ไม่มีเสียงพูด</option>
+              <option value="broll_cinematic">ซีนีมาติก</option>
+              <option value="voice_promo">พากย์โปรโมท</option>
+            </select>
+            <div id="banana-to-video-summary" class="pipeline-mini-status">พร้อมส่งภาพที่สร้างเสร็จไปทำวิดีโออัตโนมัติ</div>
+          </div>
+          <div class="pipeline-desc">สร้างภาพเสร็จแล้วส่งต่อไปทำวิดีโออัตโนมัติ</div>
+          <div class="feature-lock-note">Premium เท่านั้น</div>
+        </div>
         <label class="switch">
           <input type="checkbox" id="banana-to-video-checkbox">
           <span class="slider"></span>
         </label>
       </div>
+      </section>
    
 
-      <div style="margin-top:15px; display:flex; justify-content:space-between; align-items:center;">
-         <span style="font-size:12px; color:#555; font-weight:bold;">LOGS</span>
-         <button id="banana-log-clear" style="background:none; border:none; color:#555; cursor:pointer;">Clear</button>
-      </div>
-      <div class="log-box" id="banana-log-container"></div>
+      <details class="log-panel">
+        <summary class="log-panel-summary">
+          <span>LOGS</span>
+          <button id="banana-log-clear" class="log-clear-btn" type="button">Clear</button>
+        </summary>
+        <div class="log-box" id="banana-log-container"></div>
+      </details>
 
       <div class="action-bar" style="flex-direction: column; gap: 5px;">
+        <div class="run-head">
+          <span class="run-label">Image Mission</span>
+          <span id="banana-progress-text" class="run-percent">0%</span>
+        </div>
+        <div id="banana-step-text" class="run-step-status">ขั้นตอน: เตรียมข้อมูล</div>
+        <div class="run-progress"><div id="banana-progress-bar" class="run-progress-fill"></div></div>
         <div id="banana-status-text" style="font-size: 11px; color: #4ade80; text-align: center; height: 16px;">Ready</div>
         <div style="display: flex; gap: 8px; width: 100%;">
             <button id="banana-btn-automation" class="btn-primary" style="flex: 2;">START GENERATE</button>
@@ -538,7 +605,8 @@
 	
     <div class="tab-pane" id="tab-content-video">
       
-      <div class="section-title">1. Video Assets</div>
+      <section class="studio-section studio-section-assets">
+      <div class="section-title">Video Assets</div>
       
       <div class="upload-bar" id="video-upload-zone" style="border-color:#333;">
         <div class="upload-left">
@@ -550,8 +618,10 @@
       </div>
       <input type="file" id="video-file-input" multiple accept="image/*" hidden>
       <div class="preview-strip" id="video-preview-container"></div>
+      </section>
 
-      <div class="section-title">2. Configuration</div>
+      <section class="studio-section studio-section-config">
+      <div class="section-title">Configuration</div>
       
       <div class="input-group">
         <div class="input-row"><label>ชื่อสินค้า / Keyword</label></div>
@@ -563,7 +633,7 @@
 	  
       <div class="input-group">
         <div class="input-row"><label>บทพูดตัวละคร (Custom Script)</label></div>
-        <textarea id="video-custom-script" placeholder="เช่น: สวัสดีค่ะ วันนี้มีโปรดีๆ มาฝาก..." style="height:60px; padding:10px; border-radius:8px; border:1px solid #3f3f46; background:#27272a; color:#fff; font-family:'Sarabun', sans-serif;"></textarea>
+        <textarea id="video-custom-script" data-feature="advancedVideo" placeholder="เช่น: สวัสดีค่ะ วันนี้มีโปรดีๆ มาฝาก..." style="height:60px; padding:10px; border-radius:8px; border:1px solid #3f3f46; background:#27272a; color:#fff; font-family:'Sarabun', sans-serif;"></textarea>
         <div style="font-size:10px; color:#666; margin-top:4px;">*ถ้าใส่ช่องนี้ ระบบจะให้ตัวละครพูดตามนี้เป๊ะๆ</div>
       </div>
 
@@ -572,7 +642,7 @@
             <label>รูปแบบวิดีโอ (Video Style)</label>
           </div>
           
-          <div class="special-box" id="video-random-style-wrapper" style="margin-bottom: 8px; background: #2e1065; border: 1px solid #a855f7;">
+          <div class="special-box" id="video-random-style-wrapper" data-feature="advancedVideo" style="margin-bottom: 8px; background: #2e1065; border: 1px solid #a855f7;">
               <span style="color:#e9d5ff; font-weight:600; font-size:13px;">🎲 สุ่มสไตล์ (Random Style)</span>
               <label class="switch">
                 <input type="checkbox" id="video-random-style-switch">
@@ -580,7 +650,7 @@
               </label>
           </div>
 
-         <input type="hidden" id="video-style-select" value="talk_sales"> 
+         <input type="hidden" id="video-style-select" value="talk_ugc"> 
           
        <div id="config-content-vstyle" class="config-content show" style="display: block; border: 1px solid #333; border-radius: 8px; padding: 10px; background: rgba(0,0,0,0.2);">
               
@@ -596,24 +666,24 @@
                   <button class="config-option" data-type="vstyle" data-value="rant_expert" data-label="🎓 ผู้เชี่ยวชาญ">🎓 ผู้เชี่ยวชาญ</button>
               </div>
 
-              <div class="style-group-label" style="margin-top:15px; color:#ef4444; border-left: 3px solid #ef4444; padding-left: 8px; margin-bottom: 10px; font-weight: bold;">🛑 สายบ่นเตือนสติ (Tough Love)</div>
-              <div class="style-grid" id="vstyle-group-rant" style="display:grid; grid-template-columns:1fr 1fr; gap:5px;">
+              <div class="style-group-label" data-feature="advancedVideo" style="margin-top:15px; color:#ef4444; border-left: 3px solid #ef4444; padding-left: 8px; margin-bottom: 10px; font-weight: bold;">🛑 สายบ่นเตือนสติ (Tough Love)</div>
+              <div class="style-grid" id="vstyle-group-rant" data-feature="advancedVideo" style="display:grid; grid-template-columns:1fr 1fr; gap:5px;">
                   <button class="config-option" data-type="vstyle" data-value="rant" data-label="เพื่อนบ่น">🗣️ เพื่อนบ่นเตือน</button>
                   <button class="config-option" data-type="vstyle" data-value="hook_mistake" data-label="แม่ด่า">🤦‍♀️ แม่ด่าเพราะรัก</button>
                   <button class="config-option" data-type="vstyle" data-value="rant_skeptical" data-label="ตาสว่าง">💡 เตือนให้ตาสว่าง</button>
                   <button class="config-option" data-type="vstyle" data-value="rant_partner" data-label="แฟนบ่น">🙎‍♀️ แฟนบ่น(ห่วง)</button>
               </div>
 			  
-              <div class="style-group-label" style="margin-top:15px; color:#eab308; border-left: 3px solid #eab308; padding-left: 8px; margin-bottom: 10px; font-weight: bold;">💰 ปิดการขาย (ตอนจบ)</div>
-              <div class="style-grid" id="vstyle-group-closing" style="display:grid; grid-template-columns:1fr 1fr; gap:5px;">
+              <div class="style-group-label" data-feature="advancedVideo" style="margin-top:15px; color:#eab308; border-left: 3px solid #eab308; padding-left: 8px; margin-bottom: 10px; font-weight: bold;">💰 ปิดการขาย (ตอนจบ)</div>
+              <div class="style-grid" id="vstyle-group-closing" data-feature="advancedVideo" style="display:grid; grid-template-columns:1fr 1fr; gap:5px;">
                   <button class="config-option" data-type="vstyle" data-value="closing_urgency" data-label="⚡ นาทีทอง">⚡ เร่งให้ซื้อ</button>
                   <button class="config-option" data-type="vstyle" data-value="closing_sincere" data-label="💖 ป้ายยา">💖 ป้ายยาแบบเพื่อน</button>
                   <button class="config-option" data-type="vstyle" data-value="closing_challenge" data-label="🥊 ท้าให้ลอง">🥊 ท้าให้ลอง</button>
                   <button class="config-option" data-type="vstyle" data-value="closing_cta" data-label="👇 กดตะกร้า">👇 ชี้กดตะกร้า</button>
               </div>
 
-              <div class="style-group-label" style="margin-top:15px; color:#60a5fa; border-left: 3px solid #60a5fa; padding-left: 8px; margin-bottom: 10px; font-weight: bold;">📸 เน้นสินค้า (ไม่มีเสียงพูด)</div>
-              <div class="style-grid" id="vstyle-group-broll" style="display:grid; grid-template-columns:1fr 1fr; gap:5px;">
+              <div class="style-group-label" data-feature="advancedVideo" style="margin-top:15px; color:#60a5fa; border-left: 3px solid #60a5fa; padding-left: 8px; margin-bottom: 10px; font-weight: bold;">📸 เน้นสินค้า (ไม่มีเสียงพูด)</div>
+              <div class="style-grid" id="vstyle-group-broll" data-feature="advancedVideo" style="display:grid; grid-template-columns:1fr 1fr; gap:5px;">
                   <button class="config-option" data-type="vstyle" data-value="broll_hero" data-label="🏆 Hero Shot">🏆 Hero Shot</button>
                   <button class="config-option" data-type="vstyle" data-value="broll_pan" data-label="📷 แพนกล้อง">📷 แพนกล้อง</button>
                   <button class="config-option" data-type="vstyle" data-value="broll_zoom" data-label="🔍 ซูมลาย">🔍 ซูมลาย</button>
@@ -621,8 +691,8 @@
                   <button class="config-option" data-type="vstyle" data-value="miniature_vdo" data-label="🏙️ ชีวิตเมืองจิ๋ว">🏙️ ชีวิตเมืองจิ๋ว</button>
               </div>
 
-              <div class="style-group-label" style="margin-top:15px; color:#f472b6; border-left: 3px solid #f472b6; padding-left: 8px; margin-bottom: 10px; font-weight: bold;">🎙️ พากย์เสียง (ไม่มีคน)</div>
-            <div class="style-grid" id="vstyle-group-voiceover" style="display:grid; grid-template-columns:1fr 1fr; gap:5px;">
+              <div class="style-group-label" data-feature="advancedVideo" style="margin-top:15px; color:#f472b6; border-left: 3px solid #f472b6; padding-left: 8px; margin-bottom: 10px; font-weight: bold;">🎙️ พากย์เสียง (ไม่มีคน)</div>
+            <div class="style-grid" id="vstyle-group-voiceover" data-feature="advancedVideo" style="display:grid; grid-template-columns:1fr 1fr; gap:5px;">
                   <button class="config-option" data-type="vstyle" data-value="voice_promo" data-label="⚡ ตัดเร็ว (Promo)">⚡ โปรโมท(Promo)</button>
                   <button class="config-option" data-type="vstyle" data-value="voice_soft" data-label="🍃 ละมุน (Soft)">🍃 ละมุน (Soft)</button>
                   <button class="config-option" data-type="vstyle" data-value="voice_docu" data-label="📚 สารคดี (Docu)">📚 สารคดี (Docu)</button>
@@ -679,8 +749,8 @@
           <div class="segment-row" id="video-seg-rounds">
               <button class="segment-opt active" data-type="rounds" data-value="1">1</button>
               <button class="segment-opt" data-type="rounds" data-value="3">3</button>
-              <button class="segment-opt" data-type="rounds" data-value="5">5</button>
-              <button class="segment-opt" data-type="rounds" data-value="custom">+</button>
+              <button class="segment-opt" data-type="rounds" data-value="5" data-feature="advancedRounds">5</button>
+              <button class="segment-opt" data-type="rounds" data-value="custom" data-feature="advancedRounds">+</button>
           </div>
           <input type="number" id="video-custom-round-input" class="hidden" style="margin-top:5px;" placeholder="จำนวนรอบ...">
         </div>
@@ -696,16 +766,25 @@
       
       <div id="video-round-info" style="font-size:11px; color:#666; text-align:right; margin-bottom:10px;"></div>
       <span style="color:#888; font-size:10px; display:block; margin-bottom:10px;"><center>*หากต้องการทำงานรวดเร็วขึ้นให้ปิดระบบบันทึกคลิป</center></span>
+      </section>
 
     
 
-      <div style="margin-top:15px; display:flex; justify-content:space-between; align-items:center;">
-         <span style="font-size:12px; color:#555; font-weight:bold;">LOGS</span>
-         <button id="video-log-clear" style="background:none; border:none; color:#555; cursor:pointer;">Clear</button>
-      </div>
-      <div class="log-box" id="video-log-container"></div>
+      <details class="log-panel">
+        <summary class="log-panel-summary">
+          <span>LOGS</span>
+          <button id="video-log-clear" class="log-clear-btn" type="button">Clear</button>
+        </summary>
+        <div class="log-box" id="video-log-container"></div>
+      </details>
 	  
       <div class="action-bar" style="flex-direction: column; gap: 5px;">
+        <div class="run-head">
+          <span class="run-label">Video Mission</span>
+          <span id="video-progress-text" class="run-percent">0%</span>
+        </div>
+        <div id="video-step-text" class="run-step-status">ขั้นตอน: เตรียมข้อมูล</div>
+        <div class="run-progress"><div id="video-progress-bar" class="run-progress-fill"></div></div>
         <div id="video-status-text" style="font-size: 11px; color: #4ade80; text-align: center; height: 16px;">Ready</div>
         <div style="display: flex; gap: 8px; width: 100%;">
             <button id="video-btn-automation" class="btn-primary btn-video" style="flex: 2;">START VIDEO</button>
@@ -722,7 +801,57 @@
          <h3 style="color:#00f2fe; margin:0; font-size:16px; display:flex; align-items:center; gap:8px;">⚙️ ตั้งค่าระบบ</h3>
          <button id="close-settings" style="background:none; border:none; color:#888; cursor:pointer; font-size:24px; transition:0.2s;">&times;</button>
       </div>
+
+      <div class="settings-section-title">Plan / License</div>
+      <div class="license-plan-card">
+        <div>
+          <span class="license-plan-kicker">Current Version</span>
+          <strong id="settings-plan-label">Premium</strong>
+          <p id="settings-plan-desc">ปลดล็อก Image-to-Video, Mascot และฟังก์ชันขั้นสูง</p>
+        </div>
+        <span class="license-plan-dot"></span>
+      </div>
+
+      <div id="settings-plan-summary" class="plan-summary-grid">
+        <div class="plan-summary-card" data-plan-summary="basic">
+          <div class="plan-summary-head">
+            <strong>Basic</strong>
+            <span class="plan-summary-status">ACTIVE</span>
+          </div>
+          <ul>
+            <li>สร้างรูปและวิดีโอด้วยระบบมาตรฐาน</li>
+            <li>เลือกรอบสร้างได้สูงสุด 3 รอบ</li>
+            <li>ล็อก Mascot, Custom Scene และ Custom Character</li>
+            <li>ล็อก Image-to-Video Auto สำหรับ Premium</li>
+          </ul>
+        </div>
+
+        <div class="plan-summary-card vip" data-plan-summary="vip">
+          <div class="plan-summary-head">
+            <strong>Premium</strong>
+            <span class="plan-summary-status">ACTIVE</span>
+          </div>
+          <ul>
+            <li>ปลดล็อก Image-to-Video Auto</li>
+            <li>ใช้ Mascot, Custom Script และโหมดกำหนดเอง</li>
+            <li>เลือกรอบสร้างขั้นสูงได้มากกว่า Basic</li>
+            <li>รองรับฟีเจอร์ Story Studio ในอนาคต</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="settings-section-title">Story Studio</div>
+      <div class="brain-card settings-brain-card">
+        <div class="brain-card-head">
+          <div>
+            <div class="brain-title">Smart AI Storyboard</div>
+            <div class="brain-hint">Coming Soon: แท็บใหญ่สำหรับทำคลิปขายสินค้าและคลิปสตอรี่หลายฉาก โดยใช้ AI ช่วยคิดภาพ ฉาก และลำดับวิดีโอ</div>
+          </div>
+          <span class="brain-status-badge is-warning-status">Coming Soon</span>
+        </div>
+      </div>
       
+      <div class="settings-section-title">Video Defaults</div>
       <div class="input-group">
         <div class="input-row"><label style="color:#a1a1aa; font-size:12px; font-weight:600;">สัดส่วนภาพและวิดีโอ (Aspect Ratio)</label></div>
         <select id="veo3-aspect-ratio" class="theme-input" style="cursor:pointer; appearance:none; margin-top:5px; background-image: url('data:image/svg+xml;utf8,<svg fill=\"%2300f2fe\" height=\"24\" viewBox=\"0 0 24 24\" width=\"24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M7 10l5 5 5-5z\"/><path d=\"M0 0h24v24H0z\" fill=\"none\"/></svg>'); background-repeat: no-repeat; background-position-x: 96%; background-position-y: 50%;">
@@ -730,6 +859,9 @@
           <option value="16:9">🖥️ แนวนอน 16:9 (YouTube / Facebook)</option>
         </select>
       </div>
+
+      <div class="settings-section-title">Account</div>
+      <button id="btn-settings-switch-key" class="settings-license-button" type="button">เปลี่ยน License Key / สลับ Basic-Premium</button>
       
       <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:25px;">
         <button id="btn-cancel-settings" style="background:transparent; border:1px solid #333; color:#aaa; padding:10px 16px; border-radius:8px; cursor:pointer; font-size:13px; font-weight:600; transition:0.2s;" onmouseover="this.style.borderColor='#fff'; this.style.color='#fff';" onmouseout="this.style.borderColor='#333'; this.style.color='#aaa';">ยกเลิก</button>
@@ -748,6 +880,11 @@
   </div>
 
   <script src="config.js"></script>
+  <script src="src/utils/delay.js"></script>
+  <script src="src/app/toast.js"></script>
+  <script src="src/app/settings.js"></script>
+  <script src="src/licensing/feature-gates.js"></script>
+  <script src="src/brain/brain-mode.js"></script>
   <script src="auth.js"></script> 
   <script src="sidebar.js"></script>
 </body>

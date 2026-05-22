@@ -1,4 +1,4 @@
-// Background Service Worker for PROMPT&PLAY AUTO GEN V.5.0.1
+// Background Service Worker for Prompt & Play Studio.
 
 // Open side panel when extension icon is clicked
 chrome.action.onClicked.addListener((tab) => {
@@ -13,9 +13,9 @@ chrome.sidePanel
 // Listen for installation
 chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === 'install') {
-    console.log('PROMPT&PLAY Ai installed successfully!');
+    console.log('Prompt & Play Studio installed successfully!');
   } else if (details.reason === 'update') {
-    console.log('PROMPT&PLAY Ai updated to version', chrome.runtime.getManifest().version);
+    console.log('Prompt & Play Studio updated to version', chrome.runtime.getManifest().version);
   }
 });
 

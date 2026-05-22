@@ -1,20 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
   <defs>
-    <linearGradient id="cosmicGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#6366f1"/>
-      <stop offset="100%" style="stop-color:#d946ef"/>
+    <linearGradient id="studioGradient" x1="12%" y1="8%" x2="92%" y2="96%">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="54%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#f472b6"/>
+    </linearGradient>
+    <linearGradient id="panelGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#050816"/>
     </linearGradient>
   </defs>
-  
-  <rect width="128" height="128" rx="24" fill="#0f0f12"/>
-  
-  <rect width="120" height="120" x="4" y="4" rx="20" fill="none" stroke="url(#cosmicGradient)" stroke-width="8"/>
-  
-  <text x="50%" y="50%" 
-        font-family="Arial, sans-serif" 
-        font-size="80" 
-        font-weight="900" 
-        fill="#a855f7" 
-        text-anchor="middle" 
-        dominant-baseline="central">P</text>
+
+  <rect width="128" height="128" rx="28" fill="#05070b"/>
+  <rect x="8" y="8" width="112" height="112" rx="24" fill="url(#panelGradient)" stroke="url(#studioGradient)" stroke-width="6"/>
+  <text x="63" y="94"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="108"
+        font-weight="900"
+        fill="#f8fafc"
+        text-anchor="middle">P</text>
+  <circle cx="72" cy="49" r="20" fill="#07111f" stroke="#22d3ee" stroke-width="4"/>
+  <path d="M67 38 L84 49 L67 60 Z" fill="url(#studioGradient)"/>
 </svg>
