@@ -256,7 +256,7 @@ const FeatureGate = (() => {
     }
 
     const styleSelect = document.getElementById('banana-style-select');
-    const allowedBasicStyles = new Set(['ugc_basic', 'studio', 'live', 'fashion', 'usage', 'funny', 'sony_product', 'shop_review', 'natural_light', 'real_ads']);
+    const allowedBasicStyles = new Set(['ugc_basic', 'studio', 'live', 'fashion', 'clothing_campaign', 'funny', 'sony_product', 'shop_review']);
     if (styleSelect && !allowedBasicStyles.has(styleSelect.value)) styleSelect.value = 'ugc_basic';
     if (styleSelect) {
       activateConfigTab('style', 'recommended');
@@ -283,6 +283,10 @@ const FeatureGate = (() => {
       'hook_comparison',
       'hook_secret',
       'rant_expert',
+      'closing_urgency',
+      'closing_sincere',
+      'closing_challenge',
+      'closing_cta',
     ]);
 
     if (videoRandomStyle) videoRandomStyle.checked = false;

@@ -166,17 +166,17 @@
             
             <div class="char-tab-container">
               <div class="char-tabs human-source-tabs">
-                    <button class="char-tab-btn" data-target="upload">📷 อัปโหลดเอง</button>
-                    <button class="char-tab-btn active" data-target="preset">⭐ ตัวละครสำเร็จรูป</button>
+                    <button class="char-tab-btn active" data-target="upload">📷 อัปโหลดเอง</button>
+                    <button class="char-tab-btn" data-target="preset">⭐ ตัวละครสำเร็จรูป</button>
 					<button class="char-tab-btn" data-target="custom" data-feature="customCharacter">✨ ระบุเอง</button>
               </div>
 
-              <div id="char-group-upload" class="char-group" style="display:none;">
+              <div id="char-group-upload" class="char-group" style="display:block;">
                   <div class="character-upload-slot"></div>
                   <div class="character-source-note">ถ้าอัปโหลดรูปนางแบบ ระบบจะใช้รูปนี้เป็นตัวละครหลัก และลดความสำคัญของตัวละครสำเร็จรูป</div>
               </div>
 
-              <div id="char-group-preset" class="char-group" style="display:block;">
+              <div id="char-group-preset" class="char-group" style="display:none;">
                   <div class="char-grid">
                       <div class="char-card active" data-value="teen_girl"><span class="char-icon">🌸</span> วัยรุ่นหญิง</div>
                       <div class="char-card" data-value="thai_guy"><span class="char-icon">🧢</span> วัยรุ่นชาย</div>
@@ -232,7 +232,7 @@
               
               <div class="input-group">
                   <div class="input-row"><label>สไตล์ภาพ (Style)</label></div>
-                  <div class="special-box" id="style-random-wrapper" style="margin-bottom: 8px; background: #2e1065; border: 1px solid #a855f7;">
+                  <div class="special-box" id="style-random-wrapper" style="display:none; margin-bottom: 8px; background: #2e1065; border: 1px solid #a855f7;">
                       <span style="color:#e9d5ff; font-weight:600; font-size:13px;">🎲 สุ่มสไตล์ (Random Style)</span>
                       <label class="switch"><input type="checkbox" id="banana-random-style-switch"><span class="slider"></span></label>
                   </div>
@@ -243,46 +243,51 @@
                           <button class="char-tab-btn active config-tab-btn" data-type="style" data-group="recommended">⭐ สไตล์แนะนำ</button>
                           <button class="char-tab-btn config-tab-btn" data-type="style" data-group="human" data-feature="advancedStyle">👤 คน+สินค้า</button>
                           <button class="char-tab-btn config-tab-btn" data-type="style" data-group="product" data-feature="advancedStyle">🖼️ สินค้า+ฉาก</button>
-                          <button class="char-tab-btn config-tab-btn" data-type="style" data-group="other" data-feature="advancedStyle">🧩 อื่นๆ</button>
+                          <button class="char-tab-btn config-tab-btn" data-type="style" data-group="other" data-feature="advancedStyle" style="display:none;">🧩 อื่นๆ</button>
                       </div>
                       <div class="char-content-area">
                           <div id="style-group-recommended" class="char-grid" style="display:grid; grid-template-columns:1fr 1fr;">
                               <div class="char-card active config-option" data-type="style" data-value="ugc_basic" data-label="💬 UGC Basic Cute"><span class="char-icon">💬</span> UGC Basic Cute</div>
                               <div class="char-card config-option" data-type="style" data-value="studio" data-label="🔥 โปรโมท"><span class="char-icon">🔥</span> โปรโมทขั้นสุด</div>
-                              <div class="char-card config-option" data-type="style" data-value="live" data-label="🔴 ไลฟ์สด"><span class="char-icon">🔴</span> ไลฟ์สด</div>
-                              <div class="char-card config-option" data-type="style" data-value="fashion" data-label="👗 แฟชั่น"><span class="char-icon">👗</span> แฟชั่น (สวมใส่)</div>
-                              <div class="char-card config-option" data-type="style" data-value="usage" data-label="📸 ไลฟ์สไตล์"><span class="char-icon">📸</span> ไลฟ์สไตล์</div>
+                              <div class="char-card config-option" data-type="style" data-value="live" data-label="🔴 ไลฟ์ขายของ"><span class="char-icon">🔴</span> ไลฟ์ขายของ</div>
+                              <div class="char-card config-option specialty-style" data-type="style" data-value="fashion" data-label="👗 สวมใส่สินค้า" title="เหมาะกับรองเท้า กระเป๋า เครื่องประดับ หมวก แว่น นาฬิกา หรือของที่สวม/ถือบนตัว"><span class="char-icon">👗</span> สวมใส่สินค้า<span class="style-note-badge">ⓘ</span></div>
+                              <div class="char-card config-option specialty-style" data-type="style" data-value="clothing_campaign" data-label="👗 โฆษณาเสื้อผ้า" title="เหมาะกับเสื้อผ้า ชุด เดรส คอสตูม ชุดว่ายน้ำ"><span class="char-icon">👗</span> โฆษณาเสื้อผ้า<span class="style-note-badge">ⓘ</span></div>
                               <div class="char-card config-option" data-type="style" data-value="funny" data-label="🤪 หัวโต"><span class="char-icon">🤪</span> หัวโต</div>
-                              <div class="char-card config-option" data-type="style" data-value="sony_product" data-label="📷 Sony Product"><span class="char-icon">📷</span> Sony Product</div>
-                              <div class="char-card config-option" data-type="style" data-value="shop_review" data-label="🏪 รีวิวหน้าร้าน"><span class="char-icon">🏪</span> รีวิวหน้าร้าน</div>
-                              <div class="char-card config-option" data-type="style" data-value="natural_light" data-label="🌤️ แสงธรรมชาติ"><span class="char-icon">🌤️</span> แสงธรรมชาติ</div>
-                              <div class="char-card config-option" data-type="style" data-value="real_ads" data-label="🎯 โฆษณาเรียล"><span class="char-icon">🎯</span> โฆษณาเรียล</div>
+                              <div class="char-card config-option" data-type="style" data-value="sony_product" data-label="📷 สินค้าเด่นสมจริง"><span class="char-icon">📷</span> สินค้าเด่นสมจริง</div>
+                              <div class="char-card config-option" data-type="style" data-value="shop_review" data-label="🧺 โต๊ะรีวิวสินค้า"><span class="char-icon">🧺</span> โต๊ะรีวิวสินค้า</div>
                           </div>
                           <div id="style-group-human" class="char-grid" style="display:none; grid-template-columns:1fr 1fr;">
-                              <div class="char-card config-option" data-type="style" data-value="model" data-label="💃 นายแบบ"><span class="char-icon">💃</span> นายแบบ (เต็มตัว)</div>
-                              <div class="char-card config-option" data-type="style" data-value="influencer" data-label="🤳 อินฟลูฯ"><span class="char-icon">🤳</span> อินฟลูฯ (Vlog)</div>
                               <div class="char-card config-option" data-type="style" data-value="beauty" data-label="💄 บิวตี้"><span class="char-icon">💄</span> บิวตี้ (หน้าชัด)</div>
-                              <div class="char-card config-option" data-type="style" data-value="review" data-label="✋ รีวิว"><span class="char-icon">✋</span> ถือสินค้า(รีวิว)</div>
-                              <div class="char-card config-option" data-type="style" data-value="mirror" data-label="🪞 หน้ากระจก"><span class="char-icon">🪞</span> หน้ากระจก (สวมใส่)</div>
-                              <div class="char-card config-option" data-type="style" data-value="sony_portrait" data-label="📸 Sony Portrait Ads"><span class="char-icon">📸</span> Sony Portrait Ads</div>
-                              <div class="char-card config-option" data-type="style" data-value="lifestyle_review" data-label="☕ Lifestyle Review"><span class="char-icon">☕</span> Lifestyle Review</div>
+                              <div class="char-card config-option" data-type="style" data-value="review" data-label="✋ รีวิวโต๊ะสินค้า" style="display:none;"><span class="char-icon">✋</span> รีวิวโต๊ะสินค้า</div>
+                              <div class="char-card config-option" data-type="style" data-value="usage" data-label="📸 ใช้งานจริง" data-feature="advancedStyle"><span class="char-icon">📸</span> ใช้งานจริง</div>
+                              <div class="char-card config-option" data-type="style" data-value="real_user_review" data-label="🙂 รีวิวใช้จริง"><span class="char-icon">🙂</span> รีวิวใช้จริง</div>
+                              <div class="char-card config-option" data-type="style" data-value="natural_light" data-label="🌤️ แสงละมุน"><span class="char-icon">🌤️</span> แสงละมุน</div>
+                              <div class="char-card config-option" data-type="style" data-value="real_ads" data-label="🎯 โฆษณาสมจริง"><span class="char-icon">🎯</span> โฆษณาสมจริง</div>
+                              <div class="char-card config-option" data-type="style" data-value="outdoor_market" data-label="⛱️ บูธขายกลางแจ้ง"><span class="char-icon">⛱️</span> บูธขายกลางแจ้ง</div>
+                              <div class="char-card config-option specialty-style" data-type="style" data-value="mirror" data-label="🪞 เซลฟี่ลองชุด" title="เหมาะกับเสื้อผ้า/ชุด แบบลองชุดหน้ากระจก"><span class="char-icon">🪞</span> เซลฟี่ลองชุด<span class="style-note-badge">ⓘ</span></div>
+                              <div class="char-card config-option" data-type="style" data-value="sony_portrait" data-label="📸 พอร์ตเทรตสมจริง" style="display:none;"><span class="char-icon">📸</span> พอร์ตเทรตสมจริง</div>
+                              <div class="char-card config-option" data-type="style" data-value="lifestyle_review" data-label="☕ รีวิวชีวิตจริง" style="display:none;"><span class="char-icon">☕</span> รีวิวชีวิตจริง</div>
                           </div>
                           <div id="style-group-product" class="char-grid" style="display:none; grid-template-columns:1fr 1fr;">
+                              <div class="char-card config-option" data-type="style" data-value="real_demo" data-label="🖐️ สาธิตใช้จริง"><span class="char-icon">🖐️</span> สาธิตใช้จริง</div>
                               <div class="char-card config-option" data-type="style" data-value="texture" data-label="💧 เนื้อสัมผัส"><span class="char-icon">💧</span> เนื้อสัมผัส (ซูม)</div>
-                              <div class="char-card config-option" data-type="style" data-value="unboxing" data-label="📦 แกะกล่อง"><span class="char-icon">📦</span> แกะกล่อง (POV)</div>
+                              <div class="char-card config-option" data-type="style" data-value="unboxing" data-label="🤲 ถือโชว์ POV"><span class="char-icon">🤲</span> ถือโชว์ POV</div>
                               <div class="char-card config-option" data-type="style" data-value="shoes" data-label="👟 รองเท้า"><span class="char-icon">👟</span> รองเท้า (เห็นเท้า)</div>
-                              <div class="char-card config-option" data-type="style" data-value="hands" data-label="🛠️ สาธิตมือ"><span class="char-icon">🛠️</span> สาธิต (เห็นมือ)</div>
+                              <div class="char-card config-option" data-type="style" data-value="hands" data-label="🛠️ สาธิตมือ" style="display:none;"><span class="char-icon">🛠️</span> สาธิต (เห็นมือ)</div>
                               <div class="char-card config-option" data-type="style" data-value="decor" data-label="🛋️ ของชิ้นใหญ่"><span class="char-icon">🛋️</span> ของชิ้นใหญ่</div>
-                              <div class="char-card config-option" data-type="style" data-value="showcase" data-label="🖼️ สินค้าล้วน"><span class="char-icon">🖼️</span> สินค้าล้วน</div>
-                              <div class="char-card config-option" data-type="style" data-value="catalog" data-label="🧾 Studio Catalog"><span class="char-icon">🧾</span> Studio Catalog</div>
-                              <div class="char-card config-option" data-type="style" data-value="counter_display" data-label="🛒 Counter Display"><span class="char-icon">🛒</span> Counter Display</div>
+                              <div class="char-card config-option" data-type="style" data-value="showcase" data-label="🖼️ สินค้า Hero"><span class="char-icon">🖼️</span> สินค้า Hero</div>
+                              <div class="char-card config-option" data-type="style" data-value="studio_photo" data-label="📸 ภาพถ่ายสตูดิโอ" data-feature="advancedStyle"><span class="char-icon">📸</span> ภาพถ่ายสตูดิโอ</div>
+                              <div class="char-card config-option" data-type="style" data-value="counter_display" data-label="🛒 วางขายหน้าร้าน"><span class="char-icon">🛒</span> วางขายหน้าร้าน</div>
                               <div class="char-card config-option" data-type="style" data-value="premium_closeup" data-label="🔎 Premium Close-up"><span class="char-icon">🔎</span> Premium Close-up</div>
+                              <div class="char-card config-option" data-type="style" data-value="fancy" data-label="✨ แฟนซี (ของลอย)"><span class="char-icon">✨</span> แฟนซี (ของลอย)</div>
+                              <div class="char-card config-option" data-type="style" data-value="cgi" data-label="🪐 CGI สินค้ายักษ์"><span class="char-icon">🪐</span> CGI สินค้ายักษ์</div>
+                              <div class="char-card config-option" data-type="style" data-value="miniature" data-label="🏙️ เมืองจิ๋ว"><span class="char-icon">🏙️</span> เมืองจิ๋ว</div>
                           </div>
-                          <div id="style-group-other" class="char-grid" style="display:none; grid-template-columns:1fr 1fr;">
+                          <div id="style-group-other" class="char-grid" style="display:none !important; grid-template-columns:1fr 1fr;">
                               <div class="char-card config-option" data-type="style" data-value="fancy" data-label="✨ แฟนซี"><span class="char-icon">✨</span> แฟนซี (ของลอย)</div>
                               <div class="char-card config-option" data-type="style" data-value="cgi" data-label="🪐 CGI ยักษ์"><span class="char-icon">🪐</span> CGI สินค้ายักษ์</div>
                               <div class="char-card config-option" data-type="style" data-value="miniature" data-label="🏙️ เมืองจิ๋ว"><span class="char-icon">🏙️</span> เมืองจิ๋ว (Miniature)</div>
-                              <div class="char-card config-option" data-type="style" data-value="outdoor_market" data-label="⛱️ Outdoor Market"><span class="char-icon">⛱️</span> Outdoor Market</div>
+                              <div class="char-card config-option" data-type="style" data-value="outdoor_market" data-label="⛱️ บูธขายกลางแจ้ง"><span class="char-icon">⛱️</span> บูธขายกลางแจ้ง</div>
 						</div>
                       </div>
                   </div>
@@ -319,7 +324,7 @@
 
               <div class="input-group">
                   <div class="input-row"><label>ฉากหลัง (Background)</label></div>
-                  <div class="special-box" id="bg-random-wrapper" style="margin-bottom: 8px; background: #2e1065; border: 1px solid #a855f7;">
+                  <div class="special-box" id="bg-random-wrapper" style="display:none; margin-bottom: 8px; background: #2e1065; border: 1px solid #a855f7;">
                       <span style="color:#e9d5ff; font-weight:600; font-size:13px;">🎲 สุ่มฉากหลัง (Random BG)</span>
                       <label class="switch"><input type="checkbox" id="banana-random-bg-switch"><span class="slider"></span></label>
                   </div>
@@ -345,7 +350,7 @@
                               <div class="char-card config-option" data-type="bg" data-value="cafe"><span class="char-icon">☕</span> คาเฟ่</div>
                               <div class="char-card config-option" data-type="bg" data-value="garden"><span class="char-icon">🌳</span> สวน</div>
                               <div class="char-card config-option" data-type="bg" data-value="night_market"><span class="char-icon">🎪</span> ตลาดนัด</div>
-                              <div class="char-card config-option" data-type="bg" data-value="live_warehouse"><span class="char-icon">🏬</span> โกดังไลฟ์</div>
+                              <div class="char-card config-option" data-type="bg" data-value="live_warehouse"><span class="char-icon">🏬</span> โกดังสินค้า</div>
                           </div>
                           <div id="bg-group-other" class="char-grid" style="display:none; grid-template-columns:1fr 1fr;">
                               <div class="char-card config-option" data-type="bg" data-value="bedroom"><span class="char-icon">🛏️</span> ห้องนอน</div>
@@ -358,6 +363,9 @@
                               <div class="char-card config-option" data-type="bg" data-value="office"><span class="char-icon">🏢</span> ออฟฟิศ</div>
                               <div class="char-card config-option" data-type="bg" data-value="gym"><span class="char-icon">🏋️</span> ฟิตเนส</div>
                               <div class="char-card config-option" data-type="bg" data-value="supermarket"><span class="char-icon">🛒</span> ซูเปอร์ฯ</div>
+                              <div class="char-card config-option" data-type="bg" data-value="factory_line"><span class="char-icon">🏭</span> โรงงานผลิต</div>
+                              <div class="char-card config-option" data-type="bg" data-value="busy_shop"><span class="char-icon">🛍️</span> ร้านขายดี</div>
+                              <div class="char-card config-option" data-type="bg" data-value="sampheng_market"><span class="char-icon">🧺</span> ตลาดสำเพ็ง</div>
                               <div class="char-card config-option" data-type="bg" data-value="street"><span class="char-icon">🏙️</span> ถนนคนเดิน</div>
                               <div class="char-card config-option" data-type="bg" data-value="subway"><span class="char-icon">🚇</span> รถไฟฟ้า</div>
                               <div class="char-card config-option" data-type="bg" data-value="restaurant"><span class="char-icon">🍽️</span> ร้านอาหาร</div>
@@ -379,7 +387,7 @@
 
               <div class="input-group">
                   <div class="input-row"><label>ชุด (Outfit)</label></div>
-                  <div class="special-box" id="outfit-random-wrapper" style="margin-bottom: 8px; background: #2e1065; border: 1px solid #a855f7;">
+                  <div class="special-box" id="outfit-random-wrapper" style="display:none; margin-bottom: 8px; background: #2e1065; border: 1px solid #a855f7;">
                       <span style="color:#e9d5ff; font-weight:600; font-size:13px;">🎲 สุ่มชุด (Random Outfit)</span>
                       <label class="switch"><input type="checkbox" id="banana-random-outfit-switch"><span class="slider"></span></label>
                   </div>
@@ -744,8 +752,8 @@
                   <button class="config-option" data-type="vstyle" data-value="rant_partner" data-label="แฟนบ่น">🙎‍♀️ แฟนบ่น(ห่วง)</button>
               </div>
 			  
-              <div class="style-group-label" data-feature="advancedVideo" style="margin-top:15px; color:#eab308; border-left: 3px solid #eab308; padding-left: 8px; margin-bottom: 10px; font-weight: bold;">💰 ปิดการขาย (ตอนจบ)</div>
-              <div class="style-grid" id="vstyle-group-closing" data-feature="advancedVideo" style="display:grid; grid-template-columns:1fr 1fr; gap:5px;">
+              <div class="style-group-label" style="margin-top:15px; color:#eab308; border-left: 3px solid #eab308; padding-left: 8px; margin-bottom: 10px; font-weight: bold;">💰 ปิดการขาย (ตอนจบ)</div>
+              <div class="style-grid" id="vstyle-group-closing" style="display:grid; grid-template-columns:1fr 1fr; gap:5px;">
                   <button class="config-option" data-type="vstyle" data-value="closing_urgency" data-label="⚡ นาทีทอง">⚡ เร่งให้ซื้อ</button>
                   <button class="config-option" data-type="vstyle" data-value="closing_sincere" data-label="💖 ป้ายยา">💖 ป้ายยาแบบเพื่อน</button>
                   <button class="config-option" data-type="vstyle" data-value="closing_challenge" data-label="🥊 ท้าให้ลอง">🥊 ท้าให้ลอง</button>
@@ -909,6 +917,20 @@
             <li>รองรับฟีเจอร์ Story Studio ในอนาคต</li>
           </ul>
         </div>
+      </div>
+
+      <div class="settings-section-title">ตั้งค่า Flow ที่จำเป็น</div>
+      <div class="flow-settings-guide-card">
+        <div class="flow-settings-guide-copy">
+          <strong>ตั้งค่า Google Flow ก่อนเริ่มรัน</strong>
+          <p>ต้องใช้มุมมองแบบ “กลุ่ม” และขนาดตาราง “M” เพื่อให้ระบบอ่านตำแหน่งภาพได้ถูกต้อง</p>
+        </div>
+        <img src="assets/flow-required-settings.png" alt="ตัวอย่างการตั้งค่า Google Flow ที่ถูกต้อง" class="flow-settings-guide-image">
+        <ul class="flow-settings-guide-list">
+          <li>มุมมอง: กลุ่ม</li>
+          <li>ขนาดตารางกริด: M</li>
+          <li>แนะนำให้เปิด/ปิดตัวเลือกตามกรอบสีแดงในภาพ</li>
+        </ul>
       </div>
 
       <div id="settings-story-studio-title" class="settings-section-title">Story Studio</div>

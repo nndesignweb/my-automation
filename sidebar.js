@@ -1,17 +1,17 @@
 ﻿// ============================================
-// ðŸ›¡ï¸ SECURITY CORE: TAMPER PROTECTION SYSTEM
+// 🛡️ SECURITY CORE: TAMPER PROTECTION SYSTEM
 // ============================================
-// à¸•à¸±à¸§à¹à¸›à¸£à¸¥à¸±à¸šà¸ªà¸³à¸«à¸£à¸±à¸šà¹€à¸Šà¹‡à¸„à¸ªà¸–à¸²à¸™à¸° (à¸«à¹‰à¸²à¸¡à¸¥à¸š)
+// ตัวแปรลับสำหรับเช็คสถานะ (ห้ามลบ)
 let _0x99f = false; 
 
 function _secureCheck() {
-    // 1. à¹€à¸Šà¹‡à¸„à¸§à¹ˆà¸²à¸¡à¸µà¹„à¸Ÿà¸¥à¹Œ auth.js à¹‚à¸«à¸¥à¸”à¹€à¸‚à¹‰à¸²à¸¡à¸²à¹„à¸«à¸¡
+    // 1. เช็คว่ามีไฟล์ auth.js โหลดเข้ามาไหม
     if (typeof AUTH === 'undefined') {
         _selfDestruct("E01: Missing Core Library");
         return false;
     }
     
-    // 2. à¹€à¸Šà¹‡à¸„à¸§à¹ˆà¸²à¸«à¸™à¹‰à¸² HTML à¸¡à¸µà¸à¸¥à¹ˆà¸­à¸‡ Login à¸«à¸£à¸·à¸­à¹„à¸¡à¹ˆ (à¸›à¹‰à¸­à¸‡à¸à¸±à¸™à¸à¸²à¸£à¸¥à¸š Element)
+    // 2. เช็คว่าหน้า HTML มีกล่อง Login หรือไม่ (ป้องกันการลบ Element)
     const overlay = document.getElementById('auth-overlay');
     const keyInput = document.getElementById('license-key-input');
     
@@ -20,39 +20,39 @@ function _secureCheck() {
         return false;
     }
     
-    _0x99f = true; // à¸œà¹ˆà¸²à¸™à¸à¸²à¸£à¸•à¸£à¸§à¸ˆà¸ªà¸­à¸š
+    _0x99f = true; // ผ่านการตรวจสอบ
     return true;
 }
 
 function _selfDestruct(reason) {
-    // ðŸ’£ à¸£à¸°à¹€à¸šà¸´à¸”à¹‚à¸›à¸£à¹à¸à¸£à¸¡: à¸¥à¹‰à¸²à¸‡à¸«à¸™à¹‰à¸²à¸ˆà¸­à¸—à¸´à¹‰à¸‡à¸—à¸±à¹‰à¸‡à¸«à¸¡à¸”
+    // 💣 ระเบิดโปรแกรม: ล้างหน้าจอทิ้งทั้งหมด
     document.body.innerHTML = `
         <div style="background:black; color:red; height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; font-family:monospace; text-align:center;">
-            <h1 style="font-size:40px;">âš ï¸ SYSTEM CORRUPTED</h1>
+            <h1 style="font-size:40px;">⚠️ SYSTEM CORRUPTED</h1>
             <p style="color:#fff;">${reason}</p>
             <p style="color:#555; margin-top:20px;">Unauthorized modification detected.</p>
         </div>
     `;
-    // à¸—à¸³à¸¥à¸²à¸¢à¸•à¸±à¸§à¹à¸›à¸£à¸—à¸´à¹‰à¸‡
+    // ทำลายตัวแปรทิ้ง
     window.bananaHandleAutomation = null;
     window.videoRunAutomation = null;
     throw new Error("Security Violation: " + reason);
 }
 
-// à¹€à¸Šà¹‡à¸„à¸„à¸§à¸²à¸¡à¸›à¸¥à¸­à¸”à¸ à¸±à¸¢à¸—à¸±à¸™à¸—à¸µà¸—à¸µà¹ˆà¹‚à¸«à¸¥à¸”à¹„à¸Ÿà¸¥à¹Œ
+// เช็คความปลอดภัยทันทีที่โหลดไฟล์
 _secureCheck();
 
-// à¹€à¸Šà¹‡à¸„à¸‹à¹‰à¸³à¸—à¸¸à¸à¹† 2 à¸§à¸´à¸™à¸²à¸—à¸µ (Watchdog) - à¸à¸±à¸™à¸„à¸™à¹à¸­à¸šà¸¥à¸šà¸—à¸µà¸«à¸¥à¸±à¸‡à¸œà¹ˆà¸²à¸™ Inspect Element
+// เช็คซ้ำทุกๆ 2 วินาที (Watchdog) - กันคนแอบลบทีหลังผ่าน Inspect Element
 setInterval(() => {
     _secureCheck();
 }, 2000);
 
 
 // ============================================
-// ðŸŸ¢ à¸ªà¹ˆà¸§à¸™à¸—à¸µà¹ˆà¹€à¸žà¸´à¹ˆà¸¡à¹ƒà¸«à¸¡à¹ˆ 1: à¸£à¸°à¸šà¸šà¸ªà¸¥à¸±à¸šà¹‚à¸«à¸¡à¸” (à¸§à¸²à¸‡à¸•à¹ˆà¸­à¸ˆà¸²à¸ _secureCheck)
+// 🟢 ส่วนที่เพิ่มใหม่ 1: ระบบสลับโหมด (วางต่อจาก _secureCheck)
 // ============================================
 
-// à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸ªà¸¥à¸±à¸šà¹‚à¸«à¸¡à¸” Human / Mascot (à¸‰à¸šà¸±à¸šà¸›à¸£à¸±à¸šà¸›à¸£à¸¸à¸‡: à¹€à¸žà¸´à¹ˆà¸¡à¸£à¸°à¸šà¸š Refresh UI à¸—à¸±à¸™à¸—à¸µ)
+// ฟังก์ชันสลับโหมด Human / Mascot (ฉบับปรับปรุง: เพิ่มระบบ Refresh UI ทันที)
 function switchAppMode(mode) {
     if (mode === 'mascot' && window.FeatureGate && !FeatureGate.can('mascotMode')) {
         mode = 'human';
@@ -74,7 +74,7 @@ function switchAppMode(mode) {
         if(humanSource) humanSource.style.display = 'block';
         if(mascotSource) mascotSource.style.display = 'none';
         
-        // ðŸŒ¸ à¹ƒà¸Šà¹‰ Class à¹à¸—à¸™à¸à¸²à¸£à¸à¸±à¸‡à¸ªà¸µ
+        // 🌸 ใช้ Class แทนการฝังสี
         if(btnHuman) btnHuman.classList.add('active');
         if(btnMascot) btnMascot.classList.remove('active');
     } else {
@@ -83,7 +83,7 @@ function switchAppMode(mode) {
         if(humanSource) humanSource.style.display = 'none';
         if(mascotSource) mascotSource.style.display = 'block';
         
-        // ðŸŒ¸ à¹ƒà¸Šà¹‰ Class à¹à¸—à¸™à¸à¸²à¸£à¸à¸±à¸‡à¸ªà¸µ
+        // 🌸 ใช้ Class แทนการฝังสี
         if(btnHuman) btnHuman.classList.remove('active');
         if(btnMascot) btnMascot.classList.add('active');
     }
@@ -133,24 +133,24 @@ function organizeCharacterSourcePanel() {
 }
 
 // ============================================
-// ðŸŸ¢ [DEBUGGED VERSION] à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸ˆà¸±à¸”à¸à¸²à¸£à¸›à¸¸à¹ˆà¸¡à¸à¸”à¸«à¸™à¹‰à¸² Mascot
+// 🟢 [DEBUGGED VERSION] ฟังก์ชันจัดการปุ่มกดหน้า Mascot
 // ============================================
 function setupMascotEvents() {
-    console.log("ðŸ§¸ Setup Mascot Events (Starting)...");
+    console.log("🧸 Setup Mascot Events (Starting)...");
 
-    // à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸Šà¹ˆà¸§à¸¢à¸œà¸¹à¸à¸›à¸¸à¹ˆà¸¡ (à¸‰à¸šà¸±à¸šà¹à¸à¹‰à¹„à¸‚: à¸£à¸­à¸‡à¸£à¸±à¸šà¸›à¸¸à¹ˆà¸¡à¸—à¸µà¹ˆà¹„à¸¡à¹ˆà¸¡à¸µà¸à¸¥à¹ˆà¸­à¸‡ Custom à¹€à¸Šà¹ˆà¸™ à¸ªà¸µà¸«à¸™à¹‰à¸²)
+    // ฟังก์ชันช่วยผูกปุ่ม (ฉบับแก้ไข: รองรับปุ่มที่ไม่มีกล่อง Custom เช่น สีหน้า)
     function setupCustomToggle(btnClass, wrapperId, inputId, hiddenInputId) {
         const buttons = document.querySelectorAll(btnClass);
         const wrapper = wrapperId ? document.getElementById(wrapperId) : null;
         const input = inputId ? document.getElementById(inputId) : null;
         const hiddenInput = document.getElementById(hiddenInputId);
 
-        // [à¸ˆà¸¸à¸”à¸—à¸µà¹ˆà¹à¸à¹‰à¹„à¸‚]: à¹„à¸¡à¹ˆà¸ªà¸±à¹ˆà¸‡ return à¸—à¸±à¸™à¸—à¸µ à¹à¸•à¹ˆà¸ˆà¸°à¹€à¸Šà¹‡à¸„à¹€à¸‰à¸žà¸²à¸°à¹€à¸¡à¸·à¹ˆà¸­à¸¡à¸µà¸à¸²à¸£à¸ªà¹ˆà¸‡ ID à¸¡à¸²à¹€à¸—à¹ˆà¸²à¸™à¸±à¹‰à¸™
-        if (wrapperId && !wrapper) { console.warn(`âš ï¸ à¹„à¸¡à¹ˆà¸žà¸š Wrapper: ${wrapperId}`); }
-        if (inputId && !input) { console.warn(`âš ï¸ à¹„à¸¡à¹ˆà¸žà¸š Input: ${inputId}`); }
+        // [จุดที่แก้ไข]: ไม่สั่ง return ทันที แต่จะเช็คเฉพาะเมื่อมีการส่ง ID มาเท่านั้น
+        if (wrapperId && !wrapper) { console.warn(`⚠️ ไม่พบ Wrapper: ${wrapperId}`); }
+        if (inputId && !input) { console.warn(`⚠️ ไม่พบ Input: ${inputId}`); }
 
         buttons.forEach(btn => {
-            // Clone à¹€à¸žà¸·à¹ˆà¸­à¸¥à¹‰à¸²à¸‡ Event à¹€à¸à¹ˆà¸² à¸›à¹‰à¸­à¸‡à¸à¸±à¸™à¸à¸²à¸£à¸‹à¹‰à¸­à¸™à¸—à¸±à¸š
+            // Clone เพื่อล้าง Event เก่า ป้องกันการซ้อนทับ
             const newBtn = btn.cloneNode(true);
             btn.parentNode.replaceChild(newBtn, btn);
 
@@ -158,21 +158,21 @@ function setupMascotEvents() {
                 if (newBtn.disabled || newBtn.classList.contains('is-locked')) {
                     return;
                 }
-                console.log(`ðŸ–±ï¸ Clicked: ${btnClass} -> Value: ${newBtn.dataset.value}`);
+                console.log(`🖱ï¸ Clicked: ${btnClass} -> Value: ${newBtn.dataset.value}`);
 
-                // 1. à¸ˆà¸±à¸”à¸à¸²à¸£à¸ªà¸–à¸²à¸™à¸° Active à¸šà¸™ UI
+                // 1. จัดการสถานะ Active บน UI
                 document.querySelectorAll(btnClass).forEach(b => b.classList.remove('active'));
                 newBtn.classList.add('active');
 
                 const value = newBtn.dataset.value;
 
-                // 2. à¸­à¸±à¸›à¹€à¸”à¸•à¸„à¹ˆà¸²à¸¥à¸‡ Hidden Input à¸‚à¸­à¸‡à¸£à¸°à¸šà¸š
+                // 2. อัปเดตค่าลง Hidden Input ของระบบ
                 if (hiddenInput) {
                     hiddenInput.value = value;
                     hiddenInput.dispatchEvent(new Event('change', { bubbles: true }));
                 }
 
-                // 3. à¸ˆà¸±à¸”à¸à¸²à¸£à¹€à¸›à¸´à¸”/à¸›à¸´à¸”à¸à¸¥à¹ˆà¸­à¸‡à¸£à¸°à¸šà¸¸à¹€à¸­à¸‡ (Custom Wrapper) à¹€à¸‰à¸žà¸²à¸°à¸–à¹‰à¸²à¸¡à¸µ Element à¸­à¸¢à¸¹à¹ˆà¸ˆà¸£à¸´à¸‡
+                // 3. จัดการเปิด/ปิดกล่องระบุเอง (Custom Wrapper) เฉพาะถ้ามี Element อยู่จริง
                 if (wrapper && input) {
                     if (value === 'custom') {
                         wrapper.style.display = 'block';
@@ -188,16 +188,16 @@ function setupMascotEvents() {
         });
     }
 
-    // 1. à¸•à¸±à¸§à¸¥à¸°à¸„à¸£ (Character)
+    // 1. ตัวละคร (Character)
     setupCustomToggle('.mascot-card', 'mascot-custom-wrapper', 'mascot-custom-input', null);
 
-    // 2. à¸‰à¸²à¸ (Scene)
+    // 2. ฉาก (Scene)
     setupCustomToggle('.mascot-bg', 'mascot-custom-bg-wrapper', 'mascot-custom-bg-input', 'mascot-bg-select');
 
-    // 3. à¸Šà¸¸à¸” (Outfit)
+    // 3. ชุด (Outfit)
     setupCustomToggle('.mascot-outfit', 'mascot-custom-outfit-wrapper', 'mascot-custom-outfit-input', 'mascot-outfit-select');
 
-    // ðŸŸ¢ [à¹à¸à¹‰à¹„à¸‚à¹à¸¥à¹‰à¸§]: à¸•à¸­à¸™à¸™à¸µà¹‰à¸›à¸¸à¹ˆà¸¡à¸ªà¸µà¸«à¸™à¹‰à¸²à¸ˆà¸°à¸—à¸³à¸‡à¸²à¸™à¹„à¸”à¹‰à¹à¸¥à¹‰à¸§à¹à¸¡à¹‰à¹„à¸¡à¹ˆà¸¡à¸µà¸à¸¥à¹ˆà¸­à¸‡à¸‚à¹‰à¸­à¸„à¸§à¸²à¸¡
+    // 🟢 [แก้ไขแล้ว]: ตอนนี้ปุ่มสีหน้าจะทำงานได้แล้วแม้ไม่มีกล่องข้อความ
     setupCustomToggle('.mascot-expression', null, null, 'mascot-expression-select');
 }
 
@@ -206,7 +206,7 @@ function setupMascotEvents() {
 // 1. SYSTEM: VISUAL UI CONTROLLER
 // ============================================
 
-// A. à¹€à¸›à¸¥à¸µà¹ˆà¸¢à¸™à¹à¸—à¹‡à¸šà¸„à¸²à¹à¸£à¸„à¹€à¸•à¸­à¸£à¹Œ (à¹à¸à¹‰à¹„à¸‚: à¸£à¸­à¸‡à¸£à¸±à¸š data-target="auto" à¸‚à¸­à¸‡à¸›à¸¸à¹ˆà¸¡à¸£à¸°à¸šà¸¸à¹€à¸­à¸‡)
+// A. เปลี่ยนแท็บคาแรคเตอร์ (แก้ไข: รองรับ data-target="auto" ของปุ่มระบุเอง)
 function switchCharTab(tabName) {
     if ((tabName === 'auto' || tabName === 'custom') && window.FeatureGate && !FeatureGate.can('customCharacter')) {
         tabName = 'preset';
@@ -215,14 +215,14 @@ function switchCharTab(tabName) {
     const tabs = document.querySelectorAll('#character-source-human .char-tab-btn:not(.config-tab-btn), #workspace-human .char-tab-btn:not(.config-tab-btn)');
     const groups = document.querySelectorAll('#character-source-human .char-group, #workspace-human .char-group');
     
-    // 1. à¹€à¸›à¸¥à¸µà¹ˆà¸¢à¸™à¸ªà¸µà¸›à¸¸à¹ˆà¸¡ Tab à¹ƒà¸«à¹‰ Active
+    // 1. เปลี่ยนสีปุ่ม Tab ให้ Active
     tabs.forEach(btn => {
         const target = btn.dataset.target || btn.getAttribute('data-target');
         if (target === tabName) btn.classList.add('active');
         else btn.classList.remove('active');
     });
     
-    // 2. à¸ªà¸¥à¸±à¸šà¸à¸²à¸£à¹à¸ªà¸”à¸‡à¸œà¸¥ Grid à¸£à¸¹à¸›à¸ à¸²à¸ž (à¸«à¸à¸´à¸‡/à¸Šà¸²à¸¢/à¸­à¸²à¸Šà¸µà¸ž)
+    // 2. สลับการแสดงผล Grid รูปภาพ (หญิง/ชาย/อาชีพ)
     groups.forEach(group => group.style.display = 'none');
     const targetGroup = document.getElementById(`char-group-${tabName}`);
     if (targetGroup) targetGroup.style.display = 'block';
@@ -236,21 +236,21 @@ function switchCharTab(tabName) {
         if (defaultCard) selectCharacter(defaultCard, 'teen_girl');
     }
 
-    // ðŸŸ¢ 3. à¸ˆà¸±à¸”à¸à¸²à¸£à¸Šà¹ˆà¸­à¸‡ "à¸£à¸°à¸šà¸¸à¹€à¸­à¸‡" (à¹à¸à¹‰à¸šà¸±à¹Šà¸: à¹€à¸Šà¹‡à¸„ 'auto' à¹ƒà¸«à¹‰à¸•à¸£à¸‡à¸à¸±à¸š HTML)
+    // 🟢 3. จัดการช่อง "ระบุเอง" (แก้บั๊ก: เช็ค 'auto' ให้ตรงกับ HTML)
     const customInput = document.getElementById('banana-custom-character-input');
     if (customInput) {
-        // à¸«à¸²à¸•à¸±à¸§à¸„à¸£à¸­à¸š (Wrapper) à¹€à¸žà¸·à¹ˆà¸­à¸‹à¹ˆà¸­à¸™à¸—à¸±à¹‰à¸‡ Label à¹à¸¥à¸° Input à¸žà¸£à¹‰à¸­à¸¡à¸à¸±à¸™
+        // หาตัวครอบ (Wrapper) เพื่อซ่อนทั้ง Label และ Input พร้อมกัน
         const wrapper = customInput.closest('#char-group-custom') || customInput.closest('.custom-character-box'); 
         
-        // âœ… à¹à¸à¹‰à¹„à¸‚à¹€à¸‡à¸·à¹ˆà¸­à¸™à¹„à¸‚: à¸–à¹‰à¸²à¹€à¸›à¹‡à¸™ 'auto' (à¸›à¸¸à¹ˆà¸¡à¸£à¸°à¸šà¸¸à¹€à¸­à¸‡) à¸«à¸£à¸·à¸­ 'custom' à¹ƒà¸«à¹‰à¹à¸ªà¸”à¸‡à¸Šà¹ˆà¸­à¸‡à¸à¸£à¸­à¸
+        // ✅ แก้ไขเงื่อนไข: ถ้าเป็น 'auto' (ปุ่มระบุเอง) หรือ 'custom' ให้แสดงช่องกรอก
         if (tabName === 'auto' || tabName === 'custom') {
             if (wrapper && wrapper.id !== 'char-group-custom') wrapper.style.display = 'block';
             else customInput.style.display = 'block';
             
-            // à¹‚à¸Ÿà¸à¸±à¸ªà¹„à¸›à¸—à¸µà¹ˆà¸Šà¹ˆà¸­à¸‡à¸žà¸´à¸¡à¸žà¹Œà¸—à¸±à¸™à¸—à¸µ
+            // โฟกัสไปที่ช่องพิมพ์ทันที
             setTimeout(() => customInput.focus(), 100);
         } else {
-            // âŒ à¸–à¹‰à¸²à¹€à¸¥à¸·à¸­à¸à¹à¸—à¹‡à¸šà¸­à¸·à¹ˆà¸™ (à¸«à¸à¸´à¸‡/à¸Šà¸²à¸¢/à¸­à¸²à¸Šà¸µà¸ž) -> à¹ƒà¸«à¹‰à¸‹à¹ˆà¸­à¸™
+            // ❌ ถ้าเลือกแท็บอื่น (หญิง/ชาย/อาชีพ) -> ให้ซ่อน
             if (wrapper && wrapper.id !== 'char-group-custom') wrapper.style.display = 'none';
             else customInput.style.display = 'none';
         }
@@ -261,26 +261,26 @@ window.switchCharTab = switchCharTab;
 
 
 
-// B. à¹€à¸¥à¸·à¸­à¸à¸„à¸²à¹à¸£à¸„à¹€à¸•à¸­à¸£à¹Œ (à¸‰à¸šà¸±à¸šà¸­à¸±à¸›à¹€à¸”à¸•: à¸¥à¹‡à¸­à¸„à¸Šà¸¸à¸”à¹ƒà¸«à¹‰ Job à¹à¸¥à¸° Senior)
+// B. เลือกคาแรคเตอร์ (ฉบับอัปเดต: ล็อคชุดให้ Job และ Senior)
 function selectCharacter(element, value) {
     if (element.disabled || element.classList.contains('is-locked')) {
-        showToast('à¸•à¸±à¸§à¹€à¸¥à¸·à¸­à¸à¸™à¸µà¹‰à¹ƒà¸Šà¹‰à¹„à¸”à¹‰à¹€à¸‰à¸žà¸²à¸° Premium', 'warning');
+        showToast('ตัวเลือกนี้ใช้ได้เฉพาะ Premium', 'warning');
         return;
     }
 
-    // 1. à¹€à¸à¹‡à¸šà¸„à¹ˆà¸²à¸¥à¸‡ Input à¸«à¸¥à¸±à¸
+    // 1. เก็บค่าลง Input หลัก
     const hiddenInput = document.getElementById('banana-character-select');
     if (hiddenInput) hiddenInput.value = value;
 
-    // 2. à¹€à¸›à¸¥à¸µà¹ˆà¸¢à¸™à¸ªà¸µà¸›à¸¸à¹ˆà¸¡ Active
+    // 2. เปลี่ยนสีปุ่ม Active
     document.querySelectorAll('#character-source-human .char-group .char-card:not(.config-option), #workspace-human .char-group .char-card:not(.config-option)').forEach(card => card.classList.remove('active'));
     element.classList.add('active');
 
     // ========================================================
-    // ðŸŸ¢ [à¸­à¸±à¸›à¹€à¸”à¸•] Logic à¸¥à¹‡à¸­à¸„à¸Šà¹ˆà¸­à¸‡à¹€à¸¥à¸·à¸­à¸à¸Šà¸¸à¸” (Job + Senior)
+    // 🟢 [อัปเดต] Logic ล็อคช่องเลือกชุด (Job + Senior)
     // ========================================================
     
-    // 1. à¹€à¸Šà¹‡à¸„à¸§à¹ˆà¸²à¹€à¸›à¹‡à¸™à¸«à¸¡à¸§à¸” "à¸­à¸²à¸Šà¸µà¸ž" à¸«à¸£à¸·à¸­à¹„à¸¡à¹ˆ?
+    // 1. เช็คว่าเป็นหมวด "อาชีพ" หรือไม่?
     const outfitLockedCharacters = new Set([
         'seller_woman', 'seller_man', 'doctor_female', 'doctor_male', 'nurse_female', 'nurse_male',
         'chef_female', 'chef_male', 'rider_male', 'farmer_female', 'warrior', 'princess',
@@ -288,29 +288,29 @@ function selectCharacter(element, value) {
     ]);
     const isOutfitLockedCharacter = outfitLockedCharacters.has(value) || element.classList.contains('costume-locked');
     
-    // 2. à¹€à¸Šà¹‡à¸„à¸§à¹ˆà¸²à¹€à¸›à¹‡à¸™à¸«à¸¡à¸§à¸” "à¸ªà¸¹à¸‡à¸§à¸±à¸¢" (à¸¡à¸™à¸¸à¸©à¸¢à¹Œà¸›à¹‰à¸²/à¸¥à¸¸à¸‡/à¸¢à¸²à¸¢/à¸•à¸²) à¸«à¸£à¸·à¸­à¹„à¸¡à¹ˆ?  <-- à¹€à¸žà¸´à¹ˆà¸¡à¸•à¸£à¸‡à¸™à¸µà¹‰
+    // 2. เช็คว่าเป็นหมวด "สูงวัย" (มนุษย์ป้า/ลุง/ยาย/ตา) หรือไม่?  <-- เพิ่มตรงนี้
     const isSeniorGroup = false;
     
-    // à¸«à¸² Wrapper à¸‚à¸­à¸‡à¸ªà¹ˆà¸§à¸™à¹€à¸¥à¸·à¸­à¸à¸Šà¸¸à¸”
+    // หา Wrapper ของส่วนเลือกชุด
     const outfitContent = document.getElementById('config-content-outfit');
     const outfitWrapper = outfitContent ? outfitContent.closest('.input-group') : null;
 
     if (outfitWrapper) {
-        // ðŸ”’ à¸–à¹‰à¸²à¹€à¸›à¹‡à¸™ "à¸­à¸²à¸Šà¸µà¸ž" à¸«à¸£à¸·à¸­ "à¸ªà¸¹à¸‡à¸§à¸±à¸¢" -> à¹ƒà¸«à¹‰à¸¥à¹‡à¸­à¸„à¸Šà¹ˆà¸­à¸‡à¸Šà¸¸à¸”à¸—à¸±à¸™à¸—à¸µ!
+        // 🔒 ถ้าเป็น "อาชีพ" หรือ "สูงวัย" -> ให้ล็อคช่องชุดทันที!
         if (isOutfitLockedCharacter || isSeniorGroup) {
             outfitWrapper.classList.add('disabled-section');
             
-            // à¸£à¸µà¹€à¸‹à¹‡à¸•à¸›à¸¸à¹ˆà¸¡à¸Šà¸¸à¸”à¹ƒà¸«à¹‰à¸à¸¥à¸±à¸šà¹„à¸›à¹€à¸›à¹‡à¸™ "à¸ªà¸¸à¹ˆà¸¡" (Auto) à¹€à¸žà¸·à¹ˆà¸­à¸„à¸§à¸²à¸¡à¹€à¸£à¸µà¸¢à¸šà¸£à¹‰à¸­à¸¢
+            // รีเซ็ตปุ่มชุดให้กลับไปเป็น "สุ่ม" (Auto) เพื่อความเรียบร้อย
             const outfitAutoBtn = document.querySelector('#config-content-outfit .config-option[data-value="ai_match"]');
             if (outfitAutoBtn) outfitAutoBtn.click(); 
             
         } else {
-            // ðŸ”“ à¸–à¹‰à¸²à¹€à¸›à¹‡à¸™à¸«à¸¡à¸§à¸”à¸­à¸·à¹ˆà¸™ (à¸§à¸±à¸¢à¸£à¸¸à¹ˆà¸™, à¹„à¸®à¹‚à¸‹) -> à¸›à¸¥à¸”à¸¥à¹‡à¸­à¸„à¹ƒà¸«à¹‰à¹€à¸¥à¸·à¸­à¸à¸Šà¸¸à¸”à¹„à¸”à¹‰à¸›à¸à¸•à¸´
+            // 🔓 ถ้าเป็นหมวดอื่น (วัยรุ่น, ไฮโซ) -> ปลดล็อคให้เลือกชุดได้ปกติ
             outfitWrapper.classList.remove('disabled-section');
         }
     }
 
-    // 3. Logic à¹€à¸”à¸´à¸¡: à¹€à¸„à¸¥à¸µà¸¢à¸£à¹Œà¸£à¸¹à¸›à¸™à¸²à¸‡à¹à¸šà¸šà¸–à¹‰à¸²à¹€à¸¥à¸·à¸­à¸à¸„à¸²à¹à¸£à¸„à¹€à¸•à¸­à¸£à¹Œ
+    // 3. Logic เดิม: เคลียร์รูปนางแบบถ้าเลือกคาแรคเตอร์
     if (typeof modelUploadedImages !== 'undefined' && modelUploadedImages.length > 0 && value !== 'auto') {
         try {
             modelUploadedImages = [];
@@ -361,7 +361,7 @@ function toggleConfig(id) {
     if(header) header.classList.toggle('open');
 }
 
-// D. Select Config Option (à¸‰à¸šà¸±à¸šà¸­à¸±à¸›à¹€à¸”à¸•: à¸›à¸´à¸”à¸Šà¸¸à¸”à¹ƒà¸«à¹‰ Fashion à¹à¸¥à¸°à¸à¸¥à¸¸à¹ˆà¸¡ Close-up)
+// D. Select Config Option (ฉบับอัปเดต: ปิดชุดให้ Fashion และกลุ่ม Close-up)
 function enableManualConfigMode(type) {
     const randomSwitchMap = {
         style: 'banana-random-style-switch',
@@ -381,9 +381,27 @@ function enableManualConfigMode(type) {
     }
 }
 
+function setDefaultBgToAiMatch() {
+    const bgInput = document.getElementById('banana-bg-select');
+    if (bgInput) bgInput.value = 'ai_match';
+
+    const bgContent = document.getElementById('config-content-bg');
+    if (bgContent) {
+        bgContent.querySelectorAll('.config-option').forEach((option) => {
+            option.classList.toggle('active', option.dataset.value === 'ai_match');
+        });
+        bgContent.querySelectorAll('.config-tab-btn').forEach((tab) => {
+            tab.classList.toggle('active', tab.dataset.group === 'popular');
+        });
+        bgContent.querySelectorAll('.char-grid[id^="bg-group-"]').forEach((group) => {
+            group.style.display = group.id === 'bg-group-popular' ? 'grid' : 'none';
+        });
+    }
+}
+
 function selectConfigOption(element) {
     if (element.disabled || element.classList.contains('is-locked')) {
-        showToast('à¸•à¸±à¸§à¹€à¸¥à¸·à¸­à¸à¸™à¸µà¹‰à¹ƒà¸Šà¹‰à¹„à¸”à¹‰à¹€à¸‰à¸žà¸²à¸° Premium', 'warning');
+        showToast('ตัวเลือกนี้ใช้ได้เฉพาะ Premium', 'warning');
         return;
     }
 
@@ -392,14 +410,14 @@ function selectConfigOption(element) {
     const label = element.dataset.label;
     enableManualConfigMode(type);
 
-    // 1. à¸­à¸±à¸›à¹€à¸”à¸•à¸„à¹ˆà¸²à¸¥à¸‡ Input
+    // 1. อัปเดตค่าลง Input
     let input = document.getElementById(`banana-${type}-select`);
     if (!input && type === 'vstyle') {
         input = document.getElementById('video-style-select');
     }
     if(input) input.value = value;
 
-    // 2. à¸­à¸±à¸›à¹€à¸”à¸•à¸‚à¹‰à¸­à¸„à¸§à¸²à¸¡à¸—à¸µà¹ˆà¹à¸ªà¸”à¸‡
+    // 2. อัปเดตข้อความที่แสดง
     const display = document.getElementById(`display-${type}`);
     if(display) {
         let cleanLabel = label;
@@ -407,7 +425,7 @@ function selectConfigOption(element) {
         display.innerHTML = label; 
     }
 
-    // 3. à¹€à¸›à¸¥à¸µà¹ˆà¸¢à¸™à¸ªà¸µà¸›à¸¸à¹ˆà¸¡
+    // 3. เปลี่ยนสีปุ่ม
     const container = document.getElementById(`config-content-${type}`);
     if(container) {
         container.querySelectorAll('.config-option').forEach(opt => opt.classList.remove('active'));
@@ -419,7 +437,7 @@ function selectConfigOption(element) {
     }
 
 // ============================================================
-    // ðŸŸ¢ LOGIC: à¸¥à¹‡à¸­à¸„ "à¸„à¸²à¹à¸£à¸„à¹€à¸•à¸­à¸£à¹Œ", "à¸‰à¸²à¸" à¹à¸¥à¸° "à¸Šà¸¸à¸”" à¸­à¸±à¸•à¹‚à¸™à¸¡à¸±à¸•à¸´à¹€à¸¡à¸·à¹ˆà¸­à¹€à¸›à¸¥à¸µà¹ˆà¸¢à¸™à¸ªà¹„à¸•à¸¥à¹Œà¸ à¸²à¸ž
+    // 🟢 LOGIC: ล็อค "คาแรคเตอร์", "ฉาก" และ "ชุด" อัตโนมัติเมื่อเปลี่ยนสไตล์ภาพ
     // ============================================================
     if (type === 'style') {
         const outfitWrapper = document.getElementById('config-content-outfit')?.closest('.input-group');
@@ -429,24 +447,31 @@ function selectConfigOption(element) {
         const bgRandomSwitch = document.getElementById('banana-random-bg-switch');
         const outfitRandomSwitch = document.getElementById('banana-random-outfit-switch');
 
-        // 1. à¸ˆà¸±à¸”à¸à¸¥à¸¸à¹ˆà¸¡à¸ªà¹„à¸•à¸¥à¹Œà¸—à¸µà¹ˆà¸•à¹‰à¸­à¸‡à¸¥à¹‡à¸­à¸„
-     // ðŸŸ¢ à¸­à¸±à¸›à¹€à¸”à¸•: à¸¢à¹‰à¸²à¸¢à¹‚à¸«à¸¡à¸”à¸¡à¸·à¸­à¹à¸¥à¸°à¹€à¸—à¹‰à¸² à¸¡à¸²à¸£à¸§à¸¡à¹ƒà¸™à¸à¸¥à¸¸à¹ˆà¸¡à¸—à¸µà¹ˆà¸•à¹‰à¸­à¸‡à¸¥à¹‡à¸­à¸à¸—à¸±à¹‰à¸‡à¸„à¸™à¹à¸¥à¸°à¸Šà¸¸à¸”
-        const noHumanStyles = ['showcase', 'decor', 'texture', 'unboxing', 'hands', 'shoes']; 
-        const noOutfitStyles = ['fashion']; // à¹€à¸«à¸¥à¸·à¸­à¹à¸„à¹ˆà¹à¸Ÿà¸Šà¸±à¹ˆà¸™à¸—à¸µà¹ˆà¸¥à¹‡à¸­à¸à¹€à¸‰à¸žà¸²à¸°à¸Šà¸¸à¸” (à¹à¸•à¹ˆà¸¢à¸±à¸‡à¹ƒà¸«à¹‰à¹€à¸¥à¸·à¸­à¸à¸«à¸™à¹‰à¸²à¸„à¸™à¹„à¸”à¹‰)
-        const fixedBgStyles = ['mirror']; // ðŸŸ¢ à¸šà¸±à¸‡à¸„à¸±à¸šà¸‰à¸²à¸à¹ƒà¸™à¸£à¹ˆà¸¡ (à¸«à¸™à¹‰à¸²à¸à¸£à¸°à¸ˆà¸) -> à¸¥à¹‡à¸­à¸„à¸‰à¸²à¸
+        // 1. จัดกลุ่มสไตล์ที่ต้องล็อค
+        const noHumanStyles = ['real_demo', 'texture', 'unboxing', 'shoes', 'hands', 'decor', 'showcase', 'studio_photo', 'catalog', 'counter_display', 'premium_closeup', 'fancy', 'cgi', 'miniature'];
+        const noOutfitStyles = ['mirror', 'clothing_campaign', 'real_demo', 'texture', 'unboxing', 'shoes', 'hands', 'decor', 'showcase', 'studio_photo', 'catalog', 'counter_display', 'premium_closeup', 'fancy', 'cgi', 'miniature']; // สไตล์สินค้า+ฉาก/เฉพาะทางไม่ใช้ค่าชุด
+        const fixedBgStyles = ['mirror']; // 🟢 บังคับฉากในร่ม (เซลฟี่ลองชุด) -> ล็อคฉาก
+        const setCharacterSectionLocked = (locked, message = 'โหมดนี้ไม่ใช้นางแบบ') => {
+            if (!charWrapper) return;
+            charWrapper.classList.toggle('disabled-section', locked);
+            charWrapper.classList.toggle('model-ignored-section', locked);
+            if (locked) {
+                charWrapper.dataset.lockNote = message;
+                charWrapper.setAttribute('title', message);
+            } else {
+                delete charWrapper.dataset.lockNote;
+                charWrapper.removeAttribute('title');
+            }
+        };
 
         if (value === 'miniature') {
-            // ðŸ™ï¸ à¸ªà¹„à¸•à¸¥à¹Œà¹€à¸¡à¸·à¸­à¸‡à¸ˆà¸´à¹‹à¸§: à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸²à¹€à¸£à¸´à¹ˆà¸¡à¸•à¹‰à¸™à¹ƒà¸«à¹‰ à¹à¸•à¹ˆà¸¢à¸±à¸‡à¹ƒà¸«à¹‰à¹€à¸¥à¸·à¸­à¸à¸‰à¸²à¸à¹à¸¥à¸°à¸Šà¸¸à¸”à¹€à¸­à¸‡à¹„à¸”à¹‰
+            // 🏙️ สไตล์เมืองจิ๋ว: ตั้งค่าเริ่มต้นให้ แต่ยังให้เลือกฉากและชุดเองได้
             if (bgWrapper) bgWrapper.classList.remove('disabled-section');
-            if (outfitWrapper) outfitWrapper.classList.remove('disabled-section');
-            if (charWrapper && typeof modelUploadedImages !== 'undefined' && modelUploadedImages.length > 0) {
-                charWrapper.classList.add('disabled-section');
-            } else if (charWrapper) {
-                charWrapper.classList.remove('disabled-section');
-            }
+            if (outfitWrapper) outfitWrapper.classList.add('disabled-section');
+            setCharacterSectionLocked(true);
 
             if (bgRandomSwitch) { bgRandomSwitch.checked = false; bgRandomSwitch.disabled = false; }
-            if (outfitRandomSwitch) { outfitRandomSwitch.checked = false; outfitRandomSwitch.disabled = false; }
+            if (outfitRandomSwitch) { outfitRandomSwitch.checked = false; outfitRandomSwitch.disabled = true; }
 
             const bgAutoBtn = document.querySelector('#config-content-bg .config-option[data-value="ai_match"]');
             const outfitAutoBtn = document.querySelector('#config-content-outfit .config-option[data-value="ai_match"]');
@@ -461,16 +486,12 @@ function selectConfigOption(element) {
             if (charCustomInput) charCustomInput.value = '';
 
         } else if (noHumanStyles.includes(value)) {
-            // ðŸ–¼ï¸ à¸ªà¹„à¸•à¸¥à¹Œà¹„à¸£à¹‰à¸„à¸™: à¸¥à¹‡à¸­à¸„ à¸„à¸²à¹à¸£à¸„à¹€à¸•à¸­à¸£à¹Œ + à¸Šà¸¸à¸” (à¹à¸•à¹ˆà¸¢à¸±à¸‡à¹ƒà¸«à¹‰à¹€à¸¥à¸·à¸­à¸à¸‰à¸²à¸à¹„à¸”à¹‰à¸­à¸´à¸ªà¸£à¸°)
+            // 🖼ï¸ สไตล์ไร้คน: ล็อค คาแรคเตอร์ + ชุด (แต่ยังให้เลือกฉากได้อิสระ)
             if (bgWrapper) bgWrapper.classList.remove('disabled-section');
             if (bgRandomSwitch) bgRandomSwitch.disabled = false;
 
             if (outfitWrapper) outfitWrapper.classList.add('disabled-section');
-            if (charWrapper && typeof modelUploadedImages !== 'undefined' && modelUploadedImages.length > 0) {
-                charWrapper.classList.add('disabled-section');
-            } else if (charWrapper) {
-                charWrapper.classList.remove('disabled-section');
-            }
+            setCharacterSectionLocked(true);
 
             if (outfitRandomSwitch) { outfitRandomSwitch.checked = false; outfitRandomSwitch.disabled = true; }
 
@@ -485,25 +506,25 @@ function selectConfigOption(element) {
             if (charCustomInput) charCustomInput.value = '';
 
         } else {
-            // ðŸ”“ à¸ªà¹„à¸•à¸¥à¹Œà¸­à¸·à¹ˆà¸™à¹†: à¸›à¸¥à¸”à¸¥à¹‡à¸­à¸„à¸„à¸²à¹à¸£à¸„à¹€à¸•à¸­à¸£à¹Œà¹€à¸ªà¸¡à¸­
-            if (charWrapper) charWrapper.classList.remove('disabled-section');
+            // 🔓 สไตล์อื่นๆ: ปลดล็อคคาแรคเตอร์เสมอ
+            setCharacterSectionLocked(false);
             
-            // ðŸŸ¢ à¸•à¸£à¸§à¸ˆà¸ªà¸­à¸šà¸§à¹ˆà¸²à¸ˆà¸°à¸•à¹‰à¸­à¸‡à¸¥à¹‡à¸­à¸„ "à¸‰à¸²à¸" à¸«à¸£à¸·à¸­à¹„à¸¡à¹ˆ (à¸ªà¸³à¸«à¸£à¸±à¸šà¸«à¸™à¹‰à¸²à¸à¸£à¸°à¸ˆà¸)
+            // 🟢 ตรวจสอบว่าจะต้องล็อค "ฉาก" หรือไม่ (สำหรับหน้ากระจก)
             if (bgWrapper) {
                 if (fixedBgStyles.includes(value)) {
-                    bgWrapper.classList.add('disabled-section'); // à¸¥à¹‡à¸­à¸à¸‰à¸²à¸à¹ƒà¸«à¹‰à¸¡à¸·à¸”
-                    if (bgRandomSwitch) { bgRandomSwitch.checked = false; bgRandomSwitch.disabled = true; } // à¸›à¸´à¸”à¸ªà¸¸à¹ˆà¸¡à¸‰à¸²à¸
+                    bgWrapper.classList.add('disabled-section'); // ล็อกฉากให้มืด
+                    if (bgRandomSwitch) { bgRandomSwitch.checked = false; bgRandomSwitch.disabled = true; } // ปิดสุ่มฉาก
                     
-                    // à¹à¸­à¸šà¸à¸”à¹€à¸¥à¸·à¸­à¸à¸‰à¸²à¸ "à¸«à¹‰à¸­à¸‡à¸™à¸­à¸™ (bedroom)" à¹ƒà¸«à¹‰à¸­à¸±à¸•à¹‚à¸™à¸¡à¸±à¸•à¸´ à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸«à¹‰à¸ªà¸¡à¸ˆà¸£à¸´à¸‡
+                    // แอบกดเลือกฉาก "ห้องนอน (bedroom)" ให้อัตโนมัติ เพื่อให้สมจริง
                     const bedroomBtn = document.querySelector('#config-content-bg .config-option[data-value="bedroom"]');
                     if (bedroomBtn) bedroomBtn.click();
                 } else {
-                    bgWrapper.classList.remove('disabled-section'); // à¸›à¸¥à¸”à¸¥à¹‡à¸­à¸à¸‰à¸²à¸
+                    bgWrapper.classList.remove('disabled-section'); // ปลดล็อกฉาก
                     if (bgRandomSwitch) bgRandomSwitch.disabled = false;
                 }
             }
 
-            // à¸•à¸£à¸§à¸ˆà¸ªà¸­à¸šà¸§à¹ˆà¸²à¸ˆà¸°à¸•à¹‰à¸­à¸‡à¸¥à¹‡à¸­à¸„ "à¸Šà¸¸à¸”" à¸«à¸£à¸·à¸­à¹„à¸¡à¹ˆ
+            // ตรวจสอบว่าจะต้องล็อค "ชุด" หรือไม่
             if (outfitWrapper) {
                 if (noOutfitStyles.includes(value)) {
                     outfitWrapper.classList.add('disabled-section');
@@ -519,7 +540,7 @@ function selectConfigOption(element) {
     }
 	
 	
-	// ðŸŸ¢ à¹€à¸žà¸´à¹ˆà¸¡: à¸–à¹‰à¸²à¹€à¸›à¹‡à¸™à¸à¸²à¸£à¹€à¸¥à¸·à¸­à¸ Video Style à¹ƒà¸«à¹‰à¹€à¸Šà¹‡à¸„à¸§à¹ˆà¸²à¸ˆà¸°à¸›à¸´à¸”à¸à¸¥à¹ˆà¸­à¸‡à¹€à¸ªà¸µà¸¢à¸‡à¹„à¸«à¸¡
+	// 🟢 เพิ่ม: ถ้าเป็นการเลือก Video Style ให้เช็คว่าจะปิดกล่องเสียงไหม
     if (type === 'vstyle') {
         if (typeof checkVideoVoiceState === 'function') checkVideoVoiceState();
     }
@@ -528,10 +549,10 @@ function selectConfigOption(element) {
 }
 
 
-// E. Switch Config Tab (à¸‰à¸šà¸±à¸šà¹à¸à¹‰à¹„à¸‚: à¸£à¸­à¸‡à¸£à¸±à¸š Custom Tab + Auto Focus)
+// E. Switch Config Tab (ฉบับแก้ไข: รองรับ Custom Tab + Auto Focus)
 function switchConfigTab(element) {
     if (element.disabled || element.classList.contains('is-locked')) {
-        showToast('à¸•à¸±à¸§à¹€à¸¥à¸·à¸­à¸à¸™à¸µà¹‰à¹ƒà¸Šà¹‰à¹„à¸”à¹‰à¹€à¸‰à¸žà¸²à¸° Premium', 'warning');
+        showToast('ตัวเลือกนี้ใช้ได้เฉพาะ Premium', 'warning');
         return;
     }
 
@@ -542,7 +563,7 @@ function switchConfigTab(element) {
     if (groupName === 'custom' && window.FeatureGate) {
         const featureName = type === 'bg' ? 'customScene' : (type === 'outfit' ? 'customOutfit' : null);
         if (featureName && !FeatureGate.can(featureName)) {
-            showToast('à¹‚à¸«à¸¡à¸”à¸£à¸°à¸šà¸¸à¹€à¸­à¸‡à¹ƒà¸Šà¹‰à¹„à¸”à¹‰à¹€à¸‰à¸žà¸²à¸° Premium', 'warning');
+            showToast('โหมดระบุเองใช้ได้เฉพาะ Premium', 'warning');
             return;
         }
     }
@@ -550,14 +571,14 @@ function switchConfigTab(element) {
     const container = document.getElementById(`config-content-${type}`);
     if(!container) return;
 
-    // 1. à¹€à¸›à¸¥à¸µà¹ˆà¸¢à¸™à¸ªà¸–à¸²à¸™à¸°à¸›à¸¸à¹ˆà¸¡ Tab à¹ƒà¸«à¹‰ Active
+    // 1. เปลี่ยนสถานะปุ่ม Tab ให้ Active
     container.querySelectorAll('.config-tab-btn').forEach(btn => btn.classList.remove('active'));
     element.classList.add('active');
 
-   // 2. à¸à¸³à¸«à¸™à¸”à¸£à¸²à¸¢à¸à¸²à¸£à¸à¸¥à¸¸à¹ˆà¸¡à¸‚à¸­à¸‡à¹à¸•à¹ˆà¸¥à¸°à¸›à¸£à¸°à¹€à¸ à¸— (à¸­à¸±à¸›à¹€à¸”à¸•à¹ƒà¸«à¹‰à¹€à¸«à¸¥à¸·à¸­ 4 à¸à¸¥à¸¸à¹ˆà¸¡)
+   // 2. กำหนดรายการกลุ่มของแต่ละประเภท (อัปเดตให้เหลือ 4 กลุ่ม)
     let groups = [];
     if(type === 'style') {
-       groups = ['recommended', 'human', 'product', 'other'];
+       groups = ['recommended', 'human', 'product'];
     } else if (type === 'bg') {
        groups = ['popular', 'other', 'custom']; 
     } else if (type === 'outfit') {
@@ -566,18 +587,18 @@ function switchConfigTab(element) {
        groups = ['promo', 'review', 'demo', 'fun', 'voiceover', 'broll'];
     }
 
-    // 3. à¸§à¸™à¸¥à¸¹à¸›à¹€à¸›à¸´à¸”/à¸›à¸´à¸” Group à¹à¸¥à¸° Auto Select
+    // 3. วนลูปเปิด/ปิด Group และ Auto Select
     groups.forEach(g => {
         const groupId = `${type}-group-${g}`;
         const el = document.getElementById(groupId);
         
         if(el) {
             if (g === groupName) {
-                // à¹€à¸›à¸´à¸”à¹à¸ªà¸”à¸‡à¸œà¸¥ Group à¸™à¸µà¹‰
-                // à¸«à¸¡à¸²à¸¢à¹€à¸«à¸•à¸¸: à¸–à¹‰à¸²à¹€à¸›à¹‡à¸™ 'custom' à¸«à¸£à¸·à¸­ 'auto' à¹ƒà¸«à¹‰à¹ƒà¸Šà¹‰ display: block (à¹„à¸¡à¹ˆà¹ƒà¸Šà¹ˆ grid)
+                // เปิดแสดงผล Group นี้
+                // หมายเหตุ: ถ้าเป็น 'custom' หรือ 'auto' ให้ใช้ display: block (ไม่ใช่ grid)
                 el.style.display = (g === 'auto' || g === 'custom') ? 'block' : 'grid';
 
-                // Auto Select: à¸–à¹‰à¸²à¸¡à¸µà¸•à¸±à¸§à¹€à¸¥à¸·à¸­à¸à¹à¸„à¹ˆ 1 à¸­à¸±à¸™ à¸«à¸£à¸·à¸­à¹€à¸›à¹‡à¸™à¹‚à¸«à¸¡à¸” auto -> à¸à¸”à¹ƒà¸«à¹‰à¹€à¸¥à¸¢
+                // Auto Select: ถ้ามีตัวเลือกแค่ 1 อัน หรือเป็นโหมด auto -> กดให้เลย
                 const options = el.querySelectorAll('.config-option');
                 if (options.length > 0) {
                     if (options.length === 1 || g === 'auto') {
@@ -588,15 +609,15 @@ function switchConfigTab(element) {
                 }
 
             } else {
-                // à¸›à¸´à¸” Group à¸­à¸·à¹ˆà¸™
+                // ปิด Group อื่น
                 el.style.display = 'none';
             }
         }
     });
 
-    // ðŸŸ¢ [Logic à¸žà¸´à¹€à¸¨à¸©] à¸–à¹‰à¸²à¹€à¸¥à¸·à¸­à¸à¹à¸—à¹‡à¸š custom à¹ƒà¸«à¹‰à¹‚à¸Ÿà¸à¸±à¸ªà¸Šà¹ˆà¸­à¸‡à¸žà¸´à¸¡à¸žà¹Œà¸—à¸±à¸™à¸—à¸µ
+    // 🟢 [Logic พิเศษ] ถ้าเลือกแท็บ custom ให้โฟกัสช่องพิมพ์ทันที
     if (groupName === 'custom') {
-        const inputId = `banana-custom-${type}-input`; // à¸ªà¸£à¹‰à¸²à¸‡ ID à¸­à¸±à¸•à¹‚à¸™à¸¡à¸±à¸•à¸´ à¹€à¸Šà¹ˆà¸™ banana-custom-bg-input
+        const inputId = `banana-custom-${type}-input`; // สร้าง ID อัตโนมัติ เช่น banana-custom-bg-input
         const input = document.getElementById(inputId);
         if(input) {
             setTimeout(() => input.focus(), 100);
@@ -607,77 +628,77 @@ function switchConfigTab(element) {
 
 
 
-// F. Select Segment (Rounds & Clips) - à¹à¸à¹‰à¹„à¸‚à¸£à¸­à¸‡à¸£à¸±à¸šà¸—à¸±à¹‰à¸‡ Video à¹à¸¥à¸° Banana
+// F. Select Segment (Rounds & Clips) - แก้ไขรองรับทั้ง Video และ Banana
 function selectSegment(element) {
     if (element.disabled || element.classList.contains('is-locked')) {
-        showToast('à¸•à¸±à¸§à¹€à¸¥à¸·à¸­à¸à¸™à¸µà¹‰à¹ƒà¸Šà¹‰à¹„à¸”à¹‰à¹€à¸‰à¸žà¸²à¸° Premium', 'warning');
+        showToast('ตัวเลือกนี้ใช้ได้เฉพาะ Premium', 'warning');
         return;
     }
-    const type = element.dataset.type;   // 'rounds' à¸«à¸£à¸·à¸­ 'clips'
+    const type = element.dataset.type;   // 'rounds' หรือ 'clips'
     const value = element.dataset.value; // '1', '3', '5', 'custom'
 
-    // 1. à¹€à¸Šà¹‡à¸„à¸§à¹ˆà¸²à¸à¸”à¸¡à¸²à¸ˆà¸²à¸à¸«à¸™à¹‰à¸²à¹„à¸«à¸™? (Video à¸«à¸£à¸·à¸­ Banana)
+    // 1. เช็คว่ากดมาจากหน้าไหน? (Video หรือ Banana)
     const isVideoTab = element.closest('#tab-content-video') !== null;
     const isBasicPlan = window.FeatureGate && FeatureGate.getPlan && FeatureGate.getPlan() === 'basic';
     if (isBasicPlan && type === 'rounds' && (value === '5' || value === 'custom')) {
-        showToast('Basic à¸ˆà¸³à¸à¸±à¸”à¸£à¸­à¸šà¸ªà¸¹à¸‡à¸ªà¸¸à¸” 3 à¸£à¸­à¸š', 'warning');
+        showToast('Basic จำกัดรอบสูงสุด 3 รอบ', 'warning');
         if (window.FeatureGate) FeatureGate.enforceBasicRoundLimit();
         return;
     }
     
-    // 2. à¸à¸³à¸«à¸™à¸” ID à¹€à¸›à¹‰à¸²à¸«à¸¡à¸²à¸¢à¹ƒà¸«à¹‰à¸–à¸¹à¸à¸à¸±à¹ˆà¸‡
+    // 2. กำหนด ID เป้าหมายให้ถูกฝั่ง
     let mainInputId, customInputId;
 
     if (isVideoTab) {
-        // à¸à¸±à¹ˆà¸‡ Video
+        // ฝั่ง Video
         mainInputId = (type === 'rounds') ? 'video-round-count' : 'video-download-count-auto';
         customInputId = 'video-custom-round-input';
     } else {
-        // à¸à¸±à¹ˆà¸‡ Banana
+        // ฝั่ง Banana
         mainInputId = (type === 'rounds') ? 'banana-round-count' : 'banana-download-count';
         customInputId = 'banana-custom-round-input';
     }
 
-    // 3. à¸ˆà¸±à¸”à¸à¸²à¸£à¸à¸£à¸“à¸µà¹€à¸¥à¸·à¸­à¸ 'custom' (+)
+    // 3. จัดการกรณีเลือก 'custom' (+)
     if (value === 'custom') {
         const customInput = document.getElementById(customInputId);
         if (customInput) {
-            customInput.classList.remove('hidden'); // à¹€à¸›à¸´à¸”à¸Šà¹ˆà¸­à¸‡à¸à¸£à¸­à¸
-            customInput.style.display = 'block';    // à¸šà¸±à¸‡à¸„à¸±à¸šà¹‚à¸Šà¸§à¹Œ
+            customInput.classList.remove('hidden'); // เปิดช่องกรอก
+            customInput.style.display = 'block';    // บังคับโชว์
             customInput.focus();
         }
         
-        // à¸­à¸±à¸›à¹€à¸”à¸• UI à¸›à¸¸à¹ˆà¸¡
+        // อัปเดต UI ปุ่ม
         const parent = element.parentElement;
         parent.querySelectorAll('.segment-opt').forEach(b => b.classList.remove('active'));
         element.classList.add('active');
         
-        // à¸šà¸­à¸ input à¸«à¸¥à¸±à¸à¸§à¹ˆà¸²à¹€à¸›à¹‡à¸™ custom
+        // บอก input หลักว่าเป็น custom
         const mainInput = document.getElementById(mainInputId);
         if (mainInput) mainInput.value = 'custom';
         
-        return; // à¸ˆà¸šà¸‡à¸²à¸™
+        return; // จบงาน
     }
 
-    // 4. à¸ˆà¸±à¸”à¸à¸²à¸£à¸à¸£à¸“à¸µà¹€à¸¥à¸·à¸­à¸à¸•à¸±à¸§à¹€à¸¥à¸‚à¸›à¸à¸•à¸´ (1, 3, 5)
-    // à¸‹à¹ˆà¸­à¸™à¸Šà¹ˆà¸­à¸‡ custom à¸à¸¥à¸±à¸šà¹„à¸›
+    // 4. จัดการกรณีเลือกตัวเลขปกติ (1, 3, 5)
+    // ซ่อนช่อง custom กลับไป
     const customInput = document.getElementById(customInputId);
     if (customInput) {
         customInput.classList.add('hidden');
         customInput.style.display = 'none';
     }
 
-    // à¸­à¸±à¸›à¹€à¸”à¸•à¸„à¹ˆà¸²à¸¥à¸‡ Input à¸«à¸¥à¸±à¸
+    // อัปเดตค่าลง Input หลัก
     const mainInput = document.getElementById(mainInputId);
     if (mainInput) {
         mainInput.value = value;
         
-        // à¸­à¸±à¸›à¹€à¸”à¸• UI à¸›à¸¸à¹ˆà¸¡ active
+        // อัปเดต UI ปุ่ม active
         const parent = element.parentElement;
         parent.querySelectorAll('.segment-opt').forEach(b => b.classList.remove('active'));
         element.classList.add('active');
 
-        // à¸ªà¸±à¹ˆà¸‡à¸­à¸±à¸›à¹€à¸”à¸•à¸‚à¹‰à¸­à¸„à¸§à¸²à¸¡à¸ªà¸£à¸¸à¸›à¸—à¸±à¸™à¸—à¸µ
+        // สั่งอัปเดตข้อความสรุปทันที
         if (isVideoTab && typeof videoUpdateRoundInfo === 'function') videoUpdateRoundInfo();
         if (!isVideoTab && typeof bananaUpdateRoundInfo === 'function') bananaUpdateRoundInfo();
     }
@@ -685,7 +706,7 @@ function selectSegment(element) {
 
 // G. Setup Visual UI
 function setupAllVisualUI() {
-    console.log("ðŸ› ï¸ Setting up Visual UI...");
+    console.log("🛠️ Setting up Visual UI...");
     function addSafeClick(selector, callback) {
         const elements = document.querySelectorAll(selector);
         elements.forEach(el => {
@@ -697,13 +718,14 @@ function setupAllVisualUI() {
 
     addSafeClick('.char-tab-btn:not(.config-tab-btn)', (btn) => switchCharTab(btn.dataset.target || btn.getAttribute('data-target')));
     
-    // ðŸŸ¢ [à¸ˆà¸¸à¸”à¸—à¸µà¹ˆà¹à¸à¹‰à¹„à¸‚]: à¹€à¸žà¸´à¹ˆà¸¡ :not(.mascot-expression) à¹€à¸žà¸·à¹ˆà¸­à¸ªà¸±à¹ˆà¸‡à¹ƒà¸«à¹‰à¸£à¸°à¸šà¸š "à¸«à¹‰à¸²à¸¡à¸¥à¹‰à¸²à¸‡à¸£à¸¹à¸›à¸™à¸²à¸‡à¹à¸šà¸š" à¹€à¸¡à¸·à¹ˆà¸­à¸¡à¸µà¸à¸²à¸£à¹€à¸›à¸¥à¸µà¹ˆà¸¢à¸™à¸ªà¸µà¸«à¸™à¹‰à¸²à¸¡à¸²à¸ªà¸„à¸­à¸•
+    // 🟢 [จุดที่แก้ไข]: เพิ่ม :not(.mascot-expression) เพื่อสั่งให้ระบบ "ห้ามล้างรูปนางแบบ" เมื่อมีการเปลี่ยนสีหน้ามาสคอต
     addSafeClick('.char-card:not(.mascot-card):not(.mascot-bg):not(.mascot-outfit):not(.mascot-expression)', (card) => selectCharacter(card, card.dataset.value));
 	
     addSafeClick('.config-header', (header) => toggleConfig(header.dataset.target));
     addSafeClick('.config-option', (opt) => selectConfigOption(opt));
     addSafeClick('.config-tab-btn', (btn) => switchConfigTab(btn));
     addSafeClick('.segment-opt', (seg) => selectSegment(seg));
+    setDefaultBgToAiMatch();
 }
 
 function fixThaiRuntimeText() {
@@ -734,39 +756,88 @@ function fixThaiRuntimeText() {
     const styleLabels = {
         ugc_basic: '💬 UGC Basic Cute',
         studio: '🔥 โปรโมทขั้นสุด',
-        live: '🔴 ไลฟ์สด',
-        fashion: '👗 แฟชั่น (สวมใส่)',
-        usage: '📸 ไลฟ์สไตล์',
+        live: '🔴 ไลฟ์ขายของ',
+        fashion: '👗 สวมใส่สินค้า',
+        usage: '📸 ใช้งานจริง',
+        real_demo: '🖐️ สาธิตใช้จริง',
+        real_user_review: '🙂 รีวิวใช้จริง',
         funny: '🤪 หัวโต',
-        sony_product: '📷 Sony Product',
-        shop_review: '🏪 รีวิวหน้าร้าน',
-        natural_light: '🌤️ แสงธรรมชาติ',
-        real_ads: '🎯 โฆษณาเรียล',
-        model: '💃 นายแบบ (เต็มตัว)',
-        influencer: '🤳 อินฟลูฯ (Vlog)',
+        sony_product: '📷 สินค้าเด่นสมจริง',
+        shop_review: '🧺 โต๊ะรีวิวสินค้า',
+        natural_light: '🌤️ แสงละมุน',
+        real_ads: '🎯 โฆษณาสมจริง',
+        clothing_campaign: '👗 โฆษณาเสื้อผ้า',
+        model: '💃 นายแบบสินค้า',
+        influencer: '🤳 รีวิว Vlog',
         beauty: '💄 บิวตี้ (หน้าชัด)',
-        review: '✋ ถือสินค้า (รีวิว)',
-        mirror: '🪞 หน้ากระจก (สวมใส่)',
-        sony_portrait: '📸 Sony Portrait Ads',
-        lifestyle_review: '☕ Lifestyle Review',
+        review: '✋ รีวิวโต๊ะสินค้า',
+        mirror: '🪞 เซลฟี่ลองชุด',
+        sony_portrait: '📸 พอร์ตเทรตสมจริง',
+        lifestyle_review: '☕ รีวิวชีวิตจริง',
         texture: '💧 เนื้อสัมผัส (ซูม)',
-        unboxing: '📦 แกะกล่อง (POV)',
+        unboxing: '🤲 ถือโชว์ POV',
         shoes: '👟 รองเท้า (เห็นเท้า)',
         hands: '🛠️ สาธิต (เห็นมือ)',
         decor: '🛋️ ของชิ้นใหญ่',
-        showcase: '🖼️ สินค้าล้วน',
-        catalog: '🧾 Studio Catalog',
-        counter_display: '🛒 Counter Display',
+        showcase: '🖼️ สินค้า Hero',
+        studio_photo: '📸 ภาพถ่ายสตูดิโอ',
+        catalog: '🧾 แคตตาล็อกสินค้า',
+        counter_display: '🛒 วางขายหน้าร้าน',
         premium_closeup: '🔎 Premium Close-up',
         fancy: '✨ แฟนซี (ของลอย)',
         cgi: '🪐 CGI สินค้ายักษ์',
         miniature: '🏙️ เมืองจิ๋ว',
-        outdoor_market: '⛱️ Outdoor Market',
+        outdoor_market: '⛱️ บูธขายกลางแจ้ง',
     };
     Object.entries(styleLabels).forEach(([value, text]) => {
         document.querySelectorAll(`.config-option[data-type="style"][data-value="${value}"]`).forEach((item) => {
             item.innerHTML = `<span class="char-icon">${text.split(' ')[0]}</span> ${text.replace(/^\S+\s*/, '')}`;
             item.dataset.label = text;
+        });
+    });
+
+    const styleNotes = {
+        fashion: {
+            title: 'เหมาะกับรองเท้า กระเป๋า เครื่องประดับ หมวก แว่น นาฬิกา หรือของที่สวม/ถือบนตัว'
+        },
+        clothing_campaign: {
+            title: 'เหมาะกับเสื้อผ้า ชุด เดรส คอสตูม ชุดว่ายน้ำ'
+        },
+        mirror: {
+            title: 'เหมาะกับเสื้อผ้า/ชุด แบบลองชุดหน้ากระจก'
+        },
+        real_demo: {
+            title: 'เหมาะกับสินค้าที่ต้องสาธิตวิธีใช้หรือเห็นผลลัพธ์'
+        },
+        texture: {
+            title: 'เหมาะกับสินค้าเน้นเนื้อสัมผัส วัสดุ ผิว รายละเอียด'
+        },
+        unboxing: {
+            title: 'เหมาะกับสินค้าที่ต้องถือโชว์มุมมอง POV'
+        },
+        shoes: {
+            title: 'เหมาะกับรองเท้าหรือสินค้าที่ต้องเห็นเท้า'
+        },
+        studio_photo: {
+            title: 'เหมาะกับสินค้าทุกแบบที่ต้องการภาพสตูดิโอพรีเมียม'
+        },
+        fancy: {
+            title: 'เหมาะกับสินค้าที่ต้องการ CG แฟนตาซี ของลอย เอฟเฟกต์'
+        },
+        cgi: {
+            title: 'เหมาะกับสินค้าแบบ CGI ยักษ์ ไม่มีคน'
+        },
+        miniature: {
+            title: 'เหมาะกับสินค้าในฉากโลกจิ๋ว/เมืองจิ๋ว'
+        }
+    };
+    Object.entries(styleNotes).forEach(([value, note]) => {
+        document.querySelectorAll(`.config-option[data-type="style"][data-value="${value}"]`).forEach((item) => {
+            item.classList.add('specialty-style');
+            item.title = note.title;
+            if (!item.querySelector('.style-note-badge')) {
+                item.insertAdjacentHTML('beforeend', '<span class="style-note-badge" aria-label="คำแนะนำ">ⓘ</span>');
+            }
         });
     });
 
@@ -804,10 +875,10 @@ function fixThaiRuntimeText() {
 document.addEventListener('DOMContentLoaded', () => {
 	
 	// ============================================
-    // ðŸŸ¢ à¸ªà¹ˆà¸§à¸™à¸—à¸µà¹ˆà¹€à¸žà¸´à¹ˆà¸¡à¹ƒà¸«à¸¡à¹ˆ 2: à¸ªà¸±à¹ˆà¸‡à¹ƒà¸«à¹‰à¸›à¸¸à¹ˆà¸¡à¸—à¸³à¸‡à¸²à¸™ (à¸§à¸²à¸‡à¸šà¸£à¸£à¸—à¸±à¸”à¹à¸£à¸à¹ƒà¸™ DOMContentLoaded)
+    // 🟢 ส่วนที่เพิ่มใหม่ 2: สั่งให้ปุ่มทำงาน (วางบรรทัดแรกใน DOMContentLoaded)
     // ============================================
     
-    // 1. à¸œà¸¹à¸à¸›à¸¸à¹ˆà¸¡à¸ªà¸¥à¸±à¸šà¹‚à¸«à¸¡à¸” Human/Mascot à¹ƒà¸«à¹‰à¸à¸”à¹„à¸”à¹‰
+    // 1. ผูกปุ่มสลับโหมด Human/Mascot ให้กดได้
     const btnHuman = document.getElementById('btn-mode-human');
     const btnMascot = document.getElementById('btn-mode-mascot');
     
@@ -824,11 +895,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2. à¹€à¸£à¸µà¸¢à¸à¹ƒà¸Šà¹‰à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸ˆà¸±à¸”à¸à¸²à¸£à¸›à¸¸à¹ˆà¸¡à¸«à¸™à¹‰à¸² Mascot
+    // 2. เรียกใช้ฟังก์ชันจัดการปุ่มหน้า Mascot
     setupMascotEvents();
     
     // ============================================
-    // (à¸ˆà¸šà¸ªà¹ˆà¸§à¸™à¸—à¸µà¹ˆà¹€à¸žà¸´à¹ˆà¸¡à¹ƒà¸«à¸¡à¹ˆ - à¹‚à¸„à¹‰à¸”à¹€à¸”à¸´à¸¡à¸•à¹ˆà¸­à¸ˆà¸²à¸à¸™à¸µà¹‰à¸«à¹‰à¸²à¸¡à¸¥à¸š)
+    // (จบส่วนที่เพิ่มใหม่ - โค้ดเดิมต่อจากนี้ห้ามลบ)
     // ============================================
 	
 
@@ -857,10 +928,10 @@ document.addEventListener('DOMContentLoaded', () => {
         videoSetupUploadZone();
         videoSetupEventListeners();
         videoUpdateImageCount();
-	// ðŸŸ¢ à¹€à¸žà¸´à¹ˆà¸¡: à¹€à¸Šà¹‡à¸„à¸ªà¸–à¸²à¸™à¸°à¸à¸¥à¹ˆà¸­à¸‡à¹€à¸ªà¸µà¸¢à¸‡à¸—à¸±à¸™à¸—à¸µà¸—à¸µà¹ˆà¹‚à¸«à¸¥à¸”à¹€à¸ªà¸£à¹‡à¸ˆ
+	// 🟢 เพิ่ม: เช็คสถานะกล่องเสียงทันทีที่โหลดเสร็จ
         if (typeof checkVideoVoiceState === 'function') checkVideoVoiceState();
     }
-// ðŸŸ¢ Tab Switching Logic
+// 🟢 Tab Switching Logic
     const tabButtons = document.querySelectorAll('.segment-btn');
     const tabContents = document.querySelectorAll('.tab-pane');
     const setActiveModeTheme = (mode) => {
@@ -895,7 +966,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // ============================================
-// ðŸ› ï¸ ROBUST CLICK SYSTEM (à¹€à¸žà¸´à¹ˆà¸¡à¹€à¸žà¸·à¹ˆà¸­à¸„à¸§à¸²à¸¡à¹€à¸ªà¸–à¸µà¸¢à¸£)
+// 🛠️ ROBUST CLICK SYSTEM (เพิ่มเพื่อความเสถียร)
 // ============================================
 async function legacySmartClick(tabId, selector, textMatch = null) {
   return await chrome.scripting.executeScript({
@@ -949,25 +1020,25 @@ function inferRunProgress(message, isRunning = false) {
   const text = String(message || '').toLowerCase();
 
   if (!message || text.includes('ready')) return { percent: 0, step: 'assets' };
-  if (text.includes('à¹€à¸ªà¸£à¹‡à¸ˆ') || text.includes('complete') || text.includes('mission complete')) {
+  if (text.includes('เสร็จ') || text.includes('complete') || text.includes('mission complete')) {
     return { percent: 100, step: 'run' };
   }
-  if (text.includes('error') || text.includes('à¸«à¸¢à¸¸à¸”') || text.includes('stop')) {
+  if (text.includes('error') || text.includes('หยุด') || text.includes('stop')) {
     return { percent: isRunning ? 55 : 0, step: 'run' };
   }
-  if (text.includes('download') || text.includes('à¸”à¸²à¸§à¸™à¹Œà¹‚à¸«à¸¥à¸”') || text.includes('à¸”à¸¹à¸”à¹„à¸Ÿà¸¥à¹Œ') || text.includes('à¸šà¸±à¸™à¸—à¸¶à¸')) {
+  if (text.includes('download') || text.includes('ดาวน์โหลด') || text.includes('ดูดไฟล์') || text.includes('บันทึก')) {
     return { percent: 88, step: 'run' };
   }
-  if (text.includes('à¸£à¸­') || text.includes('generat') || text.includes('render') || text.includes('create') || text.includes('à¸ªà¸£à¹‰à¸²à¸‡')) {
+  if (text.includes('รอ') || text.includes('generat') || text.includes('render') || text.includes('create') || text.includes('สร้าง')) {
     return { percent: 68, step: 'run' };
   }
-  if (text.includes('upload') || text.includes('à¸­à¸±à¸žà¹‚à¸«à¸¥à¸”') || text.includes('à¹€à¸žà¸´à¹ˆà¸¡à¸¥à¸‡à¸žà¸£à¸­à¸¡à¸•à¹Œ')) {
+  if (text.includes('upload') || text.includes('อัพโหลด') || text.includes('เพิ่มลงพรอมต์')) {
     return { percent: 38, step: 'assets' };
   }
-  if (text.includes('prompt') || text.includes('à¸žà¸£à¸­à¸¡à¸•à¹Œ') || text.includes('keyword') || text.includes('fill')) {
+  if (text.includes('prompt') || text.includes('พรอมต์') || text.includes('keyword') || text.includes('fill')) {
     return { percent: 24, step: 'prompt' };
   }
-  if (text.includes('style') || text.includes('à¹€à¸ªà¸µà¸¢à¸‡') || text.includes('à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸²') || text.includes('mode')) {
+  if (text.includes('style') || text.includes('เสียง') || text.includes('ตั้งค่า') || text.includes('mode')) {
     return { percent: 12, step: 'creative' };
   }
 
@@ -980,15 +1051,15 @@ function updateRunProgress(scope, percent, stepName) {
   const text = document.getElementById(`${scope}-progress-text`);
   const stepText = document.getElementById(`${scope}-step-text`);
   const stepLabels = {
-    assets: 'à¹€à¸•à¸£à¸µà¸¢à¸¡à¸‚à¹‰à¸­à¸¡à¸¹à¸¥à¹à¸¥à¸°à¸£à¸¹à¸›à¸ à¸²à¸ž',
-    prompt: 'à¸à¸³à¸¥à¸±à¸‡à¸ªà¸£à¹‰à¸²à¸‡ Prompt',
-    creative: 'à¸à¸³à¸¥à¸±à¸‡à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸²à¸ªà¹„à¸•à¸¥à¹Œ',
-    run: 'à¸à¸³à¸¥à¸±à¸‡à¸£à¸±à¸™à¸‡à¸²à¸™',
+    assets: 'เตรียมข้อมูลและรูปภาพ',
+    prompt: 'กำลังสร้าง Prompt',
+    creative: 'กำลังตั้งค่าสไตล์',
+    run: 'กำลังรันงาน',
   };
 
   if (bar) bar.style.width = `${safePercent}%`;
   if (text) text.textContent = `${Math.round(safePercent)}%`;
-  if (stepText) stepText.textContent = `à¸‚à¸±à¹‰à¸™à¸•à¸­à¸™: ${stepLabels[stepName] || stepLabels.assets}`;
+  if (stepText) stepText.textContent = `ขั้นตอน: ${stepLabels[stepName] || stepLabels.assets}`;
 
   updateWorkflowTimeline(stepName, safePercent);
 }
@@ -1005,10 +1076,10 @@ function updateWorkflowTimeline(activeStep = 'assets', percent = 0) {
 }
 
 // ============================================
-// ðŸ›¡ï¸ ANTI-BOT PROMPT RANDOMIZER
+// 🛡️ ANTI-BOT PROMPT RANDOMIZER
 // ============================================
 function getAntiBotSeed() {
-    // à¸ªà¸¸à¹ˆà¸¡à¸„à¸³à¸„à¸¸à¸“à¸¨à¸±à¸žà¸—à¹Œà¹à¸¥à¸°à¸£à¸«à¸±à¸ª à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸«à¹‰ Prompt à¹à¸•à¹ˆà¸¥à¸°à¸£à¸­à¸šà¸¡à¸µ Hash à¹„à¸¡à¹ˆà¸‹à¹‰à¸³à¸à¸±à¸™
+    // สุ่มคำคุณศัพท์และรหัส เพื่อให้ Prompt แต่ละรอบมี Hash ไม่ซ้ำกัน
     const adjs = ['vivid', 'clear', 'sharp', 'detailed', 'crisp', 'clean', 'fine'];
     const randAdj = adjs[Math.floor(Math.random() * adjs.length)];
     const randHash = Math.random().toString(36).substring(2, 6);
@@ -1043,7 +1114,7 @@ const videoPromptResult = document.getElementById('video-prompt-result');
 const videoBtnCopyPrompt = document.getElementById('video-btn-copy-prompt');
 const videoLogContainer = document.getElementById('video-log-container');
 const videoLogClearBtn = document.getElementById('video-log-clear');
-// [à¸ªà¹ˆà¸§à¸™à¹€à¸žà¸´à¹ˆà¸¡à¹ƒà¸«à¸¡à¹ˆ] à¸•à¸±à¸§à¹à¸›à¸£à¸ªà¸³à¸«à¸£à¸±à¸šà¹€à¸¥à¸·à¸­à¸à¹€à¸ªà¸µà¸¢à¸‡/à¸ªà¸³à¹€à¸™à¸µà¸¢à¸‡
+// [ส่วนเพิ่มใหม่] ตัวแปรสำหรับเลือกเสียง/สำเนียง
 const videoVoiceStyleSelect = document.getElementById('video-voice-style-select');
 const videoRandomVoiceCheckbox = document.getElementById('video-random-voice-checkbox');
 
@@ -1084,11 +1155,11 @@ function videoSetupUploadZone() {
 }
 
 // ============================================
-// VIDEO IMAGE PREVIEW SYSTEM (à¹€à¸žà¸´à¹ˆà¸¡à¹ƒà¸«à¸¡à¹ˆ)
+// VIDEO IMAGE PREVIEW SYSTEM (เพิ่มใหม่)
 // ============================================
 const videoPreviewContainer = document.getElementById('video-preview-container');
 
-// à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸ˆà¸±à¸”à¸à¸²à¸£à¹„à¸Ÿà¸¥à¹Œà¸—à¸µà¹ˆà¸­à¸±à¸›à¹‚à¸«à¸¥à¸” (Video)
+// ฟังก์ชันจัดการไฟล์ที่อัปโหลด (Video)
 function videoHandleFiles(files) {
   const imageFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
 
@@ -1103,7 +1174,7 @@ function videoHandleFiles(files) {
         dataUrl: e.target.result
       };
       videoUploadedImages.push(imageData);
-      videoUpdateImageCount(); // à¹€à¸£à¸µà¸¢à¸à¸­à¸±à¸›à¹€à¸”à¸•à¸«à¸™à¹‰à¸²à¸ˆà¸­
+      videoUpdateImageCount(); // เรียกอัปเดตหน้าจอ
     };
     reader.readAsDataURL(file);
   });
@@ -1111,50 +1182,50 @@ function videoHandleFiles(files) {
   videoFileInput.value = '';
 }
 
-// à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸¥à¸šà¸£à¸¹à¸›à¸—à¸±à¹‰à¸‡à¸«à¸¡à¸” (Video)
+// ฟังก์ชันลบรูปทั้งหมด (Video)
 function videoClearAllImages() {
   videoUploadedImages = [];
   videoUpdateImageCount();
   videoUpdateStatus('All images cleared');
 }
 
-// à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸¥à¸šà¸—à¸µà¸¥à¸°à¸£à¸¹à¸› (Video)
+// ฟังก์ชันลบทีละรูป (Video)
 function videoRemoveOneImage(index) {
   videoUploadedImages.splice(index, 1);
   videoUpdateImageCount();
 }
 
-// à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸­à¸±à¸›à¹€à¸”à¸•à¸«à¸™à¹‰à¸²à¸ˆà¸­à¹à¸¥à¸°à¹à¸ªà¸”à¸‡à¸£à¸¹à¸›à¸•à¸±à¸§à¸­à¸¢à¹ˆà¸²à¸‡ (Video)
+// ฟังก์ชันอัปเดตหน้าจอและแสดงรูปตัวอย่าง (Video)
 function videoUpdateImageCount() {
-  // 1. à¸­à¸±à¸›à¹€à¸”à¸•à¸•à¸±à¸§à¹€à¸¥à¸‚
+  // 1. อัปเดตตัวเลข
   videoImageCount.textContent = videoUploadedImages.length;
 
-  // 2. à¸ˆà¸±à¸”à¸à¸²à¸£à¸›à¸¸à¹ˆà¸¡ Clear All
+  // 2. จัดการปุ่ม Clear All
   if (videoUploadedImages.length > 0) {
     if(videoClearImagesBtn) videoClearImagesBtn.style.display = 'flex';
   } else {
     if(videoClearImagesBtn) videoClearImagesBtn.style.display = 'none';
   }
 
-  // 3. à¸­à¸±à¸›à¹€à¸”à¸•à¸‚à¹‰à¸­à¸¡à¸¹à¸¥à¸£à¸­à¸š
+  // 3. อัปเดตข้อมูลรอบ
   videoUpdateRoundInfo();
 
-  // 4. à¸ªà¸£à¹‰à¸²à¸‡à¸£à¸¹à¸›à¸•à¸±à¸§à¸­à¸¢à¹ˆà¸²à¸‡ (Render Previews)
+  // 4. สร้างรูปตัวอย่าง (Render Previews)
   if (videoPreviewContainer) {
-    videoPreviewContainer.innerHTML = ''; // à¹€à¸„à¸¥à¸µà¸¢à¸£à¹Œà¸‚à¸­à¸‡à¹€à¸à¹ˆà¸²
+    videoPreviewContainer.innerHTML = ''; // เคลียร์ของเก่า
 
     videoUploadedImages.forEach((img, index) => {
       const item = document.createElement('div');
-      item.className = 'preview-item'; // à¹ƒà¸Šà¹‰ Style à¹€à¸”à¸µà¸¢à¸§à¸à¸±à¸šà¸«à¸™à¹‰à¸² Banana
+      item.className = 'preview-item'; // ใช้ Style เดียวกับหน้า Banana
 
       const imgEl = document.createElement('img');
       imgEl.src = img.dataUrl;
       imgEl.title = img.name;
 
-      // à¸›à¸¸à¹ˆà¸¡à¸¥à¸š
+      // ปุ่มลบ
       const delBtn = document.createElement('button');
       delBtn.className = 'preview-remove-btn';
-      delBtn.innerHTML = 'âœ•';
+      delBtn.innerHTML = '✕';
       delBtn.onclick = () => videoRemoveOneImage(index);
 
       item.appendChild(imgEl);
@@ -1181,16 +1252,16 @@ function videoUpdateRoundInfo() {
     if (customInput) customInput.style.display = 'none';
   }
 
-  // à¹à¸à¹‰à¹„à¸‚: à¸›à¸¥à¸”à¸¥à¹‡à¸­à¸„à¹‚à¸Šà¸§à¹Œ Text à¹€à¸ªà¸¡à¸­ (à¸‚à¸­à¸‡à¹€à¸”à¸´à¸¡à¸‹à¹ˆà¸­à¸™à¹„à¸§à¹‰)
+  // แก้ไข: ปลดล็อคโชว์ Text เสมอ (ของเดิมซ่อนไว้)
   if (roundInfo) {
       roundInfo.style.display = 'block';
       const roundsPerImage = videoGetRoundsPerImage();
       const totalRounds = imageTotal * roundsPerImage;
 
       if (imageTotal === 0) {
-        roundInfo.textContent = `à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸²: ${roundsPerImage} à¸£à¸­à¸šà¸•à¹ˆà¸­à¸ à¸²à¸ž`;
+        roundInfo.textContent = `ตั้งค่า: ${roundsPerImage} รอบต่อภาพ`;
       } else {
-        roundInfo.textContent = `à¸„à¸´à¸§à¸£à¸§à¸¡: ${imageTotal} à¸ à¸²à¸ž Ã— ${roundsPerImage} à¸£à¸­à¸š = à¸£à¸±à¸™à¸—à¸±à¹‰à¸‡à¸«à¸¡à¸” ${totalRounds} à¸„à¸¥à¸´à¸›`;
+        roundInfo.textContent = `คิวรวม: ${imageTotal} ภาพ × ${roundsPerImage} รอบ = รันทั้งหมด ${totalRounds} คลิป`;
       }
   }
 }
@@ -1206,7 +1277,7 @@ function videoGetRoundsPerImage() {
   if (select.value === 'custom' || (customInput && customInput.style.display === 'block')) {
       if (customInput) {
           const val = parseInt(customInput.value);
-          // à¹à¸à¹‰à¹„à¸‚: à¸”à¸±à¸à¸ˆà¸±à¸šà¸à¸£à¸“à¸µà¸žà¸´à¸¡à¸žà¹Œà¸•à¸±à¸§à¸­à¸±à¸à¸©à¸£ (NaN) à¸«à¸£à¸·à¸­à¸•à¸´à¸”à¸¥à¸š à¹ƒà¸«à¹‰à¸„à¸·à¸™à¸„à¹ˆà¸² 1 à¹€à¸ªà¸¡à¸­
+          // แก้ไข: ดักจับกรณีพิมพ์ตัวอักษร (NaN) หรือติดลบ ให้คืนค่า 1 เสมอ
           const safeVal = (!isNaN(val) && val > 0) ? val : 1;
           return isBasicPlan ? Math.min(safeVal, 3) : safeVal;
       }
@@ -1248,7 +1319,7 @@ function videoUpdateLogDisplay() {
   if (!videoLogContainer) return;
   
   if (videoLogs.length === 0) {
-    videoLogContainer.innerHTML = '<div class="log-empty">à¸¢à¸±à¸‡à¹„à¸¡à¹ˆà¸¡à¸µ log</div>';
+    videoLogContainer.innerHTML = '<div class="log-empty">ยังไม่มี log</div>';
     return;
   }
   
@@ -1299,7 +1370,7 @@ function videoUpdateStatus(message, persistent = false) {
   }
 }
 
-// Video Prompt & Play Studio: Setup event listeners (Fix: à¹à¸¢à¸à¸à¸¥à¸¸à¹ˆà¸¡à¸›à¸¸à¹ˆà¸¡à¹€à¸ªà¸µà¸¢à¸‡à¹ƒà¸«à¹‰à¸à¸”à¸žà¸£à¹‰à¸­à¸¡à¸à¸±à¸™à¹„à¸”à¹‰)
+// Video Prompt & Play Studio: Setup event listeners (Fix: แยกกลุ่มปุ่มเสียงให้กดพร้อมกันได้)
 function videoSetupEventListeners() {
     if (videoClearImagesBtn) videoClearImagesBtn.addEventListener('click', videoClearAllImages);
     if (videoBtnAutomation) videoBtnAutomation.addEventListener('click', videoRunAutomation);
@@ -1312,7 +1383,7 @@ function videoSetupEventListeners() {
         });
     }
     
-    // à¹à¸à¹‰à¹„à¸‚ Logic à¸•à¸£à¸‡à¸™à¸µà¹‰à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸«à¹‰à¹à¸ªà¸”à¸‡à¸œà¸¥à¸ªà¹„à¸•à¸¥à¹Œà¸•à¸¥à¸­à¸”à¹€à¸§à¸¥à¸² à¹à¸•à¹ˆà¸ˆà¸²à¸‡à¸¥à¸‡à¹€à¸¡à¸·à¹ˆà¸­à¹€à¸¥à¸·à¸­à¸à¸ªà¸¸à¹ˆà¸¡
+    // แก้ไข Logic ตรงนี้เพื่อให้แสดงผลสไตล์ตลอดเวลา แต่จางลงเมื่อเลือกสุ่ม
     const randomVStyleSwitch = document.getElementById('video-random-style-switch');
     const vStyleContainer = document.getElementById('config-content-vstyle');
     
@@ -1321,49 +1392,49 @@ function videoSetupEventListeners() {
             if (e.target.checked) {
                 vStyleContainer.style.opacity = "0.5";
                 vStyleContainer.style.pointerEvents = "none";
-                videoAddLog("ðŸŽ² à¹‚à¸«à¸¡à¸”à¸§à¸´à¸”à¸µà¹‚à¸­: à¸ªà¸¸à¹ˆà¸¡à¸ªà¹„à¸•à¸¥à¹Œà¹€à¸›à¸´à¸”à¹ƒà¸Šà¹‰à¸‡à¸²à¸™", "info");
+                videoAddLog("🎲 โหมดวิดีโอ: สุ่มสไตล์เปิดใช้งาน", "info");
             } else {
                 vStyleContainer.style.opacity = "1";
                 vStyleContainer.style.pointerEvents = "auto";
-                videoAddLog("ðŸ–±ï¸ à¹‚à¸«à¸¡à¸”à¸§à¸´à¸”à¸µà¹‚à¸­: à¹€à¸¥à¸·à¸­à¸à¸ªà¹„à¸•à¸¥à¹Œà¹€à¸­à¸‡", "info");
+                videoAddLog("🖱ï¸ โหมดวิดีโอ: เลือกสไตล์เอง", "info");
             }
         });
-        // à¹„à¸¡à¹ˆà¸ªà¸±à¹ˆà¸‡ dispatch event à¸—à¸±à¸™à¸—à¸µ à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸«à¹‰ UI à¹à¸ªà¸”à¸‡à¸œà¸¥à¸à¹ˆà¸­à¸™
+        // ไม่สั่ง dispatch event ทันที เพื่อให้ UI แสดงผลก่อน
     }
   
-  // ðŸŸ¢ 4. à¹à¸à¹‰à¹„à¸‚ Logic à¸›à¸¸à¹ˆà¸¡à¹€à¸¥à¸·à¸­à¸à¹€à¸ªà¸µà¸¢à¸‡ (Voice Buttons) à¹ƒà¸«à¹‰à¹à¸¢à¸à¸à¸¥à¸¸à¹ˆà¸¡à¸à¸±à¸™
+  // 🟢 4. แก้ไข Logic ปุ่มเลือกเสียง (Voice Buttons) ให้แยกกลุ่มกัน
   const allVoiceBtns = document.querySelectorAll('.voice-btn');
   
   if (allVoiceBtns.length > 0) {
       allVoiceBtns.forEach(btn => {
           btn.addEventListener('click', (e) => {
-              // à¸”à¸¶à¸‡à¸›à¸¸à¹ˆà¸¡à¸—à¸µà¹ˆà¸–à¸¹à¸à¸à¸”à¸ˆà¸£à¸´à¸‡ (à¹€à¸œà¸·à¹ˆà¸­à¹‚à¸”à¸™à¹„à¸­à¸„à¸­à¸™à¸‚à¹‰à¸²à¸‡à¹ƒà¸™)
+              // ดึงปุ่มที่ถูกกดจริง (เผื่อโดนไอคอนข้างใน)
               const clickedBtn = e.target.closest('.voice-btn');
               if (!clickedBtn) return;
 
-              // à¹€à¸Šà¹‡à¸„à¸§à¹ˆà¸²à¹€à¸›à¹‡à¸™à¸›à¸¸à¹ˆà¸¡à¸›à¸£à¸°à¹€à¸ à¸—à¹„à¸«à¸™ (gender à¸«à¸£à¸·à¸­ dialect)
-              const type = clickedBtn.getAttribute('data-type');     // 'gender' à¸«à¸£à¸·à¸­ 'dialect'
+              // เช็คว่าเป็นปุ่มประเภทไหน (gender หรือ dialect)
+              const type = clickedBtn.getAttribute('data-type');     // 'gender' หรือ 'dialect'
               const value = clickedBtn.getAttribute('data-value');
 
-              // ðŸŸ¢ Key Logic: à¸¥à¹‰à¸²à¸‡ Active à¹€à¸‰à¸žà¸²à¸°à¹€à¸žà¸·à¹ˆà¸­à¸™à¸£à¹ˆà¸§à¸¡à¸à¸¥à¸¸à¹ˆà¸¡ (Type à¹€à¸”à¸µà¸¢à¸§à¸à¸±à¸™)
+              // 🟢 Key Logic: ล้าง Active เฉพาะเพื่อนร่วมกลุ่ม (Type เดียวกัน)
               const siblings = document.querySelectorAll(`.voice-btn[data-type="${type}"]`);
               siblings.forEach(b => b.classList.remove('active'));
 
-              // à¹ƒà¸ªà¹ˆ Active à¹ƒà¸«à¹‰à¸›à¸¸à¹ˆà¸¡à¸—à¸µà¹ˆà¸à¸”
+              // ใส่ Active ให้ปุ่มที่กด
               clickedBtn.classList.add('active');
 
-              // à¸­à¸±à¸›à¹€à¸”à¸•à¸„à¹ˆà¸²à¸¥à¸‡ Input à¸•à¸²à¸¡à¸›à¸£à¸°à¹€à¸ à¸—
+              // อัปเดตค่าลง Input ตามประเภท
               if (type === 'gender') {
                   const genderInput = document.getElementById('video-voice-gender-select');
                   if (genderInput) genderInput.value = value;
                   
-                  // UX: à¹€à¸›à¸¥à¸µà¹ˆà¸¢à¸™à¸ªà¸µà¸›à¸¸à¹ˆà¸¡à¸•à¸²à¸¡à¹€à¸žà¸¨
+                  // UX: เปลี่ยนสีปุ่มตามเพศ
                   if (value === 'male' || value === 'teen_boy' || value === 'boy' || value.includes('male')) {
-                      clickedBtn.style.borderColor = '#60a5fa'; // à¸Ÿà¹‰à¸²
+                      clickedBtn.style.borderColor = '#60a5fa'; // ฟ้า
                   } else {
-                      clickedBtn.style.borderColor = '#f472b6'; // à¸Šà¸¡à¸žà¸¹
+                      clickedBtn.style.borderColor = '#f472b6'; // ชมพู
                   }
-                  // à¸£à¸µà¹€à¸‹à¹‡à¸•à¸ªà¸µà¸›à¸¸à¹ˆà¸¡à¸—à¸µà¹ˆà¹„à¸¡à¹ˆà¹„à¸”à¹‰à¹€à¸¥à¸·à¸­à¸à¹ƒà¸™à¸à¸¥à¸¸à¹ˆà¸¡à¹€à¸”à¸µà¸¢à¸§à¸à¸±à¸™
+                  // รีเซ็ตสีปุ่มที่ไม่ได้เลือกในกลุ่มเดียวกัน
                   siblings.forEach(b => {
                       if(!b.classList.contains('active')) b.style.borderColor = '#3f3f46';
                   });
@@ -1376,7 +1447,7 @@ function videoSetupEventListeners() {
       });
   }
   
-  // 5. Smart UI: à¸šà¸—à¸žà¸¹à¸”
+  // 5. Smart UI: บทพูด
   const customScriptInput = document.getElementById('video-custom-script');
   if (customScriptInput) {
       customScriptInput.addEventListener('input', () => {
@@ -1391,7 +1462,7 @@ function videoSetupEventListeners() {
                       const promoBtn = document.querySelector('.char-tab-btn[data-type="vstyle"][data-group="promo"]');
                       if (promoBtn) {
                           promoBtn.click();
-                          showToast('âš ï¸ à¸¡à¸µà¸šà¸—à¸žà¸¹à¸”: à¹€à¸›à¸¥à¸µà¹ˆà¸¢à¸™à¹€à¸›à¹‡à¸™à¹‚à¸«à¸¡à¸”à¸„à¸™à¸žà¸¹à¸”à¹ƒà¸«à¹‰à¸­à¸±à¸•à¹‚à¸™à¸¡à¸±à¸•à¸´', 'warning');
+                          showToast('⚠️ มีบทพูด: เปลี่ยนเป็นโหมดคนพูดให้อัตโนมัติ', 'warning');
                       }
                   }
               } else {
@@ -1407,8 +1478,8 @@ function videoSetupEventListeners() {
 async function videoHandleTestFill() {
   const generatedPrompt = videoPromptResult.textContent;
 
-  if (!generatedPrompt || generatedPrompt.includes('à¸à¸³à¸¥à¸±à¸‡à¸§à¸´à¹€à¸„à¸£à¸²à¸°à¸«à¹Œ') || generatedPrompt.startsWith('Error:')) {
-    showToast('à¸à¸£à¸¸à¸“à¸²à¸ªà¸£à¹‰à¸²à¸‡ Prompt à¸à¹ˆà¸­à¸™', 'error');
+  if (!generatedPrompt || generatedPrompt.includes('กำลังวิเคราะห์') || generatedPrompt.startsWith('Error:')) {
+    showToast('กรุณาสร้าง Prompt ก่อน', 'error');
     return;
   }
 
@@ -1649,10 +1720,10 @@ async function videoHandleTestUpload() {
                           } catch(e) {}
                         }
 
-                        // Fallback: find button with text (Crop/Save/à¸šà¸±à¸™à¸—à¸¶à¸/à¹€à¸ªà¸£à¹‡à¸ˆ/à¸•à¹ˆà¸­à¹„à¸›)
+                        // Fallback: find button with text (Crop/Save/บันทึก/เสร็จ/ต่อไป)
                         if (!confirmBtn) {
                           const allButtons = document.querySelectorAll('button');
-                          const textCandidates = ['Crop and Save', 'à¸šà¸±à¸™à¸—à¸¶à¸', 'à¸•à¹ˆà¸­à¹„à¸›', 'à¹€à¸ªà¸£à¹‡à¸ˆ', 'Save', 'Confirm'];
+                          const textCandidates = ['Crop and Save', 'บันทึก', 'ต่อไป', 'เสร็จ', 'Save', 'Confirm'];
                           for (const btn of allButtons) {
                             const text = (btn.textContent || '').trim();
                             if (!text) continue;
@@ -1867,7 +1938,7 @@ async function videoHandleTestDownload() {
 // Video Prompt & Play Studio: Handle test download multi - download selected number of videos
 async function videoHandleTestDownloadMulti() {
   const maxDownloads = parseInt(videoDownloadCountAuto?.value || '1');
-  videoUpdateStatus(`à¸à¸³à¸¥à¸±à¸‡à¹€à¸•à¸£à¸µà¸¢à¸¡à¸”à¸¹à¸”à¹„à¸Ÿà¸¥à¹Œ ${maxDownloads} à¸„à¸¥à¸´à¸›...`);
+  videoUpdateStatus(`กำลังเตรียมดูดไฟล์ ${maxDownloads} คลิป...`);
 
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -1877,48 +1948,48 @@ async function videoHandleTestDownloadMulti() {
       func: async (maxDl) => {
         const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
         
-        // à¹€à¸”à¹‰à¸‡à¸‚à¸¶à¹‰à¸™à¸šà¸™à¸ªà¸¸à¸”à¸‚à¸­à¸‡à¸ˆà¸­
+        // เด้งขึ้นบนสุดของจอ
         window.scrollTo(0, 0);
         await sleep(1000);
 
-        // ðŸš¨ à¸„à¹‰à¸™à¸«à¸²à¹à¸—à¹‡à¸ <video> à¸—à¸±à¹‰à¸‡à¸«à¸¡à¸”à¸šà¸™à¸«à¸™à¹‰à¸²à¸ˆà¸­
+        // 🚨 ค้นหาแท็ก <video> ทั้งหมดบนหน้าจอ
         const allVideos = Array.from(document.querySelectorAll('video'));
         
-        // à¸à¸£à¸­à¸‡à¹€à¸­à¸²à¹€à¸‰à¸žà¸²à¸°à¸§à¸´à¸”à¸µà¹‚à¸­à¸—à¸µà¹ˆà¹€à¸›à¹‡à¸™à¸à¸²à¸£à¹Œà¸”à¸ˆà¸£à¸´à¸‡à¹† (à¹ƒà¸«à¸à¹ˆà¸à¸§à¹ˆà¸² 150px) à¹„à¸¡à¹ˆà¹ƒà¸Šà¹ˆà¹„à¸­à¸„à¸­à¸™à¸ˆà¸´à¹‹à¸§
+        // กรองเอาเฉพาะวิดีโอที่เป็นการ์ดจริงๆ (ใหญ่กว่า 150px) ไม่ใช่ไอคอนจิ๋ว
         const validVideos = allVideos.filter(vid => {
             const rect = vid.getBoundingClientRect();
             return rect.width > 150;
         });
 
         if (validVideos.length === 0) {
-            return { success: false, message: 'à¹„à¸¡à¹ˆà¸žà¸šà¸§à¸´à¸”à¸µà¹‚à¸­à¸«à¸¥à¸±à¸à¸šà¸™à¸«à¸™à¹‰à¸²à¸ˆà¸­' };
+            return { success: false, message: 'ไม่พบวิดีโอหลักบนหน้าจอ' };
         }
 
         const toDownload = Math.min(maxDl, validVideos.length);
         let downloadedCount = 0;
 
-        // ðŸš€ à¸§à¸™à¸¥à¸¹à¸›à¸”à¸¹à¸”à¹„à¸Ÿà¸¥à¹Œà¸—à¸µà¸¥à¸°à¸„à¸¥à¸´à¸›
+        // 🚀 วนลูปดูดไฟล์ทีละคลิป
         for (let i = 0; i < toDownload; i++) {
             const targetVideo = validVideos[i];
             
-            // à¹€à¸¥à¸·à¹ˆà¸­à¸™à¸ˆà¸­à¹ƒà¸«à¹‰à¹€à¸«à¹‡à¸™à¸§à¸´à¸”à¸µà¹‚à¸­à¸™à¸´à¸”à¸™à¸¶à¸‡ (à¹€à¸žà¸·à¹ˆà¸­à¸„à¸§à¸²à¸¡à¸ªà¸§à¸¢à¸‡à¸²à¸¡à¸•à¸­à¸™à¸£à¸±à¸™à¸šà¸­à¸—)
+            // เลื่อนจอให้เห็นวิดีโอนิดนึง (เพื่อความสวยงามตอนรันบอท)
             targetVideo.scrollIntoView({ behavior: 'smooth', block: 'center' });
             await sleep(800);
 
-          // ðŸŒŸ 1. à¸‚à¹‚à¸¡à¸¢à¸¥à¸´à¸‡à¸à¹Œà¸§à¸´à¸”à¸µà¹‚à¸­à¸•à¸£à¸‡à¹† à¸ˆà¸²à¸à¹à¸—à¹‡à¸ <video> à¸«à¸£à¸·à¸­ <source>
+          // 🌟 1. ขโมยลิงก์วิดีโอตรงๆ จากแท็ก <video> หรือ <source>
             let vidSrc = targetVideo.getAttribute('src') || targetVideo.currentSrc || targetVideo.src;
             if (!vidSrc) {
                 const sourceTag = targetVideo.querySelector('source');
                 if (sourceTag) vidSrc = sourceTag.getAttribute('src') || sourceTag.src;
             }
 
-            // ðŸŒŸ à¸›à¸¥à¸”à¸¥à¹‡à¸­à¸„à¹€à¸‡à¸·à¹ˆà¸­à¸™à¹„à¸‚ http à¸­à¸­à¸à¹„à¸›! à¸¡à¸µà¸¥à¸´à¸‡à¸à¹Œà¸›à¸¸à¹Šà¸šà¸”à¸¹à¸”à¸›à¸±à¹Šà¸š
+            // 🌟 ปลดล็อคเงื่อนไข http ออกไป! มีลิงก์ปุ๊บดูดปั๊บ
             if (vidSrc) {
                 try {
-                    // ðŸ”¥ à¹à¸›à¸¥à¸‡à¸¥à¸´à¸‡à¸à¹Œà¹à¸šà¸šà¸¢à¹ˆà¸­ (/fx/api/...) à¹ƒà¸«à¹‰à¹€à¸›à¹‡à¸™à¸¥à¸´à¸‡à¸à¹Œà¹€à¸•à¹‡à¸¡ (https://...)
+                    // 🔥 แปลงลิงก์แบบย่อ (/fx/api/...) ให้เป็นลิงก์เต็ม (https://...)
                     const absoluteUrl = new URL(vidSrc, window.location.origin).href;
 
-                    // ðŸ”¥ 2. à¸—à¹ˆà¸²à¹„à¸¡à¹‰à¸•à¸²à¸¢à¹à¸®à¸à¹€à¸à¸­à¸£à¹Œ: à¸”à¸¶à¸‡à¹„à¸Ÿà¸¥à¹Œ MP4 à¸ˆà¸²à¸à¹€à¸‹à¸´à¸£à¹Œà¸Ÿà¹€à¸§à¸­à¸£à¹Œà¹‚à¸”à¸¢à¸•à¸£à¸‡
+                    // 🔥 2. ท่าไม้ตายแฮกเกอร์: ดึงไฟล์ MP4 จากเซิร์ฟเวอร์โดยตรง
                     const response = await fetch(absoluteUrl);
                     
                     if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
@@ -1926,28 +1997,28 @@ async function videoHandleTestDownloadMulti() {
                     const blob = await response.blob(); 
                     const blobUrl = window.URL.createObjectURL(blob);
 
-                    // ðŸŒŸ 3. à¸ªà¸£à¹‰à¸²à¸‡ "à¸›à¸¸à¹ˆà¸¡à¸”à¸²à¸§à¸™à¹Œà¹‚à¸«à¸¥à¸”à¸¥à¹ˆà¸­à¸‡à¸«à¸™" à¸‚à¸­à¸‡à¹€à¸£à¸²à¹€à¸­à¸‡
+                    // 🌟 3. สร้าง "ปุ่มดาวน์โหลดล่องหน" ของเราเอง
                     const a = document.createElement('a');
                     a.style.display = 'none';
                     a.href = blobUrl;
                     a.download = `Banana_Video_${Date.now()}_${i+1}.mp4`; 
                     
                     document.body.appendChild(a);
-                    a.click(); // à¸ªà¸±à¹ˆà¸‡à¹€à¸‹à¸Ÿà¸¥à¸‡à¹€à¸„à¸£à¸·à¹ˆà¸­à¸‡
+                    a.click(); // สั่งเซฟลงเครื่อง
                     await sleep(500);
 
-                    // à¹€à¸à¹‡à¸šà¸à¸§à¸²à¸”à¸›à¸¸à¹ˆà¸¡à¸¥à¹ˆà¸­à¸‡à¸«à¸™à¸—à¸´à¹‰à¸‡
+                    // เก็บกวาดปุ่มล่องหนทิ้ง
                     document.body.removeChild(a);
                     window.URL.revokeObjectURL(blobUrl);
 
                     downloadedCount++;
-                    await sleep(1500); // â³ à¸£à¸­à¹à¸›à¸šà¸™à¸¶à¸‡à¹ƒà¸«à¹‰à¹„à¸Ÿà¸¥à¹Œà¹„à¸«à¸¥à¹€à¸‚à¹‰à¸²à¹€à¸„à¸£à¸·à¹ˆà¸­à¸‡à¸à¹ˆà¸­à¸™à¸”à¸¹à¸”à¸„à¸¥à¸´à¸›à¸–à¸±à¸”à¹„à¸›
+                    await sleep(1500); // ⏳ รอแปบนึงให้ไฟล์ไหลเข้าเครื่องก่อนดูดคลิปถัดไป
 
                 } catch (fetchErr) {
-                    console.log(`à¸”à¸¹à¸”à¸§à¸´à¸”à¸µà¹‚à¸­à¸—à¸µà¹ˆ ${i+1} à¸¥à¹‰à¸¡à¹€à¸«à¸¥à¸§:`, fetchErr);
+                    console.log(`ดูดวิดีโอที่ ${i+1} ล้มเหลว:`, fetchErr);
                 }
             } else {
-                console.log(`à¸‚à¹‰à¸²à¸¡à¸§à¸´à¸”à¸µà¹‚à¸­à¸—à¸µà¹ˆ ${i+1}: à¸«à¸²à¸¥à¸´à¸‡à¸à¹Œ (src) à¹„à¸¡à¹ˆà¹€à¸ˆà¸­`);
+                console.log(`ข้ามวิดีโอที่ ${i+1}: หาลิงก์ (src) ไม่เจอ`);
             }
         }
 
@@ -1955,7 +2026,7 @@ async function videoHandleTestDownloadMulti() {
             success: downloadedCount > 0, 
             downloaded: downloadedCount, 
             total: toDownload,
-            message: downloadedCount > 0 ? `à¸”à¸²à¸§à¸™à¹Œà¹‚à¸«à¸¥à¸”à¹€à¸ªà¸£à¹‡à¸ˆ ${downloadedCount}/${toDownload} à¸„à¸¥à¸´à¸›!` : 'à¸”à¸¶à¸‡à¹„à¸Ÿà¸¥à¹Œà¹„à¸¡à¹ˆà¸ªà¸³à¹€à¸£à¹‡à¸ˆ'
+            message: downloadedCount > 0 ? `ดาวน์โหลดเสร็จ ${downloadedCount}/${toDownload} คลิป!` : 'ดึงไฟล์ไม่สำเร็จ'
         };
       },
       args: [maxDownloads]
@@ -1967,7 +2038,7 @@ async function videoHandleTestDownloadMulti() {
         videoUpdateStatus(res.message);
         showToast(res.message, 'success');
     } else {
-        videoUpdateStatus(`Error: ${res?.message || 'à¹„à¸¡à¹ˆà¸ªà¸²à¸¡à¸²à¸£à¸–à¸”à¸¶à¸‡à¸§à¸´à¸”à¸µà¹‚à¸­à¹„à¸”à¹‰'}`);
+        videoUpdateStatus(`Error: ${res?.message || 'ไม่สามารถดึงวิดีโอได้'}`);
         showToast('Failed to download videos', 'error');
     }
 
@@ -2071,19 +2142,19 @@ function parseYAMLToPlainText(yamlText, isVideo = true) {
 // Video Prompt & Play Studio: Handle Copy Prompt
 function videoHandleCopyPrompt() {
   const text = videoPromptResult.textContent;
-  if (!text || text.includes('à¸à¸³à¸¥à¸±à¸‡à¸§à¸´à¹€à¸„à¸£à¸²à¸°à¸«à¹Œ')) {
-    showToast('à¹„à¸¡à¹ˆà¸¡à¸µ Prompt à¹ƒà¸«à¹‰à¸„à¸±à¸”à¸¥à¸­à¸', 'error');
+  if (!text || text.includes('กำลังวิเคราะห์')) {
+    showToast('ไม่มี Prompt ให้คัดลอก', 'error');
     return;
   }
 
   navigator.clipboard.writeText(text).then(() => {
-    showToast('à¸„à¸±à¸”à¸¥à¸­à¸ Prompt à¹à¸¥à¹‰à¸§!', 'success');
-    videoBtnCopyPrompt.textContent = 'âœ…';
+    showToast('คัดลอก Prompt แล้ว!', 'success');
+    videoBtnCopyPrompt.textContent = '✅';
     setTimeout(() => {
-      videoBtnCopyPrompt.textContent = 'ðŸ“‹';
+      videoBtnCopyPrompt.textContent = '📋';
     }, 2000);
   }).catch(() => {
-    showToast('à¹„à¸¡à¹ˆà¸ªà¸²à¸¡à¸²à¸£à¸–à¸„à¸±à¸”à¸¥à¸­à¸à¹„à¸”à¹‰', 'error');
+    showToast('ไม่สามารถคัดลอกได้', 'error');
   });
 }
 
@@ -2091,25 +2162,25 @@ function videoHandleCopyPrompt() {
 // AUTOMATION FUNCTIONS
 // ============================================
 
-// Video Prompt & Play Studio: Sleep helper (à¸‰à¸šà¸±à¸šà¹à¸à¹‰: à¸•à¸·à¹ˆà¸™à¸—à¸±à¸™à¸—à¸µà¸—à¸µà¹ˆà¸à¸” Stop)
+// Video Prompt & Play Studio: Sleep helper (ฉบับแก้: ตื่นทันทีที่กด Stop)
 function videoSleep(ms) {
   return new Promise((resolve, reject) => {
-    // à¹€à¸Šà¹‡à¸„à¸à¹ˆà¸­à¸™à¹€à¸¥à¸¢ à¸–à¹‰à¸²à¸à¸”à¸«à¸¢à¸¸à¸”à¹à¸¥à¹‰à¸§ à¹ƒà¸«à¹‰ Reject à¸—à¸±à¸™à¸—à¸µ
+    // เช็คก่อนเลย ถ้ากดหยุดแล้ว ให้ Reject ทันที
     if (videoShouldStopAutomation) {
         return reject(new Error('STOPPED'));
     }
 
-    const checkInterval = 100; // à¹€à¸Šà¹‡à¸„à¸—à¸¸à¸ 0.1 à¸§à¸´à¸™à¸²à¸—à¸µ
+    const checkInterval = 100; // เช็คทุก 0.1 วินาที
     let elapsed = 0;
 
     const intervalId = setInterval(() => {
-      // à¹€à¸Šà¹‡à¸„à¸›à¸¸à¹ˆà¸¡ Stop à¸—à¸¸à¸à¹† 0.1 à¸§à¸´
+      // เช็คปุ่ม Stop ทุกๆ 0.1 วิ
       if (videoShouldStopAutomation) {
         clearInterval(intervalId);
-        reject(new Error('STOPPED')); // ðŸ”´ à¸ªà¸±à¹ˆà¸‡à¸«à¸¢à¸¸à¸”à¸—à¸±à¸™à¸—à¸µ!
+        reject(new Error('STOPPED')); // 🔴 สั่งหยุดทันที!
       } else if (elapsed >= ms) {
         clearInterval(intervalId);
-        resolve(); // à¸„à¸£à¸šà¹€à¸§à¸¥à¸²
+        resolve(); // ครบเวลา
       }
       elapsed += checkInterval;
     }, checkInterval);
@@ -2120,8 +2191,8 @@ function videoSleep(ms) {
 function videoStopAutomation() {
   if (videoIsAutomationRunning) {
     videoShouldStopAutomation = true;
-    videoUpdateStatus('à¸à¸³à¸¥à¸±à¸‡à¸«à¸¢à¸¸à¸”...');
-    showToast('à¸à¸³à¸¥à¸±à¸‡à¸«à¸¢à¸¸à¸” Automation...', 'error');
+    videoUpdateStatus('กำลังหยุด...');
+    showToast('กำลังหยุด Automation...', 'error');
   }
 }
 
@@ -2129,7 +2200,7 @@ function videoStopAutomation() {
 
 
 // ============================================
-// ðŸŽ¬ VIDEO Prompt & Play Studio: Run Automation (Standalone Version)
+// 🎬 VIDEO Prompt & Play Studio: Run Automation (Standalone Version)
 // ============================================
 async function videoRunAutomation() {
   if (!_0x99f || typeof AUTH === 'undefined') { _selfDestruct("E03: Illegal Execution"); return; }
@@ -2137,13 +2208,13 @@ async function videoRunAutomation() {
   if (!isCorrect) return;
 
   if (videoIsAutomationRunning) {
-    showToast('à¸à¸³à¸¥à¸±à¸‡à¸£à¸±à¸™à¸­à¸¢à¸¹à¹ˆà¹à¸¥à¹‰à¸§ à¸à¸£à¸¸à¸“à¸²à¸£à¸­à¸ªà¸±à¸à¸„à¸£à¸¹à¹ˆ', 'error');
+    showToast('กำลังรันอยู่แล้ว กรุณารอสักครู่', 'error');
     return;
   }
 
   const productName = videoProductNameInput.value.trim();
   if (videoUploadedImages.length === 0) {
-    showToast('à¸à¸£à¸¸à¸“à¸²à¸­à¸±à¸žà¹‚à¸«à¸¥à¸”à¸ à¸²à¸žà¸•à¸±à¹‰à¸‡à¸•à¹‰à¸™à¸à¹ˆà¸­à¸™', 'error');
+    showToast('กรุณาอัพโหลดภาพตั้งต้นก่อน', 'error');
     return;
   }
 
@@ -2152,7 +2223,7 @@ async function videoRunAutomation() {
   videoBtnAutomation.disabled = true;
   await toggleWebPageLock(true); 
   
-  videoBtnAutomation.innerHTML = '<span class="loading"></span> <span>à¸à¸³à¸¥à¸±à¸‡à¸£à¸±à¸™ Video...</span>';
+  videoBtnAutomation.innerHTML = '<span class="loading"></span> <span>กำลังรัน Video...</span>';
   if (videoBtnStop) videoBtnStop.style.display = 'flex';
   if (videoPromptStatus) videoPromptStatus.style.display = 'none';
 
@@ -2167,9 +2238,9 @@ async function videoRunAutomation() {
 	
 	
 	// ============================================
-          // ðŸŸ¢ STEP 1: à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸²à¹‚à¸«à¸¡à¸” Video (à¸­à¸±à¸›à¹€à¸à¸£à¸” V13: Blacklist à¹€à¸¡à¸™à¸¹à¸‹à¹‰à¸²à¸¢à¸¡à¸·à¸­ & à¸•à¸£à¸§à¸ˆà¸ˆà¸±à¸š role="tab")
+          // 🟢 STEP 1: ตั้งค่าโหมด Video (อัปเกรด V13: Blacklist เมนูซ้ายมือ & ตรวจจับ role="tab")
           // ============================================
-          videoUpdateStatus(`âš™ï¸ Step 1/4: à¸à¸³à¸¥à¸±à¸‡à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸²à¹‚à¸«à¸¡à¸” Video...`);
+          videoUpdateStatus(`⚙️ Step 1/4: กำลังตั้งค่าโหมด Video...`);
           
           const setupVideoMode = await chrome.scripting.executeScript({
             target: { tabId: tab.id },
@@ -2189,27 +2260,27 @@ async function videoRunAutomation() {
                         return true;
                     }
 
-                    // ðŸ›‘ à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸„à¹‰à¸™à¸«à¸²à¸›à¸¸à¹ˆà¸¡à¹à¸šà¸šà¹€à¸ˆà¸²à¸°à¸ˆà¸‡à¸‚à¸±à¹‰à¸™à¸ªà¸¸à¸” (Geofencing + Blacklist)
+                    // 🛑 ฟังก์ชันค้นหาปุ่มแบบเจาะจงขั้นสุด (Geofencing + Blacklist)
                     function findSafeSettingsButton(iconNames, textKeywords = [], blacklist = []) {
                         const allBtns = Array.from(document.querySelectorAll('button, [role="tab"]'));
                         
                         return allBtns.find(btn => {
                             const rect = btn.getBoundingClientRect();
-                            // 1. à¸à¸£à¸­à¸‡à¸—à¸´à¹‰à¸‡: à¸›à¸¸à¹ˆà¸¡à¸—à¸µà¹ˆà¸­à¸¢à¸¹à¹ˆà¸Šà¸´à¸”à¸‹à¹‰à¸²à¸¢à¸‚à¸­à¸‡à¸«à¸™à¹‰à¸²à¸ˆà¸­à¹€à¸à¸´à¸™à¹„à¸› (à¹€à¸žà¸´à¹ˆà¸¡à¸£à¸°à¸¢à¸°à¹€à¸›à¹‡à¸™ 200px)
+                            // 1. กรองทิ้ง: ปุ่มที่อยู่ชิดซ้ายของหน้าจอเกินไป (เพิ่มระยะเป็น 200px)
                             if (rect.left < 200) return false; 
                             
-                            // 2. à¸à¸£à¸­à¸‡à¸—à¸´à¹‰à¸‡: à¹à¸—à¹‡à¸à¹€à¸¡à¸™à¸¹à¸‚à¸­à¸‡à¹‚à¸„à¸£à¸‡à¸ªà¸£à¹‰à¸²à¸‡à¹€à¸§à¹‡à¸š
+                            // 2. กรองทิ้ง: แท็กเมนูของโครงสร้างเว็บ
                             if (btn.closest('nav, aside')) return false;
 
                             const icon = btn.querySelector('i');
                             const iconText = icon ? icon.textContent.trim().toLowerCase() : "";
                             const btnText = (btn.textContent || "").trim().toLowerCase();
 
-                            // 3. ðŸš¨ à¸à¸£à¸­à¸‡à¸—à¸´à¹‰à¸‡ (Blacklist): à¸–à¹‰à¸²à¸¡à¸µà¸„à¸³à¸•à¹‰à¸­à¸‡à¸«à¹‰à¸²à¸¡ à¹ƒà¸«à¹‰à¹‚à¸¢à¸™à¸—à¸´à¹‰à¸‡à¸—à¸±à¸™à¸—à¸µ
+                            // 3. 🚨 กรองทิ้ง (Blacklist): ถ้ามีคำต้องห้าม ให้โยนทิ้งทันที
                             const isBad = blacklist.some(word => btnText.includes(word.toLowerCase()));
                             if (isBad) return false;
 
-                            // 4. à¸•à¸£à¸§à¸ˆà¸ªà¸­à¸šà¸„à¸§à¸²à¸¡à¸•à¸£à¸‡à¸à¸±à¸™
+                            // 4. ตรวจสอบความตรงกัน
                             const matchIcon = iconNames.some(name => iconText === name.toLowerCase());
                             const matchText = textKeywords.some(keyword => btnText.includes(keyword.toLowerCase()));
 
@@ -2217,7 +2288,7 @@ async function videoRunAutomation() {
                         });
                     }
 
-                    // 1. à¸«à¸²à¸›à¸¸à¹ˆà¸¡à¹€à¸¡à¸™à¸¹à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸²
+                    // 1. หาปุ่มเมนูตั้งค่า
                     let settingsBtn = null;
                     const allBtns = Array.from(document.querySelectorAll('button'));
                     const submitBtn = [...allBtns].reverse().find(b => (b.querySelector('i')?.textContent || "").trim() === 'arrow_forward');
@@ -2225,22 +2296,22 @@ async function videoRunAutomation() {
                         settingsBtn = submitBtn.previousElementSibling;
                     }
                     if (!settingsBtn) {
-                        settingsBtn = findSafeSettingsButton(['tune', 'settings'], ['à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸²']);
+                        settingsBtn = findSafeSettingsButton(['tune', 'settings'], ['ตั้งค่า']);
                     }
                     
-                    if (!settingsBtn) return resolve({ success: false, msg: 'âŒ à¸«à¸²à¸›à¸¸à¹ˆà¸¡à¹€à¸¡à¸™à¸¹à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸²à¹„à¸¡à¹ˆà¹€à¸ˆà¸­' });
+                    if (!settingsBtn) return resolve({ success: false, msg: '❌ หาปุ่มเมนูตั้งค่าไม่เจอ' });
                     
                     heavyClick(settingsBtn);
                     await sleep(800);
                     
-                    // 2. ðŸŽ¯ à¸«à¸²à¹à¸—à¹‡à¸š Video (à¸­à¸±à¸›à¹€à¸à¸£à¸”: à¹ƒà¸ªà¹ˆ Blacklist à¸„à¸³à¸§à¹ˆà¸² "à¸”à¸¹à¸§à¸´à¸”à¸µà¹‚à¸­", "à¹€à¸„à¸£à¸·à¹ˆà¸­à¸‡à¸¡à¸·à¸­à¸ªà¸£à¹‰à¸²à¸‡à¸‰à¸²à¸")
+                    // 2. 🎯 หาแท็บ Video (อัปเกรด: ใส่ Blacklist คำว่า "ดูวิดีโอ", "เครื่องมือสร้างฉาก")
                     let videoTab = null;
                     for (let check = 0; check < 20; check++) {
                         await sleep(500);
                         videoTab = findSafeSettingsButton(
                             ['videocam', 'play_circle'], 
-                            ['à¸§à¸´à¸”à¸µà¹‚à¸­', 'video'], 
-                            ['à¸”à¸¹à¸§à¸´à¸”à¸µà¹‚à¸­', 'à¹€à¸„à¸£à¸·à¹ˆà¸­à¸‡à¸¡à¸·à¸­à¸ªà¸£à¹‰à¸²à¸‡à¸‰à¸²à¸', 'scene'] // ðŸš¨ à¸›à¹‰à¸­à¸‡à¸à¸±à¸™à¸à¸²à¸£à¸à¸”à¹€à¸¡à¸™à¸¹à¸‹à¹‰à¸²à¸¢à¹à¸¥à¸°à¹€à¸¡à¸™à¸¹à¹€à¸„à¸£à¸·à¹ˆà¸­à¸‡à¸¡à¸·à¸­
+                            ['วิดีโอ', 'video'], 
+                            ['ดูวิดีโอ', 'เครื่องมือสร้างฉาก', 'scene'] // 🚨 ป้องกันการกดเมนูซ้ายและเมนูเครื่องมือ
                         );
                         if (videoTab) break;
                     }
@@ -2250,14 +2321,14 @@ async function videoRunAutomation() {
                         await sleep(1000); 
                     } else { 
                         document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', keyCode: 27, bubbles: true }));
-                        return resolve({ success: false, msg: 'âŒ à¸«à¸²à¹à¸—à¹‡à¸š Video à¹„à¸¡à¹ˆà¹€à¸ˆà¸­ (à¹€à¸§à¹‡à¸šà¹‚à¸«à¸¥à¸”à¸Šà¹‰à¸²)' }); 
+                        return resolve({ success: false, msg: '❌ หาแท็บ Video ไม่เจอ (เว็บโหลดช้า)' }); 
                     }
 
-                    // 3. ðŸŽ¯ à¸«à¸²à¹à¸—à¹‡à¸š Frames
+                    // 3. 🎯 หาแท็บ Frames
                     let framesTab = null;
                     for (let check = 0; check < 5; check++) {
                         await sleep(300);
-                        framesTab = findSafeSettingsButton(['crop_free'], ['à¹€à¸Ÿà¸£à¸¡', 'frames']);
+                        framesTab = findSafeSettingsButton(['crop_free'], ['เฟรม', 'frames']);
                         if (framesTab) break;
                     }
                     if (framesTab) { 
@@ -2265,7 +2336,7 @@ async function videoRunAutomation() {
                         await sleep(1000); 
                     }
 
-                    // 4. ðŸŽ¯ à¸«à¸²à¹à¸—à¹‡à¸š à¸ªà¸±à¸”à¸ªà¹ˆà¸§à¸™
+                    // 4. 🎯 หาแท็บ สัดส่วน
                     const targetIcon = (ratio === '9:16') ? 'crop_9_16' : 'crop_16_9';
                     const targetText = (ratio === '9:16') ? '9:16' : '16:9';
                     let ratioTab = null;
@@ -2280,10 +2351,10 @@ async function videoRunAutomation() {
                         await sleep(1000); 
                     }
 
-                    // à¸à¸” ESC à¹€à¸žà¸·à¹ˆà¸­à¸›à¸´à¸”à¹€à¸¡à¸™à¸¹
+                    // กด ESC เพื่อปิดเมนู
                     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', keyCode: 27, bubbles: true }));
                     await sleep(800);
-                    resolve({ success: true, msg: `âœ… à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸² Video + Frames + ${ratio} à¸ªà¸³à¹€à¸£à¹‡à¸ˆ` });
+                    resolve({ success: true, msg: `✅ ตั้งค่า Video + Frames + ${ratio} สำเร็จ` });
              
                 } catch (err) { resolve({ success: false, msg: 'Error: ' + err.message }); }
               });
@@ -2293,7 +2364,7 @@ async function videoRunAutomation() {
 
          if (!setupVideoMode[0]?.result?.success) {
               videoAddLog(`${setupVideoMode[0]?.result?.msg}`, 'warning');
-              throw new Error("à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸²à¹‚à¸«à¸¡à¸”à¸§à¸´à¸”à¸µà¹‚à¸­à¹„à¸¡à¹ˆà¸ªà¸³à¹€à¸£à¹‡à¸ˆ"); 
+              throw new Error("ตั้งค่าโหมดวิดีโอไม่สำเร็จ"); 
           } else {
               videoAddLog(`${setupVideoMode[0]?.result?.msg}`, 'success');
           }
@@ -2305,28 +2376,28 @@ async function videoRunAutomation() {
 
       for (let round = 0; round < roundsPerImage; round++) {
         const currentRound = imgIndex * roundsPerImage + round + 1;
-        const roundLabel = `[à¸£à¸­à¸š ${currentRound}/${totalRounds}]`;
+        const roundLabel = `[รอบ ${currentRound}/${totalRounds}]`;
 
         try {
           if (videoShouldStopAutomation) throw new Error('STOPPED');
 
        // ============================================
-          // ðŸ§  PREPARE PROMPT (à¸­à¸±à¸›à¹€à¸”à¸•à¸ªà¹„à¸•à¸¥à¹Œà¹ƒà¸«à¹‰à¹€à¸›à¹‡à¸™à¹€à¸¥à¸‚à¸„à¸¹à¹ˆ à¸ˆà¸±à¸”à¸à¸£à¸´à¸”à¸ªà¸§à¸¢à¸‡à¸²à¸¡)
+          // 🧠 PREPARE PROMPT (อัปเดตสไตล์ให้เป็นเลขคู่ จัดกริดสวยงาม)
           // ============================================
-          videoUpdateStatus(`${roundLabel} à¸à¸³à¸¥à¸±à¸‡à¹€à¸•à¸£à¸µà¸¢à¸¡ Prompt...`);
+          videoUpdateStatus(`${roundLabel} กำลังเตรียม Prompt...`);
 
           const styleSelect = document.getElementById('video-style-select');
           
-          // ðŸ›‘ à¸à¸Žà¹€à¸«à¸¥à¹‡à¸à¸£à¸°à¸”à¸±à¸šà¸§à¸´à¸à¸¤à¸•: à¸¥à¹‡à¸­à¸à¸„à¸­ AI à¸«à¹‰à¸²à¸¡à¹€à¸›à¸¥à¸µà¹ˆà¸¢à¸™à¸£à¸¹à¸›à¸—à¸£à¸‡ à¸›à¹‰à¸²à¸¢à¸ªà¸´à¸™à¸„à¹‰à¸² à¹à¸¥à¸° "à¹à¸Šà¹ˆà¹à¸‚à¹‡à¸‡à¸•à¸±à¸§à¸«à¸™à¸±à¸‡à¸ªà¸·à¸­" à¸‚à¸±à¹‰à¸™à¹€à¸”à¹‡à¸”à¸‚à¸²à¸”!
+          // 🛑 กฎเหล็กระดับวิกฤต: ล็อกคอ AI ห้ามเปลี่ยนรูปทรง ป้ายสินค้า และ "แช่แข็งตัวหนังสือ" ขั้นเด็ดขาด!
           const textProtection = " [CRITICAL TEXT RULE: Any Thai text, typography, or product labels in the image MUST remain 100% FROZEN, STATIC, and UNCHANGED throughout the entire video. DO NOT morph, distort, translate, animate, or hallucinate new text.]";
           const strictFidelity = " [Maintain 100% exact fidelity to the source image. DO NOT alter the product's shape, product label, typography, or background elements. Only animate the intended subject or camera movement.]" + textProtection;
           const tiktokSafetyRules = " (Rules: NO floating text, NO subtitles. Focus on natural mouth movements and minimal, realistic head gestures)." + strictFidelity;
           const productOnlySafetyRules = " (Rules: PRODUCT-ONLY video. NO people, NO human, NO face, NO presenter, NO talking character, NO mouth movement, NO lip sync, NO dialogue, NO subtitles, NO floating text. Use only subtle camera movement, light movement, product detail motion, or background ambience.)" + strictFidelity;
           const voiceoverSafetyRules = " (Rules: NARRATOR VOICEOVER ONLY. NO people, NO human presenter, NO talking character, NO mouth movement, NO lip sync, NO visible speaker, NO subtitles, NO floating text. Show only the product or the original source image with subtle product/camera motion.)" + strictFidelity;
 		  
-        // ðŸŒŸ [ULTRA NATURAL VERSION] à¸„à¸¥à¸±à¸‡à¸ªà¹„à¸•à¸¥à¹Œà¹ƒà¸Šà¹‰à¸‡à¸²à¸™à¸ˆà¸£à¸´à¸‡ (à¸­à¸±à¸›à¹€à¸”à¸•à¸£à¸°à¸šà¸š Tough Love & à¹€à¸žà¸´à¹ˆà¸¡à¸ªà¹„à¸•à¸¥à¹Œ)
+        // 🌟 [ULTRA NATURAL VERSION] คลังสไตล์ใช้งานจริง (อัปเดตระบบ Tough Love & เพิ่มสไตล์)
           const videoTemplates = {
-              // ðŸ—£ï¸ à¸à¸¥à¸¸à¹ˆà¸¡ 1: à¸£à¸µà¸§à¸´à¸§à¹à¸¥à¸°à¸”à¸¶à¸‡à¸”à¸¹à¸”à¸„à¸§à¸²à¸¡à¸ªà¸™à¹ƒà¸ˆ (Talking Head & Hook)
+              // 🗣ï¸ กลุ่ม 1: รีวิวและดึงดูดความสนใจ (Talking Head & Hook)
               'talk_ugc': "Cinematic smartphone selfie-style video. An authentic, unscripted UGC review of [product]. The character looks directly into the lens like a real everyday customer sharing a genuine 'after-use' experience. The character is speaking in Thai with a highly natural, word-of-mouth tone. " + tiktokSafetyRules,
               'talk_excited': "Bright aesthetic lighting. The character is enthusiastically presenting [product] to the viewer. High energy, friendly influencer vibe, sharing a great deal. The character is speaking in Thai with a lively, natural tone. " + tiktokSafetyRules,
               'talk_cheerful': "The character is lighthearted and smiling naturally while talking about [product]. A relaxed, feel-good vibe (no fake loud laughing). The character is speaking in Thai with a joyful, friendly banter tone. " + tiktokSafetyRules,
@@ -2336,19 +2407,19 @@ async function videoRunAutomation() {
               'hook_secret': "The character leans in slightly with an intimate, conversational vibe, holding [product]. They have a 'real talk' expression, sharing a valuable secret. The character is speaking in Thai with a quick, engaging, and mysterious tone. Speak continuously. " + tiktokSafetyRules,
               'hook_comparison': "The character is analyzing [product] logically, making a conversational comparison. Slight head tilt. The character is speaking in Thai with an analytical, 'let me explain' tone. " + tiktokSafetyRules,
 
-             // ðŸ›‘ à¸à¸¥à¸¸à¹ˆà¸¡ 1.5: à¸ªà¸²à¸¢à¸šà¹ˆà¸™à¹€à¸•à¸·à¸­à¸™à¸ªà¸•à¸´ (Tough Love)
+             // 🛑 กลุ่ม 1.5: สายบ่นเตือนสติ (Tough Love)
               'rant': "The character is delivering a passionate 'tough love' rant. Acting like a caring best friend scolding the viewer for neglecting their own well-being, before forcefully recommending [product] as the ultimate solution. The character is speaking in Thai with a fast, urgent, scolding, yet deeply caring tone. " + tiktokSafetyRules,
               'hook_mistake': "The character gives a caring but strict warning, slightly shaking their head in disbelief at a common mistake the viewer is making. It feels like a mother scolding out of love before offering [product] to help. The character is speaking in Thai with a concerned, slightly strict, but highly helpful warning tone. " + tiktokSafetyRules,
               'rant_skeptical': "The character gives a serious, concerned wake-up call. They show slight frustration about a bad habit the viewer is doing, then their expression turns highly supportive as they introduce [product] to fix it. The character is speaking in Thai with an honest, tough-love realization tone. " + tiktokSafetyRules,
               'rant_partner': "The character acts like a caring but frustrated partner, playfully scolding the viewer for not taking care of themselves, then handing them [product] as the perfect solution. The character is speaking in Thai with a passionate, slightly annoyed but deeply loving tone. " + tiktokSafetyRules,
 			  
-              // ðŸ’° à¸à¸¥à¸¸à¹ˆà¸¡ 2: à¸›à¸´à¸”à¸à¸²à¸£à¸‚à¸²à¸¢ (Closing)
+              // 💰 กลุ่ม 2: ปิดการขาย (Closing)
               'closing_urgency': "The character expresses a natural sense of urgency about [product]. Fast-paced, dynamic energy, subtly gesturing downwards. The character is speaking in Thai with a fast-paced, FOMO-driven tone. " + tiktokSafetyRules,
               'closing_sincere': "The character gives a warm, reassuring sign-off with [product] in hand. A gentle smile indicating 'trust me on this one'. The character is speaking in Thai with a comforting, caring, but fluent and continuous tone. " + tiktokSafetyRules,
               'closing_challenge': "The character holds [product] confidently, giving a friendly, playful nod. They project a bold vibe, daring the viewer to try it. The character is speaking in Thai with a bold, confident, and challenging tone. " + tiktokSafetyRules,
               'closing_cta': "The character delivers a direct but friendly Call-To-Action about [product], subtly pointing or looking down to indicate the shopping basket. The character is speaking in Thai with a clear, inviting CTA tone. " + tiktokSafetyRules,
 
-              // ðŸ“¸ à¸à¸¥à¸¸à¹ˆà¸¡ 3: à¹€à¸™à¹‰à¸™à¸ªà¸´à¸™à¸„à¹‰à¸² (B-Roll)
+              // 📸 กลุ่ม 3: เน้นสินค้า (B-Roll)
               'broll_hero': "Professional commercial Hero Shot. The [product] stands perfectly still. Very subtle light reflection movement on the surface to show realism. NO rotation. Keep original image 100%. " + productOnlySafetyRules,
               'broll_pan': "Slow and smooth cinematic camera pan over [product]. Keep the product and background exactly as the original image. " + productOnlySafetyRules,
               'broll_zoom': "Camera slowly zooms in on [product] texture. Highlighting micro-details without changing them. " + productOnlySafetyRules,
@@ -2356,7 +2427,7 @@ async function videoRunAutomation() {
               'broll_motion_detail': "Product motion-detail B-roll. Use a gentle camera drift, subtle focus pull, tiny reflection movement, and micro-detail emphasis on [product]. Do NOT change the main lighting, scene, color mood, product shape, label, or background. Keep the original image identity intact. " + productOnlySafetyRules,
               'miniature_vdo': `Cinematic miniature product world animation. The giant [product] remains static while tiny non-human props, packaging pieces, lights, and display elements move in a stepped stop-motion style. Tilt-shift macro zoom. ${productOnlySafetyRules}`,
 
-              // ðŸŽ™ï¸ à¸à¸¥à¸¸à¹ˆà¸¡ 4: à¸žà¸²à¸à¸¢à¹Œà¹€à¸ªà¸µà¸¢à¸‡ (Voiceover)
+              // 🎙️ กลุ่ม 4: พากย์เสียง (Voiceover)
               'voice_promo': "Fast cuts commercial style. Energetic camera movement showing [product]. Keep original image details. Voice Tone: High-energy, fast-paced commercial narrator. " + voiceoverSafetyRules,
               'voice_soft': "Gentle camera movement showing [product]. Soft vibe. Keep original colors. Voice Tone: Soothing and calm narrator, but speaking at a normal, continuous commercial pace. NOT slow ASMR. " + voiceoverSafetyRules,
              'voice_docu': "Cinematic product documentary style. Elegant pans detailing the premium quality of [product]. Voice Tone: Professional and sophisticated product narrator explaining features continuously at a standard commercial speed. NOT slow. " + voiceoverSafetyRules,
@@ -2408,7 +2479,7 @@ async function videoRunAutomation() {
 
         let speakerRef = "The character is";
 
-          // ðŸ—£ï¸ à¸à¸±à¸‡à¸„à¸³à¸ªà¸±à¹ˆà¸‡à¹à¸‹à¸™à¸”à¹Œà¸§à¸´à¸Š: à¸•à¸µà¸à¸£à¸­à¸šà¸«à¸™à¹‰à¸²-à¸«à¸¥à¸±à¸‡ à¸šà¸±à¸‡à¸„à¸±à¸šà¸žà¸¹à¸”à¹„à¸—à¸¢ 100% à¸«à¹‰à¸²à¸¡à¸«à¸¥à¸¸à¸”à¹€à¸”à¹‡à¸”à¸‚à¸²à¸”!
+          // 🗣ï¸ ฝังคำสั่งแซนด์วิช: ตีกรอบหน้า-หลัง บังคับพูดไทย 100% ห้ามหลุดเด็ดขาด!
           let thaiHeader = "[CRITICAL LANGUAGE OVERRIDE: 100% THAI AUDIO ONLY. NO ENGLISH.] ";
           let thaiFooter = " [STRICT ENFORCEMENT: The character MUST speak exclusively in fluent Thai language. Absolutely NO English words, NO foreign languages, NO English accents. Must speak with a natural, continuous conversational pace. NO unnaturally slow talking, NO awkward pauses.]";
           
@@ -2419,47 +2490,47 @@ async function videoRunAutomation() {
           } else if (selectedVoice === 'northern') {
               dialectPhrase = `${thaiHeader}[DIALECT: Northern Thai] ${speakerRef} speaking in Northern Thai dialect with a modern conversational pace. Strictly speaking ONLY, NO singing, NO traditional music${thaiFooter}`;
           } else {
-              // à¸ªà¸³à¸«à¸£à¸±à¸šà¸ à¸²à¸©à¸²à¸à¸¥à¸²à¸‡
+              // สำหรับภาษากลาง
               dialectPhrase = `${thaiHeader}[DIALECT: Standard Thai] ${speakerRef} speaking in standard Thai${thaiFooter}`;
           }
 
           // --- Audio Injection Logic ---
           if (noVoiceModes.includes(selectedId)) {
-              // à¸›à¸´à¸”à¹€à¸ªà¸µà¸¢à¸‡ (B-Roll) à¸¥à¸šà¸„à¸³à¸ªà¸±à¹ˆà¸‡à¸žà¸¹à¸”à¸­à¸­à¸à¹ƒà¸«à¹‰à¸«à¸¡à¸”
+              // ปิดเสียง (B-Roll) ลบคำสั่งพูดออกให้หมด
               finalPrompt = finalPrompt.replace(/The character is speaking in Thai/gi, ''); 
               finalPrompt = finalPrompt.replace(/speaking in thai/gi, ''); 
-              videoAddLog(`ðŸ”‡ B-Roll: à¸›à¸´à¸”à¹€à¸ªà¸µà¸¢à¸‡`, 'info');
+              videoAddLog(`🔇 B-Roll: ปิดเสียง`, 'info');
           } else if (voiceoverModes.includes(selectedId)) {
               let genderLabel = genderTerm ? `${genderTerm} ` : "";
               let voPhrase = dialectPhrase.replace(/The character is/gi, 'The narrator voiceover is');
               finalPrompt += ` (Audio Note: A professional ${genderLabel}narrator voiceover. ${voPhrase}).`;
-              videoAddLog(`ðŸŽ™ï¸ Voiceover: ${genderTerm || 'à¹„à¸¡à¹ˆà¸£à¸°à¸šà¸¸à¹€à¸žà¸¨'} (${selectedVoice})`, 'info');
+              videoAddLog(`🎙️ Voiceover: ${genderTerm || 'ไม่ระบุเพศ'} (${selectedVoice})`, 'info');
           } else {
-              // ðŸ› ï¸ FIX 3: à¹€à¸›à¸¥à¸µà¹ˆà¸¢à¸™à¸ˆà¸²à¸à¸à¸²à¸£à¹ƒà¸Šà¹‰ .replace() à¹à¸—à¸£à¸à¸à¸¥à¸²à¸‡à¸›à¸£à¸°à¹‚à¸¢à¸„ à¹€à¸›à¹‡à¸™à¸à¸²à¸£à¸•à¹ˆà¸­à¸—à¹‰à¸²à¸¢ (Append) à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸«à¹‰ Prompt à¸ªà¸¡à¸šà¸¹à¸£à¸“à¹Œ
+              // 🛠️ FIX 3: เปลี่ยนจากการใช้ .replace() แทรกกลางประโยค เป็นการต่อท้าย (Append) เพื่อให้ Prompt สมบูรณ์
               finalPrompt += ` ${dialectPhrase}`;
           }
 
           // --- Custom Script Injection ---
           if (customScriptValue && !noVoiceModes.includes(selectedId)) {
-              // ðŸ› ï¸ FIX 4: à¸šà¸±à¸‡à¸„à¸±à¸šà¸„à¸³à¸§à¹ˆà¸² "exactly in Thai language" à¹„à¸§à¹‰à¸«à¸™à¹‰à¸²à¸šà¸—à¸žà¸¹à¸” à¹€à¸žà¸·à¹ˆà¸­à¹„à¸¡à¹ˆà¹ƒà¸«à¹‰ AI à¸‚à¹‰à¸²à¸¡à¹„à¸›à¹ƒà¸Šà¹‰à¸ à¸²à¸©à¸²à¸­à¸·à¹ˆà¸™
+              // 🛠️ FIX 4: บังคับคำว่า "exactly in Thai language" ไว้หน้าบทพูด เพื่อไม่ให้ AI ข้ามไปใช้ภาษาอื่น
               if (voiceoverModes.includes(selectedId)) {
                   finalPrompt += ` The narrator voiceover is saying exactly in Thai language: "${customScriptValue}".`;
               } else {
                   finalPrompt += ` The character is talking to the camera, saying exactly in Thai language: "${customScriptValue}".`;
               }
-              videoAddLog(`ðŸ—£ï¸ à¹ƒà¸Šà¹‰à¸šà¸—à¸žà¸¹à¸”à¸—à¸µà¹ˆà¸£à¸°à¸šà¸¸: "${customScriptValue}"`, 'info');
+              videoAddLog(`🗣ï¸ ใช้บทพูดที่ระบุ: "${customScriptValue}"`, 'info');
           }
 
-          // ðŸ› ï¸ FIX 5: à¹€à¸žà¸´à¹ˆà¸¡à¸„à¸³à¹à¸šà¸™à¸ à¸²à¸©à¸²à¸•à¹ˆà¸²à¸‡à¸Šà¸²à¸•à¸´ (foreign language, english language) à¹ƒà¸™ Negative Prompt
+          // 🛠️ FIX 5: เพิ่มคำแบนภาษาต่างชาติ (foreign language, english language) ใน Negative Prompt
           if (voiceoverModes.includes(selectedId)) {
               finalPrompt += ` [STRICT VISUAL VOICEOVER RULE: The voice is off-screen narration only. Do not create a presenter, talking face, lips, mouth movement, or any new human. If the source image already contains a person, keep that person visually static and do not make them speak.]`;
           }
           finalPrompt += ` Product label and text must be 100% FROZEN. ${getAntiBotSeed()} Negative Prompt: "foreign language, english language, english audio, other languages, text morphing, changing text, distorted letters, gibberish, alien language, moving text, floating letters, bad text, slow talking, slow speaking, long pauses, awkward silence, short speech, whispering"`;
           
       // ============================================
-          // ðŸŸ¢ STEP 2: à¸­à¸±à¸žà¹‚à¸«à¸¥à¸”à¸£à¸¹à¸›à¹à¸¥à¸°à¸à¸” [à¹€à¸žà¸´à¹ˆà¸¡à¹„à¸›à¸¢à¸±à¸‡à¸žà¸£à¸­à¸¡à¸•à¹Œ] (à¸­à¸±à¸›à¹€à¸à¸£à¸” V14: à¹€à¸ˆà¸²à¸°à¹€à¸à¸£à¸²à¸° Radix UI Menu)
+          // 🟢 STEP 2: อัพโหลดรูปและกด [เพิ่มไปยังพรอมต์] (อัปเกรด V14: เจาะเกราะ Radix UI Menu)
           // ============================================
-          videoUpdateStatus(`${roundLabel} Step 2/4: à¸à¸³à¸¥à¸±à¸‡à¸­à¸±à¸žà¹‚à¸«à¸¥à¸”à¹à¸¥à¸°à¹€à¸žà¸´à¹ˆà¸¡à¸¥à¸‡à¸žà¸£à¸­à¸¡à¸•à¹Œ...`);
+          videoUpdateStatus(`${roundLabel} Step 2/4: กำลังอัพโหลดและเพิ่มลงพรอมต์...`);
 
           const singleImageData = [{
             name: currentImage.name, type: currentImage.type, dataUrl: currentImage.dataUrl
@@ -2472,7 +2543,7 @@ async function videoRunAutomation() {
                   try {
                       const sleep = (ms) => new Promise(r => setTimeout(r, ms));
                       
-                      // ðŸŽ¯ à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸—à¸µà¹ˆ 1: à¸ªà¸³à¸«à¸£à¸±à¸šà¸à¸”à¹€à¸›à¸´à¸”à¹€à¸¡à¸™à¸¹ 3 à¸ˆà¸¸à¸” (Hover + MouseDown)
+                      // 🎯 ฟังก์ชันที่ 1: สำหรับกดเปิดเมนู 3 จุด (Hover + MouseDown)
                       async function triggerClick(el) {
                           if (!el) return;
                           el.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -2484,10 +2555,10 @@ async function videoRunAutomation() {
                           await sleep(100); 
                           el.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
                           el.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
-                          el.click(); // à¸¢à¹‰à¸³à¸”à¹‰à¸§à¸¢ click à¹€à¸œà¸·à¹ˆà¸­à¹„à¸§à¹‰
+                          el.click(); // ย้ำด้วย click เผื่อไว้
                       }
 
-                      // ðŸŽ¯ à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸—à¸µà¹ˆ 2: à¸ªà¸³à¸«à¸£à¸±à¸šà¸à¸”à¸„à¸³à¸ªà¸±à¹ˆà¸‡à¹ƒà¸™à¹€à¸¡à¸™à¸¹ Radix UI 
+                      // 🎯 ฟังก์ชันที่ 2: สำหรับกดคำสั่งในเมนู Radix UI 
                       async function actionClick(el) {
                           if (!el) return;
                           el.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -2501,17 +2572,17 @@ async function videoRunAutomation() {
                           el.click(); 
                       }
 
-                      // 1. à¸ˆà¸³à¸£à¸¹à¸›à¹€à¸à¹ˆà¸²à¸šà¸™à¸«à¸™à¹‰à¸²à¸ˆà¸­à¸—à¸±à¹‰à¸‡à¸«à¸¡à¸”à¹„à¸§à¹‰à¸à¹ˆà¸­à¸™
+                      // 1. จำรูปเก่าบนหน้าจอทั้งหมดไว้ก่อน
                       const getFeedImgs = () => Array.from(document.querySelectorAll('img')).filter(img => {
                           const rect = img.getBoundingClientRect();
                           const isHeader = img.closest('header, nav, [role="banner"]');
-                          return rect.width > 40 && rect.height > 40 && !isHeader; // à¹ƒà¸Šà¹‰ 40px à¹€à¸œà¸·à¹ˆà¸­à¹€à¸›à¹‡à¸™ Thumbnail à¹€à¸¥à¹‡à¸à¹†
+                          return rect.width > 40 && rect.height > 40 && !isHeader; // ใช้ 40px เผื่อเป็น Thumbnail เล็กๆ
                       });
                       const initialImagesSrc = getFeedImgs().map(img => img.src);
 
-                      // 2. à¸™à¸³à¸£à¸¹à¸›à¹„à¸›à¸§à¸²à¸‡ (Paste) à¹ƒà¸™à¸Šà¹ˆà¸­à¸‡à¹à¸Šà¸—à¸«à¸¥à¸±à¸
+                      // 2. นำรูปไปวาง (Paste) ในช่องแชทหลัก
                       const editor = document.querySelector('[data-slate-editor="true"]') || document.querySelector('[role="textbox"]');
-                      if (!editor) return resolve({ success: false, msg: 'âŒ à¹„à¸¡à¹ˆà¸žà¸šà¸Šà¹ˆà¸­à¸‡à¹à¸Šà¸—à¹€à¸žà¸·à¹ˆà¸­à¸§à¸²à¸‡à¸£à¸¹à¸›' });
+                      if (!editor) return resolve({ success: false, msg: '❌ ไม่พบช่องแชทเพื่อวางรูป' });
 
                       editor.focus();
                       editor.click();
@@ -2532,12 +2603,12 @@ async function videoRunAutomation() {
                       });
                       editor.dispatchEvent(pasteEvent);
 
-                      // ðŸŸ¢ à¸£à¸­à¸à¸¥à¸·à¸™à¹„à¸Ÿà¸¥à¹Œà¸à¸±à¹ˆà¸‡à¸§à¸´à¸”à¸µà¹‚à¸­ (4 à¸§à¸´à¸™à¸²à¸—à¸µ)
+                      // 🟢 รอกลืนไฟล์ฝั่งวิดีโอ (4 วินาที)
                       await sleep(4000); 
                       
-                      // à¸£à¸­à¸à¸”à¸›à¸¸à¹ˆà¸¡ Save/Crop (à¸–à¹‰à¸²à¸¡à¸µ)
+                      // รอกดปุ่ม Save/Crop (ถ้ามี)
                       let confirmBtn = null;
-                      const confirmTexts = ['Save', 'Confirm', 'Crop and Save', 'à¸šà¸±à¸™à¸—à¸¶à¸', 'à¸¢à¸·à¸™à¸¢à¸±à¸™', 'à¹€à¸ªà¸£à¹‡à¸ˆà¸ªà¸´à¹‰à¸™', 'à¸•à¹ˆà¸­à¹„à¸›'];
+                      const confirmTexts = ['Save', 'Confirm', 'Crop and Save', 'บันทึก', 'ยืนยัน', 'เสร็จสิ้น', 'ต่อไป'];
                       for (let check = 0; check < 20; check++) {
                           const currentButtons = document.querySelectorAll('button');
                           confirmBtn = Array.from(currentButtons).find(btn =>
@@ -2549,23 +2620,23 @@ async function videoRunAutomation() {
                       
                       if (confirmBtn) {
                           confirmBtn.click(); 
-                          // ðŸŸ¢ à¸£à¸­à¸«à¸™à¹‰à¸²à¸•à¹ˆà¸²à¸‡à¸›à¸´à¸” (4 à¸§à¸´à¸™à¸²à¸—à¸µ)
+                          // 🟢 รอหน้าต่างปิด (4 วินาที)
                           await sleep(4000); 
                       }
 
-                      // 3. ðŸŽ¯ à¸£à¸°à¸šà¸šà¹€à¸¥à¹‡à¸‡à¹€à¸›à¹‰à¸²à¹à¸¥à¸°à¸à¸” 3 à¸ˆà¸¸à¸”
+                      // 3. 🎯 ระบบเล็งเป้าและกด 3 จุด
                       let isSuccess = false;
 
                       for (let w = 0; w < 40; w++) { 
-                          await sleep(1500); // à¸£à¸­à¸£à¸¹à¸›à¸­à¸±à¸›à¹‚à¸«à¸¥à¸”à¹€à¸‚à¹‰à¸² Feed
+                          await sleep(1500); // รอรูปอัปโหลดเข้า Feed
                           
                           const currentImgs = getFeedImgs();
                           let newImg = currentImgs.find(img => !initialImagesSrc.includes(img.src));
 
-                          // à¸—à¹ˆà¸²à¹„à¸¡à¹‰à¸•à¸²à¸¢: à¸–à¹‰à¸²à¸«à¸²à¸ˆà¸²à¸ src à¹„à¸¡à¹ˆà¹€à¸ˆà¸­ à¹ƒà¸«à¹‰à¸«à¸²à¸›à¹‰à¸²à¸¢à¸„à¸³à¸§à¹ˆà¸² "à¸£à¸¹à¸›à¸ à¸²à¸žà¸—à¸µà¹ˆà¸­à¸±à¸›à¹‚à¸«à¸¥à¸”" 
+                          // ท่าไม้ตาย: ถ้าหาจาก src ไม่เจอ ให้หาป้ายคำว่า "รูปภาพที่อัปโหลด" 
                           if (!newImg) {
                               const uploadLabels = Array.from(document.querySelectorAll('span, div, p')).filter(el => 
-                                  el.innerText && (el.innerText.includes('à¸£à¸¹à¸›à¸ à¸²à¸žà¸—à¸µà¹ˆà¸­à¸±à¸›à¹‚à¸«à¸¥à¸”') || el.innerText.includes('Uploaded'))
+                                  el.innerText && (el.innerText.includes('รูปภาพที่อัปโหลด') || el.innerText.includes('Uploaded'))
                               );
                               if (uploadLabels.length > 0) {
                                   let container = uploadLabels[0].closest('div[class*="card"], div:has(img)') || uploadLabels[0].parentElement.parentElement;
@@ -2577,7 +2648,7 @@ async function videoRunAutomation() {
                               newImg.scrollIntoView({ behavior: 'smooth', block: 'center' });
                               await sleep(1000); 
 
-                              // à¹€à¸­à¸²à¹€à¸¡à¸²à¸ªà¹Œà¸–à¸¹à¹† à¸—à¸µà¹ˆà¸à¸²à¸£à¹Œà¸”à¸£à¸¹à¸› à¹€à¸žà¸·à¹ˆà¸­à¹€à¸£à¸µà¸¢à¸à¸›à¸¸à¹ˆà¸¡ 3 à¸ˆà¸¸à¸”à¸­à¸­à¸à¸¡à¸²
+                              // เอาเมาส์ถูๆ ที่การ์ดรูป เพื่อเรียกปุ่ม 3 จุดออกมา
                               newImg.dispatchEvent(new MouseEvent('mouseover', {bubbles: true}));
                               newImg.dispatchEvent(new MouseEvent('mouseenter', {bubbles: true}));
                               await sleep(1000);
@@ -2589,20 +2660,20 @@ async function videoRunAutomation() {
                                   if (!container || container === document.body) break;
                                   const btns = Array.from(container.querySelectorAll('button'));
                                   dotBtn = btns.find(b => {
-                                      // à¸«à¸²à¸œà¹ˆà¸²à¸™ Native JS à¹‚à¸”à¸¢à¸«à¸¥à¸µà¸à¹€à¸¥à¸µà¹ˆà¸¢à¸‡ :contains à¸‚à¸­à¸‡ jQuery
+                                      // หาผ่าน Native JS โดยหลีกเลี่ยง :contains ของ jQuery
                                       const icon = b.querySelector('i, svg');
                                       const text = (b.innerText || '').toLowerCase();
                                       const ariaLabel = (b.getAttribute('aria-label') || '').toLowerCase();
                                       const isMenu = b.getAttribute('aria-haspopup') === 'menu';
                                       
-                                      return isMenu || ariaLabel.includes('more') || ariaLabel.includes('à¸•à¸±à¸§à¹€à¸¥à¸·à¸­à¸') || (icon && (text.includes('more') || text.includes('vert') || text.includes('horiz')));
+                                      return isMenu || ariaLabel.includes('more') || ariaLabel.includes('ตัวเลือก') || (icon && (text.includes('more') || text.includes('vert') || text.includes('horiz')));
                                   });
                                   if (dotBtn) break;
                                   container = container.parentElement;
                               }
 
                               if (!dotBtn) {
-                                  // à¹à¸ªà¸à¸™à¸—à¸±à¹‰à¸‡à¸ˆà¸­à¸«à¸²à¸£à¸­à¸šà¹† à¸£à¸¹à¸›
+                                  // แสกนทั้งจอหารอบๆ รูป
                                   const allBtns = Array.from(document.querySelectorAll('button'));
                                   const validDotBtns = allBtns.filter(b => {
                                       const isMenu = b.getAttribute('aria-haspopup') === 'menu';
@@ -2619,36 +2690,36 @@ async function videoRunAutomation() {
                               }
 
                               if (dotBtn) {
-                                  // ðŸ”¥ 1. à¹€à¸›à¸´à¸”à¹€à¸¡à¸™à¸¹
+                                  // 🔥 1. เปิดเมนู
                                   await triggerClick(dotBtn); 
-                                  await sleep(1500); // à¸£à¸­à¹€à¸¡à¸™à¸¹à¸à¸²à¸‡à¸­à¸­à¸à¹à¸šà¸šà¸™à¸´à¹ˆà¸‡à¹†
+                                  await sleep(1500); // รอเมนูกางออกแบบนิ่งๆ
 
-                                 // ðŸŒ à¸­à¸±à¸›à¹€à¸à¸£à¸” V14: à¹€à¸ˆà¸²à¸°à¹€à¸à¸£à¸²à¸°à¹€à¸¡à¸™à¸¹à¸•à¸²à¸¡ HTML à¸—à¸µà¹ˆà¸£à¸°à¸šà¸¸ (Radix UI)
+                                 // 🌐 อัปเกรด V14: เจาะเกราะเมนูตาม HTML ที่ระบุ (Radix UI)
                                   const menuItems = Array.from(document.querySelectorAll('[role="menuitem"], button')).reverse();
                                   const addPromptBtn = menuItems.find(m => {
                                       const rect = m.getBoundingClientRect();
-                                      if (rect.width === 0 || rect.height === 0) return false; // à¸‚à¹‰à¸²à¸¡à¸›à¸¸à¹ˆà¸¡à¸—à¸µà¹ˆà¸‹à¹ˆà¸­à¸™à¸­à¸¢à¸¹à¹ˆ
+                                      if (rect.width === 0 || rect.height === 0) return false; // ข้ามปุ่มที่ซ่อนอยู่
 
-                                      // à¸à¸§à¸²à¸” Text à¸—à¸±à¹‰à¸‡à¸«à¸¡à¸”à¸‚à¹‰à¸²à¸‡à¹ƒà¸™à¸›à¸¸à¹ˆà¸¡ à¸£à¸§à¸¡à¸–à¸¶à¸‡à¹„à¸­à¸„à¸­à¸™
+                                      // กวาด Text ทั้งหมดข้างในปุ่ม รวมถึงไอคอน
                                       const text = (m.textContent || "").replace(/\s+/g, ''); 
-                                      return text.includes('à¹€à¸žà¸´à¹ˆà¸¡à¹„à¸›à¸¢à¸±à¸‡à¸žà¸£à¸­à¸¡à¸•à¹Œ') || text.includes('addtoprompt') || text.includes('à¹€à¸žà¸´à¹ˆà¸¡à¸¥à¸‡à¹ƒà¸™à¸žà¸£à¸­à¸¡à¸•à¹Œ');
+                                      return text.includes('เพิ่มไปยังพรอมต์') || text.includes('addtoprompt') || text.includes('เพิ่มลงในพรอมต์');
                                   });
 
                                   if (addPromptBtn) {
-                                      // ðŸ”¥ 2. à¸„à¸¥à¸´à¸à¸›à¸¸à¹ˆà¸¡à¹€à¸¡à¸™à¸¹ "à¹€à¸žà¸´à¹ˆà¸¡à¹„à¸›à¸¢à¸±à¸‡à¸žà¸£à¸­à¸¡à¸•à¹Œ"
+                                      // 🔥 2. คลิกปุ่มเมนู "เพิ่มไปยังพรอมต์"
                                       await actionClick(addPromptBtn); 
                                       await sleep(800);
                                       
-                                      // à¸›à¸´à¸”à¹€à¸¡à¸™à¸¹à¹€à¸œà¸·à¹ˆà¸­à¸„à¹‰à¸²à¸‡
+                                      // ปิดเมนูเผื่อค้าง
                                       document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', keyCode: 27, bubbles: true }));
                                       isSuccess = true;
                                       break; 
                                   } else {
-                                      // à¸–à¹‰à¸²à¹„à¸¡à¹ˆà¸¡à¸µà¹€à¸¡à¸™à¸¹ à¹à¸ªà¸”à¸‡à¸§à¹ˆà¸²à¸£à¸¹à¸›à¸¢à¸±à¸‡à¸›à¸£à¸°à¸¡à¸§à¸¥à¸œà¸¥à¹„à¸¡à¹ˆà¹€à¸ªà¸£à¹‡à¸ˆ à¹ƒà¸«à¹‰à¸›à¸´à¸”à¸«à¸™à¹‰à¸²à¸•à¹ˆà¸²à¸‡à¸—à¸´à¹‰à¸‡à¹à¸¥à¹‰à¸§à¸£à¸­à¸§à¸™à¸¥à¸¹à¸›à¹ƒà¸«à¸¡à¹ˆ
+                                      // ถ้าไม่มีเมนู แสดงว่ารูปยังประมวลผลไม่เสร็จ ให้ปิดหน้าต่างทิ้งแล้วรอวนลูปใหม่
                                       document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', keyCode: 27, bubbles: true }));
                                   }
                               } else {
-                                  // à¸—à¹ˆà¸²à¹„à¸¡à¹‰à¸•à¸²à¸¢à¸ªà¸¸à¸”à¸—à¹‰à¸²à¸¢: à¸„à¸¥à¸´à¸à¸‚à¸§à¸²à¸—à¸µà¹ˆà¸£à¸¹à¸›
+                                  // ท่าไม้ตายสุดท้าย: คลิกขวาที่รูป
                                   newImg.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true, cancelable: true, view: window, button: 2 }));
                                   await sleep(1500);
                               }
@@ -2656,9 +2727,9 @@ async function videoRunAutomation() {
                       } 
 
                       if (isSuccess) {
-                          return resolve({ success: true, msg: 'âœ… à¸à¸” [à¹€à¸žà¸´à¹ˆà¸¡à¹„à¸›à¸¢à¸±à¸‡à¸žà¸£à¸­à¸¡à¸•à¹Œ] à¸ªà¸³à¹€à¸£à¹‡à¸ˆà¹à¸¥à¹‰à¸§!' });
+                          return resolve({ success: true, msg: '✅ กด [เพิ่มไปยังพรอมต์] สำเร็จแล้ว!' });
                       } else {
-                          return resolve({ success: false, msg: 'âŒ à¸«à¸¡à¸”à¹€à¸§à¸¥à¸²à¸£à¸­ à¸«à¸£à¸·à¸­à¸à¸”à¹€à¸¡à¸™à¸¹à¹„à¸¡à¹ˆà¸•à¸´à¸”' });
+                          return resolve({ success: false, msg: '❌ หมดเวลารอ หรือกดเมนูไม่ติด' });
                       }
 
                   } catch (e) { resolve({ success: false, msg: 'Error: ' + e.message }); }
@@ -2668,17 +2739,17 @@ async function videoRunAutomation() {
           });
 
           if (!uploadResult[0]?.result?.success) {
-              videoAddLog(`âš ï¸ ${uploadResult[0]?.result?.msg} -> à¸‚à¹‰à¸²à¸¡à¸£à¸­à¸šà¸™à¸µà¹‰`, 'warning');
-              throw new Error("à¸™à¸³à¸£à¸¹à¸›à¹€à¸‚à¹‰à¸²à¸à¸¥à¹ˆà¸­à¸‡à¹€à¸£à¸´à¹ˆà¸¡à¹„à¸¡à¹ˆà¸ªà¸³à¹€à¸£à¹‡à¸ˆ"); 
+              videoAddLog(`⚠️ ${uploadResult[0]?.result?.msg} -> ข้ามรอบนี้`, 'warning');
+              throw new Error("นำรูปเข้ากล่องเริ่มไม่สำเร็จ"); 
           } else {
               videoAddLog(`${uploadResult[0]?.result?.msg}`, 'success');
           }
           await videoSleep(3000);
 
           // ============================================
-          // ðŸŸ¢ STEP 3: à¸à¸£à¸­à¸ Prompt à¸§à¸´à¸”à¸µà¹‚à¸­
+          // 🟢 STEP 3: กรอก Prompt วิดีโอ
           // ============================================
-          videoUpdateStatus(`${roundLabel} Step 3/4: à¸à¸³à¸¥à¸±à¸‡à¸›à¹‰à¸­à¸™à¸„à¸³à¸ªà¸±à¹ˆà¸‡à¸ªà¸£à¹‰à¸²à¸‡à¸§à¸´à¸”à¸µà¹‚à¸­...`);
+          videoUpdateStatus(`${roundLabel} Step 3/4: กำลังป้อนคำสั่งสร้างวิดีโอ...`);
 
           await chrome.scripting.executeScript({
             target: { tabId: tab.id },
@@ -2726,13 +2797,13 @@ async function videoRunAutomation() {
           await videoSleep(4500);
 
           // ============================================
-          // ðŸŸ¢ STEP 4: à¸à¸”à¸›à¸¸à¹ˆà¸¡à¸ªà¹ˆà¸‡à¸„à¸³à¸ªà¸±à¹ˆà¸‡à¸ªà¸£à¹‰à¸²à¸‡à¸§à¸´à¸”à¸µà¹‚à¸­ [ULTIMATE GOD MODE]
+          // 🟢 STEP 4: กดปุ่มส่งคำสั่งสร้างวิดีโอ [ULTIMATE GOD MODE]
           // ============================================
-          videoUpdateStatus(`${roundLabel} Step 4/4: à¸à¸³à¸¥à¸±à¸‡à¸à¸”à¸ªà¸£à¹‰à¸²à¸‡à¸§à¸´à¸”à¸µà¹‚à¸­...`);
+          videoUpdateStatus(`${roundLabel} Step 4/4: กำลังกดสร้างวิดีโอ...`);
           
           const createResult = await chrome.scripting.executeScript({
             target: { tabId: tab.id },
-            world: 'MAIN', // à¸—à¸°à¸¥à¸§à¸‡à¹€à¸‚à¹‰à¸²à¸«à¸™à¹‰à¸²à¹€à¸§à¹‡à¸šà¸«à¸¥à¸±à¸
+            world: 'MAIN', // ทะลวงเข้าหน้าเว็บหลัก
             func: (timeoutMs) => {
               return new Promise((resolve) => {
                   const sleep = (ms) => new Promise(r => setTimeout(r, ms));
@@ -2753,26 +2824,26 @@ async function videoRunAutomation() {
                               const text = (btn.textContent || "").toLowerCase().trim();
 
                               const style = window.getComputedStyle(btn);
-                              // à¹€à¸Šà¹‡à¸„à¹ƒà¸«à¹‰à¸Šà¸±à¸§à¸£à¹Œà¸§à¹ˆà¸²à¸›à¸¸à¹ˆà¸¡à¸žà¸£à¹‰à¸­à¸¡à¹ƒà¸Šà¹‰à¸‡à¸²à¸™à¸ˆà¸£à¸´à¸‡à¹† à¹„à¸¡à¹ˆà¹„à¸”à¹‰à¹à¸­à¸šà¹€à¸—à¸²à¸­à¸¢à¸¹à¹ˆ
+                              // เช็คให้ชัวร์ว่าปุ่มพร้อมใช้งานจริงๆ ไม่ได้แอบเทาอยู่
                               if (btn.disabled || style.pointerEvents === 'none' || style.opacity === '0' || btn.getAttribute('aria-disabled') === 'true') continue;
 
-                              if (text.includes('nano') || text.includes('pro') || text.includes('à¸­à¸±à¸›à¹€à¸à¸£à¸”')) continue;
+                              if (text.includes('nano') || text.includes('pro') || text.includes('อัปเกรด')) continue;
                               if (html.includes('add_circle') || html.includes('add ')) continue;
 
-                              if (html.includes('arrow_forward') || html.includes('send') || text === 'à¸ªà¸£à¹‰à¸²à¸‡' || text === 'create') {
+                              if (html.includes('arrow_forward') || html.includes('send') || text === 'สร้าง' || text === 'create') {
                                   targetBtn = btn;
                                   break;
                               }
                           }
 
                           if (targetBtn) {
-                              // à¹€à¸¥à¸·à¹ˆà¸­à¸™à¸ˆà¸­à¹ƒà¸«à¹‰à¸›à¸¸à¹ˆà¸¡à¸­à¸¢à¸¹à¹ˆà¸•à¸£à¸‡à¸à¸¥à¸²à¸‡à¹€à¸›à¹Šà¸°à¹† à¸«à¸¥à¸šà¸žà¸§à¸à¹à¸–à¸šà¹€à¸¡à¸™à¸¹à¸šà¸±à¸‡
+                              // เลื่อนจอให้ปุ่มอยู่ตรงกลางเป๊ะๆ หลบพวกแถบเมนูบัง
                               targetBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
                               await sleep(500);
 
                               let success = false;
                               try {
-                                  // ðŸ”¥ à¸—à¹ˆà¸²à¸—à¸µà¹ˆ 1: à¹à¸®à¹‡à¸ React (à¹€à¸„à¸£à¸·à¹ˆà¸­à¸‡ Chrome à¹ƒà¸«à¸¡à¹ˆà¹† à¸ˆà¸°à¸œà¹ˆà¸²à¸™à¸—à¹ˆà¸²à¸™à¸µà¹‰)
+                                  // 🔥 ท่าที่ 1: แฮ็ก React (เครื่อง Chrome ใหม่ๆ จะผ่านท่านี้)
                                   const reactKey = Object.keys(targetBtn).find(k => k.startsWith('__reactProps'));
                                   if (reactKey && targetBtn[reactKey].onClick) {
                                       targetBtn[reactKey].onClick({ preventDefault: () => {}, stopPropagation: () => {}, nativeEvent: { isTrusted: true }, type: 'click' });
@@ -2789,7 +2860,7 @@ async function videoRunAutomation() {
                                   }
                               } catch(e) {}
 
-                              // ðŸ”¥ à¸—à¹ˆà¸²à¸—à¸µà¹ˆ 2: à¸ˆà¸³à¸¥à¸­à¸‡à¹€à¸¡à¸²à¸ªà¹Œà¸¢à¸´à¸‡à¸žà¸´à¸à¸±à¸” X, Y à¸•à¸£à¸‡à¸à¸¥à¸²à¸‡à¸›à¸¸à¹ˆà¸¡ (à¸—à¸°à¸¥à¸¸à¸à¸³à¹à¸žà¸‡à¸šà¸±à¸‡)
+                              // 🔥 ท่าที่ 2: จำลองเมาส์ยิงพิกัด X, Y ตรงกลางปุ่ม (ทะลุกำแพงบัง)
                               const rect = targetBtn.getBoundingClientRect();
                               const x = rect.left + (rect.width / 2);
                               const y = rect.top + (rect.height / 2);
@@ -2799,9 +2870,9 @@ async function videoRunAutomation() {
                               targetBtn.dispatchEvent(new MouseEvent('mousedown', mouseOpts));
                               targetBtn.dispatchEvent(new PointerEvent('pointerup', mouseOpts));
                               targetBtn.dispatchEvent(new MouseEvent('mouseup', mouseOpts));
-                              targetBtn.click(); // à¸—à¹ˆà¸²à¹€à¸šà¸ªà¸´à¸„
+                              targetBtn.click(); // ท่าเบสิค
 
-                              // ðŸ”¥ à¸—à¹ˆà¸²à¸—à¸µà¹ˆ 3: à¸à¸£à¸°à¸«à¸™à¹ˆà¸³à¸›à¸¸à¹ˆà¸¡ Enter à¸‹à¹‰à¸³
+                              // 🔥 ท่าที่ 3: กระหน่ำปุ่ม Enter ซ้ำ
                               targetBtn.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', code: 'Enter', keyCode: 13, bubbles: true }));
                               
                               const editor = document.querySelector('[data-slate-editor="true"]') || document.querySelector('[role="textbox"]');
@@ -2810,13 +2881,13 @@ async function videoRunAutomation() {
                                   editor.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', code: 'Enter', keyCode: 13, which: 13, bubbles: true }));
                               }
 
-                              return resolve({ success: true, msg: 'à¸à¸”à¸›à¸¸à¹ˆà¸¡à¸ªà¹ˆà¸‡à¸„à¸³à¸ªà¸±à¹ˆà¸‡à¸ªà¸³à¹€à¸£à¹‡à¸ˆ!' });
+                              return resolve({ success: true, msg: 'กดปุ่มส่งคำสั่งสำเร็จ!' });
                           }
                           
                           await sleep(1000);
                       }
                       
-                      resolve({ success: false, msg: 'à¸«à¸²à¸›à¸¸à¹ˆà¸¡à¸ªà¹ˆà¸‡à¸„à¸³à¸ªà¸±à¹ˆà¸‡à¹„à¸¡à¹ˆà¹€à¸ˆà¸­ à¸«à¸£à¸·à¸­à¸›à¸¸à¹ˆà¸¡à¸¢à¸±à¸‡à¹‚à¸«à¸¥à¸”à¹„à¸¡à¹ˆà¹€à¸ªà¸£à¹‡à¸ˆ' });
+                      resolve({ success: false, msg: 'หาปุ่มส่งคำสั่งไม่เจอ หรือปุ่มยังโหลดไม่เสร็จ' });
                   }
                   
                   trySubmit();
@@ -2826,25 +2897,25 @@ async function videoRunAutomation() {
           });
 
           if (!createResult[0]?.result?.success) throw new Error(createResult[0]?.result?.msg);
-          videoAddLog(`ðŸ–±ï¸ ${roundLabel} à¸ªà¹ˆà¸‡à¸„à¸³à¸ªà¸±à¹ˆà¸‡à¸ªà¸£à¹‰à¸²à¸‡à¸§à¸´à¸”à¸µà¹‚à¸­à¹€à¸£à¸µà¸¢à¸šà¸£à¹‰à¸­à¸¢`, 'success');
+          videoAddLog(`🖱ï¸ ${roundLabel} ส่งคำสั่งสร้างวิดีโอเรียบร้อย`, 'success');
           await videoSleep(3000);
 
          // ============================================
-          // ðŸŸ¢ STEP 5: à¸£à¸­à¸œà¸¥à¸¥à¸±à¸žà¸˜à¹Œ (à¸£à¸­à¸‡à¸£à¸±à¸š Turbo Mode)
+          // 🟢 STEP 5: รอผลลัพธ์ (รองรับ Turbo Mode)
           // ============================================
           const checkboxEl = document.getElementById('video-download-count-auto');
           const isDownloadEnabled = checkboxEl ? checkboxEl.checked : true;
 
        if (!isDownloadEnabled) {
-              // ðŸš€ à¸­à¸±à¸›à¹€à¸à¸£à¸” Turbo Mode: à¸ªà¸¸à¹ˆà¸¡à¸£à¸­ 45-60 à¸§à¸´à¸™à¸²à¸—à¸µ (à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸«à¹‰à¸„à¸¥à¸´à¸›à¹€à¸”à¸´à¸¡à¸£à¸±à¸™à¹„à¸›à¸–à¸¶à¸‡ 70-80% à¸à¹ˆà¸­à¸™à¹€à¸£à¸´à¹ˆà¸¡à¸„à¸´à¸§à¹ƒà¸«à¸¡à¹ˆ)
+              // 🚀 อัปเกรด Turbo Mode: สุ่มรอ 45-60 วินาที (เพื่อให้คลิปเดิมรันไปถึง 70-80% ก่อนเริ่มคิวใหม่)
               const turboWait = Math.floor(Math.random() * 15000) + 45000; 
-              videoUpdateStatus(`ðŸš€ ${roundLabel} Turbo Mode: à¸žà¸±à¸à¸£à¸­ ${Math.floor(turboWait/1000)} à¸§à¸´ à¸›à¹‰à¸­à¸‡à¸à¸±à¸™à¹€à¸§à¹‡à¸šà¸„à¹‰à¸²à¸‡...`);
+              videoUpdateStatus(`🚀 ${roundLabel} Turbo Mode: พักรอ ${Math.floor(turboWait/1000)} วิ ป้องกันเว็บค้าง...`);
               await videoSleep(turboWait);
-              videoAddLog(`â­ï¸ à¸ªà¹ˆà¸‡à¸„à¸´à¸§à¹ƒà¸«à¸¡à¹ˆ (à¸§à¸´à¸”à¸µà¹‚à¸­à¹€à¸”à¸´à¸¡à¸™à¹ˆà¸²à¸ˆà¸°à¹€à¸ªà¸£à¹‡à¸ˆà¹„à¸›à¹à¸¥à¹‰à¸§ 80%)`, 'info');
+              videoAddLog(`⏭️ ส่งคิวใหม่ (วิดีโอเดิมน่าจะเสร็จไปแล้ว 80%)`, 'info');
           } else {
-              videoUpdateStatus(`â³ ${roundLabel} à¸£à¸­ AI à¹€à¸£à¸™à¹€à¸”à¸­à¸£à¹Œà¸§à¸´à¸”à¸µà¹‚à¸­ (à¸­à¸²à¸ˆà¹ƒà¸Šà¹‰à¹€à¸§à¸¥à¸² 1-3 à¸™à¸²à¸—à¸µ)...`);
+              videoUpdateStatus(`⏳ ${roundLabel} รอ AI เรนเดอร์วิดีโอ (อาจใช้เวลา 1-3 นาที)...`);
               
-              // ðŸ“¸ à¸–à¹ˆà¸²à¸¢ Snapshot à¸ˆà¸”à¸ˆà¸³à¸£à¸«à¸±à¸ªà¸§à¸´à¸”à¸µà¹‚à¸­à¹€à¸à¹ˆà¸²à¸—à¸±à¹‰à¸‡à¸«à¸¡à¸”à¸šà¸™à¸«à¸™à¹‰à¸²à¸ˆà¸­à¹„à¸§à¹‰! (à¸«à¸±à¸§à¹ƒà¸ˆà¸«à¸¥à¸±à¸à¸‚à¸­à¸‡à¸à¸²à¸£à¸à¸±à¸™à¸„à¸¥à¸´à¸›à¹€à¸à¹ˆà¸²)
+              // 📸 ถ่าย Snapshot จดจำรหัสวิดีโอเก่าทั้งหมดบนหน้าจอไว้! (หัวใจหลักของการกันคลิปเก่า)
               const getOldVids = await chrome.scripting.executeScript({
                   target: { tabId: tab.id },
                   func: () => {
@@ -2856,25 +2927,25 @@ async function videoRunAutomation() {
               const oldVideoSrcs = getOldVids[0]?.result || [];
               let isFinished = false;
 
-              for(let w=0; w<240; w++) { // à¸£à¸­à¸ªà¸¹à¸‡à¸ªà¸¸à¸” 4 à¸™à¸²à¸—à¸µ
+              for(let w=0; w<240; w++) { // รอสูงสุด 4 นาที
                   if (videoShouldStopAutomation) throw new Error('STOPPED');
                   
                   const checkProgress = await chrome.scripting.executeScript({
                       target: { tabId: tab.id },
                       func: (oldSrcs) => {
                           const currentVids = Array.from(document.querySelectorAll('video'));
-                          // à¸™à¸±à¸šà¹€à¸‰à¸žà¸²à¸°à¸§à¸´à¸”à¸µà¹‚à¸­à¸—à¸µà¹ˆà¸¡à¸µà¸¥à¸´à¸‡à¸à¹Œ (src) à¹€à¸›à¹‡à¸™à¸‚à¸­à¸‡à¹ƒà¸«à¸¡à¹ˆ à¸—à¸µà¹ˆà¹„à¸¡à¹ˆà¹€à¸„à¸¢à¸¡à¸µà¹ƒà¸™à¸„à¸§à¸²à¸¡à¸—à¸£à¸‡à¸ˆà¸³
+                          // นับเฉพาะวิดีโอที่มีลิงก์ (src) เป็นของใหม่ ที่ไม่เคยมีในความทรงจำ
                           let newCount = 0;
                           for (const v of currentVids) {
                               const src = v.getAttribute('src') || v.currentSrc || v.src || '';
                               if (src && !oldSrcs.includes(src)) newCount++;
                           }
                           
-                          // ðŸš¨ à¸­à¸±à¸›à¹€à¸à¸£à¸”à¹€à¸£à¸”à¸²à¸£à¹Œ: à¸•à¸£à¸§à¸ˆà¸ˆà¸±à¸š "à¸ªà¸–à¸²à¸™à¸°à¸à¸³à¸¥à¸±à¸‡à¹‚à¸«à¸¥à¸”" à¸—à¸¸à¸à¸£à¸¹à¸›à¹à¸šà¸šà¸šà¸™à¸«à¸™à¹‰à¸²à¹€à¸§à¹‡à¸š (à¸«à¸¥à¸­à¸”à¹‚à¸«à¸¥à¸”, à¹€à¸›à¸­à¸£à¹Œà¹€à¸‹à¹‡à¸™à¸•à¹Œ, à¸›à¸¸à¹ˆà¸¡à¸à¸³à¸¥à¸±à¸‡à¸ªà¸£à¹‰à¸²à¸‡)
+                          // 🚨 อัปเกรดเรดาร์: ตรวจจับ "สถานะกำลังโหลด" ทุกรูปแบบบนหน้าเว็บ (หลอดโหลด, เปอร์เซ็นต์, ปุ่มกำลังสร้าง)
                           const hasProgressBar = document.querySelector('[role="progressbar"]') !== null;
                           const hasLoadingText = Array.from(document.querySelectorAll('button, span, div')).some(el => {
                               const txt = (el.textContent || '').trim();
-                              return txt.includes('à¸à¸³à¸¥à¸±à¸‡à¸ªà¸£à¹‰à¸²à¸‡') || txt.includes('Generating') || /^(\d+%)|(\d+\s*%)$/.test(txt);
+                              return txt.includes('กำลังสร้าง') || txt.includes('Generating') || /^(\d+%)|(\d+\s*%)$/.test(txt);
                           });
                           const hasLoadingClass = document.querySelector('[class*="loading"], [class*="progress"]') !== null;
                           
@@ -2886,26 +2957,26 @@ async function videoRunAutomation() {
                   
                   const status = checkProgress[0]?.result;
                   
-                  // ðŸŒŸ à¸•à¹‰à¸­à¸‡à¹€à¸ˆà¸­à¸§à¸´à¸”à¸µà¹‚à¸­à¹ƒà¸«à¸¡à¹ˆ à¹à¸¥à¸° "à¸ªà¸–à¸²à¸™à¸°à¸à¸³à¸¥à¸±à¸‡à¹‚à¸«à¸¥à¸”à¸—à¸±à¹‰à¸‡à¸«à¸¡à¸”à¸šà¸™à¸ˆà¸­à¸•à¹‰à¸­à¸‡à¸«à¸²à¸¢à¹„à¸› 100%" à¸–à¸¶à¸‡à¸ˆà¸°à¹„à¸›à¸•à¹ˆà¸­!
+                  // 🌟 ต้องเจอวิดีโอใหม่ และ "สถานะกำลังโหลดทั้งหมดบนจอต้องหายไป 100%" ถึงจะไปต่อ!
                   if (status && status.newVids > 0 && !status.loading) {
-                      videoUpdateStatus(`âœ… à¹€à¸ˆà¸­à¸§à¸´à¸”à¸µà¹‚à¸­à¹ƒà¸«à¸¡à¹ˆ ${status.newVids} à¸„à¸¥à¸´à¸›! à¸£à¸­à¸£à¸°à¸šà¸šà¸›à¸£à¸°à¸¡à¸§à¸¥à¸œà¸¥à¹ƒà¸«à¹‰à¸ªà¸¡à¸šà¸¹à¸£à¸“à¹Œà¸­à¸µà¸ 8 à¸§à¸´à¸™à¸²à¸—à¸µ...`);
-                      await videoSleep(8000); // â³ à¸«à¸™à¹ˆà¸§à¸‡à¹€à¸§à¸¥à¸² 8 à¸§à¸´ à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸«à¹‰à¸„à¸¥à¸´à¸›à¸ªà¸¸à¸”à¸—à¹‰à¸²à¸¢à¹‚à¸«à¸¥à¸”à¹€à¸‚à¹‰à¸²à¸—à¸µà¹ˆ
+                      videoUpdateStatus(`✅ เจอวิดีโอใหม่ ${status.newVids} คลิป! รอระบบประมวลผลให้สมบูรณ์อีก 8 วินาที...`);
+                      await videoSleep(8000); // ⏳ หน่วงเวลา 8 วิ เพื่อให้คลิปสุดท้ายโหลดเข้าที่
                       isFinished = true; 
                       break;
                   }
                   
-                  if (w % 10 === 0) videoUpdateStatus(`â³ à¸à¸³à¸¥à¸±à¸‡à¹€à¸£à¸™à¹€à¸”à¸­à¸£à¹Œ... (${w}s)`);
+                  if (w % 10 === 0) videoUpdateStatus(`⏳ กำลังเรนเดอร์... (${w}s)`);
                   await videoSleep(1000);
               }
 
               if (isFinished) {
-                  videoUpdateStatus(`âœ… à¸ªà¸£à¹‰à¸²à¸‡à¸§à¸´à¸”à¸µà¹‚à¸­à¹€à¸ªà¸£à¹‡à¸ˆà¸ªà¸´à¹‰à¸™!`);
-                  videoAddLog(`${roundLabel} à¹€à¸£à¸™à¹€à¸”à¸­à¸£à¹Œà¸§à¸´à¸”à¸µà¹‚à¸­à¸ªà¸³à¹€à¸£à¹‡à¸ˆ`, 'success');
+                  videoUpdateStatus(`✅ สร้างวิดีโอเสร็จสิ้น!`);
+                  videoAddLog(`${roundLabel} เรนเดอร์วิดีโอสำเร็จ`, 'success');
 
                   // =====================================================================
-                  // ðŸ“¥ à¸£à¸°à¸šà¸šà¸”à¸²à¸§à¸™à¹Œà¹‚à¸«à¸¥à¸”à¸§à¸´à¸”à¸µà¹‚à¸­à¸­à¸±à¸•à¹‚à¸™à¸¡à¸±à¸•à¸´ (à¹‚à¸«à¸¥à¸”à¹€à¸‰à¸žà¸²à¸°à¸‚à¸­à¸‡à¹ƒà¸«à¸¡à¹ˆà¸—à¸±à¹‰à¸‡à¸«à¸¡à¸”à¸—à¸µà¹ˆà¸ªà¸£à¹‰à¸²à¸‡à¹€à¸ªà¸£à¹‡à¸ˆ)
+                  // 📥 ระบบดาวน์โหลดวิดีโออัตโนมัติ (โหลดเฉพาะของใหม่ทั้งหมดที่สร้างเสร็จ)
                   // =====================================================================
-                  videoUpdateStatus(`ðŸ“¥ à¸à¸³à¸¥à¸±à¸‡à¹€à¸•à¸£à¸µà¸¢à¸¡à¸”à¸¹à¸”à¹„à¸Ÿà¸¥à¹Œà¸§à¸´à¸”à¸µà¹‚à¸­à¸—à¸µà¹ˆà¹€à¸žà¸´à¹ˆà¸‡à¸ªà¸£à¹‰à¸²à¸‡à¹€à¸ªà¸£à¹‡à¸ˆ...`);
+                  videoUpdateStatus(`📥 กำลังเตรียมดูดไฟล์วิดีโอที่เพิ่งสร้างเสร็จ...`);
                   
                   const downloadResult = await chrome.scripting.executeScript({
                       target: { tabId: tab.id },
@@ -2914,28 +2985,28 @@ async function videoRunAutomation() {
                               try {
                                   const sleep = (ms) => new Promise(r => setTimeout(r, ms));
                                   
-                                  // à¸”à¸±à¸™à¸ˆà¸­à¸‚à¸¶à¹‰à¸™à¸šà¸™à¸ªà¸¸à¸”
+                                  // ดันจอขึ้นบนสุด
                                   window.scrollTo({ top: 0, behavior: 'smooth' });
                                   await sleep(1500); 
                                   
-                                  // à¸à¸§à¸²à¸”à¸«à¸²à¸§à¸´à¸”à¸µà¹‚à¸­à¹ƒà¸™à¸Ÿà¸µà¸”
+                                  // กวาดหาวิดีโอในฟีด
                                   const allVideos = Array.from(document.querySelectorAll('video'));
                                   const feedVideos = allVideos.filter(vid => !vid.closest('header, nav, [role="textbox"]'));
 
-                                  // ðŸŒŸ à¸„à¸±à¸”à¸à¸£à¸­à¸‡à¹€à¸­à¸²à¹€à¸‰à¸žà¸²à¸°à¸§à¸´à¸”à¸µà¹‚à¸­ "à¹ƒà¸«à¸¡à¹ˆà¹€à¸­à¸µà¹ˆà¸¢à¸¡" à¸—à¸µà¹ˆà¹„à¸¡à¹ˆà¸¡à¸µà¹ƒà¸™à¸„à¸§à¸²à¸¡à¸—à¸£à¸‡à¸ˆà¸³à¹€à¸à¹ˆà¸²à¹€à¸—à¹ˆà¸²à¸™à¸±à¹‰à¸™!
+                                  // 🌟 คัดกรองเอาเฉพาะวิดีโอ "ใหม่เอี่ยม" ที่ไม่มีในความทรงจำเก่าเท่านั้น!
                                   const newVideos = feedVideos.filter(vid => {
                                       const src = vid.getAttribute('src') || vid.currentSrc || vid.src || '';
                                       return src && !oldSrcs.includes(src);
                                   });
 
                                   if (newVideos.length === 0) {
-                                      return resolve({ success: false, msg: 'à¹„à¸¡à¹ˆà¸žà¸šà¸§à¸´à¸”à¸µà¹‚à¸­à¹ƒà¸«à¸¡à¹ˆ (à¸­à¸²à¸ˆà¸ˆà¸°à¹€à¸£à¸™à¹€à¸”à¸­à¸£à¹Œà¸¥à¹‰à¸¡à¹€à¸«à¸¥à¸§)' });
+                                      return resolve({ success: false, msg: 'ไม่พบวิดีโอใหม่ (อาจจะเรนเดอร์ล้มเหลว)' });
                                   }
 
-                                  // à¹€à¸£à¸µà¸¢à¸‡à¸ˆà¸²à¸à¸‹à¹‰à¸²à¸¢à¹„à¸›à¸‚à¸§à¸²
+                                  // เรียงจากซ้ายไปขวา
                                   newVideos.sort((a, b) => a.getBoundingClientRect().left - b.getBoundingClientRect().left);
 
-                                  // ðŸ”¥ à¹‚à¸«à¸¥à¸”à¸—à¸¸à¸à¸„à¸¥à¸´à¸›à¸—à¸µà¹ˆà¹€à¸›à¹‡à¸™à¸‚à¸­à¸‡à¹ƒà¸«à¸¡à¹ˆ (à¸ªà¸¹à¸‡à¸ªà¸¸à¸” 4 à¸„à¸¥à¸´à¸›à¹€à¸œà¸·à¹ˆà¸­à¹„à¸§à¹‰)
+                                  // 🔥 โหลดทุกคลิปที่เป็นของใหม่ (สูงสุด 4 คลิปเผื่อไว้)
                                   const targetVideos = newVideos.slice(0, 4);
                                   let downloadedCount = 0;
 
@@ -2966,14 +3037,14 @@ async function videoRunAutomation() {
                                           window.URL.revokeObjectURL(blobUrl);
 
                                           downloadedCount++;
-                                          await sleep(1500); // â³ à¸£à¸­à¹„à¸Ÿà¸¥à¹Œà¹‚à¸«à¸¥à¸”à¹€à¸‚à¹‰à¸²à¹€à¸„à¸£à¸·à¹ˆà¸­à¸‡
+                                          await sleep(1500); // ⏳ รอไฟล์โหลดเข้าเครื่อง
                                       }
                                   }
                                   
                                   if (downloadedCount > 0) {
-                                      resolve({ success: true, msg: `à¸”à¸¹à¸”à¹„à¸Ÿà¸¥à¹Œà¸§à¸´à¸”à¸µà¹‚à¸­à¹ƒà¸«à¸¡à¹ˆà¸ªà¸³à¹€à¸£à¹‡à¸ˆ ${downloadedCount} à¸„à¸¥à¸´à¸›!` });
+                                      resolve({ success: true, msg: `ดูดไฟล์วิดีโอใหม่สำเร็จ ${downloadedCount} คลิป!` });
                                   } else {
-                                      resolve({ success: false, msg: `à¸«à¸²à¸¥à¸´à¸‡à¸à¹Œà¸‚à¸­à¸‡à¸§à¸´à¸”à¸µà¹‚à¸­à¹ƒà¸«à¸¡à¹ˆà¹„à¸¡à¹ˆà¹€à¸ˆà¸­ (à¸­à¸²à¸ˆà¸ˆà¸°à¹‚à¸«à¸¥à¸”à¹„à¸¡à¹ˆà¸‚à¸¶à¹‰à¸™)` });
+                                      resolve({ success: false, msg: `หาลิงก์ของวิดีโอใหม่ไม่เจอ (อาจจะโหลดไม่ขึ้น)` });
                                   }
                               } catch (err) {
                                   resolve({ success: false, msg: 'Error: ' + err.message });
@@ -2984,23 +3055,23 @@ async function videoRunAutomation() {
                   });
 
                   if (downloadResult[0]?.result?.success) {
-                      videoAddLog(`ðŸ“¥ ${downloadResult[0].result.msg}`, 'success');
+                      videoAddLog(`📥 ${downloadResult[0].result.msg}`, 'success');
                   } else {
-                      videoAddLog(`âš ï¸ à¹‚à¸«à¸¥à¸”à¸­à¸±à¸•à¹‚à¸™à¸¡à¸±à¸•à¸´à¹„à¸¡à¹ˆà¸ªà¸³à¹€à¸£à¹‡à¸ˆ: ${downloadResult[0]?.result?.msg}`, 'warning');
+                      videoAddLog(`⚠️ โหลดอัตโนมัติไม่สำเร็จ: ${downloadResult[0]?.result?.msg}`, 'warning');
                   }
 
               } else {
-                  videoUpdateStatus(`âš ï¸ à¸«à¸¡à¸”à¹€à¸§à¸¥à¸²à¸£à¸­à¸§à¸´à¸”à¸µà¹‚à¸­ (à¸§à¸´à¸”à¸µà¹‚à¸­à¸­à¸²à¸ˆà¸ˆà¸°à¸¢à¸±à¸‡à¹€à¸£à¸™à¹€à¸”à¸­à¸£à¹Œà¹„à¸¡à¹ˆà¹€à¸ªà¸£à¹‡à¸ˆ)`);
+                  videoUpdateStatus(`⚠️ หมดเวลารอวิดีโอ (วิดีโออาจจะยังเรนเดอร์ไม่เสร็จ)`);
               }
           }
 
           completedRounds++;
           
-          // ðŸŸ¢ [à¹‚à¸„à¹‰à¸”à¸—à¸µà¹ˆà¹€à¸žà¸´à¹ˆà¸¡à¹ƒà¸«à¸¡à¹ˆ] COOLDOWN: à¸žà¸±à¸à¸«à¸²à¸¢à¹ƒà¸ˆà¸à¹ˆà¸­à¸™à¹€à¸£à¸´à¹ˆà¸¡à¸§à¸´à¸”à¸µà¹‚à¸­à¸„à¸¥à¸´à¸›à¸•à¹ˆà¸­à¹„à¸› 
-          // (à¸§à¸´à¸”à¸µà¹‚à¸­à¸à¸´à¸™à¸—à¸£à¸±à¸žà¸¢à¸²à¸à¸£à¸«à¸™à¸±à¸ à¸•à¹‰à¸­à¸‡à¸žà¸±à¸à¸™à¸²à¸™à¸à¸§à¹ˆà¸²à¸£à¸¹à¸›à¸™à¸´à¸”à¸™à¸¶à¸‡ à¸ªà¸¸à¹ˆà¸¡à¸žà¸±à¸ 7-10 à¸§à¸´à¸™à¸²à¸—à¸µ)
+          // 🟢 [โค้ดที่เพิ่มใหม่] COOLDOWN: พักหายใจก่อนเริ่มวิดีโอคลิปต่อไป 
+          // (วิดีโอกินทรัพยากรหนัก ต้องพักนานกว่ารูปนิดนึง สุ่มพัก 7-10 วินาที)
           if (currentRound < totalRounds) {
               const cooldownTime = Math.floor(Math.random() * 3000) + 7000; 
-              videoUpdateStatus(`â³ à¸žà¸±à¸à¸£à¸°à¸šà¸š ${cooldownTime/1000} à¸§à¸´à¸™à¸²à¸—à¸µà¸à¹ˆà¸­à¸™à¹€à¸£à¸´à¹ˆà¸¡à¸„à¸¥à¸´à¸›à¸–à¸±à¸”à¹„à¸›...`);
+              videoUpdateStatus(`⏳ พักระบบ ${cooldownTime/1000} วินาทีก่อนเริ่มคลิปถัดไป...`);
               await videoSleep(cooldownTime);
           }
 		  
@@ -3011,17 +3082,17 @@ async function videoRunAutomation() {
                 videoIsAutomationRunning = false;
                 throw new Error('STOPPED');
             }
-            videoUpdateStatus(`âš ï¸ à¸žà¸šà¸›à¸±à¸à¸«à¸²: ${errMsg} -> à¸‚à¹‰à¸²à¸¡à¹„à¸›à¸£à¸­à¸šà¸–à¸±à¸”à¹„à¸›`);
+            videoUpdateStatus(`⚠️ พบปัญหา: ${errMsg} -> ข้ามไปรอบถัดไป`);
             await videoSleep(2000);
         }
       }
     }
     
-    videoUpdateStatus(`ðŸŽ‰ à¸—à¸³à¸‡à¸²à¸™à¹€à¸ªà¸£à¹‡à¸ˆà¸ªà¸´à¹‰à¸™à¸—à¸±à¹‰à¸‡à¸«à¸¡à¸”!`);
+    videoUpdateStatus(`🎉 ทำงานเสร็จสิ้นทั้งหมด!`);
     showToast('Mission Complete!', 'success');
 
   } catch (error) {
-    if (error.message !== 'STOPPED') videoAddLog(`âŒ Error: ${error.message}`, 'error');
+    if (error.message !== 'STOPPED') videoAddLog(`❌ Error: ${error.message}`, 'error');
   } finally {
     videoIsAutomationRunning = false;
     videoShouldStopAutomation = false;
@@ -3066,14 +3137,14 @@ const bananaBtnCopyPrompt = document.getElementById('banana-btn-copy-prompt');
 const bananaLogContainer = document.getElementById('banana-log-container');
 const bananaLogClearBtn = document.getElementById('banana-log-clear');
 
-// [à¸ªà¹ˆà¸§à¸™à¹€à¸žà¸´à¹ˆà¸¡à¹ƒà¸«à¸¡à¹ˆ] à¸•à¸±à¸§à¹à¸›à¸£à¸ªà¸³à¸«à¸£à¸±à¸šà¹€à¸¥à¸·à¸­à¸à¸‰à¸²à¸à¸«à¸¥à¸±à¸‡ (Banana)
+// [ส่วนเพิ่มใหม่] ตัวแปรสำหรับเลือกฉากหลัง (Banana)
 const bananaBgSelect = document.getElementById('banana-bg-select');
 const bananaRandomBgCheckbox = document.getElementById('banana-random-bg-checkbox');
 
 // Store uploaded images (Banana)
 let bananaUploadedImages = [];
 let bananaCurrentImageIndex = 0;
-let modelUploadedImages = []; // à¸•à¸±à¸§à¹à¸›à¸£à¹€à¸à¹‡à¸šà¸£à¸¹à¸›à¸™à¸²à¸‡à¹à¸šà¸š
+let modelUploadedImages = []; // ตัวแปรเก็บรูปนางแบบ
 let bananaIsAutomationRunning = false;
 let bananaShouldStopAutomation = false;
 let bananaStatusTimeoutId = null;
@@ -3107,47 +3178,47 @@ function bananaSetupUploadZone() {
 }
 
 // ============================================
-// IMAGE MANAGEMENT (à¹à¸à¹‰à¹„à¸‚: à¹à¸ªà¸”à¸‡à¸£à¸¹à¸› + à¸¥à¸šà¸—à¸µà¸¥à¸°à¸£à¸¹à¸›)
+// IMAGE MANAGEMENT (แก้ไข: แสดงรูป + ลบทีละรูป)
 // ============================================
 const bananaPreviewContainer = document.getElementById('banana-preview-container');
 
-// à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸­à¸±à¸›à¹€à¸”à¸•à¸«à¸™à¹‰à¸²à¸ˆà¸­ (à¹€à¸£à¸µà¸¢à¸à¹ƒà¸Šà¹‰à¹€à¸¡à¸·à¹ˆà¸­à¸¡à¸µà¸à¸²à¸£à¹€à¸žà¸´à¹ˆà¸¡à¸«à¸£à¸·à¸­à¸¥à¸šà¸£à¸¹à¸›)
+// ฟังก์ชันอัปเดตหน้าจอ (เรียกใช้เมื่อมีการเพิ่มหรือลบรูป)
 function bananaUpdateImageCount() {
-  // 1. à¸­à¸±à¸›à¹€à¸”à¸•à¸•à¸±à¸§à¹€à¸¥à¸‚
+  // 1. อัปเดตตัวเลข
   bananaImageCount.textContent = bananaUploadedImages.length;
 
-  // 2. à¸ˆà¸±à¸”à¸à¸²à¸£à¸›à¸¸à¹ˆà¸¡ Clear All
+  // 2. จัดการปุ่ม Clear All
   if (bananaUploadedImages.length > 0) {
     bananaClearImagesBtn.style.display = 'flex';
   } else {
     bananaClearImagesBtn.style.display = 'none';
   }
 
-  bananaUpdateRoundInfo(); // à¸­à¸±à¸›à¹€à¸”à¸•à¸ˆà¸³à¸™à¸§à¸™à¸£à¸­à¸š
+  bananaUpdateRoundInfo(); // อัปเดตจำนวนรอบ
 
-  // 3. à¸ªà¸£à¹‰à¸²à¸‡à¸£à¸¹à¸›à¸•à¸±à¸§à¸­à¸¢à¹ˆà¸²à¸‡ (Render Previews)
+  // 3. สร้างรูปตัวอย่าง (Render Previews)
   renderBananaPreviews();
 }
 
-// à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸§à¸²à¸”à¸£à¸¹à¸›à¸•à¸±à¸§à¸­à¸¢à¹ˆà¸²à¸‡
+// ฟังก์ชันวาดรูปตัวอย่าง
 function renderBananaPreviews() {
   if (!bananaPreviewContainer) return;
-  bananaPreviewContainer.innerHTML = ''; // à¹€à¸„à¸¥à¸µà¸¢à¸£à¹Œà¸‚à¸­à¸‡à¹€à¸à¹ˆà¸²
+  bananaPreviewContainer.innerHTML = ''; // เคลียร์ของเก่า
 
   bananaUploadedImages.forEach((img, index) => {
     const item = document.createElement('div');
     item.className = 'preview-item';
 
-    // à¸ªà¸£à¹‰à¸²à¸‡à¸£à¸¹à¸›à¸ à¸²à¸ž
+    // สร้างรูปภาพ
     const imgEl = document.createElement('img');
     imgEl.src = img.dataUrl;
     imgEl.title = img.name;
 
-    // à¸ªà¸£à¹‰à¸²à¸‡à¸›à¸¸à¹ˆà¸¡à¸¥à¸š (X)
+    // สร้างปุ่มลบ (X)
     const delBtn = document.createElement('button');
     delBtn.className = 'preview-remove-btn';
-    delBtn.innerHTML = 'âœ•';
-    delBtn.onclick = () => bananaRemoveOneImage(index); // à¹€à¸£à¸µà¸¢à¸à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸¥à¸š
+    delBtn.innerHTML = '✕';
+    delBtn.onclick = () => bananaRemoveOneImage(index); // เรียกฟังก์ชันลบ
 
     item.appendChild(imgEl);
     item.appendChild(delBtn);
@@ -3155,15 +3226,15 @@ function renderBananaPreviews() {
   });
 }
 
-// à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸¥à¸šà¸—à¸µà¸¥à¸°à¸£à¸¹à¸›
+// ฟังก์ชันลบทีละรูป
 function bananaRemoveOneImage(index) {
-  // à¸¥à¸šà¸­à¸­à¸à¸ˆà¸²à¸ Array à¸•à¸²à¸¡à¸•à¸³à¹à¸«à¸™à¹ˆà¸‡ index
+  // ลบออกจาก Array ตามตำแหน่ง index
   bananaUploadedImages.splice(index, 1);
-  // à¸­à¸±à¸›à¹€à¸”à¸•à¸«à¸™à¹‰à¸²à¸ˆà¸­à¹ƒà¸«à¸¡à¹ˆ
+  // อัปเดตหน้าจอใหม่
   bananaUpdateImageCount();
 }
 
-// à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸ˆà¸±à¸”à¸à¸²à¸£à¹„à¸Ÿà¸¥à¹Œà¸—à¸µà¹ˆà¸­à¸±à¸›à¹‚à¸«à¸¥à¸”
+// ฟังก์ชันจัดการไฟล์ที่อัปโหลด
 function bananaHandleFiles(files) {
   const imageFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
 
@@ -3178,7 +3249,7 @@ function bananaHandleFiles(files) {
         dataUrl: e.target.result
       };
       bananaUploadedImages.push(imageData);
-      // à¹€à¸£à¸µà¸¢à¸à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸­à¸±à¸›à¹€à¸”à¸• (à¸‹à¸¶à¹ˆà¸‡à¸ˆà¸°à¹„à¸›à¸§à¸²à¸”à¸£à¸¹à¸›à¹ƒà¸«à¹‰à¹€à¸­à¸‡)
+      // เรียกฟังก์ชันอัปเดต (ซึ่งจะไปวาดรูปให้เอง)
       bananaUpdateImageCount();
     };
     reader.readAsDataURL(file);
@@ -3187,16 +3258,16 @@ function bananaHandleFiles(files) {
   bananaFileInput.value = '';
 }
 
-// à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸¥à¸šà¸£à¸¹à¸›à¸—à¸±à¹‰à¸‡à¸«à¸¡à¸”
+// ฟังก์ชันลบรูปทั้งหมด
 function bananaClearAllImages() {
   bananaUploadedImages = [];
-  bananaUpdateImageCount(); // à¸«à¸™à¹‰à¸²à¸ˆà¸­à¸ˆà¸°à¹€à¸„à¸¥à¸µà¸¢à¸£à¹Œà¸£à¸¹à¸›à¸­à¸­à¸à¸«à¸¡à¸”à¹€à¸­à¸‡
+  bananaUpdateImageCount(); // หน้าจอจะเคลียร์รูปออกหมดเอง
   bananaUpdateStatus('All images cleared');
 }
 
 
 // ==========================================
-// MODEL UPLOAD FUNCTIONS (à¹€à¸žà¸´à¹ˆà¸¡à¹ƒà¸«à¸¡à¹ˆ)
+// MODEL UPLOAD FUNCTIONS (เพิ่มใหม่)
 // ==========================================
 const modelUploadZone = document.getElementById('model-upload-zone');
 const modelFileInput = document.getElementById('model-file-input');
@@ -3244,7 +3315,7 @@ function modelSetupUploadZone() {
 function modelHandleFiles(files) {
   const imageFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
   if(imageFiles.length > 0) {
-      const file = imageFiles[0]; // à¸£à¸±à¸šà¹à¸„à¹ˆà¸£à¸¹à¸›à¹€à¸”à¸µà¸¢à¸§à¸¥à¹ˆà¸²à¸ªà¸¸à¸”
+      const file = imageFiles[0]; // รับแค่รูปเดียวล่าสุด
       const reader = new FileReader();
       reader.onload = (e) => {
         modelUploadedImages = [{
@@ -3261,14 +3332,14 @@ function modelHandleFiles(files) {
 
 
 // ============================================
-// MODEL PREVIEW SYSTEM (à¸£à¸°à¸šà¸šà¹à¸ªà¸”à¸‡à¸£à¸¹à¸›à¸™à¸²à¸‡à¹à¸šà¸š)
+// MODEL PREVIEW SYSTEM (ระบบแสดงรูปนางแบบ)
 // ============================================
 const modelPreviewContainer = document.getElementById('model-preview-container');
 
 
 
 // ============================================
-// [UPDATED] MODEL UPDATE UI: à¸£à¸­à¸‡à¸£à¸±à¸šà¸à¸²à¸£à¸¥à¹‡à¸­à¸„à¸—à¸±à¹‰à¸‡ Human à¹à¸¥à¸° Mascot
+// [UPDATED] MODEL UPDATE UI: รองรับการล็อคทั้ง Human และ Mascot
 // ============================================
 function modelUpdateUI() {
     const container = document.getElementById('model-preview-container');
@@ -3281,7 +3352,7 @@ function modelUpdateUI() {
 
     if (modelUploadedImages.length > 0) {
         if(countBadge) { countBadge.textContent = '1'; countBadge.style.display = 'inline-block'; }
-        if(uploadText) uploadText.textContent = "à¹€à¸›à¸¥à¸µà¹ˆà¸¢à¸™à¸£à¸¹à¸›à¸™à¸²à¸‡à¹à¸šà¸š";
+        if(uploadText) uploadText.textContent = "เปลี่ยนรูปนางแบบ";
         if(clearBtn) clearBtn.classList.remove('hidden');
 
         const item = document.createElement('div');
@@ -3292,7 +3363,7 @@ function modelUpdateUI() {
 
         const delBtn = document.createElement('button');
         delBtn.className = 'preview-remove-btn';
-        delBtn.innerHTML = 'âœ•';
+        delBtn.innerHTML = '✕';
         delBtn.onclick = () => {
             modelUploadedImages = [];
             modelUpdateUI();
@@ -3304,17 +3375,17 @@ function modelUpdateUI() {
 
     } else {
         if(countBadge) countBadge.style.display = 'none';
-        if(uploadText) uploadText.textContent = "à¹€à¸žà¸´à¹ˆà¸¡à¸£à¸¹à¸›à¸™à¸²à¸‡à¹à¸šà¸š (Ref)";
+        if(uploadText) uploadText.textContent = "เพิ่มรูปนางแบบ (Ref)";
         if(clearBtn) clearBtn.classList.add('hidden');
     }
 
     // -------------------------------------------------------
-    // [NEW] Logic à¸¥à¹‡à¸­à¸„à¸ªà¹ˆà¸§à¸™à¹€à¸¥à¸·à¸­à¸à¸•à¸±à¸§à¸¥à¸°à¸„à¸£ (à¸—à¸±à¹‰à¸‡ 2 à¹‚à¸«à¸¡à¸”)
+    // [NEW] Logic ล็อคส่วนเลือกตัวละคร (ทั้ง 2 โหมด)
     // -------------------------------------------------------
     const hasImage = modelUploadedImages.length > 0;
     const currentMode = document.getElementById('current-app-mode')?.value || 'human';
 
-    // 1. à¸¥à¹‡à¸­à¸„à¸à¸±à¹ˆà¸‡ Human
+    // 1. ล็อคฝั่ง Human
     const presetGroup = document.getElementById('char-group-preset');
     const customGroup = document.getElementById('char-group-custom');
     [presetGroup, customGroup].forEach((group) => {
@@ -3328,7 +3399,7 @@ function modelUpdateUI() {
         }
     });
 
-    // 2. à¸¥à¹‡à¸­à¸„à¸à¸±à¹ˆà¸‡ Mascot (Grid à¹€à¸¥à¸·à¸­à¸à¸•à¸±à¸§à¸¥à¸°à¸„à¸£)
+    // 2. ล็อคฝั่ง Mascot (Grid เลือกตัวละคร)
     const mascotGrid = document.getElementById('mascot-grid');
     const mascotCustomInput = document.getElementById('mascot-custom-input');
     
@@ -3336,7 +3407,7 @@ function modelUpdateUI() {
         if (hasImage && currentMode === 'mascot') {
             mascotGrid.classList.add('disabled-section');
             if(mascotCustomInput) mascotCustomInput.disabled = true;
-            bananaAddLog('ðŸ“¸ Mascot Mode: à¸•à¸£à¸§à¸ˆà¸žà¸šà¸£à¸¹à¸›à¸ à¸²à¸ž Ref - à¸›à¸´à¸”à¸à¸²à¸£à¹€à¸¥à¸·à¸­à¸à¸•à¸±à¸§à¸¥à¸°à¸„à¸£à¸Šà¸±à¹ˆà¸§à¸„à¸£à¸²à¸§', 'info');
+            bananaAddLog('📸 Mascot Mode: ตรวจพบรูปภาพ Ref - ปิดการเลือกตัวละครชั่วคราว', 'info');
         } else {
             mascotGrid.classList.remove('disabled-section');
             if(mascotCustomInput) mascotCustomInput.disabled = false;
@@ -3369,7 +3440,7 @@ function bananaUpdateRoundInfo() {
     if (customInput) customInput.style.display = 'none';
   }
 
-  // à¹à¸à¹‰à¹„à¸‚: à¹‚à¸Šà¸§à¹Œ Text à¹ƒà¸«à¹‰à¸œà¸¹à¹‰à¹ƒà¸Šà¹‰à¸—à¸£à¸²à¸šà¸„à¸´à¸§à¸—à¸µà¹ˆà¸£à¸°à¸šà¸šà¸ˆà¸°à¸£à¸±à¸™
+  // แก้ไข: โชว์ Text ให้ผู้ใช้ทราบคิวที่ระบบจะรัน
   if (roundInfo) {
       roundInfo.style.display = 'block';
       const roundsPerImage = bananaGetRoundsPerImage();
@@ -3394,7 +3465,7 @@ function bananaGetRoundsPerImage() {
   if (select.value === 'custom' || (customInput && customInput.style.display === 'block')) {
       if (customInput) {
           const val = parseInt(customInput.value);
-          // à¹à¸à¹‰à¹„à¸‚: à¸”à¸±à¸à¸ˆà¸±à¸šà¸„à¸§à¸²à¸¡à¸›à¸¥à¸­à¸”à¸ à¸±à¸¢à¸‚à¸­à¸‡à¸‚à¹‰à¸­à¸¡à¸¹à¸¥
+          // แก้ไข: ดักจับความปลอดภัยของข้อมูล
           const safeVal = (!isNaN(val) && val > 0) ? val : 1;
           return isBasicPlan ? Math.min(safeVal, 3) : safeVal;
       }
@@ -3416,7 +3487,7 @@ function bananaSyncRoundDropdown() {
   if (isBasicPlan && (selectedValue === '5' || selectedValue === 'custom')) {
     dropdown.value = '3';
     hiddenSelect.value = '3';
-    showToast('Basic à¸ˆà¸³à¸à¸±à¸”à¸£à¸­à¸šà¸ªà¸¹à¸‡à¸ªà¸¸à¸” 3 à¸£à¸­à¸š', 'warning');
+    showToast('Basic จำกัดรอบสูงสุด 3 รอบ', 'warning');
   } else {
     hiddenSelect.value = selectedValue;
   }
@@ -3460,7 +3531,7 @@ function bananaUpdateLogDisplay() {
   if (!bananaLogContainer) return;
   
   if (bananaLogs.length === 0) {
-    bananaLogContainer.innerHTML = '<div class="log-empty">à¸¢à¸±à¸‡à¹„à¸¡à¹ˆà¸¡à¸µ log</div>';
+    bananaLogContainer.innerHTML = '<div class="log-empty">ยังไม่มี log</div>';
     return;
   }
   
@@ -3529,23 +3600,23 @@ function bananaUpdateStatus(message) {
 // Banana Prompt & Play Studio: Handle Copy Prompt
 function bananaHandleCopyPrompt() {
   const text = bananaPromptResult.textContent;
-  if (!text || text.includes('à¸à¸³à¸¥à¸±à¸‡à¸§à¸´à¹€à¸„à¸£à¸²à¸°à¸«à¹Œ')) {
-    showToast('à¹„à¸¡à¹ˆà¸¡à¸µ Prompt à¹ƒà¸«à¹‰à¸„à¸±à¸”à¸¥à¸­à¸', 'error');
+  if (!text || text.includes('กำลังวิเคราะห์')) {
+    showToast('ไม่มี Prompt ให้คัดลอก', 'error');
     return;
   }
 
   navigator.clipboard.writeText(text).then(() => {
-    showToast('à¸„à¸±à¸”à¸¥à¸­à¸ Prompt à¹à¸¥à¹‰à¸§!', 'success');
-    bananaBtnCopyPrompt.textContent = 'âœ…';
+    showToast('คัดลอก Prompt แล้ว!', 'success');
+    bananaBtnCopyPrompt.textContent = '✅';
     setTimeout(() => {
-      bananaBtnCopyPrompt.textContent = 'ðŸ“‹';
+      bananaBtnCopyPrompt.textContent = '📋';
     }, 2000);
   }).catch(() => {
-    showToast('à¹„à¸¡à¹ˆà¸ªà¸²à¸¡à¸²à¸£à¸–à¸„à¸±à¸”à¸¥à¸­à¸à¹„à¸”à¹‰', 'error');
+    showToast('ไม่สามารถคัดลอกได้', 'error');
   });
 }
 
-// Banana Prompt & Play Studio: Sleep helper (à¸‰à¸šà¸±à¸šà¹à¸à¹‰: à¸•à¸·à¹ˆà¸™à¸—à¸±à¸™à¸—à¸µà¸—à¸µà¹ˆà¸à¸” Stop)
+// Banana Prompt & Play Studio: Sleep helper (ฉบับแก้: ตื่นทันทีที่กด Stop)
 function bananaSleep(ms) {
   return new Promise((resolve, reject) => {
     if (bananaShouldStopAutomation) {
@@ -3572,35 +3643,35 @@ function bananaSleep(ms) {
 function bananaStopAutomation() {
   if (bananaIsAutomationRunning) {
     bananaShouldStopAutomation = true;
-    bananaUpdateStatus('à¸à¸³à¸¥à¸±à¸‡à¸«à¸¢à¸¸à¸”...');
-    showToast('à¸à¸³à¸¥à¸±à¸‡à¸«à¸¢à¸¸à¸” Automation...', 'error');
+    bananaUpdateStatus('กำลังหยุด...');
+    showToast('กำลังหยุด Automation...', 'error');
   }
 }
 
-// Banana Prompt & Play Studio: Get generated images from page (à¹à¸à¹‰à¹„à¸‚: à¸”à¸¶à¸‡à¸—à¸±à¹‰à¸‡à¸«à¸¡à¸” + Scroll)
+// Banana Prompt & Play Studio: Get generated images from page (แก้ไข: ดึงทั้งหมด + Scroll)
 async function bananaGetGeneratedImages() {
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     
     const result = await chrome.scripting.executeScript({
       target: { tabId: tab.id },
-      func: async () => { // ðŸŸ¢ à¹€à¸žà¸´à¹ˆà¸¡ async à¹€à¸žà¸·à¹ˆà¸­à¸£à¸­à¸‡à¸£à¸±à¸šà¸à¸²à¸£à¸£à¸­
+      func: async () => { // 🟢 เพิ่ม async เพื่อรองรับการรอ
         
-        // 1. à¸ªà¸±à¹ˆà¸‡ Scroll à¸¥à¸‡à¸¥à¹ˆà¸²à¸‡à¸ªà¸¸à¸”à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸«à¹‰à¸£à¸¹à¸› Lazy Load à¹‚à¸«à¸¥à¸”à¸‚à¸¶à¹‰à¸™à¸¡à¸²à¹ƒà¸«à¹‰à¸„à¸£à¸š
+        // 1. สั่ง Scroll ลงล่างสุดเพื่อให้รูป Lazy Load โหลดขึ้นมาให้ครบ
         window.scrollTo(0, document.body.scrollHeight);
-        await new Promise(r => setTimeout(r, 1000)); // à¸£à¸­ 1 à¸§à¸´à¸™à¸²à¸—à¸µà¹ƒà¸«à¹‰à¹‚à¸«à¸¥à¸”
+        await new Promise(r => setTimeout(r, 1000)); // รอ 1 วินาทีให้โหลด
 
         const images = [];
         
-        // Method: à¸à¸§à¸²à¸”à¸«à¸²à¸—à¸¸à¸à¸£à¸¹à¸›à¹ƒà¸™à¸«à¸™à¹‰à¸²à¸ˆà¸­à¸—à¸µà¹ˆà¸¡à¸µà¸‚à¸™à¸²à¸”à¹ƒà¸«à¸à¹ˆà¸žà¸­
+        // Method: กวาดหาทุกรูปในหน้าจอที่มีขนาดใหญ่พอ
         const allImgs = document.querySelectorAll('img');
         for (const img of allImgs) {
           const rect = img.getBoundingClientRect();
-          // à¹€à¸‡à¸·à¹ˆà¸­à¸™à¹„à¸‚: à¸•à¹‰à¸­à¸‡à¹€à¸›à¹‡à¸™à¸£à¸¹à¸›à¸—à¸µà¹ˆà¸‚à¸™à¸²à¸”à¹ƒà¸«à¸à¹ˆà¸à¸§à¹ˆà¸² 200x200 (à¸à¸±à¸™à¸žà¸§à¸à¹„à¸­à¸„à¸­à¸™/à¹‚à¸¥à¹‚à¸à¹‰)
+          // เงื่อนไข: ต้องเป็นรูปที่ขนาดใหญ่กว่า 200x200 (กันพวกไอคอน/โลโก้)
           if (rect.width >= 200 && rect.height >= 200) {
             const src = img.src || img.getAttribute('src') || img.getAttribute('data-src');
             
-            // à¸à¸£à¸­à¸‡à¸£à¸¹à¸›à¸—à¸µà¹ˆà¹„à¸¡à¹ˆà¹ƒà¸Šà¹ˆà¸œà¸¥à¸¥à¸±à¸žà¸˜à¹Œà¸­à¸­à¸
+            // กรองรูปที่ไม่ใช่ผลลัพธ์ออก
             if (src && !src.includes('icon') && !src.includes('avatar') && !src.includes('logo') && !src.includes('profile')) {
               images.push({
                 src: src,
@@ -3611,7 +3682,7 @@ async function bananaGetGeneratedImages() {
           }
         }
         
-        // à¸¥à¸šà¸£à¸¹à¸›à¸‹à¹‰à¸³ (Remove duplicates)
+        // ลบรูปซ้ำ (Remove duplicates)
         const uniqueImages = [];
         const seenSrcs = new Set();
         for (const img of images) {
@@ -3621,7 +3692,7 @@ async function bananaGetGeneratedImages() {
           }
         }
         
-        // ðŸŸ¢ à¸ªà¹ˆà¸‡à¸à¸¥à¸±à¸šà¸—à¸±à¹‰à¸‡à¸«à¸¡à¸” (à¸¥à¸š .slice(0, 10) à¸­à¸­à¸à¹à¸¥à¹‰à¸§)
+        // 🟢 ส่งกลับทั้งหมด (ลบ .slice(0, 10) ออกแล้ว)
         return uniqueImages; 
       }
     });
@@ -3676,11 +3747,11 @@ async function bananaConvertImageToDataUrl(imageUrl) {
 
 
 // ============================================
-// ðŸŸ¢ NEW LOGIC: SNAPSHOT & COMPARE (à¹à¸à¹‰à¸›à¸±à¸à¸«à¸²à¸”à¸¶à¸‡à¸£à¸¹à¸›à¹€à¸à¹ˆà¸²)
+// 🟢 NEW LOGIC: SNAPSHOT & COMPARE (แก้ปัญหาดึงรูปเก่า)
 // ============================================
 
 // ============================================
-// ðŸŸ¢ à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸Šà¹ˆà¸§à¸¢: à¸”à¸¶à¸‡ URL à¸£à¸¹à¸›à¸—à¸±à¹‰à¸‡à¸«à¸¡à¸” (à¸­à¸±à¸›à¹€à¸à¸£à¸”: à¸„à¹‰à¸™à¸«à¸²à¸›à¹‰à¸²à¸¢ "à¸£à¸¹à¸›à¸ à¸²à¸žà¸—à¸µà¹ˆà¸­à¸±à¸›à¹‚à¸«à¸¥à¸”" à¸‚à¸±à¹‰à¸™à¸ªà¸¸à¸”à¸¢à¸­à¸”)
+// 🟢 ฟังก์ชันช่วย: ดึง URL รูปทั้งหมด (อัปเกรด: ค้นหาป้าย "รูปภาพที่อัปโหลด" ขั้นสุดยอด)
 // ============================================
 async function getAllPageImages() {
     try {
@@ -3688,7 +3759,7 @@ async function getAllPageImages() {
         const result = await chrome.scripting.executeScript({
             target: { tabId: tab.id },
             func: async () => {
-                // à¸”à¸±à¸™à¸ˆà¸­à¸¥à¸‡à¸¥à¹ˆà¸²à¸‡à¸ªà¸¸à¸”à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸«à¹‰à¹€à¸§à¹‡à¸šà¹‚à¸«à¸¥à¸”à¸£à¸¹à¸›à¸—à¸µà¹ˆà¸‹à¹ˆà¸­à¸™à¸­à¸¢à¸¹à¹ˆà¸­à¸­à¸à¸¡à¸²à¹ƒà¸«à¹‰à¸«à¸¡à¸”
+                // ดันจอลงล่างสุดเพื่อให้เว็บโหลดรูปที่ซ่อนอยู่ออกมาให้หมด
                 window.scrollTo(0, document.body.scrollHeight);
                 await new Promise(r => setTimeout(r, 1000));
                 window.scrollTo(0, 0);
@@ -3703,8 +3774,8 @@ async function getAllPageImages() {
                         const text = (node.innerText || '').trim();
                         const hasToolbar = !!node.querySelector('[role="toolbar"]');
                         const hasTile = !!node.querySelector('[data-tile-id]');
-                        const hasDownload = text.includes('à¸”à¸²à¸§à¸™à¹Œà¹‚à¸«à¸¥à¸”') || text.toLowerCase().includes('download');
-                        const hasDate = text.includes('à¸ªà¸£à¹‰à¸²à¸‡à¹€à¸¡à¸·à¹ˆà¸­') || text.toLowerCase().includes('created');
+                        const hasDownload = text.includes('ดาวน์โหลด') || text.toLowerCase().includes('download');
+                        const hasDate = text.includes('สร้างเมื่อ') || text.toLowerCase().includes('created');
 
                         if ((hasToolbar || hasDownload) && hasTile && hasDate) {
                             return node;
@@ -3721,7 +3792,7 @@ async function getAllPageImages() {
 
                     const text = (card.innerText || '').toLowerCase();
                     const isUploadedCard =
-                        text.includes('à¸£à¸¹à¸›à¸ à¸²à¸žà¸—à¸µà¹ˆà¸­à¸±à¸›à¹‚à¸«à¸¥à¸”') ||
+                        text.includes('รูปภาพที่อัปโหลด') ||
                         text.includes('uploaded image') ||
                         text.includes('original image');
 
@@ -3729,8 +3800,8 @@ async function getAllPageImages() {
 
                     const hasNanoBanana = text.includes('nano banana');
                     const hasPromptReuse =
-                        text.includes('à¹ƒà¸Šà¹‰à¸žà¸£à¸­à¸¡à¸•à¹Œà¸‹à¹‰à¸³') ||
-                        text.includes('à¹ƒà¸Šà¹‰à¸žà¸£à¸­à¸¡à¸•à¹Œà¸‚à¹‰à¸­à¸„à¸§à¸²à¸¡à¸­à¸µà¸à¸„à¸£à¸±à¹‰à¸‡') ||
+                        text.includes('ใช้พรอมต์ซ้ำ') ||
+                        text.includes('ใช้พรอมต์ข้อความอีกครั้ง') ||
                         text.includes('reuse prompt');
                     const hasPromptText = text.length > 180;
 
@@ -3758,8 +3829,8 @@ async function getAllPageImages() {
                             const candidateSrc = candidate.src || candidate.getAttribute('src') || candidate.getAttribute('data-src');
                             const candidateAlt = (candidate.getAttribute('alt') || '').toLowerCase();
                             const isReferenceThumb =
-                                candidateAlt.includes('à¸­à¸±à¸›à¹‚à¸«à¸¥à¸”') ||
-                                candidateAlt.includes('à¸„à¸­à¸¥à¹€à¸¥à¹‡à¸à¸Šà¸±à¸™') ||
+                                candidateAlt.includes('อัปโหลด') ||
+                                candidateAlt.includes('คอลเล็กชัน') ||
                                 candidateAlt.includes('uploaded') ||
                                 candidateAlt.includes('collection');
                             const isEditImage = !!candidate.closest('a[href*="/edit/"]');
@@ -3780,7 +3851,7 @@ async function getAllPageImages() {
     }
 }
 
-// 2. à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸«à¸¥à¸±à¸: Banana -> Video (à¹à¸à¹‰à¹„à¸‚à¹à¸¥à¹‰à¸§)
+// 2. ฟังก์ชันหลัก: Banana -> Video (แก้ไขแล้ว)
 function bananaGetToVideoStyle() {
   return bananaToVideoStyleSelect ? bananaToVideoStyleSelect.value : 'talk_ugc';
 }
@@ -3879,27 +3950,27 @@ function bananaApplyToVideoStyle(styleValue) {
 
 async function bananaToVideoAutomation() {
   if (window.FeatureGate && !FeatureGate.can('imageToVideo')) {
-    showToast('Image-to-Video Auto à¹ƒà¸Šà¹‰à¹„à¸”à¹‰à¹€à¸‰à¸žà¸²à¸° Premium', 'warning');
+    showToast('Image-to-Video Auto ใช้ได้เฉพาะ Premium', 'warning');
     return;
   }
 
   if (bananaIsAutomationRunning || videoIsAutomationRunning) {
-    showToast('à¸à¸³à¸¥à¸±à¸‡à¸£à¸±à¸™à¸­à¸¢à¸¹à¹ˆà¹à¸¥à¹‰à¸§ à¸à¸£à¸¸à¸“à¸²à¸£à¸­à¸ªà¸±à¸à¸„à¸£à¸¹à¹ˆ', 'error');
+    showToast('กำลังรันอยู่แล้ว กรุณารอสักครู่', 'error');
     return;
   }
 
-  // à¸”à¸¶à¸‡à¸„à¹ˆà¸² Config
+  // ดึงค่า Config
   const productName = bananaProductNameInput ? bananaProductNameInput.value.trim() : '';
   const selectedVideoStyle = bananaGetToVideoStyle();
   const bananaImageAutoDownloadCheckbox = document.getElementById('banana-auto-download-checkbox');
   const previousImageAutoDownload = bananaImageAutoDownloadCheckbox ? bananaImageAutoDownloadCheckbox.checked : null;
   
   if (bananaUploadedImages.length === 0) {
-    showToast('à¸à¸£à¸¸à¸“à¸²à¸­à¸±à¸žà¹‚à¸«à¸¥à¸”à¸ à¸²à¸žà¸ªà¸´à¸™à¸„à¹‰à¸²à¸à¹ˆà¸­à¸™', 'error');
+    showToast('กรุณาอัพโหลดภาพสินค้าก่อน', 'error');
     return;
   }
 
-  // Sync à¸„à¹ˆà¸²à¹„à¸›à¸¢à¸±à¸‡à¸«à¸™à¹‰à¸² Video
+  // Sync ค่าไปยังหน้า Video
   if (videoProductNameInput) videoProductNameInput.value = productName;
   bananaUpdateToVideoSummary('เริ่มโหมด Image-to-Video: กำลังสร้างภาพก่อนส่งต่อ...');
   const bananaRoundValue = bananaRoundCountSelect ? bananaRoundCountSelect.value : '1';
@@ -3921,31 +3992,31 @@ async function bananaToVideoAutomation() {
 
   try {
     // -------------------------------------------------
-    // ðŸ“¸ PHASE 1: SNAPSHOT (à¸ˆà¸³à¸£à¸¹à¸›à¹€à¸”à¸´à¸¡à¸à¹ˆà¸­à¸™à¹€à¸£à¸´à¹ˆà¸¡à¸‡à¸²à¸™)
+    // 📸 PHASE 1: SNAPSHOT (จำรูปเดิมก่อนเริ่มงาน)
     // -------------------------------------------------
-    bananaUpdateStatus('ðŸ“¸ Snapshot: à¸à¸³à¸¥à¸±à¸‡à¸ˆà¸”à¸ˆà¸³à¸£à¸¹à¸›à¸ à¸²à¸žà¹€à¸”à¸´à¸¡...');
+    bananaUpdateStatus('📸 Snapshot: กำลังจดจำรูปภาพเดิม...');
     const previousImagesSet = await getAllPageImages();
-    bananaAddLog(`â„¹ï¸ à¸ à¸²à¸žà¹€à¸”à¸´à¸¡à¹ƒà¸™à¸ˆà¸­à¸¡à¸µ ${previousImagesSet.size} à¸ à¸²à¸ž`, 'info');
+    bananaAddLog(`ℹ️ ภาพเดิมในจอมี ${previousImagesSet.size} ภาพ`, 'info');
 
     // -------------------------------------------------
-    // ðŸŽ¬ PHASE 2: à¸£à¸±à¸™ Banana (à¸ªà¸£à¹‰à¸²à¸‡à¸ à¸²à¸ž)
+    // 🎬 PHASE 2: รัน Banana (สร้างภาพ)
     // -------------------------------------------------
-    bananaUpdateStatus('ðŸŽ¬ [1/2] à¸à¸³à¸¥à¸±à¸‡à¸ªà¸£à¹‰à¸²à¸‡à¸ à¸²à¸ž...');
+    bananaUpdateStatus('🎬 [1/2] กำลังสร้างภาพ...');
     
-    // à¹€à¸£à¸µà¸¢à¸à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸ªà¸£à¹‰à¸²à¸‡à¸ à¸²à¸ž (Function à¹€à¸”à¸´à¸¡à¸—à¸µà¹ˆà¸¡à¸µà¸­à¸¢à¸¹à¹ˆà¹à¸¥à¹‰à¸§)
-await bananaHandleAutomation(true); // à¸ªà¹ˆà¸‡à¸ªà¸±à¸à¸à¸²à¸“à¸§à¹ˆà¸² "à¸à¸³à¸¥à¸±à¸‡à¸—à¸³à¸•à¹ˆà¸­à¹€à¸™à¸·à¹ˆà¸­à¸‡ à¸«à¹‰à¸²à¸¡à¸›à¸¥à¸”à¸¥à¹‡à¸­à¸„"
+    // เรียกฟังก์ชันสร้างภาพ (Function เดิมที่มีอยู่แล้ว)
+await bananaHandleAutomation(true); // ส่งสัญญาณว่า "กำลังทำต่อเนื่อง ห้ามปลดล็อค"
 
     if (bananaShouldStopAutomation) throw new Error('STOPPED');
 
-    // à¸£à¸­à¹ƒà¸«à¹‰à¸ à¸²à¸žà¹‚à¸«à¸¥à¸”à¹€à¸ªà¸£à¹‡à¸ˆ (à¸ªà¸³à¸„à¸±à¸à¸¡à¸²à¸! à¹ƒà¸«à¹‰à¹€à¸§à¸¥à¸²à¸£à¸°à¸šà¸š Render)
-    bananaUpdateStatus('â³ à¸£à¸­à¸ à¸²à¸žà¹ƒà¸«à¸¡à¹ˆ Render (10s)...');
+    // รอให้ภาพโหลดเสร็จ (สำคัญมาก! ให้เวลาระบบ Render)
+    bananaUpdateStatus('⏳ รอภาพใหม่ Render (10s)...');
     await new Promise(resolve => setTimeout(resolve, 10000));
 
     // -------------------------------------------------
-    // ðŸ•µï¸ PHASE 3: à¹€à¸›à¸£à¸µà¸¢à¸šà¹€à¸—à¸µà¸¢à¸šà¸«à¸² "à¸£à¸¹à¸›à¹ƒà¸«à¸¡à¹ˆ" (VERIFIED COMPARE)
+    // 🕵️ PHASE 3: เปรียบเทียบหา "รูปใหม่" (VERIFIED COMPARE)
     // -------------------------------------------------
-   // ðŸ•µï¸ [à¸ˆà¸¸à¸”à¸—à¸µà¹ˆà¹à¸à¹‰à¹„à¸‚] PHASE 3: à¸£à¸°à¸šà¸šà¸•à¸£à¸§à¸ˆà¸ªà¸­à¸šà¸ à¸²à¸žà¹ƒà¸«à¸¡à¹ˆà¹à¸šà¸š "à¹€à¸ˆà¸­à¹à¸„à¹ˆà¹„à¸«à¸™à¹€à¸­à¸²à¹à¸„à¹ˆà¸™à¸±à¹‰à¸™" (Non-Fatal Check)
-    bananaUpdateStatus('ðŸ” à¸à¸³à¸¥à¸±à¸‡à¸£à¸­à¸£à¸¹à¸›à¸ à¸²à¸žà¹ƒà¸«à¸¡à¹ˆ Render à¹ƒà¸«à¹‰à¸ªà¸¡à¸šà¸¹à¸£à¸“à¹Œ...');
+   // 🕵️ [จุดที่แก้ไข] PHASE 3: ระบบตรวจสอบภาพใหม่แบบ "เจอแค่ไหนเอาแค่นั้น" (Non-Fatal Check)
+    bananaUpdateStatus('🔍 กำลังรอรูปภาพใหม่ Render ให้สมบูรณ์...');
     let newImageUrls = [];
 
     for (let retry = 0; retry < 5; retry++) { 
@@ -3955,37 +4026,37 @@ await bananaHandleAutomation(true); // à¸ªà¹ˆà¸‡à¸ªà¸±à¸à¸
         const currentImagesSet = await getAllPageImages();
         const currentImagesArray = Array.from(currentImagesSet);
         
-        // à¸à¸£à¸­à¸‡à¸«à¸²à¸ à¸²à¸žà¹ƒà¸«à¸¡à¹ˆà¸—à¸µà¹ˆà¹„à¸¡à¹ˆà¹„à¸”à¹‰à¸­à¸¢à¸¹à¹ˆà¹ƒà¸™ Snapshot à¸•à¸­à¸™à¹€à¸£à¸´à¹ˆà¸¡à¸•à¹‰à¸™
+        // กรองหาภาพใหม่ที่ไม่ได้อยู่ใน Snapshot ตอนเริ่มต้น
         newImageUrls = currentImagesArray.filter(url => !previousImagesSet.has(url));
         
         if (newImageUrls.length > 0) {
-            // ðŸ§  à¸•à¸£à¸§à¸ˆà¸ªà¸­à¸šà¸„à¸§à¸²à¸¡à¸™à¸´à¹ˆà¸‡: à¸£à¸­à¸­à¸µà¸ 3 à¸§à¸´à¸™à¸²à¸—à¸µà¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸«à¹‰à¸ à¸²à¸žà¹ƒà¸šà¸ªà¸¸à¸”à¸—à¹‰à¸²à¸¢à¹ƒà¸™ Batch à¹‚à¸«à¸¥à¸”à¸ˆà¸™à¸„à¸£à¸š
+            // 🧠 ตรวจสอบความนิ่ง: รออีก 3 วินาทีเพื่อให้ภาพใบสุดท้ายใน Batch โหลดจนครบ
             await new Promise(resolve => setTimeout(resolve, 3000));
             const reCheckSet = await getAllPageImages();
             const reCheckArray = Array.from(reCheckSet).filter(url => !previousImagesSet.has(url));
             
             if (reCheckArray.length >= newImageUrls.length) {
                 newImageUrls = reCheckArray;
-                break; // à¹€à¸ˆà¸­à¸ à¸²à¸žà¹à¸¥à¹‰à¸§ (à¸ˆà¸°à¸à¸µà¹ˆà¸ à¸²à¸žà¸à¹‡à¹„à¸”à¹‰) à¹ƒà¸«à¹‰à¸­à¸­à¸à¸ˆà¸²à¸ Loop à¸à¸²à¸£à¸£à¸­
+                break; // เจอภาพแล้ว (จะกี่ภาพก็ได้) ให้ออกจาก Loop การรอ
             }
         }
-        bananaUpdateStatus(`â³ à¸£à¸­à¸£à¸¹à¸›à¸ à¸²à¸žà¹ƒà¸«à¸¡à¹ˆ Render à¹ƒà¸«à¹‰à¸„à¸£à¸š... (${retry + 1}/5)`);
+        bananaUpdateStatus(`⏳ รอรูปภาพใหม่ Render ให้ครบ... (${retry + 1}/5)`);
     }
 
-    // ðŸŸ¢ [Logic à¹ƒà¸«à¸¡à¹ˆ]: à¸–à¹‰à¸²à¸ˆà¸š Loop à¹à¸¥à¹‰à¸§à¸¢à¸±à¸‡à¹„à¸¡à¹ˆà¹€à¸ˆà¸­à¸ à¸²à¸žà¹€à¸¥à¸¢ à¹ƒà¸«à¹‰ Log à¹€à¸•à¸·à¸­à¸™à¹à¸•à¹ˆà¹„à¸¡à¹ˆà¸•à¹‰à¸­à¸‡ Crash
+    // 🟢 [Logic ใหม่]: ถ้าจบ Loop แล้วยังไม่เจอภาพเลย ให้ Log เตือนแต่ไม่ต้อง Crash
     if (newImageUrls.length === 0) {
-        bananaAddLog('âš ï¸ à¹„à¸¡à¹ˆà¸žà¸šà¸£à¸¹à¸›à¸ à¸²à¸žà¹ƒà¸«à¸¡à¹ˆà¹ƒà¸™à¸£à¸­à¸šà¸™à¸µà¹‰ (à¸£à¸¹à¸›à¸­à¸²à¸ˆà¸ªà¸£à¹‰à¸²à¸‡à¹„à¸¡à¹ˆà¸ªà¸³à¹€à¸£à¹‡à¸ˆà¸«à¸£à¸·à¸­ Error) - à¸à¸³à¸¥à¸±à¸‡à¸‚à¹‰à¸²à¸¡à¹„à¸›à¹€à¸Šà¹‡à¸„à¸‚à¸±à¹‰à¸™à¸•à¸­à¸™à¸–à¸±à¸”à¹„à¸›', 'warning');
+        bananaAddLog('⚠️ ไม่พบรูปภาพใหม่ในรอบนี้ (รูปอาจสร้างไม่สำเร็จหรือ Error) - กำลังข้ามไปเช็คขั้นตอนถัดไป', 'warning');
     } else {
         newImageUrls.reverse(); 
-        bananaAddLog(`âœ¨ à¸¢à¸·à¸™à¸¢à¸±à¸™à¸žà¸šà¸ à¸²à¸žà¹ƒà¸«à¸¡à¹ˆà¸—à¸µà¹ˆà¸ªà¸£à¹‰à¸²à¸‡à¸ªà¸³à¹€à¸£à¹‡à¸ˆ ${newImageUrls.length} à¸ à¸²à¸ž`, 'success');
+        bananaAddLog(`✨ ยืนยันพบภาพใหม่ที่สร้างสำเร็จ ${newImageUrls.length} ภาพ`, 'success');
     }
 
     // -------------------------------------------------
-    // ðŸ”„ PHASE 4: à¹à¸›à¸¥à¸‡à¸‚à¹‰à¸­à¸¡à¸¹à¸¥à¹à¸¥à¸°à¸ªà¹ˆà¸‡à¸•à¹ˆà¸­ (à¹à¸à¹‰à¹„à¸‚à¹ƒà¸«à¹‰à¸‚à¹‰à¸²à¸¡à¹„à¸”à¹‰à¸–à¹‰à¸²à¹„à¸¡à¹ˆà¸¡à¸µà¸£à¸¹à¸›)
+    // 🔄 PHASE 4: แปลงข้อมูลและส่งต่อ (แก้ไขให้ข้ามได้ถ้าไม่มีรูป)
     // -------------------------------------------------
     if (newImageUrls.length > 0) {
-        bananaUpdateStatus(`ðŸŽ¬ [2/2] à¸à¸³à¸¥à¸±à¸‡à¹à¸›à¸¥à¸‡à¸‚à¹‰à¸­à¸¡à¸¹à¸¥à¸ à¸²à¸žà¹ƒà¸«à¸¡à¹ˆ...`);
-        videoUploadedImages = []; // à¹€à¸„à¸¥à¸µà¸¢à¸£à¹Œà¸‚à¸­à¸‡à¹€à¸à¹ˆà¸²à¸—à¸´à¹‰à¸‡
+        bananaUpdateStatus(`🎬 [2/2] กำลังแปลงข้อมูลภาพใหม่...`);
+        videoUploadedImages = []; // เคลียร์ของเก่าทิ้ง
 
         for (let i = 0; i < newImageUrls.length; i++) {
             if (bananaShouldStopAutomation) throw new Error('STOPPED');
@@ -3993,7 +4064,7 @@ await bananaHandleAutomation(true); // à¸ªà¹ˆà¸‡à¸ªà¸±à¸à¸
             const url = newImageUrls[i];
             let dataUrl = url;
 
-            bananaUpdateStatus(`ðŸŽ¬ [2/2] à¸à¸³à¸¥à¸±à¸‡à¹à¸›à¸¥à¸‡à¸ à¸²à¸ž ${i + 1}/${newImageUrls.length}...`);
+            bananaUpdateStatus(`🎬 [2/2] กำลังแปลงภาพ ${i + 1}/${newImageUrls.length}...`);
 
             if (!url.startsWith('data:')) {
                 dataUrl = await bananaConvertImageToDataUrl(url);
@@ -4010,61 +4081,61 @@ await bananaHandleAutomation(true); // à¸ªà¹ˆà¸‡à¸ªà¸±à¸à¸
         }
         
         videoUpdateImageCount();
-        bananaUpdateStatus(`ðŸŽ¬ [2/2] à¸ªà¹ˆà¸‡à¸•à¹ˆà¸­à¸ à¸²à¸ž ${videoUploadedImages.length} à¸ à¸²à¸ž à¹„à¸›à¸¢à¸±à¸‡ Video Mode`);
+        bananaUpdateStatus(`🎬 [2/2] ส่งต่อภาพ ${videoUploadedImages.length} ภาพ ไปยัง Video Mode`);
 
-        // à¸ªà¸¥à¸±à¸š Tab à¹„à¸›à¸«à¸™à¹‰à¸² Video
+        // สลับ Tab ไปหน้า Video
         const videoTab = document.querySelector('[data-tab="video"]');
         if (videoTab) {
             videoTab.click();
             await new Promise(resolve => setTimeout(resolve, 1000));
         }
     } else {
-        bananaUpdateStatus('à¹„à¸¡à¹ˆà¸žà¸šà¸ à¸²à¸žà¹ƒà¸«à¸¡à¹ˆà¸ªà¸³à¸«à¸£à¸±à¸šà¸ªà¹ˆà¸‡à¸•à¹ˆà¸­à¹„à¸›à¸—à¸³à¸§à¸´à¸”à¸µà¹‚à¸­');
-        bananaAddLog('â­ï¸ à¹„à¸¡à¹ˆà¸¡à¸µà¸£à¸¹à¸›à¹ƒà¸«à¸¡à¹ˆà¹ƒà¸«à¹‰à¸ªà¹ˆà¸‡à¸•à¹ˆà¸­ - à¸‚à¹‰à¸²à¸¡à¸‚à¸±à¹‰à¸™à¸•à¸­à¸™à¸à¸²à¸£à¸—à¸³ Video', 'info');
+        bananaUpdateStatus('ไม่พบภาพใหม่สำหรับส่งต่อไปทำวิดีโอ');
+        bananaAddLog('⏭️ ไม่มีรูปใหม่ให้ส่งต่อ - ข้ามขั้นตอนการทำ Video', 'info');
         return;
     }
 
 // -------------------------------------------------
-    // ðŸš€ PHASE 5: à¸£à¸±à¸™ Video Automation (à¸‰à¸šà¸±à¸šà¹à¸à¹‰à¹„à¸‚: à¸›à¸´à¸”à¸ªà¸¸à¹ˆà¸¡ à¹à¸¥à¸°à¹ƒà¸Šà¹‰à¸ªà¹„à¸•à¸¥à¹Œ UGC)
+    // 🚀 PHASE 5: รัน Video Automation (ฉบับแก้ไข: ปิดสุ่ม และใช้สไตล์ UGC)
     // -------------------------------------------------
-    // [à¸ˆà¸¸à¸”à¸—à¸µà¹ˆà¹à¸à¹‰à¹„à¸‚]: à¸¢à¸à¹€à¸¥à¸´à¸à¸à¸²à¸£à¸šà¸±à¸‡à¸„à¸±à¸šà¸ªà¸¸à¹ˆà¸¡ à¹à¸¥à¸°à¸ªà¸±à¹ˆà¸‡à¹ƒà¸«à¹‰à¹ƒà¸Šà¹‰à¸ªà¹„à¸•à¸¥à¹Œ à¸£à¸µà¸§à¸´à¸§ UGC (16) à¹€à¸ªà¸¡à¸­
+    // [จุดที่แก้ไข]: ยกเลิกการบังคับสุ่ม และสั่งให้ใช้สไตล์ รีวิว UGC (16) เสมอ
     const vRandomCheckbox = document.getElementById('video-random-style-switch'); 
     if (vRandomCheckbox) {
-        vRandomCheckbox.checked = false; // âŒ à¸›à¸´à¸”à¹‚à¸«à¸¡à¸”à¸ªà¸¸à¹ˆà¸¡
-        // à¸à¸£à¸°à¸•à¸¸à¹‰à¸™ Event à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸«à¹‰ UI à¸«à¸™à¹‰à¸²à¹€à¸§à¹‡à¸šà¸›à¸£à¸±à¸šà¸„à¸§à¸²à¸¡à¸ªà¸§à¹ˆà¸²à¸‡à¸à¸¥à¹ˆà¸­à¸‡à¸ªà¹„à¸•à¸¥à¹Œà¹ƒà¸«à¹‰à¸à¸¥à¸±à¸šà¸¡à¸²à¹€à¸¥à¸·à¸­à¸à¹„à¸”à¹‰
+        vRandomCheckbox.checked = false; // ❌ ปิดโหมดสุ่ม
+        // กระตุ้น Event เพื่อให้ UI หน้าเว็บปรับความสว่างกล่องสไตล์ให้กลับมาเลือกได้
         vRandomCheckbox.dispatchEvent(new Event('change', { bubbles: true })); 
-        bananaAddLog('âœ… à¸›à¸´à¸”à¹‚à¸«à¸¡à¸”à¸ªà¸¸à¹ˆà¸¡ Video Style à¸­à¸±à¸•à¹‚à¸™à¸¡à¸±à¸•à¸´ à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸Šà¹‰à¸ªà¹„à¸•à¸¥à¹Œà¸—à¸µà¹ˆà¸à¸³à¸«à¸™à¸”', 'info');
+        bananaAddLog('✅ ปิดโหมดสุ่ม Video Style อัตโนมัติ เพื่อใช้สไตล์ที่กำหนด', 'info');
     }
 
-    // à¸šà¸±à¸‡à¸„à¸±à¸šà¹€à¸¥à¸·à¸­à¸à¸›à¸¸à¹ˆà¸¡à¸ªà¹„à¸•à¸¥à¹Œà¹€à¸šà¸­à¸£à¹Œ 16 (à¸£à¸µà¸§à¸´à¸§à¸šà¹‰à¸²à¸™à¹†/UGC) à¹€à¸žà¸·à¹ˆà¸­à¸„à¸§à¸²à¸¡à¸Šà¸±à¸§à¸£à¹Œà¸à¹ˆà¸­à¸™à¸£à¸±à¸™
+    // บังคับเลือกปุ่มสไตล์เบอร์ 16 (รีวิวบ้านๆ/UGC) เพื่อความชัวร์ก่อนรัน
     const ugcOption = null && document.querySelector('.config-option[data-type="vstyle"][data-value="talk_ugc"]')
         || document.querySelector('.config-option[data-type="vstyle"].active')
         || document.querySelector('.config-option[data-type="vstyle"]');
     if (ugcOption) {
         ugcOption.click();
-        bananaAddLog('ðŸ¤³ à¸šà¸±à¸‡à¸„à¸±à¸šà¹ƒà¸Šà¹‰à¸ªà¹„à¸•à¸¥à¹Œ: à¸£à¸µà¸§à¸´à¸§à¸šà¹‰à¸²à¸™à¹† (UGC)', 'success');
+        bananaAddLog('🤳 บังคับใช้สไตล์: รีวิวบ้านๆ (UGC)', 'success');
     }
 
     const appliedStyleLabel = bananaApplyToVideoStyle(selectedVideoStyle);
-    bananaAddLog(`ðŸŽ¬ à¹ƒà¸Šà¹‰à¸ªà¹„à¸•à¸¥à¹Œà¸§à¸´à¸”à¸µà¹‚à¸­à¸­à¸±à¸•à¹‚à¸™à¸¡à¸±à¸•à¸´: ${appliedStyleLabel}`, 'success');
+    bananaAddLog(`🎬 ใช้สไตล์วิดีโออัตโนมัติ: ${appliedStyleLabel}`, 'success');
     bananaUpdateToVideoSummary(`ส่งต่อ ${videoUploadedImages.length} ภาพไปทำวิดีโอสไตล์ ${appliedStyleLabel}`);
 
     if (videoUploadedImages.length === 0) {
-        throw new Error('à¹„à¸¡à¹ˆà¸žà¸šà¸ à¸²à¸žà¸—à¸µà¹ˆà¸ªà¹ˆà¸‡à¸•à¹ˆà¸­à¹„à¸›à¸¢à¸±à¸‡ Video Mode');
+        throw new Error('ไม่พบภาพที่ส่งต่อไปยัง Video Mode');
     }
 
     await videoRunAutomation();
 
-    bananaUpdateStatus('ðŸŽ¬ à¹€à¸ªà¸£à¹‡à¸ˆà¸ªà¸´à¹‰à¸™! à¸ªà¸£à¹‰à¸²à¸‡à¸ à¸²à¸žà¹à¸¥à¸°à¸§à¸´à¸”à¸µà¹‚à¸­à¹€à¸ªà¸£à¹‡à¸ˆà¹à¸¥à¹‰à¸§');
-    showToast('à¸ªà¸£à¹‰à¸²à¸‡à¸ à¸²à¸žà¹à¸¥à¸°à¸§à¸´à¸”à¸µà¹‚à¸­à¹€à¸ªà¸£à¹‡à¸ˆà¹à¸¥à¹‰à¸§!', 'success');
+    bananaUpdateStatus('🎬 เสร็จสิ้น! สร้างภาพและวิดีโอเสร็จแล้ว');
+    showToast('สร้างภาพและวิดีโอเสร็จแล้ว!', 'success');
 
   } catch (error) {
     if (error.message === 'STOPPED') {
-        bananaUpdateStatus('à¸«à¸¢à¸¸à¸”à¸à¸²à¸£à¸—à¸³à¸‡à¸²à¸™à¹à¸¥à¹‰à¸§');
-        showToast('à¸«à¸¢à¸¸à¸”à¸•à¸²à¸¡à¸„à¸³à¸ªà¸±à¹ˆà¸‡à¸œà¸¹à¹‰à¹ƒà¸Šà¹‰', 'warning');
+        bananaUpdateStatus('หยุดการทำงานแล้ว');
+        showToast('หยุดตามคำสั่งผู้ใช้', 'warning');
     } else {
-        bananaUpdateStatus(`âŒ Error: ${error.message}`);
-        showToast('à¹€à¸à¸´à¸”à¸‚à¹‰à¸­à¸œà¸´à¸”à¸žà¸¥à¸²à¸”: ' + error.message, 'error');
+        bananaUpdateStatus(`❌ Error: ${error.message}`);
+        showToast('เกิดข้อผิดพลาด: ' + error.message, 'error');
     }
   } finally {
     // Cleanup
@@ -4087,12 +4158,12 @@ await bananaHandleAutomation(true); // à¸ªà¹ˆà¸‡à¸ªà¸±à¸à¸
 }
 
 // ============================================
-// ðŸŒ BANANA SETUP: EVENT LISTENERS (à¸‰à¸šà¸±à¸šà¹à¸à¹‰: à¸¥à¹‡à¸­à¸„à¸›à¸¸à¹ˆà¸¡ Text à¹€à¸¡à¸·à¹ˆà¸­à¹ƒà¸Šà¹‰ Smart Auto)
+// 🍌 BANANA SETUP: EVENT LISTENERS (ฉบับแก้: ล็อคปุ่ม Text เมื่อใช้ Smart Auto)
 // ============================================
 function bananaSetupEventListeners() {
 	
 // ==================================================================
-  // ðŸŸ¢ [NEW] à¸ˆà¸±à¸”à¸à¸²à¸£ Smart Auto à¸‚à¸­à¸‡ MASCOT (Fix: à¹„à¸¡à¹ˆà¸¥à¹‡à¸­à¸à¸›à¸¸à¹ˆà¸¡à¸‚à¹‰à¸­à¸„à¸§à¸²à¸¡)
+  // 🟢 [NEW] จัดการ Smart Auto ของ MASCOT (Fix: ไม่ล็อกปุ่มข้อความ)
   // ==================================================================
   const mascotSmartCheck = document.getElementById('mascot-smart-auto-checkbox');
   const mascotBgInput = document.getElementById('mascot-bg-select');
@@ -4100,7 +4171,7 @@ function bananaSetupEventListeners() {
   const mascotCustomBg = document.getElementById('mascot-custom-bg-input');
   const mascotCustomOutfit = document.getElementById('mascot-custom-outfit-input');
   
-  // à¹€à¸žà¸´à¹ˆà¸¡: à¸à¸¥à¹ˆà¸­à¸‡à¸ªà¸§à¸´à¸•à¸Šà¹Œà¸‚à¹‰à¸­à¸„à¸§à¸²à¸¡
+  // เพิ่ม: กล่องสวิตช์ข้อความ
   const mascotTextCheck = document.getElementById('mascot-text-overlay-checkbox');
   const mascotTextBox = document.getElementById('mascot-text-box');
 
@@ -4118,15 +4189,15 @@ function bananaSetupEventListeners() {
           };
 
          if (isSmart) {
-              // 1. à¸¥à¹‡à¸­à¸„à¸ªà¹ˆà¸§à¸™à¹€à¸¥à¸·à¸­à¸à¸‰à¸²à¸à¹à¸¥à¸°à¸Šà¸¸à¸” (à¹ƒà¸«à¹‰ AI à¸„à¸´à¸”à¹€à¸­à¸‡)
+              // 1. ล็อคส่วนเลือกฉากและชุด (ให้ AI คิดเอง)
               toggleLock(mascotBgInput, true);
               toggleLock(mascotOutfitInput, true);
               if(mascotCustomBg) mascotCustomBg.disabled = true;
               if(mascotCustomOutfit) mascotCustomOutfit.disabled = true;
               
-              // ðŸŸ¢ 2. à¹„à¸¡à¹ˆà¸¥à¹‡à¸­à¸à¸ªà¸§à¸´à¸•à¸Šà¹Œà¸‚à¹‰à¸­à¸„à¸§à¸²à¸¡à¸ªà¹ˆà¸§à¸™à¸à¸¥à¸²à¸‡à¹à¸¥à¹‰à¸§ à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸«à¹‰à¸œà¸¹à¹‰à¹ƒà¸Šà¹‰à¹€à¸¥à¸·à¸­à¸à¹€à¸›à¸´à¸”/à¸›à¸´à¸”à¹€à¸­à¸‡à¹„à¸”à¹‰à¸•à¸¥à¸­à¸”
+              // 🟢 2. ไม่ล็อกสวิตช์ข้อความส่วนกลางแล้ว เพื่อให้ผู้ใช้เลือกเปิด/ปิดเองได้ตลอด
           } else {
-              // 1. à¸›à¸¥à¸”à¸¥à¹‡à¸­à¸„à¸›à¸à¸•à¸´
+              // 1. ปลดล็อคปกติ
               toggleLock(mascotBgInput, false);
               toggleLock(mascotOutfitInput, false);
               if(mascotCustomBg) mascotCustomBg.disabled = false;
@@ -4134,7 +4205,7 @@ function bananaSetupEventListeners() {
           }
       });
       
-      // à¸à¸£à¸°à¸•à¸¸à¹‰à¸™ Event à¸„à¸£à¸±à¹‰à¸‡à¹à¸£à¸
+      // กระตุ้น Event ครั้งแรก
       setTimeout(() => { mascotSmartCheck.dispatchEvent(new Event('change')); }, 200);
   }
 	
@@ -4142,7 +4213,7 @@ function bananaSetupEventListeners() {
   const smartAutoCheckbox = document.getElementById('banana-smart-auto-checkbox');
   const manualContainer = document.getElementById('manual-config-container');
   
-  // ðŸŸ¢ à¹€à¸žà¸´à¹ˆà¸¡: à¸«à¸²à¸›à¸¸à¹ˆà¸¡ Checkbox à¹ƒà¸ªà¹ˆà¸•à¸±à¸§à¸«à¸™à¸±à¸‡à¸ªà¸·à¸­à¹à¸¥à¸°à¸à¸¥à¹ˆà¸­à¸‡à¸‚à¸­à¸‡à¸¡à¸±à¸™
+  // 🟢 เพิ่ม: หาปุ่ม Checkbox ใส่ตัวหนังสือและกล่องของมัน
   const textCheckbox = document.getElementById('banana-text-overlay-checkbox');
   const textOverlayBox = textCheckbox ? textCheckbox.closest('.special-box') : null;
 
@@ -4150,21 +4221,21 @@ function bananaSetupEventListeners() {
       smartAutoCheckbox.addEventListener('change', (e) => {
           const isSmartOn = e.target.checked;
 
-          // 1. à¸ˆà¸±à¸”à¸à¸²à¸£à¸ªà¹ˆà¸§à¸™ Manual Config (à¸‚à¹‰à¸²à¸‡à¸¥à¹ˆà¸²à¸‡à¸ªà¸¸à¸”)
+          // 1. จัดการส่วน Manual Config (ข้างล่างสุด)
           if (manualContainer) {
               if (isSmartOn) manualContainer.classList.add('disabled-section');
               else manualContainer.classList.remove('disabled-section');
           }
 
-          // ðŸŸ¢ à¹à¸à¹‰à¹„à¸‚: à¹„à¸¡à¹ˆà¸¥à¹‡à¸­à¸à¸›à¸¸à¹ˆà¸¡à¸‚à¹‰à¸­à¸„à¸§à¸²à¸¡à¹à¸¥à¹‰à¸§ (à¹ƒà¸«à¹‰à¹€à¸¥à¸·à¸­à¸à¹€à¸­à¸‡à¹„à¸”à¹‰à¹€à¸ªà¸¡à¸­)
+          // 🟢 แก้ไข: ไม่ล็อกปุ่มข้อความแล้ว (ให้เลือกเองได้เสมอ)
           if (textOverlayBox && textCheckbox) {
-              // à¹„à¸¡à¹ˆà¸—à¸³à¸­à¸°à¹„à¸£à¸à¸±à¸š classList 'disabled-section' 
-              // à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸«à¹‰à¸œà¸¹à¹‰à¹ƒà¸Šà¹‰à¸à¸”à¹€à¸›à¸´à¸”/à¸›à¸´à¸”à¹„à¸”à¹‰à¹€à¸­à¸‡à¸•à¸²à¸¡à¹ƒà¸ˆà¸Šà¸­à¸š à¹à¸¡à¹‰à¸ˆà¸°à¹€à¸›à¸´à¸” Smart Auto à¸­à¸¢à¸¹à¹ˆà¸à¹‡à¸•à¸²à¸¡
+              // ไม่ทำอะไรกับ classList 'disabled-section' 
+              // เพื่อให้ผู้ใช้กดเปิด/ปิดได้เองตามใจชอบ แม้จะเปิด Smart Auto อยู่ก็ตาม
               textOverlayBox.classList.remove('disabled-section');
           }
       });
       
-      // à¸à¸£à¸°à¸•à¸¸à¹‰à¸™ Event à¸„à¸£à¸±à¹‰à¸‡à¹à¸£à¸à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸«à¹‰ UI à¸­à¸±à¸›à¹€à¸”à¸•à¸•à¸²à¸¡à¸„à¹ˆà¸²à¹€à¸£à¸´à¹ˆà¸¡à¸•à¹‰à¸™à¸—à¸±à¸™à¸—à¸µ
+      // กระตุ้น Event ครั้งแรกเพื่อให้ UI อัปเดตตามค่าเริ่มต้นทันที
       setTimeout(() => {
           smartAutoCheckbox.dispatchEvent(new Event('change'));
       }, 100);
@@ -4180,21 +4251,21 @@ function bananaSetupEventListeners() {
   
   
   
-// à¸›à¸¸à¹ˆà¸¡ START (à¸à¸±à¹ˆà¸‡à¸ªà¸£à¹‰à¸²à¸‡à¸ à¸²à¸žà¸­à¸¢à¹ˆà¸²à¸‡à¹€à¸”à¸µà¸¢à¸§)
+// ปุ่ม START (ฝั่งสร้างภาพอย่างเดียว)
   if(bananaBtnAutomation) {
       bananaBtnAutomation.addEventListener('click', async () => {
           const shouldContinueToVideo = bananaToVideoCheckbox && bananaToVideoCheckbox.checked;
           if (shouldContinueToVideo) {
               if (window.FeatureGate && !FeatureGate.can('imageToVideo')) {
                   bananaToVideoCheckbox.checked = false;
-                  showToast('Image-to-Video Auto à¹ƒà¸Šà¹‰à¹„à¸”à¹‰à¹€à¸‰à¸žà¸²à¸° Premium', 'warning');
+                  showToast('Image-to-Video Auto ใช้ได้เฉพาะ Premium', 'warning');
                   return;
               }
               await bananaToVideoAutomation();
               return;
           }
 
-          await bananaHandleAutomation(false);  // à¸ªà¸±à¹ˆà¸‡à¸£à¸±à¸™à¹à¸„à¹ˆà¹‚à¸«à¸¡à¸”à¸ªà¸£à¹‰à¸²à¸‡à¸£à¸¹à¸› à¹à¸¥à¹‰à¸§à¸ˆà¸šà¹€à¸¥à¸¢
+          await bananaHandleAutomation(false);  // สั่งรันแค่โหมดสร้างรูป แล้วจบเลย
       });
   }
 
@@ -4214,65 +4285,65 @@ function bananaSetupEventListeners() {
   }
   
   
-  // ðŸŸ¢ à¹€à¸žà¸´à¹ˆà¸¡: Event Listener à¸ªà¸³à¸«à¸£à¸±à¸šà¸ªà¸§à¸´à¸•à¸Šà¹Œ "à¸ªà¸¸à¹ˆà¸¡à¸ªà¹„à¸•à¸¥à¹Œ"
+  // 🟢 เพิ่ม: Event Listener สำหรับสวิตช์ "สุ่มสไตล์"
   const randomStyleSwitch = document.getElementById('banana-random-style-switch');
   const styleSelectContainer = document.getElementById('config-content-style');
 
   if (randomStyleSwitch && styleSelectContainer) {
       randomStyleSwitch.addEventListener('change', (e) => {
           if (e.target.checked) {
-              // à¸–à¹‰à¸²à¹€à¸›à¸´à¸”à¸ªà¸¸à¹ˆà¸¡ -> à¸—à¸³à¸à¸¥à¹ˆà¸­à¸‡à¹€à¸¥à¸·à¸­à¸à¸‚à¹‰à¸²à¸‡à¸¥à¹ˆà¸²à¸‡à¹ƒà¸«à¹‰à¸¡à¸·à¸” (Disabled)
+              // ถ้าเปิดสุ่ม -> ทำกล่องเลือกข้างล่างให้มืด (Disabled)
               styleSelectContainer.classList.add('disabled-section');
           } else {
-              // à¸–à¹‰à¸²à¸›à¸´à¸”à¸ªà¸¸à¹ˆà¸¡ -> à¸›à¸¥à¸”à¸¥à¹‡à¸­à¸„à¹ƒà¸«à¹‰à¹€à¸¥à¸·à¸­à¸à¹€à¸­à¸‡à¹„à¸”à¹‰
+              // ถ้าปิดสุ่ม -> ปลดล็อคให้เลือกเองได้
               styleSelectContainer.classList.remove('disabled-section');
           }
       });
 
-      // à¹€à¸£à¸µà¸¢à¸à¸„à¸£à¸±à¹‰à¸‡à¹à¸£à¸à¹€à¸žà¸·à¹ˆà¸­à¹€à¸‹à¹‡à¸•à¸„à¹ˆà¸²à¹€à¸£à¸´à¹ˆà¸¡à¸•à¹‰à¸™
+      // เรียกครั้งแรกเพื่อเซ็ตค่าเริ่มต้น
       setTimeout(() => {
           randomStyleSwitch.dispatchEvent(new Event('change'));
       }, 100);
   }
   
   
-  // ðŸŸ¢ à¹€à¸žà¸´à¹ˆà¸¡: Event Listener à¸ªà¸³à¸«à¸£à¸±à¸šà¸ªà¸§à¸´à¸•à¸Šà¹Œ "à¸ªà¸¸à¹ˆà¸¡à¸‰à¸²à¸à¸«à¸¥à¸±à¸‡"
+  // 🟢 เพิ่ม: Event Listener สำหรับสวิตช์ "สุ่มฉากหลัง"
   const randomBgSwitch = document.getElementById('banana-random-bg-switch');
   const bgSelectContainer = document.getElementById('config-content-bg');
 
   if (randomBgSwitch && bgSelectContainer) {
       randomBgSwitch.addEventListener('change', (e) => {
           if (e.target.checked) {
-              // à¸–à¹‰à¸²à¹€à¸›à¸´à¸”à¸ªà¸¸à¹ˆà¸¡ -> à¸—à¸³à¸à¸¥à¹ˆà¸­à¸‡à¹€à¸¥à¸·à¸­à¸à¸‚à¹‰à¸²à¸‡à¸¥à¹ˆà¸²à¸‡à¹ƒà¸«à¹‰à¸¡à¸·à¸” (Disabled)
+              // ถ้าเปิดสุ่ม -> ทำกล่องเลือกข้างล่างให้มืด (Disabled)
               bgSelectContainer.classList.add('disabled-section');
           } else {
-              // à¸–à¹‰à¸²à¸›à¸´à¸”à¸ªà¸¸à¹ˆà¸¡ -> à¸›à¸¥à¸”à¸¥à¹‡à¸­à¸„à¹ƒà¸«à¹‰à¹€à¸¥à¸·à¸­à¸à¹€à¸­à¸‡à¹„à¸”à¹‰
+              // ถ้าปิดสุ่ม -> ปลดล็อคให้เลือกเองได้
               bgSelectContainer.classList.remove('disabled-section');
           }
       });
 
-      // à¹€à¸£à¸µà¸¢à¸à¸„à¸£à¸±à¹‰à¸‡à¹à¸£à¸à¹€à¸žà¸·à¹ˆà¸­à¹€à¸‹à¹‡à¸•à¸„à¹ˆà¸²à¹€à¸£à¸´à¹ˆà¸¡à¸•à¹‰à¸™
+      // เรียกครั้งแรกเพื่อเซ็ตค่าเริ่มต้น
       setTimeout(() => {
           randomBgSwitch.dispatchEvent(new Event('change'));
       }, 100);
   }
   
-  // ðŸŸ¢ à¹€à¸žà¸´à¹ˆà¸¡: Event Listener à¸ªà¸³à¸«à¸£à¸±à¸šà¸ªà¸§à¸´à¸•à¸Šà¹Œ "à¸ªà¸¸à¹ˆà¸¡à¸Šà¸¸à¸”"
+  // 🟢 เพิ่ม: Event Listener สำหรับสวิตช์ "สุ่มชุด"
   const randomOutfitSwitch = document.getElementById('banana-random-outfit-switch');
   const outfitSelectContainer = document.getElementById('config-content-outfit');
 
   if (randomOutfitSwitch && outfitSelectContainer) {
       randomOutfitSwitch.addEventListener('change', (e) => {
           if (e.target.checked) {
-              // à¸–à¹‰à¸²à¹€à¸›à¸´à¸”à¸ªà¸¸à¹ˆà¸¡ -> à¸—à¸³à¸à¸¥à¹ˆà¸­à¸‡à¹€à¸¥à¸·à¸­à¸à¸‚à¹‰à¸²à¸‡à¸¥à¹ˆà¸²à¸‡à¹ƒà¸«à¹‰à¸¡à¸·à¸” (Disabled)
+              // ถ้าเปิดสุ่ม -> ทำกล่องเลือกข้างล่างให้มืด (Disabled)
               outfitSelectContainer.classList.add('disabled-section');
           } else {
-              // à¸–à¹‰à¸²à¸›à¸´à¸”à¸ªà¸¸à¹ˆà¸¡ -> à¸›à¸¥à¸”à¸¥à¹‡à¸­à¸„à¹ƒà¸«à¹‰à¹€à¸¥à¸·à¸­à¸à¹€à¸­à¸‡à¹„à¸”à¹‰
+              // ถ้าปิดสุ่ม -> ปลดล็อคให้เลือกเองได้
               outfitSelectContainer.classList.remove('disabled-section');
           }
       });
 
-      // à¹€à¸£à¸µà¸¢à¸à¸„à¸£à¸±à¹‰à¸‡à¹à¸£à¸à¹€à¸žà¸·à¹ˆà¸­à¹€à¸‹à¹‡à¸•à¸„à¹ˆà¸²à¹€à¸£à¸´à¹ˆà¸¡à¸•à¹‰à¸™
+      // เรียกครั้งแรกเพื่อเซ็ตค่าเริ่มต้น
       setTimeout(() => {
           randomOutfitSwitch.dispatchEvent(new Event('change'));
       }, 100);
@@ -4287,7 +4358,7 @@ function bananaSetupEventListeners() {
 // Banana: Main Automation Logic (Full Version)
 // ============================================
 async function bananaHandleAutomation(isContinuous = false) {
-  // --- ðŸ›¡ï¸ Security & Init ---
+  // --- 🛡️ Security & Init ---
   if (!_0x99f || typeof AUTH === 'undefined') {
       _selfDestruct("E03: Illegal Execution");
       return;
@@ -4298,7 +4369,7 @@ async function bananaHandleAutomation(isContinuous = false) {
   const productName = bananaProductNameInput.value.trim();
 
   if (bananaUploadedImages.length === 0) {
-    showToast('à¸à¸£à¸¸à¸“à¸²à¸­à¸±à¸žà¹‚à¸«à¸¥à¸”à¸ à¸²à¸žà¸ªà¸´à¸™à¸„à¹‰à¸²à¸à¹ˆà¸­à¸™', 'error');
+    showToast('กรุณาอัพโหลดภาพสินค้าก่อน', 'error');
     return;
   }
   
@@ -4312,7 +4383,7 @@ async function bananaHandleAutomation(isContinuous = false) {
   bananaShouldStopAutomation = false;
   bananaBtnAutomation.disabled = true;
   await toggleWebPageLock(true); 
-  bananaBtnAutomation.innerHTML = '<span class="loading"></span> <span>à¸à¸³à¸¥à¸±à¸‡à¸—à¸³à¸‡à¸²à¸™...</span>';
+  bananaBtnAutomation.innerHTML = '<span class="loading"></span> <span>กำลังทำงาน...</span>';
 
   if (bananaBtnStop) bananaBtnStop.style.display = 'flex';
 
@@ -4320,12 +4391,12 @@ async function bananaHandleAutomation(isContinuous = false) {
   let totalDownloaded = 0;
 
   bananaClearLogs();
-  bananaAddLog('ðŸš€ à¹€à¸£à¸´à¹ˆà¸¡à¸ªà¸£à¹‰à¸²à¸‡à¸ à¸²à¸žà¸­à¸±à¸•à¹‚à¸™à¸¡à¸±à¸•à¸´', 'step');
+  bananaAddLog('🚀 เริ่มสร้างภาพอัตโนมัติ', 'step');
   
  // ============================================
-  // ðŸŸ¢ à¸‚à¸±à¹‰à¸™à¸•à¸­à¸™à¸—à¸µà¹ˆ 1: à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸²à¸£à¸°à¸šà¸šà¹‚à¸«à¸¡à¸” Image (à¸­à¸±à¸›à¹€à¸à¸£à¸”à¸„à¹‰à¸™à¸«à¸²à¸”à¹‰à¸§à¸¢à¹„à¸­à¸„à¸­à¸™ Google Symbols)
+  // 🟢 ขั้นตอนที่ 1: ตั้งค่าระบบโหมด Image (อัปเกรดค้นหาด้วยไอคอน Google Symbols)
   // ============================================
-  bananaUpdateStatus('âš™ï¸ à¸‚à¸±à¹‰à¸™à¸•à¸­à¸™à¸—à¸µà¹ˆ 1: à¸à¸³à¸¥à¸±à¸‡à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸²à¸£à¸°à¸šà¸š...');
+  bananaUpdateStatus('⚙️ ขั้นตอนที่ 1: กำลังตั้งค่าระบบ...');
 
   try {
       const setupInitial = await chrome.scripting.executeScript({
@@ -4345,7 +4416,7 @@ async function bananaHandleAutomation(isContinuous = false) {
                     el.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
                 }
 
-                // à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸„à¹‰à¸™à¸«à¸²à¸›à¸¸à¹ˆà¸¡ Tab à¸ˆà¸²à¸à¸Šà¸·à¹ˆà¸­à¹„à¸­à¸„à¸­à¸™ 
+                // ฟังก์ชันค้นหาปุ่ม Tab จากชื่อไอคอน 
                 function findTabByIcon(iconName) {
                     const tabs = Array.from(document.querySelectorAll('button[role="tab"]'));
                     return tabs.find(tab => {
@@ -4354,7 +4425,7 @@ async function bananaHandleAutomation(isContinuous = false) {
                     });
                 }
 
-                // 1. ðŸ” à¸«à¸²à¸›à¸¸à¹ˆà¸¡à¹€à¸›à¸´à¸”à¹€à¸¡à¸™à¸¹à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸²
+                // 1. 🔍 หาปุ่มเปิดเมนูตั้งค่า
                 let settingsBtn = null;
                 const allBtns = Array.from(document.querySelectorAll('button'));
                 
@@ -4371,10 +4442,10 @@ async function bananaHandleAutomation(isContinuous = false) {
                     });
                 }
 
-                if (!settingsBtn) return resolve({ success: false, msg: 'à¸«à¸²à¸›à¸¸à¹ˆà¸¡à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸² (à¸‚à¹‰à¸²à¸‡à¸›à¸¸à¹ˆà¸¡à¸ªà¹ˆà¸‡à¸„à¸³à¸ªà¸±à¹ˆà¸‡) à¹„à¸¡à¹ˆà¹€à¸ˆà¸­' });
+                if (!settingsBtn) return resolve({ success: false, msg: 'หาปุ่มตั้งค่า (ข้างปุ่มส่งคำสั่ง) ไม่เจอ' });
                 forceClick(settingsBtn);
 
-                // 2. ðŸŸ¢ à¸«à¸²à¹à¸—à¹‡à¸š "Image" (à¸„à¹‰à¸™à¸«à¸²à¸”à¹‰à¸§à¸¢à¹„à¸­à¸„à¸­à¸™ image)
+                // 2. 🟢 หาแท็บ "Image" (ค้นหาด้วยไอคอน image)
                 let imageTab = null;
                 for (let i = 0; i < 20; i++) {
                     await sleep(500);
@@ -4384,12 +4455,12 @@ async function bananaHandleAutomation(isContinuous = false) {
                 
                 if (!imageTab) {
                     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', keyCode: 27, bubbles: true }));
-                    return resolve({ success: false, msg: 'à¸«à¸²à¹à¸—à¹‡à¸š Image à¹„à¸¡à¹ˆà¹€à¸ˆà¸­ (à¹€à¸§à¹‡à¸šà¹‚à¸«à¸¥à¸”à¸Šà¹‰à¸²)' });
+                    return resolve({ success: false, msg: 'หาแท็บ Image ไม่เจอ (เว็บโหลดช้า)' });
                 }
                 forceClick(imageTab);
                 await sleep(1000); 
 
-                // 3. ðŸŸ¢ à¸«à¸²à¸›à¸¸à¹ˆà¸¡ à¸ªà¸±à¸”à¸ªà¹ˆà¸§à¸™ (Portrait = crop_9_16, Landscape = crop_16_9)
+                // 3. 🟢 หาปุ่ม สัดส่วน (Portrait = crop_9_16, Landscape = crop_16_9)
                 const targetIcon = (ratio === '9:16') ? 'crop_9_16' : 'crop_16_9';
                 let ratioBtn = null;
                 for (let i = 0; i < 20; i++) { 
@@ -4400,18 +4471,18 @@ async function bananaHandleAutomation(isContinuous = false) {
                 
                 if (!ratioBtn) {
                     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', keyCode: 27, bubbles: true }));
-                    return resolve({ success: false, msg: `à¸«à¸²à¸›à¸¸à¹ˆà¸¡à¸ªà¸±à¸”à¸ªà¹ˆà¸§à¸™ ${ratio} à¹„à¸¡à¹ˆà¹€à¸ˆà¸­` });
+                    return resolve({ success: false, msg: `หาปุ่มสัดส่วน ${ratio} ไม่เจอ` });
                 }
                 forceClick(ratioBtn);
                 await sleep(1000); 
 
-                // 4. à¸›à¸´à¸”à¹€à¸¡à¸™à¸¹
+                // 4. ปิดเมนู
                 document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', keyCode: 27, bubbles: true }));
                 await sleep(800);
-                resolve({ success: true, msg: 'à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸²à¸ªà¸³à¹€à¸£à¹‡à¸ˆ' });
+                resolve({ success: true, msg: 'ตั้งค่าสำเร็จ' });
 
             } catch (err) {
-                resolve({ success: false, msg: 'Error à¸ à¸²à¸¢à¹ƒà¸™à¸«à¸™à¹‰à¸²à¹€à¸§à¹‡à¸š: ' + err.message });
+                resolve({ success: false, msg: 'Error ภายในหน้าเว็บ: ' + err.message });
             }
           });
         },
@@ -4419,12 +4490,12 @@ async function bananaHandleAutomation(isContinuous = false) {
       });
 
       if (!setupInitial[0]?.result?.success) throw new Error(setupInitial[0]?.result?.msg);
-      bananaAddLog('âœ… à¸‚à¸±à¹‰à¸™à¸•à¸­à¸™à¸—à¸µà¹ˆ 1: à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸² Image Mode à¸ªà¸³à¹€à¸£à¹‡à¸ˆ', 'success');
+      bananaAddLog('✅ ขั้นตอนที่ 1: ตั้งค่า Image Mode สำเร็จ', 'success');
       await bananaSleep(1500); 
 
   } catch (setupError) {
-      bananaAddLog(`âŒ à¸‚à¸±à¹‰à¸™à¸•à¸­à¸™à¸—à¸µà¹ˆ 1 à¸¥à¹‰à¸¡à¹€à¸«à¸¥à¸§: ${setupError.message}`, 'error');
-      bananaUpdateStatus('âš ï¸ à¸¢à¸à¹€à¸¥à¸´à¸à¸à¸²à¸£à¸—à¸³à¸‡à¸²à¸™: à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸²à¹‚à¸«à¸¡à¸”à¸ à¸²à¸žà¹„à¸¡à¹ˆà¸ªà¸³à¹€à¸£à¹‡à¸ˆ');
+      bananaAddLog(`❌ ขั้นตอนที่ 1 ล้มเหลว: ${setupError.message}`, 'error');
+      bananaUpdateStatus('⚠️ ยกเลิกการทำงาน: ตั้งค่าโหมดภาพไม่สำเร็จ');
       
       bananaIsAutomationRunning = false;
       bananaBtnAutomation.disabled = false;
@@ -4436,7 +4507,7 @@ async function bananaHandleAutomation(isContinuous = false) {
   }
 
   // ============================================
-  // ðŸ”„ à¹€à¸£à¸´à¹ˆà¸¡à¸à¸²à¸£à¸—à¸³à¸‡à¸²à¸™à¹à¸šà¸šà¸§à¸™à¸¥à¸¹à¸› (Image x Rounds)
+  // 🔄 เริ่มการทำงานแบบวนลูป (Image x Rounds)
   // ============================================
   try {
       for (let imgIndex = 0; imgIndex < totalImages; imgIndex++) {
@@ -4444,18 +4515,18 @@ async function bananaHandleAutomation(isContinuous = false) {
 
         for (let round = 0; round < roundsPerImage; round++) {
           const currentRound = imgIndex * roundsPerImage + round + 1;
-          const roundLabel = `[à¸£à¸­à¸š ${currentRound}/${totalRounds}]`;
+          const roundLabel = `[รอบ ${currentRound}/${totalRounds}]`;
           
           if (bananaShouldStopAutomation) throw new Error('STOPPED');
 
         // ----------------------------------------------------
-          // ðŸŸ¢ STEP 1: à¹€à¸•à¸£à¸µà¸¢à¸¡ Prompt (à¹à¸¢à¸ Smart Auto à¸­à¸­à¸à¸ˆà¸²à¸à¹‚à¸«à¸¡à¸”à¸›à¸à¸•à¸´)
+          // 🟢 STEP 1: เตรียม Prompt (แยก Smart Auto ออกจากโหมดปกติ)
           // ----------------------------------------------------
-          bananaUpdateStatus(`ðŸ¤– ${roundLabel} [1/5] à¸à¸³à¸¥à¸±à¸‡à¸ªà¸£à¹‰à¸²à¸‡ Prompt...`);
+          bananaUpdateStatus(`🤖 ${roundLabel} [1/5] กำลังสร้าง Prompt...`);
           
           const policyPrompt = "(Policy: Do NOT show specific pricing numbers. Do NOT make medical claims. No text overlay unless specified.)";
           let imgSafety = (modelUploadedImages && modelUploadedImages.length > 0) ? " (IMPORTANT: High fidelity to reference image. Keep exact face, hair color, and identity. Do NOT change facial features.)" : " (Ethnicity: Thai/Asian appearance. Authentic look.)";
-          const coreNegative = "borders, frame, watermark, bad anatomy, deformed, blurry, ugly, sketch, specific pricing";
+          const coreNegative = "borders, frame, watermark, bad anatomy, deformed, blurry, ugly, sketch, specific pricing, extra hands, extra fingers, duplicate hands, floating hands, detached hands, third hand, random hand entering frame, malformed hands, mutated fingers, fused fingers, too many fingers";
 
           const textCheckbox = document.getElementById('banana-text-overlay-checkbox');
           const useTextOverlay = textCheckbox ? textCheckbox.checked : true; 
@@ -4469,13 +4540,24 @@ async function bananaHandleAutomation(isContinuous = false) {
               const exactText = customTextValue !== ""
                   ? `The Thai text must say exactly "${customTextValue}".`
                   : "The Thai text must be a short, catchy advertising slogan specifically promoting and selling [product]. Do NOT write about the character's profession, lifestyle, or location.";
+              const headlineRule = "CRITICAL TYPOGRAPHY RULE: Because text overlay is enabled, the image MUST include a large, prominent Thai advertising headline, not tiny caption text. The typography must feel like a real ad design with graphic play, not plain typed text. Use ad-poster scale typography with strong hierarchy, readable thick lettering, clear contrast, outline or shadow depth when useful, dynamic placement, supporting shapes, accent strokes, stickers, tags, arrows, underlines, glow, shadow, panels, or product-themed graphic elements when suitable. The headline must be easy to read at phone-screen size and integrated into the composition.";
 
               const textProfiles = {
-                  cute_ugc: `Cute Thai UGC ad typography. ${exactText} Add playful doodles, arrows, sticker-like accents, cheerful review-thumbnail layout, bright friendly colors, and a fun Must-Have social media feeling.`,
-                  premium: `Clean premium Thai advertising typography. ${exactText} Use bold elegant hierarchy, polished commercial layout, high-end spacing, and professional product-ad composition.`,
-                  live_sale: `Energetic Thai live-sale typography. ${exactText} Use bold colorful callout shapes, exciting sticker labels, arrows, pop accents, and a lively shopping-host feeling.`,
-                  mascot_cute: `Playful Thai bubble-letter typography. ${exactText} Add cute mascot-friendly stickers, rounded labels, sparkles, arrows, soft colorful accents, and a cheerful toy-like advertising feeling.`,
-                  minimal: `Minimal Thai typography. ${exactText} Use clean modern type, small but readable placement, generous spacing, and no clutter.`
+                  cute_ugc: `${headlineRule} Cute Thai UGC ad typography. ${exactText} Add playful doodles, arrows, sticker-like accents, cheerful review-thumbnail layout, bright friendly colors, and a fun Must-Have social media feeling.`,
+                  premium: `${headlineRule} Modern premium Thai advertising typography. ${exactText} Use bold clean Thai lettering, strong readable hierarchy, crisp color-block panels, product-color accent shapes, modern sticker tags, short underline strokes, soft shadow depth, and polished social-commerce layout. Keep it fresh, current, and desirable. Avoid old luxury styling: no gold serif headline, no royal calligraphy, no ornate swirls, no vintage premium script. Clean does not mean plain.`,
+                  cgi_extreme: `${headlineRule} Extreme CGI Thai advertising typography. ${exactText} Use massive cinematic 3D headline lettering, glowing outlines, neon rim light, metallic or glass depth, energy trails, particles, speed lines, explosion-like graphic accents, dramatic badges, and over-the-top blockbuster campaign layout. Make it feel like an ultra-premium futuristic CG product ad, bold and spectacular, not subtle.`,
+                  live_sale: `${headlineRule} Energetic Thai shopping-host typography. ${exactText} Use bold colorful callout shapes, exciting sticker labels, arrows, pop accents, and a lively real-time selling feeling. Do not write the words "ไลฟ์สด", "LIVE", "Live", or "livestream" in the image unless the user explicitly typed them in custom text.`,
+                  live_photo_no_text: `${headlineRule} Clean Thai selling-host typography control. ${exactText} If text overlay is enabled, use only this Thai advertising text as a prominent selling headline and integrate it cleanly into the photo. Add lively ad-style shapes or accents, but do not invent livestream UI, chat comments, price tags, badges, captions, subtitles, "ไลฟ์สด", "LIVE", "Live", or "livestream" unless the user explicitly typed those words in custom text.`,
+                  mascot_cute: `${headlineRule} Playful Thai bubble-letter typography. ${exactText} Add cute mascot-friendly stickers, rounded labels, sparkles, arrows, soft colorful accents, and a cheerful toy-like advertising feeling.`,
+                  minimal: `${headlineRule} Clean bold Thai advertising typography. ${exactText} Keep the layout uncluttered, but still use a large readable headline, one optional smaller supporting line, strong contrast, dynamic placement, tasteful accent lines, small labels, and polished ad-like spacing. Do not make the text tiny or plain.`,
+                  clean_demo: `${headlineRule} Clean Thai product-demonstration typography. ${exactText} Use one large clearly readable headline plus a smaller supporting line, placed in an open corner or lower third without covering the hands, product, or result. Add practical graphic callouts, arrows, underline accents, or small benefit tags when suitable. Keep it modern, warm, practical, and ad-like, not tiny, plain, or cluttered.`,
+                  fashion_campaign: `${headlineRule} Modern Thai fashion typography. ${exactText} Use a stylish large headline lockup with bold rounded or clean geometric Thai lettering, playful outline, soft drop shadow, trendy sticker tags, small cute-cool badges, simple arrows, color-block panels, and accents matched to the outfit colors. Keep it fresh, fashionable, friendly, and youthful-but-polished. Avoid old luxury styling: no gold serif headline, no royal calligraphy, no ornate swirls, no vintage premium script. Place text around the model without covering the outfit silhouette or wearable product.`,
+                  clothing_editorial: `${headlineRule} Modern cute-cool Thai clothing campaign typography. ${exactText} Build a fashion headline lockup with bold rounded Thai letters, white or color outline, soft shadow depth, playful sticker labels, clean color-block shapes, small star/spark accents, simple underline strokes, and palette colors picked from the outfit. The mood should feel trendy, wearable, youthful, and stylish, not old-fashioned luxury. Avoid gold serif typography, ornate curves, royal-style calligraphy, vintage swirls, and overly elegant luxury script. The text must frame the outfit and enhance the silhouette without covering fabric details.`,
+                  ad_campaign: `${headlineRule} Dynamic Thai advertising poster typography. ${exactText} Create a polished modern campaign headline layout with a large expressive Thai headline, smaller supporting line, strong visual hierarchy, bold graphic strokes or underline accents, sticker-like detail tags, and text integrated into the image composition instead of a plain caption. Avoid old luxury styling, gold serif type, royal calligraphy, and vintage ornate swirls.`,
+                  luxury_packshot: `${headlineRule} Modern product packshot Thai advertising typography. ${exactText} Use a large clean headline lockup with bold rounded or geometric Thai lettering, strong contrast, product-color accent blocks, neat sticker labels, modern badges, crisp shadow depth, simple arrows or underline marks, and a bottom-third or side-column layout that frames [product] like a finished contemporary product campaign. Avoid gold serif typography, royal calligraphy, ornate swirls, vintage luxury script, and old-fashioned beauty-poster styling.`,
+                  retail_poster: `${headlineRule} Thai retail review poster typography. ${exactText} Use bold readable headline blocks, sticker-style benefit labels, small callout tags, arrows, shop-signage energy, and a friendly sales-poster composition that feels designed, not like casual UGC text or plain text.`,
+                  natural_editorial: `${headlineRule} Natural-light Thai editorial ad typography. ${exactText} Use airy modern magazine-style layout with a large readable headline, soft translucent text panels or clean headline zones, warm accent lines, subtle stickers or label tags, balanced whitespace, and polished product-lifestyle hierarchy. Keep it fresh, warm, current, and clearly designed, not classic or old-fashioned.`,
+                  campaign_pop: `${headlineRule} High-impact Thai product campaign typography. ${exactText} Use a huge playful headline at the top with thick rounded lettering, white outline, shadow depth, dynamic supporting words around the subject, small brand-style badges, sparkle accents, arrows or decorative marks when suitable, and a polished advertising composition. Keep it energetic, premium, and product-appropriate, not like a discount flyer or plain caption text.`
               };
 
               return textProfiles[profile] || textProfiles.premium;
@@ -4491,7 +4573,7 @@ async function bananaHandleAutomation(isContinuous = false) {
           }
 
           if (currentAppMode === 'human') {
-              // ðŸŽ¯ à¸”à¸¶à¸‡à¹à¸„à¹ˆ "à¸„à¸²à¹à¸£à¸„à¹€à¸•à¸­à¸£à¹Œ" à¸­à¸¢à¹ˆà¸²à¸‡à¹€à¸”à¸µà¸¢à¸§ (à¹„à¸¡à¹ˆà¹€à¸­à¸²à¸Šà¸¸à¸”/à¸‰à¸²à¸ à¸¡à¸²à¸›à¸™à¹€à¸œà¸·à¹ˆà¸­à¹„à¸§à¹‰à¹ƒà¸«à¹‰à¹‚à¸«à¸¡à¸” Smart Auto)
+              // 🎯 ดึงแค่ "คาแรคเตอร์" อย่างเดียว (ไม่เอาชุด/ฉาก มาปนเผื่อไว้ให้โหมด Smart Auto)
               let charKey = document.getElementById('banana-character-select')?.value || 'auto';
               let charCustom = document.getElementById('banana-custom-character-input')?.value || "";
               const canUseCustomCharacter = !window.FeatureGate || FeatureGate.can('customCharacter');
@@ -4500,7 +4582,7 @@ async function bananaHandleAutomation(isContinuous = false) {
                       charCustom = "";
                   }
             const charDict = {
-                  // ðŸ‘©â€ðŸ¦° à¸—à¸±à¹ˆà¸§à¹„à¸› (à¸«à¸à¸´à¸‡)
+                  // 👩‍🦰 ทั่วไป (หญิง)
                   'teen_girl': 'realistic modern Thai teenage girl, fresh casual look, natural skin texture',
                   'office_lady': 'smart professional Thai working woman', 
                   'net_idol': 'beautiful trendy Thai net idol', 
@@ -4511,7 +4593,7 @@ async function bananaHandleAutomation(isContinuous = false) {
                   'hijab': 'beautiful Thai muslim woman wearing a hijab',
                   'villager_girl': 'authentic Thai countryside woman, rural provincial style, natural imperfect skin texture, not overly polished, realistic everyday look',
                   
-                  // ðŸ§¢ à¸—à¸±à¹ˆà¸§à¹„à¸› (à¸Šà¸²à¸¢)
+                  // 🧢 ทั่วไป (ชาย)
                   'thai_guy': 'cool modern Thai teenager guy',
                   'net_idol_male': 'handsome trendy Thai male net idol, stylish social media creator look',
                   'smart_man': 'handsome professional Thai businessman',
@@ -4521,7 +4603,7 @@ async function bananaHandleAutomation(isContinuous = false) {
                   'dad': 'warm and reliable Thai father',
                   'villager_boy': 'authentic Thai countryside man, rural provincial style, natural imperfect skin texture, not overly polished, realistic everyday look',
 
-                  // ðŸ‘· à¸­à¸²à¸Šà¸µà¸ž
+                  // 👷 อาชีพ
                   'student_female': 'cute Thai university student girl', 
                   'student_male': 'neat Thai university student boy',
                   'seller_woman': 'active and friendly Thai female merchant seller',
@@ -4535,7 +4617,7 @@ async function bananaHandleAutomation(isContinuous = false) {
                   'rider_male': 'Thai food delivery rider',
                   'farmer_female': 'hardworking Thai female farmer',
 
-                  // ðŸ‘´ à¸ªà¸¹à¸‡à¸§à¸±à¸¢
+                  // 👴 สูงวัย
                   'grandma': 'kind and gentle old Thai grandma', 
                   'active_grandma': 'energetic and stylish old Thai grandma',
                   'grandpa': 'kind and wise old Thai grandpa',
@@ -4552,8 +4634,8 @@ async function bananaHandleAutomation(isContinuous = false) {
 
               let baseChar = "professional Thai model";
               
-              // ðŸŸ¢ [à¹à¸à¹‰à¹„à¸‚]: à¸–à¹‰à¸²à¸¡à¸µà¸£à¸¹à¸›à¸™à¸²à¸‡à¹à¸šà¸š (Ref) à¹ƒà¸«à¹‰à¸‚à¹‰à¸²à¸¡à¸à¸²à¸£à¸”à¸¶à¸‡à¸„à¹ˆà¸²à¸ˆà¸²à¸à¸›à¸¸à¹ˆà¸¡ à¹à¸¥à¹‰à¸§à¹ƒà¸Šà¹‰à¸„à¸³à¸à¸¥à¸²à¸‡à¹† à¸—à¸±à¸šà¹„à¸›à¹€à¸¥à¸¢
-              // à¸›à¹‰à¸­à¸‡à¸à¸±à¸™à¸›à¸±à¸à¸«à¸² AI à¸ªà¸±à¸šà¸ªà¸™à¹€à¸žà¸¨à¸£à¸°à¸«à¸§à¹ˆà¸²à¸‡à¸£à¸¹à¸›à¸ à¸²à¸ž Ref à¸à¸±à¸šà¸„à¸³à¸ªà¸±à¹ˆà¸‡ Text
+              // 🟢 [แก้ไข]: ถ้ามีรูปนางแบบ (Ref) ให้ข้ามการดึงค่าจากปุ่ม แล้วใช้คำกลางๆ ทับไปเลย
+              // ป้องกันปัญหา AI สับสนเพศระหว่างรูปภาพ Ref กับคำสั่ง Text
               if (modelUploadedImages && modelUploadedImages.length > 0) {
                   baseChar = "the exact person from the reference image";
               } else if (charKey === 'auto' || charKey === 'custom') {
@@ -4563,7 +4645,7 @@ async function bananaHandleAutomation(isContinuous = false) {
               }
 
              if (isSmartAutoChecked) {
-                  // ðŸš€ à¹‚à¸«à¸¡à¸” Smart Auto: à¸›à¸´à¸”à¸à¸±à¹‰à¸™ UI à¸ à¸²à¸¢à¸™à¸­à¸ à¹ƒà¸Šà¹‰à¹à¸„à¹ˆà¸„à¸™ à¹à¸¥à¹‰à¸§à¹ƒà¸«à¹‰ AI à¸ˆà¸±à¸”à¸Šà¸¸à¸”/à¸‰à¸²à¸à¹ƒà¸«à¹‰à¹€à¸­à¸‡
+                  // 🚀 โหมด Smart Auto: ปิดกั้น UI ภายนอก ใช้แค่คน แล้วให้ AI จัดชุด/ฉากให้เอง
                   const attireVariations = [
                       "dressed in attire that perfectly matches the product theme.",
                       "wearing a stylish outfit that blends naturally with the scene.",
@@ -4574,35 +4656,39 @@ async function bananaHandleAutomation(isContinuous = false) {
                   const smartAttire = attireVariations[Math.floor(Math.random() * attireVariations.length)];
 
                   const actionLogic = `(Action Instructions): - If [product] is clothing: MUST BE WEARING it. - If handheld: MUST BE HOLDING it.`;
-                  const fidelityRules = `(STRICT FIDELITY): [product] must be 100% IDENTICAL to source.`;
+                  const fidelityRules = `(STRICT FIDELITY): [product] must be 100% IDENTICAL to the uploaded/reference source. Keep the exact package shape, logo area, label layout, color, cap, material, proportions, and key visual details. Do not redesign, rebrand, recolor, translate, simplify, replace, or invent new flavors, sizes, colors, or variants. If multiple products are shown, they must be exact copies of the same reference product unless the user explicitly asks for variants.`;
                   const smartNegative = coreNegative + ", price tag, numbers, watermark";
-                  const smartCuteTextPrompt = buildTextStylePrompt('cute_ugc');
-                  const smartPremiumTextPrompt = buildTextStylePrompt('premium');
-                  const smartMinimalTextPrompt = buildTextStylePrompt('minimal');
+                  const smartCampaignTextPrompt = buildTextStylePrompt('campaign_pop');
+                  const smartCameraDirections = [
+                      'Camera direction: dynamic campaign hero shot, [product] large in the foreground, presenter in the midground, strong depth and clean headline space.',
+                      'Camera direction: close product-first portrait framing with shallow depth of field, crisp packaging, and soft background blur.',
+                      'Camera direction: 3/4 advertising angle with diagonal visual flow, product foreground, presenter support, and natural perspective.',
+                      'Camera direction: slight low-angle hero framing that makes [product] feel premium and desirable without distorting the package.',
+                      'Camera direction: medium-close commercial portrait crop with face and [product] both readable, polished depth, and lively ad composition.',
+                      'Camera direction: product foreground with layered background props and soft bokeh, strong foreground-midground-background separation.'
+                  ];
+                  const smartCameraPrompt = smartCameraDirections[Math.floor(Math.random() * smartCameraDirections.length)] + ' Avoid repeating the exact same composition across generations. No camera brand text or camera logos.';
 
-                  // ðŸ›‘ à¸•à¸±à¸”à¸ªà¹„à¸•à¸¥à¹Œà¹€à¸¡à¸·à¸­à¸‡à¸ˆà¸´à¹‹à¸§ (Miniature) à¸­à¸­à¸à¸•à¸²à¸¡à¸„à¸³à¸‚à¸­ à¹€à¸«à¸¥à¸·à¸­à¸ªà¸¸à¹ˆà¸¡ 9 à¸ªà¹„à¸•à¸¥à¹Œà¸—à¸µà¹ˆà¹€à¸™à¹‰à¸™à¸„à¸™à¹à¸¥à¸°à¸ªà¸´à¸™à¸„à¹‰à¸²
+                  // 🛑 Smart Auto: ให้ AI ทำหน้าที่เป็นผู้กำกับภาพโฆษณา เลือกชุด ฉาก และองค์ประกอบให้เข้ากับสินค้า
                   const smartVariations = [
-                      `High-end cinematic portrait. ${baseChar} holding [product]. ${smartAttire}. Shot on a professional DSLR with 85mm f/1.2 prime lens, extreme shallow depth of field, creamy bokeh. ${actionLogic} ${fidelityRules} ${smartPremiumTextPrompt} 8k photorealistic.`,
-                      `Professional macro photography. Razor-sharp focus on [product] textures and droplets. ${baseChar} is interacting with the item in the background. ${smartAttire}. Captured using a 100mm macro lens on a high-end DSLR. ${smartMinimalTextPrompt} Commercial advertising quality.`,
-                      `High-energy viral social media influencer style. ${baseChar} is presenting [product] with a vibrant aesthetic. ${smartAttire}. Soft professional studio lighting, vibrant trendy colors, clean bright atmosphere. Shot on a professional DSLR camera. ${smartCuteTextPrompt}`,
-                      `Modern e-commerce promotional banner. ${baseChar} posing with [product]. ${smartAttire}. Trendy minimalist studio background. Professional commercial DSLR photography, high-end shopping online aesthetic. ${smartPremiumTextPrompt} Sharp details, 8k resolution.`,
-                      `A high-end studio commercial shot of ${baseChar}. ${smartAttire}. ${actionLogic} ${fidelityRules} ${smartPremiumTextPrompt} Cinematic professional studio lighting, premium advertising aesthetic, shot on a high-resolution professional camera.`,
-                      `Refreshing outdoor lifestyle photography featuring ${baseChar} with [product]. ${smartAttire}. ${actionLogic} ${fidelityRules}. Naturally related setting. Shot on a professional DSLR with natural soft sunlight, photorealistic 8k. ${smartCuteTextPrompt}`,
-                      `Sharp promotional image showcasing ${baseChar}. ${smartAttire}. ${actionLogic} ${fidelityRules}. Minimalist composition, professional DSLR color grading, edge-to-edge full frame. ${smartPremiumTextPrompt}`,
-                      `Candid and authentic everyday moment of ${baseChar}. ${smartAttire}. ${actionLogic} ${fidelityRules}. Unposed posture, natural home lighting. Captured with a professional high-end camera lens for a realistic yet premium atmosphere. ${smartCuteTextPrompt}`,
-                      `Engagement-focused UGC review. ${baseChar} is presenting [product] to the camera. ${smartAttire}. ${actionLogic} ${fidelityRules}. Authentic social media vibe, shot with a high-quality smartphone rear camera for a relatable feeling. ${smartCuteTextPrompt}`
+                      `Ultimate promotional advertisement image for [product]. Act as a creative advertising director. Choose the most suitable outfit, background, props, lighting, colors, graphic accents, and composition for this product category and target customer. ${baseChar} is ${smartAttire} and poses confidently while presenting [product]. Make [product] the main visual focus with clear packaging, strong hierarchy, and a complete high-impact Thai campaign layout. ${smartCameraPrompt} ${actionLogic} ${fidelityRules} ${smartCampaignTextPrompt} Photorealistic, polished, dynamic, not a simple person-holding-product photo.`,
+                      `Hero campaign key visual for [product]. AI must design the outfit and scene to match the product, customer, and brand mood. ${baseChar} appears as a confident presenter in a dynamic advertising pose, with [product] large, readable, and visually dominant. Add product-appropriate props, background details, color blocking, light effects, and graphic accents that make the ad feel finished and exciting. ${smartCameraPrompt} ${actionLogic} ${fidelityRules} ${smartCampaignTextPrompt} Sharp professional-camera realism, premium social-commerce poster quality.`,
+                      `Benefit-burst Thai product advertisement for [product]. Choose a matching outfit and background automatically, then build the image around the product benefits. ${baseChar} presents [product] with energetic sales confidence. Arrange clear product hero placement, supporting benefit badges, arrows, sparkle marks, callout zones, and a readable Thai headline without making it look like a discount flyer. ${smartCameraPrompt} ${actionLogic} ${fidelityRules} ${smartCampaignTextPrompt} High-impact commercial composition, crisp product details.`,
+                      `Lifestyle campaign poster for [product]. Select the most suitable outfit and real-world setting for the product category, then turn that lifestyle scene into a designed advertisement. ${baseChar} naturally uses or presents [product], while [product] remains the hero with clear packaging. Add tasteful props, dynamic depth, color harmony, graphic accents, and Thai campaign typography that follows the composition. ${smartCameraPrompt} ${actionLogic} ${fidelityRules} ${smartCampaignTextPrompt} Natural but polished advertising realism.`,
+                      `Product-world advertising concept for [product]. Let the product theme inspire the outfit, background, props, lighting, colors, and decorative effects. ${baseChar} is integrated into a product-themed campaign scene, presenting [product] with excitement and confidence. Make the image feel imaginative but still useful for real Thai social-commerce advertising, with strong product readability and designed typography. ${smartCameraPrompt} ${actionLogic} ${fidelityRules} ${smartCampaignTextPrompt} Premium photorealistic campaign poster.`,
+                      `Social-commerce launch poster for [product]. AI chooses a matching outfit and selling environment, then creates a scroll-stopping Thai ad image with a large product hero, expressive presenter pose, bold headline area, supporting text blocks, stickers, arrows, and energetic graphic rhythm. Keep it polished and product-appropriate, not casual UGC and not plain studio photography. ${smartCameraPrompt} ${actionLogic} ${fidelityRules} ${smartCampaignTextPrompt} Bright commercial lighting, crisp details, finished ad layout.`
                   ];
 
                   const rIndex = Math.floor(Math.random() * smartVariations.length);
                   generatedPrompt = smartVariations[rIndex] + ` ${imgSafety} ${policyPrompt} ${getAntiBotSeed()} Negative Prompt: "${smartNegative}${manualNegativeAddon}"`;
 
-                  const styleNames = ["ðŸŽ¬ Cinematic", "ðŸ” Macro", "âœ¨ Influencer", "ðŸ›’ E-commerce", "ðŸ’Ž Premium Studio", "ðŸŒ³ Outdoor", "ðŸ“¸ Showcase", "ðŸ¤³ Candid", "ðŸ“± UGC"];
-                  bananaAddLog(`ðŸš€ Smart Auto: à¸ªà¸¸à¹ˆà¸¡à¹ƒà¸Šà¹‰à¸ªà¹„à¸•à¸¥à¹Œ "${styleNames[rIndex]}"`, 'info');
+                  const styleNames = ["🎯 Campaign Director", "🌟 Hero Campaign", "💥 Benefit Burst", "🏡 Lifestyle Poster", "✨ Product World", "🚀 Social Launch"];
+                  bananaAddLog(`🚀 Smart Auto: สุ่มใช้สไตล์ "${styleNames[rIndex]}"`, 'info');
 
               
 
               } else {
-               // âš™ï¸ à¹‚à¸«à¸¡à¸”à¸›à¸à¸•à¸´ (Manual): à¸”à¸¶à¸‡à¸Šà¸¸à¸”à¹à¸¥à¸°à¸‰à¸²à¸à¸ˆà¸²à¸ UI à¸¡à¸²à¸›à¸£à¸°à¸à¸­à¸šà¸£à¹ˆà¸²à¸‡
+               // ⚙️ โหมดปกติ (Manual): ดึงชุดและฉากจาก UI มาประกอบร่าง
                   let outfitKey = document.getElementById('banana-outfit-select')?.value || 'casual';
                   let outfitCustom = document.getElementById('banana-custom-outfit-input')?.value || "";
                   let isRandomOutfit = document.getElementById('banana-random-outfit-switch')?.checked;
@@ -4621,9 +4707,9 @@ async function bananaHandleAutomation(isContinuous = false) {
                       bgCustom = "";
                   }
 
-               // ðŸ‘— à¸”à¸´à¸à¸Šà¸±à¸™à¸™à¸²à¸£à¸µ: à¸«à¸¡à¸§à¸”à¸«à¸¡à¸¹à¹ˆà¸Šà¸¸à¸”à¹à¸•à¹ˆà¸‡à¸à¸²à¸¢ (16 à¸Šà¸¸à¸” à¸•à¸£à¸‡à¸•à¸²à¸¡ UI 100%)
+               // 👗 ดิกชันนารี: หมวดหมู่ชุดแต่งกาย (16 ชุด ตรงตาม UI 100%)
                   const outfitDict = { 
-                      // ðŸ‘• à¸—à¸±à¹ˆà¸§à¹„à¸›/à¹à¸Ÿà¸Šà¸±à¹ˆà¸™
+                      // 👕 ทั่วไป/แฟชั่น
                       'ai_match': 'modern outfit automatically chosen to match the product category, target customer, and current scene. Avoid historical costume unless explicitly requested',
                       'casual': 'casual t-shirt and denim jeans', 
                       'polo': 'smart casual polo shirt', 
@@ -4636,11 +4722,11 @@ async function bananaHandleAutomation(isContinuous = false) {
                       'sleepwear': 'modern cozy sleepwear, tasteful and modest',
                       'vacation': 'relaxing summer vacation beachwear',
 
-                      // ðŸ’¼ à¸—à¸²à¸‡à¸à¸²à¸£
+                      // 💼 ทางการ
                       'shirt': 'neat crisp button-up shirt',
                       'suit': 'professional business suit',
 
-                      // ðŸŒ¸ à¸—à¹‰à¸­à¸‡à¸–à¸´à¹ˆà¸™
+                      // 🌸 ท้องถิ่น
                       'morhom': 'modern casual indigo morhom-inspired shirt, contemporary styling', 
                       'isan': 'modern casual outfit with subtle Thai Isan Pa Khao Ma inspired accent, not historical costume', 
                       'northern': 'modern northern Thai-inspired contemporary fashion, not ancient costume', 
@@ -4649,9 +4735,9 @@ async function bananaHandleAutomation(isContinuous = false) {
                       'hill_tribe': 'modern hill-tribe-inspired colorful fashion, contemporary and respectful styling'
                   };
 
-                  // ðŸ–¼ï¸ à¸”à¸´à¸à¸Šà¸±à¸™à¸™à¸²à¸£à¸µ: à¸«à¸¡à¸§à¸”à¸«à¸¡à¸¹à¹ˆà¸‰à¸²à¸à¸«à¸¥à¸±à¸‡ (30 à¸‰à¸²à¸ à¸•à¸£à¸‡à¸•à¸²à¸¡ UI 100%)
+                  // 🖼ï¸ ดิกชันนารี: หมวดหมู่ฉากหลัง (30 ฉาก ตรงตาม UI 100%)
                   const bgDict = { 
-                      // ðŸ  à¸ à¸²à¸¢à¹ƒà¸™ (Indoor)
+                      // 🏠 ภายใน (Indoor)
                       'ai_match': 'modern setting automatically chosen to match the product category and real customer use case. Avoid temples, ancient scenes, and historical settings unless explicitly requested',
                       'living_room': 'modern cozy living room', 
                       'bedroom': 'modern aesthetic bedroom with soft lighting',
@@ -4664,12 +4750,15 @@ async function bananaHandleAutomation(isContinuous = false) {
                       'luxury_hotel': 'premium luxury hotel room interior',
                       'meeting_room': 'professional corporate meeting room',
                       
-                      // ðŸ™ï¸ à¹€à¸¡à¸·à¸­à¸‡ (Urban)
+                      // 🏙️ เมือง (Urban)
                       'cafe': 'cozy minimal aesthetic cafe', 
                       'office': 'modern corporate office workspace',
                       'gym': 'modern fitness gym equipment background',
                       'supermarket': 'supermarket aisle with organized shelves',
-                      'live_warehouse': 'large modern live-commerce warehouse studio with product shelves, packing tables, softbox lights, livestream selling setup, busy but clean e-commerce atmosphere',
+                      'live_warehouse': 'busy product warehouse selling scene with tall storage shelves, stacked boxes, packing tables, and staff actively packing orders in the background. The foreground should feel close to a selling table with many visible copies of [product] neatly arranged, while the warehouse remains visible behind with strong depth and warm practical lighting. Energetic best-selling online shop atmosphere, organized chaos, product-packed foreground, staff movement in the background, trustworthy ready-to-ship Thai store feeling. No readable text, no price signs, no livestream UI, no ring light, no tripod, no microphone, no messy clutter',
+                      'factory_line': 'medium-close factory packing conveyor scene for [product]. Show [product] repeated clearly along a conveyor belt in the foreground and midground, with staff standing beside the belt packing, sorting, labeling, or placing products into boxes. The conveyor belt should lead into the background with strong depth, but the camera must not be too far away. Use a realistic warehouse-factory packing area, shelves and boxes in the background, busy staff working naturally, bright practical factory lighting, clean organized workflow, and a trustworthy high-volume production atmosphere. No livestream equipment, no ring light, no microphone, no messy clutter',
+                      'busy_shop': 'busy popular retail shop packed with many visible products, full shelves, crowded product displays, customers browsing and buying, and active shop staff helping customers. Make the foreground feel full of products and successful sales energy, while keeping the main [product] area visible and not blocked. Warm practical store lighting, lively best-selling product atmosphere, organized but busy retail environment. No livestream equipment, no ring light, no microphone, no messy clutter',
+                      'sampheng_market': 'grand busy Sampheng-style Thai wholesale market shop packed with lots of merchandise, dense colorful product displays, narrow shopfront feeling, full shelves, hanging goods, baskets, shoppers browsing closely, and shop staff helping customers. The scene should feel abundant, crowded, and high-traffic like a successful wholesale shop, but the main [product] area must remain visible in the foreground and not be overshadowed. Warm practical market lighting, organized dense retail energy, no livestream equipment, no ring light, no microphone, no messy clutter',
                       'street': 'vibrant trendy city street', 
                       'subway': 'modern subway train station interior',
                       'restaurant': 'beautiful fine dining restaurant interior',
@@ -4677,7 +4766,7 @@ async function bananaHandleAutomation(isContinuous = false) {
                       'in_car': 'inside a modern car interior',
                       'on_bike': 'sitting on a stylish motorcycle outdoors',
 
-                      // ðŸŒ³ à¸™à¸­à¸à¸ªà¸–à¸²à¸™à¸—à¸µà¹ˆ (Outdoor)
+                      // 🌳 นอกสถานที่ (Outdoor)
                       'garden': 'beautiful blooming outdoor garden',
                       'beach': 'sunny tropical beautiful beach', 
                       'mountain': 'scenic lush green mountain landscape',
@@ -4699,14 +4788,14 @@ async function bananaHandleAutomation(isContinuous = false) {
                       'detective', 'mafia_boss', 'cyber_girl', 'traveler'
                   ]).has(charKey);
                   
-                  // ðŸŸ¢ [à¸­à¸±à¸›à¹€à¸à¸£à¸”] à¸šà¸±à¸‡à¸„à¸±à¸šà¸Šà¸¸à¸”: à¹„à¸¡à¹ˆà¸ªà¸™à¸§à¹ˆà¸²à¸„à¸¥à¸´à¸à¸›à¸¸à¹ˆà¸¡à¹„à¸«à¸™à¸­à¸¢à¸¹à¹ˆ à¸–à¹‰à¸²à¸Šà¹ˆà¸­à¸‡ "à¸£à¸°à¸šà¸¸à¹€à¸­à¸‡" à¸¡à¸µà¸‚à¹‰à¸­à¸„à¸§à¸²à¸¡ à¹à¸¥à¸°à¹„à¸¡à¹ˆà¹„à¸”à¹‰à¹€à¸›à¸´à¸”à¸ªà¸¸à¹ˆà¸¡ à¹ƒà¸«à¹‰à¹ƒà¸Šà¹‰à¸‚à¹‰à¸­à¸„à¸§à¸²à¸¡à¸™à¸±à¹‰à¸™à¸—à¸±à¸™à¸—à¸µ!
+                  // 🟢 [อัปเกรด] บังคับชุด: ไม่สนว่าคลิกปุ่มไหนอยู่ ถ้าช่อง "ระบุเอง" มีข้อความ และไม่ได้เปิดสุ่ม ให้ใช้ข้อความนั้นทันที!
                   if (characterHasFixedOutfit && !(modelUploadedImages && modelUploadedImages.length > 0)) {
                       finalOutfit = "";
-                      bananaAddLog('ðŸ‘— à¸•à¸±à¸§à¸¥à¸°à¸„à¸£à¸™à¸µà¹‰à¸¡à¸µà¸Šà¸¸à¸”à¹€à¸‰à¸žà¸²à¸° à¸£à¸°à¸šà¸šà¸ˆà¸¶à¸‡à¹„à¸¡à¹ˆà¸‹à¹‰à¸­à¸™à¸Šà¸¸à¸”à¹€à¸žà¸´à¹ˆà¸¡', 'info');
+                      bananaAddLog('👗 ตัวละครนี้มีชุดเฉพาะ ระบบจึงไม่ซ้อนชุดเพิ่ม', 'info');
                   }
                   else if (!isRandomOutfit && outfitCustom.trim() !== "") {
                       finalOutfit = `[CRITICAL OUTFIT RULE: The character MUST be wearing EXACTLY this outfit/uniform: "${outfitCustom.trim()}". Absolutely NO standard t-shirts, NO casual jeans, NO default clothing. Follow the user's outfit instruction strictly.]`;
-                      bananaAddLog(`ðŸ‘— à¸šà¸±à¸‡à¸„à¸±à¸šà¸Šà¸¸à¸”: "${outfitCustom.trim()}"`, 'info');
+                      bananaAddLog(`👗 บังคับชุด: "${outfitCustom.trim()}"`, 'info');
                   } 
                   else if (isRandomOutfit) {
                       const isBasicPlan = window.FeatureGate && FeatureGate.getPlan && FeatureGate.getPlan() === 'basic';
@@ -4719,17 +4808,17 @@ async function bananaHandleAutomation(isContinuous = false) {
                       finalOutfit = `wearing ${outfitDict[outfitKey] || outfitKey.replace(/_/g, ' ')}`;
                   }
                   
-                  // à¸œà¸¹à¸à¸„à¸²à¹à¸£à¸„à¹€à¸•à¸­à¸£à¹Œà¹€à¸‚à¹‰à¸²à¸à¸±à¸šà¸Šà¸¸à¸”
+                  // ผูกคาแรคเตอร์เข้ากับชุด
                   let finalCharWithOutfit = baseChar;
                   if (finalOutfit !== "") finalCharWithOutfit += ` ${finalOutfit}`;
 				  
                  let finalBg = "clean aesthetic background";
                   
-                  // ðŸŸ¢ [à¸­à¸±à¸›à¹€à¸à¸£à¸”] à¸£à¸°à¸šà¸šà¸šà¸±à¸‡à¸„à¸±à¸šà¸‰à¸²à¸: à¸à¸±à¸‡à¸à¸Žà¹€à¸«à¸¥à¹‡à¸à¸‚à¸±à¹‰à¸™à¹€à¸”à¹‡à¸”à¸‚à¸²à¸”à¹€à¸¡à¸·à¹ˆà¸­à¸œà¸¹à¹‰à¹ƒà¸Šà¹‰à¸£à¸°à¸šà¸¸à¹€à¸­à¸‡
-                  // ðŸ› ï¸ FIX: à¸™à¸³à¹€à¸‡à¸·à¹ˆà¸­à¸™à¹„à¸‚à¹€à¸Šà¹‡à¸„à¸›à¸¸à¹ˆà¸¡à¸—à¸µà¹ˆà¸‚à¸±à¸”à¹à¸¢à¹‰à¸‡à¸à¸±à¸š UI à¸­à¸­à¸ à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸«à¹‰à¸”à¸¶à¸‡à¸‚à¹‰à¸­à¸„à¸§à¸²à¸¡à¸¡à¸²à¹ƒà¸Šà¹‰à¹„à¸”à¹‰à¸—à¸±à¸™à¸—à¸µ
+                  // 🟢 [อัปเกรด] ระบบบังคับฉาก: ฝังกฎเหล็กขั้นเด็ดขาดเมื่อผู้ใช้ระบุเอง
+                  // 🛠️ FIX: นำเงื่อนไขเช็คปุ่มที่ขัดแย้งกับ UI ออก เพื่อให้ดึงข้อความมาใช้ได้ทันที
                   if (!isRandomBg && bgCustom.trim() !== "") {
                       finalBg = `[CRITICAL SETTING RULE: The scene MUST be strictly set in a "${bgCustom.trim()}". Follow this background instruction exactly.]`;
-                      bananaAddLog(`ðŸžï¸ à¸šà¸±à¸‡à¸„à¸±à¸šà¸‰à¸²à¸: "${bgCustom.trim()}"`, 'info');
+                      bananaAddLog(`🏞️ บังคับฉาก: "${bgCustom.trim()}"`, 'info');
                   } 
                   else if (isRandomBg) {
                       const isBasicPlan = window.FeatureGate && FeatureGate.getPlan && FeatureGate.getPlan() === 'basic';
@@ -4745,42 +4834,42 @@ async function bananaHandleAutomation(isContinuous = false) {
                  let styleKey = document.getElementById('banana-style-select')?.value || 'ugc_basic';
                   let isRandomStyle = document.getElementById('banana-random-style-switch')?.checked;
                   
-                  // à¸­à¸±à¸›à¹€à¸”à¸• Array à¸ªà¸³à¸«à¸£à¸±à¸šà¸ªà¸¸à¹ˆà¸¡ (à¹€à¸­à¸²à¹€à¸‰à¸žà¸²à¸°à¸«à¸¡à¸§à¸”à¸—à¸µà¹ˆà¹ƒà¸Šà¹‰à¸‡à¸²à¸™à¸šà¹ˆà¸­à¸¢ à¹€à¸žà¸·à¹ˆà¸­à¹„à¸¡à¹ˆà¹ƒà¸«à¹‰à¸ªà¸¸à¹ˆà¸¡à¹„à¸›à¹€à¸ˆà¸­à¸‚à¸­à¸‡à¹à¸›à¸¥à¸)
+                  // อัปเดต Array สำหรับสุ่ม (เอาเฉพาะหมวดที่ใช้งานบ่อย เพื่อไม่ให้สุ่มไปเจอของแปลก)
                   const styleKeys = (window.FeatureGate && FeatureGate.getPlan && FeatureGate.getPlan() === 'basic')
-                      ? ['ugc_basic', 'studio', 'live', 'fashion', 'usage', 'funny', 'sony_product', 'shop_review', 'natural_light', 'real_ads']
-                      : ['model', 'influencer', 'ugc_basic', 'studio', 'fashion', 'usage', 'texture', 'beauty', 'review', 'live', 'sony_product', 'shop_review', 'natural_light', 'real_ads', 'sony_portrait', 'catalog', 'lifestyle_review', 'counter_display', 'outdoor_market', 'premium_closeup', 'fancy'];
+                      ? ['ugc_basic', 'studio', 'live', 'fashion', 'clothing_campaign', 'funny', 'sony_product', 'shop_review']
+                      : ['ugc_basic', 'studio', 'fashion', 'clothing_campaign', 'usage', 'real_demo', 'real_user_review', 'texture', 'beauty', 'live', 'sony_product', 'shop_review', 'natural_light', 'real_ads', 'studio_photo', 'counter_display', 'outdoor_market', 'premium_closeup', 'fancy'];
                   if (isRandomStyle) styleKey = styleKeys[Math.floor(Math.random() * styleKeys.length)];
 
-                 // ðŸŸ¢ à¸­à¸±à¸›à¹€à¸”à¸•: à¸£à¸°à¸šà¸šà¸ªà¸¸à¹ˆà¸¡à¸«à¸™à¹‰à¸²à¸•à¸²à¸—à¹ˆà¸²à¸—à¸²à¸‡à¸ªà¸³à¸«à¸£à¸±à¸šà¹‚à¸«à¸¡à¸” "à¸«à¸±à¸§à¹‚à¸•" (Funny)
+                 // 🟢 อัปเดต: ระบบสุ่มหน้าตาท่าทางสำหรับโหมด "หัวโต" (Funny)
                   const funnyExpressions = [
-                      "Playful, sweet, and engaging with a cheerful bright smile", // à¸¢à¸´à¹‰à¸¡à¸«à¸§à¸²à¸™à¸ªà¸”à¹ƒà¸ª
-                      "Extremely excited, eyes wide open in amazement, mouth slightly open in a cute gasp", // à¸•à¸·à¹ˆà¸™à¹€à¸•à¹‰à¸™à¸•à¸²à¹‚à¸•à¸­à¹‰à¸²à¸›à¸²à¸à¸™à¸´à¸”à¹†
-                      "Overjoyed and enthusiastic, huge beaming smile, looking highly energetic", // à¸¢à¸´à¹‰à¸¡à¸à¸§à¹‰à¸²à¸‡à¸£à¹ˆà¸²à¹€à¸£à¸´à¸‡à¸ªà¸¸à¸”à¸žà¸¥à¸±à¸‡
-                      "Cheeky and cute, winking one eye playfully with a sweet smile", // à¸‚à¸¢à¸´à¸šà¸•à¸²à¸‚à¸µà¹‰à¹€à¸¥à¹ˆà¸™
-                      "Innocent and adorable puppy-eyes look, gentle and heartwarming smile" // à¸ªà¸²à¸¢à¸•à¸²à¸­à¹‰à¸­à¸™à¹† à¸¢à¸´à¹‰à¸¡à¸¥à¸°à¸¡à¸¸à¸™
+                      "Playful, sweet, and engaging with a cheerful bright smile", // ยิ้มหวานสดใส
+                      "Extremely excited, eyes wide open in amazement, mouth slightly open in a cute gasp", // ตื่นเต้นตาโตอ้าปากนิดๆ
+                      "Overjoyed and enthusiastic, huge beaming smile, looking highly energetic", // ยิ้มกว้างร่าเริงสุดพลัง
+                      "Cheeky and cute, winking one eye playfully with a sweet smile", // ขยิบตาขี้เล่น
+                      "Innocent and adorable puppy-eyes look, gentle and heartwarming smile" // สายตาอ้อนๆ ยิ้มละมุน
                   ];
                   const randFunnyExp = funnyExpressions[Math.floor(Math.random() * funnyExpressions.length)];
 
-                  // ðŸŸ¢ à¸­à¸±à¸›à¹€à¸”à¸•: à¸£à¸°à¸šà¸šà¹à¸­à¸šà¸ªà¸¸à¹ˆà¸¡à¸«à¹‰à¸­à¸‡à¸ªà¸§à¸¢à¹† à¸ªà¸³à¸«à¸£à¸±à¸šà¹‚à¸«à¸¡à¸” "à¸«à¸™à¹‰à¸²à¸à¸£à¸°à¸ˆà¸" (Mirror)
+                  // 🟢 อัปเดต: ระบบแอบสุ่มห้องสวยๆ สำหรับโหมด "เซลฟี่ลองชุด" (Mirror)
                   if (styleKey === 'mirror') {
                       const mirrorRooms = [
-                          'modern aesthetic bedroom with soft lighting', // à¸«à¹‰à¸­à¸‡à¸™à¸­à¸™
-                          'luxury walk-in closet with stylish clothes rack', // à¸«à¹‰à¸­à¸‡à¹à¸•à¹ˆà¸‡à¸•à¸±à¸§
-                          'clean minimalist bathroom with elegant tiles', // à¸«à¹‰à¸­à¸‡à¸™à¹‰à¸³à¸¡à¸´à¸™à¸´à¸¡à¸­à¸¥
-                          'cozy aesthetic living room with indoor plants', // à¸«à¹‰à¸­à¸‡à¸™à¸±à¹ˆà¸‡à¹€à¸¥à¹ˆà¸™
-                          'trendy cafe restroom with warm ambient light', // à¸«à¹‰à¸­à¸‡à¸™à¹‰à¸³à¸„à¸²à¹€à¸Ÿà¹ˆ
-                          'stylish fashion boutique fitting room' // à¸«à¹‰à¸­à¸‡à¸¥à¸­à¸‡à¸Šà¸¸à¸”à¸£à¹‰à¸²à¸™à¹€à¸ªà¸·à¹‰à¸­à¸œà¹‰à¸²
+                          'modern aesthetic bedroom with soft lighting', // ห้องนอน
+                          'luxury walk-in closet with stylish clothes rack', // ห้องแต่งตัว
+                          'clean minimalist dressing area with soft neutral walls', // มุมแต่งตัวมินิมอล
+                          'cozy aesthetic living room with indoor plants', // ห้องนั่งเล่น
+                          'trendy cafe restroom with warm ambient light', // ห้องน้ำคาเฟ่
+                          'stylish fashion boutique fitting room' // ห้องลองชุดร้านเสื้อผ้า
                       ];
                       finalBg = mirrorRooms[Math.floor(Math.random() * mirrorRooms.length)];
                   }
 
-                  // ðŸŸ¢ à¸­à¸±à¸›à¹€à¸”à¸•: à¸£à¸°à¸šà¸šà¸ªà¸¸à¹ˆà¸¡à¸—à¹ˆà¸²à¸™à¸±à¹ˆà¸‡/à¸—à¹ˆà¸²à¸¢à¸·à¸™ à¸ªà¸³à¸«à¸£à¸±à¸šà¹‚à¸«à¸¡à¸” "à¸­à¸´à¸™à¸Ÿà¸¥à¸¹à¸¯" (Influencer)
+                  // 🟢 อัปเดต: ระบบสุ่มท่านั่ง/ท่ายืน สำหรับโหมด "อินฟลูฯ" (Influencer)
                   const influencerPoses = [
-                      "standing casually in the room", // à¸¢à¸·à¸™à¸Šà¸´à¸¥à¹† à¹ƒà¸™à¸«à¹‰à¸­à¸‡
-                      "sitting comfortably behind a cozy table", // à¸™à¸±à¹ˆà¸‡à¸£à¸µà¸§à¸´à¸§à¸«à¸¥à¸±à¸‡à¹‚à¸•à¹Šà¸°
-                      "sitting relaxed at a nice desk", // à¸™à¸±à¹ˆà¸‡à¸žà¸±à¸à¸œà¹ˆà¸­à¸™à¸—à¸µà¹ˆà¹‚à¸•à¹Šà¸°à¸—à¸³à¸‡à¸²à¸™
-                      "standing and leaning naturally against a counter", // à¸¢à¸·à¸™à¸žà¸´à¸‡à¹€à¸„à¸²à¸™à¹Œà¹€à¸•à¸­à¸£à¹Œà¹à¸šà¸šà¸˜à¸£à¸£à¸¡à¸Šà¸²à¸•à¸´
-                      "sitting casually on a stylish chair" // à¸™à¸±à¹ˆà¸‡à¸šà¸™à¹€à¸à¹‰à¸²à¸­à¸µà¹‰
+                      "standing casually in the room", // ยืนชิลๆ ในห้อง
+                      "sitting comfortably behind a cozy table", // นั่งรีวิวหลังโต๊ะ
+                      "sitting relaxed at a nice desk", // นั่งพักผ่อนที่โต๊ะทำงาน
+                      "standing and leaning naturally against a counter", // ยืนพิงเคาน์เตอร์แบบธรรมชาติ
+                      "sitting casually on a stylish chair" // นั่งบนเก้าอี้
                   ];
                   const randInfluencerPose = influencerPoses[Math.floor(Math.random() * influencerPoses.length)];
 
@@ -4789,89 +4878,290 @@ async function bananaHandleAutomation(isContinuous = false) {
                           ? `Cute Thai UGC ad typography that says exactly "${customTextValue}". Add playful doodles, arrows, sticker-like accents, and a cheerful Must-Have review thumbnail feeling.`
                           : `Cute high-impact Thai marketing typography. Add playful doodles, arrows, sticker-like accents, and a cheerful Must-Have review thumbnail feeling. The Thai text should promote [product] in a short catchy way.`)
                       : `Clean no-text version. Keep the cute Basic-style energy with playful non-text doodles, arrows, sticker-like graphic accents, bright friendly composition, and no readable typography.`;
+                  const pickStyleCameraPrompt = (styleKey) => {
+                      const sharedProductPortrait = [
+                          'close portrait-distance product framing with [product] near the camera, soft background blur, and natural depth',
+                          'professional product portrait lens look, shallow depth of field, clean foreground focus on [product]',
+                          'slightly angled 3/4 product hero framing with the character softly supporting in the midground',
+                          'hand-held realistic product close-up, packaging sharp, background softly blurred'
+                      ];
+                      const cameraPromptMap = {
+                          ugc_basic: [
+                              'smartphone-style medium close framing, product held close to the lens, friendly creator angle',
+                              'casual vertical creator shot with slight handheld perspective and clear product foreground',
+                              'bright review-thumbnail framing, face and product both visible, natural phone-camera energy',
+                              'close friendly UGC angle with [product] near the camera and a lively personal-review feel'
+                          ],
+                          studio: [
+                              'dynamic hero-shot composition with [product] large in the foreground and presenter in the midground',
+                              'slight low-angle campaign framing that makes [product] feel powerful and premium',
+                              'centered poster-style hero framing with strong foreground-midground-background depth',
+                              'diagonal campaign composition with product foreground, presenter support, and bold headline space'
+                          ],
+                          live: [
+                              'beauty-friendly medium-close selling portrait, host appears attractive waist-up, product display decorates the lower foreground',
+                              'close eye-level selling table shot, host centered with flattering face light, products arranged neatly in front',
+                              'tight 3/4 selling-table angle, readable products in front, attractive host upper body behind, background softly blurred',
+                              'professional portrait selling-table crop with shallow depth, beautiful host face, product rows close to camera, no phone foreground'
+                          ],
+                          fashion: [
+                              'medium-close to medium-full fashion campaign framing that prioritizes the wearable product over the model face',
+                              'product-first editorial wearable shot with the item sharp, face optional or softly secondary, clean vertical composition',
+                              '3/4 fashion lookbook angle with wearable product detail readable, product closer to camera, and ad-poster spacing',
+                              'close-to-medium fashion crop with shallow depth, strong styling, and the worn/carried product as the visual hero'
+                          ],
+                          clothing_campaign: [
+                              'full-body fashion campaign framing with the clothing silhouette clear, editorial pose, and polished headline space',
+                              'medium-full clothing advertisement shot with fabric texture readable, elegant body line, and themed set props around the model',
+                              '3/4 fashion editorial angle with outfit as the hero, premium lighting, and product-matching environment design',
+                              'knee-up to full-body clothing brand poster crop with dramatic softbox light, rim light, and dynamic fashion headline area'
+                          ],
+                          usage: [
+                              'natural medium close-up action framing showing the product being used clearly',
+                              'over-the-shoulder real-use angle focused on the product action',
+                              'candid 3/4 lifestyle angle with product visible during use and soft natural depth',
+                              'close lifestyle action crop that keeps [product] readable while showing the use case'
+                          ],
+                          real_demo: [
+                              'tight close-up POV framing on hands actively using [product], no face visible',
+                              'macro demonstration angle showing texture, application, surface, or result clearly',
+                              'over-the-hand close crop with [product] and the use action filling the frame',
+                              'top-down or slight 3/4 close-up product-use angle, hands only, clean real setting'
+                          ],
+                          real_user_review: [
+                              'soft medium close-up review framing with face partially visible and [product] readable',
+                              'casual portrait review angle, product close to camera, warm everyday background blur',
+                              'natural 3/4 upper-body framing with product held clearly and believable home-review depth',
+                              'close friendly review shot with product foreground and relaxed real-user expression'
+                          ],
+                          review: [
+                              'eye-level desk review shot with product centered on the table and reviewer behind',
+                              'slight top-down 25 degree review-table angle showing product layout clearly',
+                              '3/4 desk angle with readable packaging rows and reviewer pointing naturally',
+                              'close table-foreground framing, product sharp, reviewer softly behind'
+                          ],
+                          mirror: [
+                              'mirror-reflection outfit try-on crop, smartphone held by the model but no phone-screen frame or camera UI overlay, outfit clearly visible',
+                              'warm pastel fitting-room mirror-reflection angle, crisp full outfit visibility, phone naturally in hand, no giant phone frame',
+                              'clean mirror-reflection fashion selfie composition with sharp outfit details, visible room reflection, no camera app interface',
+                              'soft dressing-room mirror POV framing with natural crop, gentle depth, and clear clothing or accessory focus'
+                          ],
+                          sony_product: sharedProductPortrait,
+                          shop_review: [
+                              'eye-level product table review shot, multiple products neatly arranged in the foreground',
+                              'slight top-down 25 degree table framing that shows many product packs clearly',
+                              '3/4 table-review angle with product rows in front and reviewer behind or beside',
+                              'close foreground table display with packaging sharp and clean background context'
+                          ],
+                          natural_light: [
+                              'warm window-light portrait framing with product foreground and soft airy background',
+                              'gentle 3/4 lifestyle composition with shallow depth and natural sunlight direction',
+                              'close natural-light product lifestyle crop, product readable, character softly integrated',
+                              'soft backlit lifestyle angle with product in the lower foreground and clean headline space'
+                          ],
+                          real_ads: [
+                              'realistic campaign hero shot with product foreground and confident presenter midground',
+                              'dynamic diagonal advertising composition with strong depth and readable product hero',
+                              'close commercial portrait framing, product sharp, background polished but believable',
+                              '3/4 social-commerce ad angle with layered depth, clean headline space, and natural perspective'
+                          ],
+                          sony_portrait: sharedProductPortrait,
+                          lifestyle_review: [
+                              'warm casual medium close-up with product visible during a real everyday moment',
+                              'soft 3/4 lifestyle review angle with shallow depth and product foreground clarity',
+                              'natural portrait review crop with relaxed expression and readable product',
+                              'candid close lifestyle framing that still keeps product packaging clear'
+                          ],
+                          texture: [
+                              'extreme macro crop focused on product texture, material, or surface detail',
+                              'tight detail shot with shallow depth and crisp tactile product texture',
+                              'macro side-light angle emphasizing texture, shine, droplets, or material quality',
+                              'close sensory detail framing with product texture filling most of the image'
+                          ],
+                          unboxing: [
+                              'top-down first-person POV shot with hands holding and showing [product] clearly, no shipping box',
+                              'slight 3/4 overhead POV angle showing [product] shape and packaging in the hands, clean surface',
+                              'close first-person product-showcase crop with [product] details sharp and readable, no parcel packaging',
+                              'realistic handheld POV angle looking down at [product] being presented neatly for review'
+                          ],
+                          shoes: [
+                              'low-angle close-up footwear framing with shoes or feet dominant and background blurred',
+                              'street-style low 3/4 angle focused sharply on the product being worn',
+                              'close ground-level fashion crop showing product details and realistic depth',
+                              'dynamic low-angle product-wear shot with clean background separation'
+                          ],
+                          hands: [
+                              'tight hands-only action close-up showing [product] being operated clearly',
+                              'over-the-hand tool-use angle with product controls or action area sharp',
+                              '3/4 close action crop focused on hands, product, and real use surface',
+                              'practical demonstration close-up with natural hand position and clear product function'
+                          ],
+                          decor: [
+                              'wide 3/4 interior room angle showing [product] placed naturally in the space',
+                              'clean editorial interior shot with product as the main anchor and balanced room depth',
+                              'slightly low interior hero angle for large product presence without distortion',
+                              'wide lifestyle room composition with product clearly visible and environment supporting it'
+                          ],
+                          showcase: sharedProductPortrait,
+                          studio_photo: [
+                              'centered premium studio product shot with [product] on a clean platform and tasteful related props around it',
+                              'expensive commercial product photography angle, [product] centered, soft shadows, modern prop styling',
+                              'high-end tabletop studio mockup with [product] as the main hero and product-related decorations supporting it',
+                              'front 3/4 modern packshot composition with crisp label, clean lighting, and contemporary studio depth'
+                          ],
+                          catalog: [
+                              'straight-on clean catalog product framing with accurate shape and label visibility',
+                              'slight 3/4 studio catalog angle showing product depth and packaging details',
+                              'organized product lineup shot with even lighting and crisp e-commerce clarity',
+                              'close clean product catalog crop, neutral perspective, no dramatic distortion'
+                          ],
+                          counter_display: [
+                              'eye-level retail advertising poster shot with product as a neat foreground hero and clean headline space',
+                              '3/4 counter angle showing product arrangement, believable shop context, and bold ad layout hierarchy',
+                              'close counter-foreground framing with crisp packaging, subtle store depth, and room for a large Thai headline',
+                              'slight top-down retail display angle with organized products, readable labels, and campaign-poster composition'
+                          ],
+                          premium_closeup: [
+                              'premium macro product close-up with shallow depth and elegant highlight control',
+                              'tight packaging-detail shot focused on logo, material, and reflective surface',
+                              'close product beauty angle with soft background blur and crisp front label',
+                              'macro 3/4 product detail framing with refined commercial lighting'
+                          ],
+                          fancy: [
+                              'dynamic 3/4 advertising angle with product foreground and floating elements arranged in depth',
+                              'hero product perspective with shallow depth, glossy highlights, and energetic diagonal flow',
+                              'close premium campaign crop with product sharp and decorative elements softly layered',
+                              'slight low-angle fantasy-ad framing that makes [product] feel large and desirable'
+                          ],
+                          outdoor_market: [
+                              'medium-close eye-level outdoor booth advertising poster shot with [product] large on the front table and bold headline space',
+                              'medium 3/4 booth angle with [product] display close to camera, seller softly behind, and campaign-poster hierarchy',
+                              'close market-table foreground framing with [product] readable and dominant, lively booth background softly blurred',
+                              'medium-close slight top-down outdoor display angle with [product] filling the foreground, friendly seller context, and dynamic ad composition'
+                          ],
+                          cgi: [
+                              'epic low-angle CGI campaign poster shot with gigantic [product], explosive graphic depth, and huge headline space',
+                              'cinematic wide perspective with enormous product monument, glowing CG effects, and dynamic ad layout',
+                              'dramatic 3/4 wide-angle CGI composition with strong scale contrast, neon accents, particles, and bold text zones',
+                              'hero low-angle blockbuster scene framing the giant product as a landmark with extreme commercial poster energy'
+                          ],
+                          funny: [
+                              'full-body cute caricature framing with oversized head clearly visible and product held close',
+                              'medium-full playful product shot with character centered and product readable',
+                              'slight low-angle cute mascot-like framing, product foreground, cheerful expression',
+                              'bright centered character-product composition with clean depth and readable product'
+                          ],
+                          miniature: [
+                              'tilt-shift macro angle looking down into a tiny product world',
+                              'close miniature-world perspective with giant product and tiny scene elements in depth',
+                              'macro 3/4 tilt-shift framing emphasizing scale and playful tiny details',
+                              'low macro miniature angle that makes [product] feel like a huge object in a tiny world'
+                          ]
+                      };
+                      const prompts = cameraPromptMap[styleKey] || [
+                          'professional 3/4 commercial framing with natural depth and clear product visibility',
+                          'close product-friendly portrait framing with shallow depth and clean perspective',
+                          'balanced advertising composition with strong foreground-midground-background separation',
+                          'natural professional camera look with crisp product focus and believable perspective'
+                      ];
+                      const selected = prompts[Math.floor(Math.random() * prompts.length)];
+                      return `Camera direction: ${selected}. Prefer product-first medium, medium-close, or close framing. Avoid distant wide establishing shots because [product] must stay large, readable, and commercially prominent. Use wide framing only when the style truly needs scale, and even then keep [product] visually dominant. Avoid repeating the exact same composition across generations. No camera brand text or camera logos.`;
+                  };
                   const styleTextProfiles = {
                       model: 'premium',
                       influencer: 'cute_ugc',
                       ugc_basic: 'cute_ugc',
-                      fashion: 'premium',
+                      fashion: 'fashion_campaign',
+                      clothing_campaign: 'clothing_editorial',
                       beauty: 'minimal',
-                      studio: 'premium',
-                      usage: 'minimal',
-                      review: 'cute_ugc',
-                      live: 'live_sale',
+                      studio: 'campaign_pop',
+                      usage: 'natural_editorial',
+                      real_demo: 'clean_demo',
+                      real_user_review: 'natural_editorial',
+                      review: 'retail_poster',
+                      live: 'live_photo_no_text',
+                      mirror: 'fashion_campaign',
                       texture: 'minimal',
                       unboxing: 'cute_ugc',
                       shoes: 'premium',
                       hands: 'minimal',
                       decor: 'premium',
                       showcase: 'premium',
-                      fancy: 'premium',
-                      cgi: 'premium',
+                      studio_photo: 'luxury_packshot',
+                      fancy: 'cgi_extreme',
+                      cgi: 'cgi_extreme',
                       funny: 'cute_ugc',
                       miniature: 'cute_ugc',
-                      sony_product: 'minimal',
-                      shop_review: 'cute_ugc',
-                      natural_light: 'minimal',
-                      real_ads: 'premium',
+                      sony_product: 'luxury_packshot',
+                      shop_review: 'retail_poster',
+                      natural_light: 'natural_editorial',
+                      real_ads: 'ad_campaign',
                       sony_portrait: 'premium',
-                      catalog: 'minimal',
-                      lifestyle_review: 'cute_ugc',
-                      counter_display: 'minimal',
+                      catalog: 'premium',
+                      lifestyle_review: 'natural_editorial',
+                      counter_display: 'retail_poster',
                       outdoor_market: 'live_sale',
                       premium_closeup: 'minimal'
                   };
 
                  const styleTemplates = {
-                      // ðŸ‘¤ à¸à¸¥à¸¸à¹ˆà¸¡ 1: à¸„à¸™+à¸ªà¸´à¸™à¸„à¹‰à¸² (Human)
-                      'model': `Professional lifestyle photography. ${finalCharWithOutfit} interacting with [product]. Clean aesthetic setting. Soft lighting. Clean look. High quality, 8k resolution, photorealistic.`,
-                      'influencer': `Authentic UGC (User-Generated Content) social media photography. Medium portrait shot of ${finalCharWithOutfit} ${randInfluencerPose}, naturally holding and presenting the [product] to the viewer. (CRITICAL RULE: The character is NOT holding the camera. NO selfie arms. BOTH hands must be visible and interacting naturally with the product). The character is looking directly at the lens with a friendly, approachable, and highly authentic smile. TikTok/YouTube lifestyle aesthetic. Unscripted, everyday casual setting, soft natural window lighting. Engaging and relatable vibe. (NOT heavy studio quality, NOT over-produced).`,
+                      // 👤 กลุ่ม 1: คน+สินค้า (Human)
+                      'model': `Full-body product presenter advertisement. ${finalCharWithOutfit} appears as a confident campaign model in the selected scene, with [product] clearly presented as the visual focus. Use a polished commercial pose, clean product visibility, coordinated outfit styling, intentional negative space for Thai headline text, and a finished social-commerce ad composition. Photorealistic, sharp, attractive, not a plain standing portrait.`,
+                      'influencer': `Designed creator review image for [product]. Medium portrait shot of ${finalCharWithOutfit} ${randInfluencerPose}, naturally presenting [product] to the viewer. (CRITICAL RULE: The character is NOT holding the camera. NO selfie arms. BOTH hands must be visible and interacting naturally with the product). Make it feel like a polished TikTok or YouTube thumbnail: friendly face, clear product hero, bright creator setup, playful callout space, and dynamic Thai text placement. Authentic but still designed, not random casual photography.`,
                       'ugc_basic': `Raw smartphone-style social media UGC review photo. ${finalCharWithOutfit} lively presenting [product] to the camera with an energetic "Must-Have" vibe. Cute Basic-style creator thumbnail, playful, charming, bright, relatable, friendly, and less formal than a studio advertisement. ${ugcBasicCuteVibe} The [product] MUST remain 100% perfectly unchanged: keep original logo, text, packaging, shape, and color. Natural hands, clear product visibility, photorealistic, high quality.`,
-					'fashion': `High-end fashion lookbook photography. ${finalCharWithOutfit} is stylishly modeling and wearing the [product] as the main centerpiece of their outfit. Full body or medium-full shot clearly showcasing the fit, fabric, and design of the [product]. The model is posing confidently with a strong, professional fashion editorial presence. Stylish, modern, and trendy aesthetic. Professional lighting, photorealistic, 8k resolution, fashion magazine grade.`,
+					'fashion': `Fashion wearable-product campaign poster for [product]. This style is best for wearable products other than full clothing campaigns: shoes, bags, jewelry, accessories, hats, glasses, watches, or items worn, carried, or styled on the body. The wearable product must be the visual hero, more important than the model's face. The model's face may be visible, cropped, turned away, softly blurred, or secondary; do not force a face-focused portrait. If [product] is clothing or a costume, use it as the worn hero, but for dedicated clothing ads prefer the "โฆษณาเสื้อผ้า" style. Keep the product's original color, silhouette, trim, fabric, pattern, logo area, and distinctive details faithful to the reference. If [product] is a bag, shoes, jewelry, watch, glasses, or accessory, style it clearly on the body or in the hand as the hero while the selected outfit supports it. If [product] is not wearable, style the outfit to match the product category while the product remains clearly held or placed as the hero; do not transform the product into clothing. Use product-first medium-close to medium-full fashion-ad framing, modern confident pose, clean body line, stylish selected scene, fresh lookbook composition, and strong fashion campaign typography space. Make it feel like a polished modern fashion advertisement, not a face portrait or plain standing shot.`,
+                      'clothing_campaign': `Clothing fashion campaign advertisement for [product]. Specialized style for clothing, outfits, dresses, costumes, swimwear, uniforms, tops, skirts, pants, and full fashion looks only. Ignore any selected outfit setting completely; do not use outfit dropdown values or add clothing from settings. ${baseChar} must wear the exact uploaded/reference clothing product as the hero outfit. Keep the original color, silhouette, trim, fabric, pattern, lace, buttons, logo area, proportions, and distinctive details faithful to the reference. Do not add blazer, jacket, coat, cardigan, pants, outerwear, scarf, belt, bag, jewelry, or extra accessories unless they are visible in the reference clothing product. No smartphone, no mirror selfie, no phone, no camera UI. Create a full-body or knee-up fashion campaign pose with confident modern posture, clean body line, and strong outfit silhouette. Design the surrounding composition to match the clothing category and mood: for swimwear use a fresh beach-themed studio set, sand-colored platform, shells, ocean-color lighting, or resort props; for party dresses use trendy festive studio lighting, ribbons, playful sparkle, or modern event props; for knitwear use cozy soft fabric props and warm editorial light; for uniforms use clean contemporary brand set design; for casual wear use youthful lifestyle studio props that match the garment. Use modern fashion lighting with softbox key light, rim light, polished color grading, shallow depth, fabric texture clarity, and editorial background separation. Make it feel like a finished contemporary clothing brand advertisement with cute-cool dynamic Thai headline space, not an old luxury poster, not a casual selfie, and not a plain catalog photo.`,
                       'beauty': `Beauty influencer photography. Close-up shot of ${finalCharWithOutfit} applying [product] to the skin. Showing texture and glow. Soft ring light. (Action: Swatching or applying). High quality, 8k resolution.`,
-                      'studio': `Premium blockbuster advertising key visual for [product], like a high-budget Thai commercial campaign poster. The composition must be dramatic and grand, NOT a simple person standing and holding the product. Build a full hero advertising scene: [product] is the main centerpiece, placed large and dominant in the foreground with perfect label visibility and premium glossy highlights. ${finalCharWithOutfit} is integrated into the campaign scene with a dynamic advertising pose, interacting with the product environment instead of merely holding it. Create an extravagant product-themed set around them: cinematic stage lighting, dimensional background layers, elegant props inspired by the product ingredients or use case, sweeping light beams, rim light, atmospheric depth, floating graphic accents, premium reflections, and strong visual hierarchy. Use a low-angle or hero-shot commercial camera perspective, rich contrast, sharp Sony/DSLR realism, vibrant but tasteful color grading, and a polished billboard-level layout. The image must feel like a finished luxury product advertisement / campaign poster, visually powerful, expensive, and eye-catching. Avoid plain portrait, plain studio backdrop, boring standing pose, casual holding pose, flat lighting, empty background, low-budget UGC look.`,
-                      'usage': `Authentic documentary lifestyle photography. ${finalCharWithOutfit} is genuinely interacting with and actively using the [product] in a real-world, everyday situation. The character is naturally focused on the activity and is NOT looking directly at the camera (candid, unposed moment). Soft natural lighting, highly relatable and realistic storytelling atmosphere. High-end commercial grade.`,
-                      'review': `Professional YouTuber and Blogger review photography. ${finalCharWithOutfit} is holding and presenting the [product] nicely to the camera. Shot on a high-end mirrorless camera with an 85mm portrait lens, creating a beautiful creamy bokeh (extreme blurred background) that makes the character and product pop out. The character has a welcoming, professional, and friendly smile. Soft aesthetic studio lighting (like a professional ring light or softbox). High quality, razor-sharp focus on the face and the product, 8k resolution.`,
-                      'live': `Live commerce broadcast style. ${finalCharWithOutfit} acting as a charismatic host holding [product]. Energetic atmosphere. High quality, 8k resolution.`,
-                      'sony_product': `Real commercial product photo shot on a Sony mirrorless camera. ${finalCharWithOutfit} naturally presenting [product] with clean realistic lighting, true-to-life color, sharp product details, and natural skin texture. Less AI-looking, no fantasy effects, no over-smooth plastic skin. Authentic Thai social commerce advertising photo.`,
-                      'shop_review': `Real in-store review photo. ${finalCharWithOutfit} presenting [product] inside a small modern shop or retail counter, friendly seller/customer review vibe, practical lighting, believable everyday composition, Sony mirrorless photo look, natural skin texture, clear product visibility, not over-produced.`,
-                      'natural_light': `Natural window-light product lifestyle photo. ${finalCharWithOutfit} using or holding [product] near soft daylight, realistic home or cafe environment, gentle shadows, Sony mirrorless camera color, clean but casual, natural texture, no CGI, no fantasy effects.`,
-                      'real_ads': `Realistic Thai commercial advertising photo. ${finalCharWithOutfit} presenting [product] in a polished but believable setup, Sony camera look, crisp focus, natural skin, realistic lighting, clean composition, premium sale image without looking like AI art.`,
-                      'sony_portrait': `Sony mirrorless portrait advertising photo. ${finalCharWithOutfit} holding [product] naturally, shot with an 85mm portrait lens, creamy real bokeh, sharp face and product, natural Thai skin texture, premium but believable brand campaign look, no artificial fantasy effects.`,
-                      'lifestyle_review': `Everyday lifestyle review photo. ${finalCharWithOutfit} casually using [product] in a real daily-life moment, candid expression, natural home or cafe setting, Sony mirrorless documentary look, relatable Thai UGC review feeling, realistic shadows and skin texture.`,
+                      'studio': `Ultimate promotional advertisement image for [product]. Use the selected character and outfit as the campaign presenter: ${finalCharWithOutfit}. Use the selected scene as the campaign environment, then turn that outfit and scene into a complete product-ad concept instead of a simple photo. Make [product] the main visual focus with clear packaging, strong hierarchy, and a confident presenter pose. Let the advertising composition adapt to the product category, target customer, outfit, and scene: choose suitable props, lighting, colors, graphic accents, product-themed effects, or brand-like elements that make the product more desirable. Add a huge Thai headline area, dynamic supporting text zones, badges or decorative marks when suitable, and a layout that feels designed as a finished Thai advertising poster. Keep it energetic, polished, product-appropriate, and visually rich. Avoid price tags, discount flyer layout, crowded supermarket stacks, plain studio backdrop, or simple person-holding-product composition.`,
+                      'usage': `Real usage advertising scene for [product]. ${finalCharWithOutfit} is genuinely using [product] in the selected environment, but the image must still be designed like a product ad. Show the real use case clearly, keep [product] visible and important, add natural action storytelling, tasteful props, warm lighting, depth, and a clean Thai headline zone. The character may focus on the activity instead of the camera. Relatable, believable, polished, not a plain lifestyle snapshot.`,
+                      'real_demo': `Real-use close-up product demonstration for [product]. Show only one natural pair of hands, [product], and the relevant body part, material, food, surface, tool area, or environment needed to demonstrate use. No visible face, no full person, no portrait, no extra hands from outside the frame. The product must be clearly visible and actively being used: applying, holding, pouring, opening, swatching, spraying, wiping, assembling, wearing detail, mixing, placing, or operating depending on the product type. Show the result or benefit of use when possible, such as texture, coverage, pour, fit, shine, cleaning result, food result, skin result, or before/after-like action detail. Use a real everyday setting such as home, bathroom, bedroom, balcony, kitchen, desk, shop counter, or workspace when suitable. Warm natural light, realistic texture, clear product detail, authentic Thai review feeling, trusted close-up demo, not a studio ad. Leave a clean readable area for Thai ad text, but do not cover the hands, product, or result.`,
+                      'real_user_review': `Authentic real-user product review for [product]. ${finalCharWithOutfit} naturally uses, applies, holds, or presents [product] in a real everyday setting, with face or upper body partially visible and the product still readable. Keep the mood trustworthy, soft, natural, and relatable rather than overly cute. Use warm daylight, realistic skin texture, simple home, bathroom, bedroom, cafe, balcony, shop, or workspace environment when suitable, and a clean review-style composition with subtle Thai text space. Avoid exaggerated UGC stickers, discount flyer layout, or over-produced studio posing.`,
+                      'review': `Desk review advertising thumbnail for [product]. ${finalCharWithOutfit} sits or stands near a neat review table, holding or pointing to [product] while the product packaging remains large, readable, and central. Add reviewer-style props, small benefit callout areas, bright friendly lighting, clear face, clear product, and a designed Thai review headline layout. It should feel like a polished product-review poster, not just a person holding an item.`,
+                      'live': `Live-selling host advertising photo for [product]. Keep the feeling of an energetic Thai live-sale moment, but make it a clean still advertisement with no broadcast interface. Use the selected/uploaded character as the exact presenter: ${finalCharWithOutfit}. Preserve the character's reference face, age impression, body shape, skin tone, and identity; improve only the lighting, grooming, and commercial polish without changing who the character is. The outfit must follow the selected outfit instruction and match the product naturally. The presenter is centered behind a front selling table with a confident friendly expression, flattering face lighting, clean natural makeup/grooming, and healthy realistic skin texture. The foreground uses a close selling-table layout with several neatly arranged copies, colors, or variants of [product] decorating the lower foreground; the products support the composition and remain readable. The presenter may hold or present one or two products close to the camera. Use a medium-close waist-up portrait crop from the table edge, not a wide full-room shot. The selected Location must become the real background context, softly blurred behind the selling table, while the foreground keeps the live-sale product display feeling. A small neat clip microphone or compact selling microphone is allowed if it looks professional and not cluttered. Use professional portrait depth, shallow depth of field, warm flattering light, energetic best-selling atmosphere, and clear product visibility. Do not invent livestream UI or extra text: no fake LIVE label, no chat comments, no price tags, no subtitles, no broadcast interface, no phone foreground, no phone screen, no tripod, no camera rig, no messy clutter.`,
+                      'mirror': `Mirror-reflection outfit try-on advertisement for [product]. Specialized style for clothing and outfit products only. Ignore any selected outfit setting completely; do not use outfit dropdown values or add any extra clothing from settings. The uploaded/reference clothing or outfit product is the only outfit the character should wear. The image must look like the viewer is seeing the character's reflection in a real mirror while the character holds a smartphone naturally in one hand. Show the person and outfit in the mirror reflection, not inside a phone screen. Do not create a giant smartphone frame, camera app UI, shutter button, phone screen border, screenshot interface, or black phone bezel around the image. ${baseChar} stands naturally in a cozy bedroom, dressing room, walk-in closet, boutique fitting room, or soft curtain background. The character must wear the exact uploaded/reference outfit as the main focus: keep its original color, silhouette, trim, fabric, pattern, logo area, and distinctive details. Do not add blazer, jacket, coat, cardigan, pants, outerwear, layered clothing, scarf, belt, or extra accessories that are not present in the reference product. The smartphone may partially cover a small part of the face or chest, but must not block the outfit. Keep the image crisp, clean, full-body or knee-up when useful, with gentle pastel warmth instead of heavy haze. Add polished Thai ad text space with a large fashion headline, but do not cover the outfit, body line, phone, or product.`,
+                      'sony_product': `Realistic product-focused portrait commercial photo for [product]. Shoot in a close portrait-distance composition with a professional large-camera look, shallow depth of field, creamy natural background blur, and strong product clarity. Make [product] the main hero, held or placed close to the camera with readable packaging, true-to-life color, and believable glossy detail. ${finalCharWithOutfit} may support the product naturally in the midground, but the image should stay realistic and product-focused rather than a flashy poster. Use warm practical lighting, clean composition, natural skin texture, and subtle Thai text space only when needed. No camera brand text, no camera logos, no fake brand marks, no fantasy effects, no over-designed typography, no cluttered graphic poster layout.`,
+                      'shop_review': `Clean Thai product table review for [product]. Arrange multiple copies, variants, or angles of [product] neatly across a front table, making the product display the main foreground focus with readable packaging and clear labels. ${finalCharWithOutfit} appears behind or beside the table as a friendly reviewer, naturally presenting or pointing to the product without blocking it. Use the selected scene as a clean background context, such as home, cafe, small shop, counter, or workspace. Keep the setup tidy, warm, believable, and uncluttered. No ring light, no tripod, no microphone, no livestream equipment, no messy props. Add subtle Thai review text placement, warm natural or practical lighting, and a trustworthy social-commerce composition.`,
+                      'natural_light': `Natural window-light lifestyle advertisement composition. Create a warm product key visual with [product] large in the foreground or lower third, soft daylight, gentle shadows, and tasteful lifestyle props related to the product. ${finalCharWithOutfit} uses or presents the product naturally in the midground, with a candid premium lifestyle feeling. Use an elegant diagonal or S-curve visual flow, airy negative space for Thai headline text, soft bokeh, realistic home or cafe environment, professional camera color, natural texture, no CGI, no fantasy effects.`,
+                      'real_ads': `Realistic Thai commercial advertising key visual. Compose it like a finished social-commerce campaign poster: [product] is the hero, large and sharp in the foreground with clear logo and packaging, while ${finalCharWithOutfit} supports the story with a confident advertising pose. Use layered depth, dynamic diagonal composition, premium but believable lighting, tasteful graphic accents or product-themed props, dedicated headline area, crisp focus, natural skin, and polished sale-image hierarchy. Make it feel like a real brand ad, not a plain person-holding-product photo and not generic AI art.`,
+                      'sony_portrait': `Professional portrait-lens advertising photo. ${finalCharWithOutfit} holding [product] naturally, shot with an 85mm portrait lens look, creamy real bokeh, sharp face and product, natural Thai skin texture, premium but believable brand campaign look, no camera logos, no artificial fantasy effects.`,
+                      'lifestyle_review': `Everyday lifestyle review advertisement for [product]. ${finalCharWithOutfit} casually uses or presents [product] in a believable daily-life moment, with the selected scene feeling real and relatable. Keep [product] easy to see, add warm lifestyle props, natural expression, soft professional-camera realism, and clean Thai review text placement. It should feel authentic but still composed for an ad, not an accidental candid photo.`,
 
-                     // ðŸ” à¸à¸¥à¸¸à¹ˆà¸¡ 2: à¸¡à¸·à¸­+à¸ªà¸´à¸™à¸„à¹‰à¸² (Closeup) - à¸–à¸­à¸”à¸„à¸²à¹à¸£à¸„à¹€à¸•à¸­à¸£à¹Œà¸­à¸­à¸à¸—à¸±à¹‰à¸‡à¸«à¸¡à¸”
+                     // 🔍 กลุ่ม 2: มือ+สินค้า (Closeup) - ถอดคาแรคเตอร์ออกทั้งหมด
                       'texture': `Extreme close-up macro shot of [product]. Focusing on the texture, material, or droplets. Highlighting the quality. Background is blurred. Aesthetic, sensory, high definition texture. (Note: Focus on product only, face is NOT visible). High quality, 8k resolution.`,
-                      'unboxing': `First-person point of view (POV) shot. Looking down at a pair of hands holding or unboxing [product] on a messy but aesthetic desk. Natural indoor lighting, candid style. (Note: POV shot, only hands visible, face is NOT visible). High quality, 8k.`,
+                      'unboxing': `First-person point of view (POV) product-showcase review photo. Looking down from the user's own viewpoint at exactly one natural pair of hands holding and showing [product] clearly, like a neat personal review shot. Focus on the product's real shape, size, label, packaging, and details. Use a clean tabletop, lap, vanity, desk, kitchen counter, or lifestyle surface that fits the product. No shipping box, no parcel box, no cardboard delivery package, no messy unboxing clutter, no extra hands from outside the frame. (Note: POV shot, only hands visible, face is NOT visible). Photorealistic, natural indoor light, high quality.`,
                       'shoes': `Low angle street fashion photography. Close-up shot of feet wearing [product] (shoes). Focus sharply on the shoes/feet. Background blurred. (Note: Focus on feet, face is NOT visible). High quality, 8k.`,
                       'hands': `Professional action lifestyle photography. Close-up on hands holding or operating [product] (tool/equipment). Active posture, demonstrating usage. (Note: Focus on action/hands, face is NOT visible). High quality, 8k.`,
 					  
-                      // ðŸ–¼ï¸ à¸à¸¥à¸¸à¹ˆà¸¡ 3: à¸‰à¸²à¸+à¸ªà¸´à¸™à¸„à¹‰à¸² (Product) - à¹„à¸¡à¹ˆà¸¡à¸µà¸„à¸™
+                      // 🖼ï¸ กลุ่ม 3: ฉาก+สินค้า (Product) - ไม่มีคน
                       'decor': `Interior design lifestyle photography. Wide shot showcasing [product] (furniture/large home item) placed naturally and beautifully in a room. The product is the main focus of the composition. (CRITICAL RULE: NO humans, NO people, NO hands, just the product and the interior setting). High quality, 8k, photorealistic commercial grade.`,
-                      'showcase': `Professional commercial product photography of [product]. The product is placed prominently in the center of the scene. Composition focuses solely on the product. (Rule: NO humans, NO people, NO hands, just the product). High quality, 8k resolution, photorealistic, advertising grade.`,
-                      'catalog': `Clean studio catalog product photography. [product] arranged neatly in a realistic small studio setup with softbox lighting, accurate packaging details, true color, Sony camera sharpness, commercial catalog composition, no humans, no hands, no CGI.`,
-                      'counter_display': `Retail counter display photography. [product] placed on a real shop counter with subtle props and practical store lighting, ready-to-sell merchandising look, Sony mirrorless camera realism, crisp logo and packaging, no humans, no fantasy effects.`,
-                      'premium_closeup': `Premium close-up commercial photo of [product]. Focus on packaging, logo, material detail, and texture with shallow depth of field, Sony macro lens realism, elegant natural highlights, accurate colors, no humans, no hands unless required by the product.`,
+                      'showcase': `Hero product-only advertising image for [product]. The product is the only main subject, placed large and dominant with perfect label visibility, attractive reflections, product-appropriate props, and a clean campaign background. (Rule: NO humans, NO people, NO hands, just the product). Add intentional negative space for Thai headline text and a polished commercial layout, not a plain catalog shot.`,
+                      'studio_photo': `Modern premium studio product photography for [product]. Product-only high-end commercial mockup shot: place [product] centered as the main hero on a clean contemporary platform, tabletop, acrylic block, stone slab, fabric surface, or modern display riser. Decorate around it with tasteful props related to the product category, ingredients, texture, color mood, or use case, but keep every prop secondary and never covering the product. Use expensive studio lighting, soft shadows, crisp reflections, sharp packaging, readable label area, clean background depth, and a fresh modern brand-campaign feeling. Avoid old luxury styling, gold-heavy decoration, ornate props, vintage beauty-poster mood, and classic serif typography. (Rule: NO humans, NO people, NO hands, product-only).`,
+                      'catalog': `Clean e-commerce catalog image for [product]. Arrange [product] neatly in a realistic small studio setup with softbox lighting, accurate packaging details, true color, professional camera sharpness, and organized product variants or angles when useful. (Rule: NO humans, NO people, NO hands). Keep it clean, trustworthy, and shop-ready with subtle Thai product label space, no fantasy effects.`,
+                      'counter_display': `Retail counter advertising poster for [product]. Place [product] on a real shop counter as a neat foreground hero display with practical store lighting, shelf or cashier-counter context, and subtle merchandising props. Make the whole image feel like a finished Thai retail ad, not just a plain product photo: strong product hierarchy, clean campaign layout, bold headline area, small benefit callout zones, sticker-like accents when suitable, and believable shop atmosphere. (Rule: NO humans, NO people, NO hands). Keep packaging crisp, readable, centered, and clearly promoted.`,
+                      'premium_closeup': `Modern premium close-up commercial photo of [product]. Focus on packaging, logo, material detail, and texture with shallow depth of field, professional macro lens realism, clean contemporary highlights, accurate colors, crisp product surface, and fresh ad-ready composition. Avoid old luxury styling, gold-heavy mood, ornate props, and vintage beauty-poster lighting. No humans, no hands unless required by the product.`,
 
-                      // ðŸŽ¨ à¸à¸¥à¸¸à¹ˆà¸¡ 4: à¹à¸Ÿà¸™à¸•à¸²à¸‹à¸µ (Fantasy)
-                      'fancy': `High-end advertising photography. ${finalCharWithOutfit} is holding the [product]. Bright and refreshing atmosphere. Elements of the product or related ingredients are elegantly fluttering in the air around the subject. The product packaging is glossy with premium reflective highlights. Warm and fresh tone, professional commercial grade, 8k resolution.`,
-                      'outdoor_market': `Outdoor market sales photography. ${finalCharWithOutfit} presenting [product] at a modern market booth or pop-up stall, natural daylight, lively Thai retail atmosphere, realistic Sony camera color, clear product visibility, authentic social commerce vibe.`,
-                      'cgi': `Surreal CGI advertising photography. A massive, skyscraper-sized [product] is placed as a gigantic monument perfectly integrated into the environment. The product looks incredibly huge. ${finalCharWithOutfit} is standing extremely small nearby, looking up at the giant product in amazement. Cinematic lighting, 3D render style, epic scale, hyper-realistic shadows.`,
-                      'funny': `Create an advertisement image in an extremely realistic caricature style of ${finalCharWithOutfit} holding [product]. CRITICAL PROPORTIONS: The character has highly exaggerated proportionsâ€”a VERY LARGE HEAD attached to a TINY, SHORT body with SMALL LIMBS. The character must look like a cute miniature person standing full-body. The face MUST remain 100% realistic photography (NO cartoons, NO 3D renders allowed) but with a soft kawaii beauty filter. Expression: ${randFunnyExp}. High quality 8k, bright commercial lighting.`,
+                      // 🎨 กลุ่ม 4: แฟนตาซี (Fantasy)
+                      'fancy': `Fantasy CG product advertising poster for [product]. Make [product] the central hero, floating or standing on a premium fantasy product stage. Surround it with product-related ingredients, particles, glowing ribbons, splash effects, light trails, crystal or glass reflections, magical arcs, and premium 3D decorative elements. The scene should feel like a high-budget Thai product campaign: dramatic, polished, colorful, visually rich, and CG-enhanced. No person is required; avoid plain person-holding-product composition. If a presenter appears, they must stay secondary and never hold or cover the product. Keep [product] dominant, readable, glossy, and desirable, with a huge headline area and dynamic ad-poster hierarchy.`,
+                      'outdoor_market': `Outdoor booth campaign advertisement for [product]. ${finalCharWithOutfit} presents [product] at a modern market booth, pop-up stall, fair booth, or outdoor product stand. Make it feel like a finished Thai social-commerce ad poster, not a casual booth snapshot: clear product display table, lively selling atmosphere, product hero foreground, bold headline area, small callout zones, sticker-like accents when suitable, natural daylight, and polished campaign hierarchy. Keep [product] visible and attractive with realistic professional camera color and dynamic Thai sales-text placement when text overlay is enabled.`,
+                      'cgi': `Extreme CGI blockbuster advertising poster for [product]. Create an over-the-top futuristic CG product ad where [product] becomes a gigantic heroic commercial monument or central 3D product world. Absolutely no human, no presenter, no person, no mascot, no hands. The product must dominate the entire image. Use dramatic scale, cinematic lighting, glowing energy trails, particles, glass/metal reflections, floating product-themed elements, dynamic graphic arcs, depth, impact, and spectacular campaign composition. Make it feel like the most extreme high-budget Thai advertising visual, with huge headline space and CG graphic effects designed around the product. Keep [product] readable and visually dominant, but make the overall image bold, surreal, premium, and powerful.`,
+                      'funny': `Create an advertisement image in an extremely realistic caricature style of ${finalCharWithOutfit} holding [product]. CRITICAL PROPORTIONS: The character has highly exaggerated proportions—a VERY LARGE HEAD attached to a TINY, SHORT body with SMALL LIMBS. The character must look like a cute miniature person standing full-body. The face MUST remain 100% realistic photography (NO cartoons, NO 3D renders allowed) but with a soft kawaii beauty filter. Expression: ${randFunnyExp}. High quality 8k, bright commercial lighting.`,
                       'miniature': `Tilt-shift macro photography of a miniature world. Tiny people interacting around the giant [product].`
                   };
 
                   let baseStyle = styleTemplates[styleKey] || styleTemplates['model'];
                   manualTextPrompt = buildTextStylePrompt(styleTextProfiles[styleKey] || 'premium');
-                  generatedPrompt = `${baseStyle} Location: ${finalBg}. ${manualTextPrompt} ${imgSafety} (Composition: Edge-to-edge). Negative Prompt: "${coreNegative}${manualNegativeAddon}"`;
+                  const styleCameraPrompt = pickStyleCameraPrompt(styleKey);
+                  const productHeroPriority = `Product priority: [product] must remain the visual hero. Keep packaging, logo area, shape, color, and key product details clear and readable. The character, props, text, and background must support [product], not overpower or hide it. Product fidelity rule: [product] must stay identical to the uploaded/reference product image. Keep the exact package shape, logo area, label layout, color, cap, material, proportions, and key visual details. Do not redesign, rebrand, recolor, translate, simplify, replace, or invent new flavors, sizes, colors, or variants. If multiple products are shown, they must be exact copies of the same reference product unless the user explicitly asks for variants. Hand anatomy rule: If hands are visible, show only the natural hands belonging to the visible person. No extra hands, no duplicate hands, no floating hands, no detached hands, no third hand, and no random hand entering from the frame edge. Hands must have correct anatomy, natural wrists, and natural finger count. For product-only styles, show no hands at all unless the style explicitly requires POV or hand demonstration.`;
+                  generatedPrompt = `${baseStyle} Location: ${finalBg}. ${styleCameraPrompt} ${productHeroPriority} ${manualTextPrompt} ${imgSafety} (Composition: Edge-to-edge). Negative Prompt: "${coreNegative}${manualNegativeAddon}"`;
               }
          } else {
               // ============================================
-              // ðŸŸ¢ [MASCOT MODE: ULTIMATE RANDOMIZER V2]
-              // à¸£à¸°à¸šà¸šà¸ªà¸¸à¹ˆà¸¡ 5 à¸ˆà¸¸à¸”: 1. à¸„à¸³à¸‚à¸¶à¹‰à¸™à¸•à¹‰à¸™ 2. à¸ªà¸´à¸™à¸„à¹‰à¸²à¸¡à¸µà¸Šà¸µà¸§à¸´à¸• 3. à¸—à¹ˆà¸²à¸—à¸²à¸‡ 4. à¸ªà¹„à¸•à¸¥à¹Œà¸ à¸²à¸ž 5. à¸‰à¸²à¸ Smart Auto
+              // 🟢 [MASCOT MODE: ULTIMATE RANDOMIZER V2]
+              // ระบบสุ่ม 5 จุด: 1. คำขึ้นต้น 2. สินค้ามีชีวิต 3. ท่าทาง 4. สไตล์ภาพ 5. ฉาก Smart Auto
               // ============================================
-              bananaAddLog('ðŸ§¸ à¹‚à¸«à¸¡à¸”: à¸¡à¸²à¸ªà¸„à¸­à¸• (Mascot)', 'step');
+              bananaAddLog('🧸 โหมด: มาสคอต (Mascot)', 'step');
 
-              // 1. à¹€à¸•à¸£à¸µà¸¢à¸¡à¸‚à¹‰à¸­à¸¡à¸¹à¸¥à¸žà¸·à¹‰à¸™à¸à¸²à¸™
+              // 1. เตรียมข้อมูลพื้นฐาน
               const activeMascotCard = document.querySelector('#mascot-grid .mascot-card.active') || document.querySelector('.mascot-card.active');
               let mascotType = activeMascotCard ? activeMascotCard.dataset.value : 'liver'; 
               
@@ -4883,27 +5173,27 @@ async function bananaHandleAutomation(isContinuous = false) {
               const isMascotSmart = document.getElementById('mascot-smart-auto-checkbox')?.checked;
               const mascotCustomText = customTextValue || "";
 
-            // 2. à¸à¸³à¸«à¸™à¸” Subject (à¸£à¸§à¸¡à¸£à¸°à¸šà¸šà¸ªà¸¸à¹ˆà¸¡ Prefix, à¸ªà¸´à¸™à¸„à¹‰à¸²à¸¡à¸µà¸Šà¸µà¸§à¸´à¸• à¹à¸¥à¸° à¸£à¸¹à¸›à¸™à¸²à¸‡à¹à¸šà¸š)
+            // 2. กำหนด Subject (รวมระบบสุ่ม Prefix, สินค้ามีชีวิต และ รูปนางแบบ)
               let subject = "";
               if (modelUploadedImages.length > 0) {
-                  // ðŸš€ [à¸­à¸±à¸›à¹€à¸à¸£à¸”] à¸£à¸°à¸šà¸šà¸ªà¸¸à¹ˆà¸¡ 4 à¸ªà¹„à¸•à¸¥à¹Œ à¸ªà¸³à¸«à¸£à¸±à¸š "à¸™à¸²à¸‡à¹à¸šà¸š -> à¸­à¸²à¸£à¹Œà¸•à¸—à¸­à¸¢à¸«à¸±à¸§à¹‚à¸•" + à¸šà¸±à¸‡à¸„à¸±à¸šà¸•à¸²à¹‚à¸• Pixar
+                  // 🚀 [อัปเกรด] ระบบสุ่ม 4 สไตล์ สำหรับ "นางแบบ -> อาร์ตทอยหัวโต" + บังคับตาโต Pixar
                 const chibiVariations = [
-                      // à¹à¸šà¸šà¸—à¸µà¹ˆ 1: à¸­à¸²à¸£à¹Œà¸•à¸—à¸­à¸¢à¸žà¸£à¸µà¹€à¸¡à¸µà¸¢à¸¡ (Pop Mart Style) - à¸«à¸™à¹‰à¸²à¸œà¸¹à¹‰à¹ƒà¸«à¸à¹ˆà¹à¸•à¹ˆà¸ªà¸±à¸”à¸ªà¹ˆà¸§à¸™à¸Ÿà¸´à¸à¹€à¸à¸­à¸£à¹Œ
-                      "A premium 3D designer blind-box art toy (Pop Mart style). The character has an oversized head and a small stylish body. The facial identity is a perfect 3D translation of the young adult/teen in the reference imageâ€”keeping their mature charm but in a cute designer toy proportion. Big beautiful eyes, flawless texture. CLOTHING: Fully dressed in a stylish, premium outfit matching the '[product]'.",
+                      // แบบที่ 1: อาร์ตทอยพรีเมียม (Pop Mart Style) - หน้าผู้ใหญ่แต่สัดส่วนฟิกเกอร์
+                      "A premium 3D designer blind-box art toy (Pop Mart style). The character has an oversized head and a small stylish body. The facial identity is a perfect 3D translation of the young adult/teen in the reference image—keeping their mature charm but in a cute designer toy proportion. Big beautiful eyes, flawless texture. CLOTHING: Fully dressed in a stylish, premium outfit matching the '[product]'.",
 
-                      // à¹à¸šà¸šà¸—à¸µà¹ˆ 2: à¸ˆà¸´à¸šà¸´ 3D à¸ªà¹„à¸•à¸¥à¹Œà¸„à¸¥à¸²à¸ªà¸ªà¸´à¸ (à¹„à¸¡à¹ˆà¹€à¸”à¹‡à¸à¹€à¸à¸´à¸™à¹„à¸›)
+                      // แบบที่ 2: จิบิ 3D สไตล์คลาสสิก (ไม่เด็กเกินไป)
                       "A high-end 3D Super-Deformed Chibi character. It features a larger head and smaller body, but strictly maintains the young adult identity from the reference photo. Do NOT make them look like a baby. Elegant 3D Pixar-style rendering with friendly, expressive eyes and a highly professional commercial look. CLOTHING: Dressed in a high-quality outfit that visually represents the '[product]'.",
 
-                      // à¹à¸šà¸šà¸—à¸µà¹ˆ 3: à¸Ÿà¸´à¸à¹€à¸à¸­à¸£à¹Œà¸ªà¸°à¸ªà¸¡à¸£à¸°à¸”à¸±à¸šà¸žà¸£à¸µà¹€à¸¡à¸µà¸¢à¸¡
+                      // แบบที่ 3: ฟิกเกอร์สะสมระดับพรีเมียม
                       "A premium collectible 3D vinyl figure toy. The character has an exaggerated head-to-body ratio for cuteness, but the face clearly belongs to the stylish young adult in the reference image. Clean, smooth 3D rendering with a trendy aesthetic. CLOTHING: Wearing a customized, professional attire inspired by the '[product]'.",
 
-                      // à¹à¸šà¸šà¸—à¸µà¹ˆ 4: à¸­à¸™à¸´à¹€à¸¡à¸Šà¸±à¸™ 3D à¹‚à¸¡à¹€à¸”à¸´à¸£à¹Œà¸™
+                      // แบบที่ 4: อนิเมชัน 3D โมเดิร์น
                       "A charming 3D animated character with designer toy proportions (large head, small body). The face is a highly detailed, mature but stylized 3D adaptation of the reference image. NO baby face. Big beautiful eyes, friendly and welcoming vibe. CLOTHING: Fully dressed in a creative and premium costume matching the '[product]' theme."
                   ];
                   subject = chibiVariations[Math.floor(Math.random() * chibiVariations.length)];
-                  bananaAddLog('âœ¨ Mascot: à¸ªà¸¸à¹ˆà¸¡à¸£à¸¹à¸›à¹à¸šà¸šà¸„à¸³à¸ªà¸±à¹ˆà¸‡à¹à¸›à¸¥à¸‡à¸£à¸¹à¸› Ref à¹€à¸›à¹‡à¸™à¸ˆà¸´à¸šà¸´à¸«à¸±à¸§à¹‚à¸•', 'success');
+                  bananaAddLog('✨ Mascot: สุ่มรูปแบบคำสั่งแปลงรูป Ref เป็นจิบิหัวโต', 'success');
               } else {
-                  // ðŸš€ [à¸ªà¸¸à¹ˆà¸¡à¸ˆà¸¸à¸”à¸—à¸µà¹ˆ 1] à¸ªà¸³à¸«à¸£à¸±à¸š "à¸ªà¸´à¸™à¸„à¹‰à¸²à¸¡à¸µà¸Šà¸µà¸§à¸´à¸•" (5 à¸ªà¹„à¸•à¸¥à¹Œ)
+                  // 🚀 [สุ่มจุดที่ 1] สำหรับ "สินค้ามีชีวิต" (5 สไตล์)
                   const productMascotVariations = [
                       "A creative 3D living character where the [product] itself comes alive. Add cute tiny cartoon arms, legs, and an expressive face DIRECTLY onto the original [product].",
                       "A magical 3D Pixar-style transformation of the [product]. It becomes a living mascot with adorable tiny limbs and a lively face attached directly to its original body.",
@@ -4914,7 +5204,7 @@ async function bananaHandleAutomation(isContinuous = false) {
                   const randomProductPrompt = productMascotVariations[Math.floor(Math.random() * productMascotVariations.length)];
                   const strictProductRule = " CRITICAL RULE: The original shape, label, text, and texture of the [product] MUST remain 100% exactly as the source image. Do NOT deform, morph, or redesign the product body. Just attach the face and limbs to the existing shape. (DO NOT generate any other human or animal holding it)";
 
-                   // ðŸš€ [à¸ªà¸¸à¹ˆà¸¡à¸ˆà¸¸à¸”à¸—à¸µà¹ˆ 2] à¸ªà¸³à¸«à¸£à¸±à¸š "à¸¡à¸²à¸ªà¸„à¸­à¸•à¸—à¸±à¹ˆà¸§à¹„à¸›" à¸›à¹‰à¸­à¸‡à¸à¸±à¸™à¸šà¸­à¸— (à¸šà¸±à¸‡à¸„à¸±à¸š Pixar à¸—à¸¸à¸à¸­à¸±à¸™)
+                   // 🚀 [สุ่มจุดที่ 2] สำหรับ "มาสคอตทั่วไป" ป้องกันบอท (บังคับ Pixar ทุกอัน)
                   const mascotPrefixes = [
                       "an extremely cute Disney-Pixar style 3D",
                       "an adorable 3D Pixar animated",
@@ -4924,10 +5214,10 @@ async function bananaHandleAutomation(isContinuous = false) {
                   ];
                   const randPrefix = mascotPrefixes[Math.floor(Math.random() * mascotPrefixes.length)];
 
-                  // ðŸŒŸ à¸•à¸±à¸§à¸Šà¹ˆà¸§à¸¢à¹€à¸žà¸´à¹ˆà¸¡à¸„à¸§à¸²à¸¡à¸™à¹ˆà¸²à¸£à¸±à¸ à¸•à¸²à¹‚à¸• à¹„à¸¡à¹ˆà¸™à¹ˆà¸²à¸à¸¥à¸±à¸§ (à¹€à¸­à¸²à¹„à¸›à¸•à¹ˆà¸­à¸—à¹‰à¸²à¸¢à¸¡à¸²à¸ªà¸„à¸­à¸•à¸—à¸¸à¸à¸•à¸±à¸§)
+                  // 🌟 ตัวช่วยเพิ่มความน่ารัก ตาโต ไม่น่ากลัว (เอาไปต่อท้ายมาสคอตทุกตัว)
                   const cutePixarSuffix = "with big adorable cartoon eyes, extremely friendly, and completely non-scary";
 
-                  // à¸à¸²à¸™à¸‚à¹‰à¸­à¸¡à¸¹à¸¥à¸¥à¸±à¸à¸©à¸“à¸°à¹€à¸”à¹ˆà¸™ (à¸žà¹ˆà¸§à¸‡à¸„à¸§à¸²à¸¡à¸™à¹ˆà¸²à¸£à¸±à¸à¹€à¸‚à¹‰à¸²à¹„à¸›à¸—à¸¸à¸à¸­à¸±à¸™)
+                  // ฐานข้อมูลลักษณะเด่น (พ่วงความน่ารักเข้าไปทุกอัน)
                   const mascotTraits = {
                       'liver': `Liver character (glossy red stylized material), ${cutePixarSuffix}`,
                       'kidney': `Kidney character (smooth glossy bean-shaped material), ${cutePixarSuffix}`,
@@ -4944,9 +5234,9 @@ async function bananaHandleAutomation(isContinuous = false) {
                       'bear': `bipedal Teddy Bear character standing upright on two legs like a human (soft fluffy fur), ${cutePixarSuffix}`
                   };
 
-                  // à¸›à¸£à¸°à¸à¸­à¸šà¸£à¹ˆà¸²à¸‡à¸‚à¸±à¹‰à¸™à¸ªà¸¸à¸”à¸—à¹‰à¸²à¸¢
+                  // ประกอบร่างขั้นสุดท้าย
                   if (mascotType === 'product_mascot') {
-                      // à¸–à¹‰à¸²à¹€à¸›à¹‡à¸™à¸ªà¸´à¸™à¸„à¹‰à¸²à¸¡à¸µà¸Šà¸µà¸§à¸´à¸• à¸ˆà¸°à¸”à¸¶à¸‡à¸ˆà¸²à¸à¸•à¸±à¸§à¹à¸›à¸£à¸”à¹‰à¸²à¸™à¸šà¸™à¸¡à¸²à¹ƒà¸Šà¹‰
+                      // ถ้าเป็นสินค้ามีชีวิต จะดึงจากตัวแปรด้านบนมาใช้
                       subject = `Create ${randomProductPrompt}${strictProductRule}`;
                   } else if (mascotType === 'custom' || mascotType === 'custom_mascot') {
                       subject = `Create ${randPrefix} character of [${mascotType}], ${cutePixarSuffix}`;
@@ -4954,12 +5244,12 @@ async function bananaHandleAutomation(isContinuous = false) {
                       let trait = mascotTraits[mascotType] || `${mascotType} character, ${cutePixarSuffix}`;
                       subject = `Create ${randPrefix} ${trait}`;
                   }
-                  bananaAddLog(`ðŸ§¸ Mascot: à¹ƒà¸Šà¹‰à¸ªà¹„à¸•à¸¥à¹Œ 3D à¸žà¸£à¸µà¹€à¸¡à¸µà¸¢à¸¡à¹à¸šà¸šà¸ªà¸¸à¹ˆà¸¡à¸„à¸³à¸ªà¸±à¹ˆà¸‡à¸«à¸¥à¸šà¸šà¸­à¸— -> ${mascotType}`, 'info');
+                  bananaAddLog(`🧸 Mascot: ใช้สไตล์ 3D พรีเมียมแบบสุ่มคำสั่งหลบบอท -> ${mascotType}`, 'info');
               }
-             // 3. à¸ˆà¸±à¸”à¸à¸²à¸£à¸ªà¸µà¸«à¸™à¹‰à¸² à¸­à¸²à¸£à¸¡à¸“à¹Œ (à¸­à¸±à¸›à¹€à¸”à¸•à¹ƒà¸«à¹‰à¹€à¸‚à¹‰à¸²à¸à¸±à¸šà¸„à¸§à¸²à¸¡à¸™à¹ˆà¸²à¸£à¸±à¸à¸ªà¹„à¸•à¸¥à¹Œ Pixar)
+             // 3. จัดการสีหน้า อารมณ์ (อัปเดตให้เข้ากับความน่ารักสไตล์ Pixar)
               const expressionVal = document.getElementById('mascot-expression-select')?.value || 'serious';
               
-              // ðŸŒŸ à¹€à¸›à¸¥à¸µà¹ˆà¸¢à¸™à¸„à¸³à¸ªà¸±à¹ˆà¸‡à¸­à¸²à¸£à¸¡à¸“à¹Œà¹ƒà¸«à¹‰à¹€à¸›à¹‡à¸™à¹à¸šà¸š "à¸à¸²à¸£à¹Œà¸•à¸¹à¸™à¸™à¹ˆà¸²à¸£à¸±à¸" à¹à¸—à¸™à¸à¸²à¸£à¹ƒà¸Šà¹‰à¸„à¸³à¸£à¸¸à¸™à¹à¸£à¸‡
+              // 🌟 เปลี่ยนคำสั่งอารมณ์ให้เป็นแบบ "การ์ตูนน่ารัก" แทนการใช้คำรุนแรง
               const expressionMap = {
                   'serious': "Expression: A cute determined and focused look. Big eyes showing dedication, like a serious but adorable little helper.",
                   'strict': "Expression: Adorably strict, playfully pouting, or giving a cute warning look. Frowning slightly with furrowed brows, but still looking incredibly charming and huggable.",
@@ -4968,26 +5258,26 @@ async function bananaHandleAutomation(isContinuous = false) {
 
               let dynamicAction = "";
               if (mascotType === 'product_mascot') {
-                  // ðŸš€ [à¸ªà¸¸à¹ˆà¸¡à¸ˆà¸¸à¸”à¸—à¸µà¹ˆ 3] à¸ªà¸¸à¹ˆà¸¡à¸—à¹ˆà¸²à¸—à¸²à¸‡ (Action) à¸ªà¸³à¸«à¸£à¸±à¸šà¸ªà¸´à¸™à¸„à¹‰à¸²à¸¡à¸µà¸Šà¸µà¸§à¸´à¸•
+                  // 🚀 [สุ่มจุดที่ 3] สุ่มท่าทาง (Action) สำหรับสินค้ามีชีวิต
                   const productActions = [
-                      "The character is striking a confident and energetic pose to the camera in a premium commercial style.",
-                      "The living product is moving playfully, showing off its cute tiny limbs in a highly engaging advertisement.",
-                      "The mascot poses dynamically, leaning forward slightly with a lively and charming attitude perfect for viral marketing.",
-                      "The living character is expressing immense enthusiasm, gesturing with its tiny hands in a lively, eye-catching composition."
+                      "The living product is striking a confident energetic presenter pose while keeping the original package shape, label, and front face clearly visible.",
+                      "The living product moves playfully but keeps its packaging readable, using cute tiny limbs to point toward its own label and key visual features.",
+                      "The product mascot leans forward slightly like a commercial hero, with the original [product] body large, sharp, and unmistakable.",
+                      "The living character gestures enthusiastically with tiny hands while the product body remains the main foreground hero, not distorted or hidden."
                   ];
                   dynamicAction = productActions[Math.floor(Math.random() * productActions.length)];
               } else {
-                  // ðŸš€ [à¸ªà¸¸à¹ˆà¸¡à¸ˆà¸¸à¸”à¸—à¸µà¹ˆ 3] à¸ªà¸¸à¹ˆà¸¡à¸—à¹ˆà¸²à¸—à¸²à¸‡ (Action) à¸ªà¸³à¸«à¸£à¸±à¸šà¸¡à¸²à¸ªà¸„à¸­à¸•à¸—à¸±à¹ˆà¸§à¹„à¸›
+                  // 🚀 [สุ่มจุดที่ 3] สุ่มท่าทาง (Action) สำหรับมาสคอตทั่วไป
                   const normalActions = [
-                      "The mascot is interacting with the [product] in a unique, creative, and professional pose. AI: Design a dynamic posture that best showcases the [product].",
-                      "The character is holding and presenting the [product] enthusiastically to the camera, creating an eye-catching advertisement.",
-                      "The mascot is playfully posing alongside the [product], highlighting its features in a lively, high-end marketing shot.",
-                      "The character shows off the [product] with a proud and energetic stance, perfectly framed for a top-tier product commercial."
+                      "The mascot is interacting with a large foreground [product] in a dynamic presenter pose, making the product look like the main hero of the ad.",
+                      "The character is holding or pointing toward [product] close to the camera, creating an eye-catching product-first advertisement.",
+                      "The mascot poses beside a large readable [product], highlighting its features without blocking the package or label.",
+                      "The character shows off [product] with a proud energetic stance while the product remains larger, sharper, and more visually important than the mascot."
                   ];
                   dynamicAction = normalActions[Math.floor(Math.random() * normalActions.length)];
               }
 
-              // ðŸš€ [à¸ªà¸¸à¹ˆà¸¡à¸ˆà¸¸à¸”à¸—à¸µà¹ˆ 4] à¸ªà¸¸à¹ˆà¸¡à¸ªà¹„à¸•à¸¥à¹Œà¸ à¸²à¸ž 3D Pixar 4 à¹à¸šà¸š
+              // 🚀 [สุ่มจุดที่ 4] สุ่มสไตล์ภาพ 3D Pixar 4 แบบ
               const styleVariations = [
                   "Style: High-quality 3D Animation (Pixar level), Smooth glossy texture, Sharp details, Cinematic Dramatic Lighting, Deep shadows.",
                   "Aesthetic: Premium 3D cartoon render, Disney-Pixar style, ultra-detailed materials, vibrant global illumination, crisp focus.",
@@ -4996,22 +5286,38 @@ async function bananaHandleAutomation(isContinuous = false) {
               ];
               const randomStylePrompt = styleVariations[Math.floor(Math.random() * styleVariations.length)];
 
-              // 4. à¸›à¸£à¸°à¸à¸­à¸š Prompt (à¸•à¸±à¸”à¸„à¸³à¸§à¹ˆà¸² NOT smiling unless specified à¸­à¸­à¸ à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸«à¹‰ AI à¸—à¸³à¸«à¸™à¹‰à¸²à¸•à¸²à¸™à¹ˆà¸²à¸£à¸±à¸à¹„à¸”à¹‰à¸­à¸´à¸ªà¸£à¸°à¸‚à¸¶à¹‰à¸™)
+              const mascotCampaignPrompt = [
+                  "Campaign direction: Build a finished high-impact 3D product advertisement, not just a cute character render. [product] must be the hero, large and readable in the foreground or center foreground, with the mascot acting as a presenter beside or behind it. Use strong product hierarchy, clear packaging, premium props, dynamic depth, and a clean headline area for Thai ad text.",
+                  "Campaign direction: Create a 3D promotional key visual where [product] is the main commercial focus. Place [product] close to the camera with crisp shape, label, and color, while the mascot supports it with an energetic presenter pose. Add product-themed stage elements, polished lighting, and advertising layout depth.",
+                  "Campaign direction: Design a premium social-commerce mascot ad. The mascot should make [product] feel desirable, but must not overpower it. Use [product] as the foreground hero, mascot as supporting character, strong 3D commercial composition, clear text-safe area, and product-themed props or effects.",
+                  "Campaign direction: Make the scene feel like a finished 3D campaign poster for [product]. Use product foreground dominance, mascot interaction, glossy highlights, layered background, dynamic camera angle, and clear packaging fidelity. Avoid a plain mascot portrait."
+              ][Math.floor(Math.random() * 4)];
+
+              const mascotCameraPrompt = [
+                  "Camera direction: product foreground hero shot with mascot in the midground, shallow depth, premium 3D advertising perspective.",
+                  "Camera direction: slight low-angle 3/4 product stage shot, [product] large and mascot presenting beside it.",
+                  "Camera direction: close product-first composition with mascot leaning in from the side, strong depth and readable packaging.",
+                  "Camera direction: centered 3D campaign poster framing, product dominant, mascot supporting, clean headline space."
+              ][Math.floor(Math.random() * 4)];
+
+              // 4. ประกอบ Prompt (ตัดคำว่า NOT smiling unless specified ออก เพื่อให้ AI ทำหน้าตาน่ารักได้อิสระขึ้น)
               const moodPrompt = expressionMap[expressionVal] + " NOT scared, NOT creepy, NOT blurry.";
 			  
               let finalPromptParts = [];
               finalPromptParts.push(subject + ".");
-              finalPromptParts.push(randomStylePrompt); // ðŸŽ² à¸§à¸²à¸‡à¸ªà¹„à¸•à¸¥à¹Œà¸ªà¸¸à¹ˆà¸¡
+              finalPromptParts.push(randomStylePrompt); // 🎲 วางสไตล์สุ่ม
+              finalPromptParts.push(mascotCampaignPrompt);
+              finalPromptParts.push(mascotCameraPrompt);
               finalPromptParts.push(moodPrompt);
-              finalPromptParts.push(dynamicAction);     // ðŸŽ² à¸§à¸²à¸‡à¸—à¹ˆà¸²à¸—à¸²à¸‡à¸ªà¸¸à¹ˆà¸¡
+              finalPromptParts.push(dynamicAction);     // 🎲 วางท่าทางสุ่ม
 
             if (isMascotSmart) {
-                  // ðŸ›‘ [à¹à¸à¹‰à¸šà¸±à¸„] à¸–à¹‰à¸²à¹€à¸›à¹‡à¸™à¸•à¸±à¸šà¹„à¸•à¸«à¸£à¸·à¸­à¸ªà¸´à¸™à¸„à¹‰à¸² à¹ƒà¸«à¹‰à¸–à¸­à¸”à¹€à¸ªà¸·à¹‰à¸­à¸œà¹‰à¸² à¹à¸•à¹ˆà¸–à¹‰à¸²à¹€à¸›à¹‡à¸™ "à¸£à¸¹à¸›à¸™à¸²à¸‡à¹à¸šà¸š" à¸«à¹‰à¸²à¸¡à¸ªà¸±à¹ˆà¸‡à¸–à¸­à¸”à¹€à¸ªà¸·à¹‰à¸­à¸œà¹‰à¸²à¹€à¸”à¹‡à¸”à¸‚à¸²à¸”!
+                  // 🛑 [แก้บัค] ถ้าเป็นตับไตหรือสินค้า ให้ถอดเสื้อผ้า แต่ถ้าเป็น "รูปนางแบบ" ห้ามสั่งถอดเสื้อผ้าเด็ดขาด!
                   if (modelUploadedImages.length === 0) {
                       finalPromptParts.push("(Character is NOT wearing clothes, to show its shape clearly).");
                   }
                   
-                  // ðŸš€ [à¸ªà¸¸à¹ˆà¸¡à¸ˆà¸¸à¸”à¸—à¸µà¹ˆ 5] à¸ªà¸¸à¹ˆà¸¡à¸‰à¸²à¸à¸«à¸¥à¸±à¸‡ Smart Mascot (4 à¹à¸šà¸šà¸—à¸µà¹ˆà¹€à¸™à¹‰à¸™à¸ªà¸´à¸™à¸„à¹‰à¸²)
+                  // 🚀 [สุ่มจุดที่ 5] สุ่มฉากหลัง Smart Mascot (4 แบบที่เน้นสินค้า)
                   const smartMascotBGs = [
                       "Background: A creative 3D environment perfectly matching the theme, ingredients, and vibe of the [product], rendered with dramatic cinematic lighting.",
                       "Background: A premium 3D commercial studio setup. The background colors and lighting are specifically designed to complement and highlight the [product].",
@@ -5020,7 +5326,7 @@ async function bananaHandleAutomation(isContinuous = false) {
                   ];
                   const randomBG = smartMascotBGs[Math.floor(Math.random() * smartMascotBGs.length)];
                   finalPromptParts.push(randomBG);
-                  bananaAddLog(`âœ¨ Smart Mascot: à¸ªà¸¸à¹ˆà¸¡à¸‰à¸²à¸à¸«à¸¥à¸±à¸‡à¹ƒà¸«à¹‰à¹€à¸‚à¹‰à¸²à¸à¸±à¸šà¸˜à¸µà¸¡à¸ªà¸´à¸™à¸„à¹‰à¸²à¸­à¸±à¸•à¹‚à¸™à¸¡à¸±à¸•à¸´`, 'info');
+                  bananaAddLog(`✨ Smart Mascot: สุ่มฉากหลังให้เข้ากับธีมสินค้าอัตโนมัติ`, 'info');
 
               } else {
                  const bgVal = document.getElementById('mascot-bg-select')?.value || 'inside_body';
@@ -5028,7 +5334,7 @@ async function bananaHandleAutomation(isContinuous = false) {
                   const customBg = document.getElementById('mascot-custom-bg-input')?.value.trim();
                   const customOutfit = document.getElementById('mascot-custom-outfit-input')?.value.trim();
 
-                  // ðŸŸ¢ [à¸­à¸±à¸›à¹€à¸à¸£à¸”] à¸šà¸±à¸‡à¸„à¸±à¸šà¸Šà¸¸à¸” Mascot
+                  // 🟢 [อัปเกรด] บังคับชุด Mascot
                   let userOutfit = "";
                   if (outfitVal === 'custom' && customOutfit !== "") {
                       userOutfit = `[CRITICAL OUTFIT RULE: MUST be wearing EXACTLY "${customOutfit}". No default clothing]`;
@@ -5037,7 +5343,7 @@ async function bananaHandleAutomation(isContinuous = false) {
                   }
                   if (userOutfit) finalPromptParts.push(`Outfit: ${userOutfit}.`);
 
-                  // ðŸŸ¢ [à¸­à¸±à¸›à¹€à¸à¸£à¸”] à¸šà¸±à¸‡à¸„à¸±à¸šà¸‰à¸²à¸ Mascot
+                  // 🟢 [อัปเกรด] บังคับฉาก Mascot
                  let userBg = "";
                   if (bgVal === 'custom' && customBg !== "") {
                       userBg = `[CRITICAL SETTING RULE: The background MUST be strictly "${customBg}"]`;
@@ -5046,9 +5352,9 @@ async function bananaHandleAutomation(isContinuous = false) {
                   }
                   finalPromptParts.push(`Background: ${userBg}.`);
                   
-              } // <--- ðŸŸ¢ à¹€à¸žà¸´à¹ˆà¸¡à¸›à¸µà¸à¸à¸²à¸›à¸´à¸” } à¸•à¸£à¸‡à¸™à¸µà¹‰ 1 à¸•à¸±à¸§ à¹€à¸žà¸·à¹ˆà¸­à¸›à¸´à¸”à¸šà¸¥à¹‡à¸­à¸ else à¸‚à¸­à¸‡ isMascotSmart
+              } // <--- 🟢 เพิ่มปีกกาปิด } ตรงนี้ 1 ตัว เพื่อปิดบล็อก else ของ isMascotSmart
 
-              // 6. à¸ˆà¸±à¸”à¸à¸²à¸£à¸‚à¹‰à¸­à¸„à¸§à¸²à¸¡ (Text) à¹à¸¥à¸°à¸›à¸£à¸°à¸à¸­à¸šà¸£à¹ˆà¸²à¸‡à¸‚à¸±à¹‰à¸™à¸ªà¸¸à¸”à¸—à¹‰à¸²à¸¢
+              // 6. จัดการข้อความ (Text) และประกอบร่างขั้นสุดท้าย
               if (useTextOverlay) {
                   finalPromptParts.push(buildTextStylePrompt('mascot_cute'));
               } else {
@@ -5059,19 +5365,19 @@ async function bananaHandleAutomation(isContinuous = false) {
 
               generatedPrompt = finalPromptParts.join(' ');
               generatedPrompt += ` Negative Prompt: "tall character, long legs, long arms, realistic human proportions, realistic body ratio, adult body, slender body, skinny neck, suggestive pose, inappropriate clothing, revealing attire, swimsuit, underwear, messy visuals, blurry, low quality, 2D, sketch, poorly drawn face, ${coreNegative}"`;
-          } // <--- à¸ªà¹ˆà¸§à¸™à¸™à¸µà¹‰à¸›à¸´à¸”à¸šà¸¥à¹‡à¸­à¸ else (Mascot Mode) à¹„à¸”à¹‰à¸­à¸¢à¹ˆà¸²à¸‡à¸–à¸¹à¸à¸•à¹‰à¸­à¸‡à¸ªà¸¡à¸šà¸¹à¸£à¸“à¹Œà¹à¸¥à¹‰à¸§
+          } // <--- ส่วนนี้ปิดบล็อก else (Mascot Mode) ได้อย่างถูกต้องสมบูรณ์แล้ว
           
           // ----------------------------------------------------
-          // à¹à¸—à¸™à¸—à¸µà¹ˆà¸Šà¸·à¹ˆà¸­à¸ªà¸´à¸™à¸„à¹‰à¸²
+          // แทนที่ชื่อสินค้า
           // ----------------------------------------------------
           generatedPrompt = generatedPrompt.replace(/\[product\]/g, productName || 'product');
           
           await bananaSleep(500);
 
         // ----------------------------------------------------
-          // ðŸŸ¢ STEP 2: à¸­à¸±à¸žà¹‚à¸«à¸¥à¸”à¸£à¸¹à¸›à¸ à¸²à¸ž (à¹€à¸žà¸´à¹ˆà¸¡à¸£à¸°à¸šà¸šà¸£à¸­à¹‚à¸«à¸¥à¸” 100% à¸‚à¸±à¹‰à¸™à¹€à¸—à¸ž)
+          // 🟢 STEP 2: อัพโหลดรูปภาพ (เพิ่มระบบรอโหลด 100% ขั้นเทพ)
           // ----------------------------------------------------
-          bananaUpdateStatus(`ðŸ¤– ${roundLabel} [2/5] à¸ˆà¸³à¸¥à¸­à¸‡à¸à¸²à¸£à¸§à¸²à¸‡à¸£à¸¹à¸› (Paste)...`);
+          bananaUpdateStatus(`🤖 ${roundLabel} [2/5] จำลองการวางรูป (Paste)...`);
           
           const singleImageData = [{
               name: currentImage.name, type: currentImage.type, dataUrl: currentImage.dataUrl
@@ -5084,24 +5390,24 @@ async function bananaHandleAutomation(isContinuous = false) {
                   try {
                       const sleep = (ms) => new Promise(r => setTimeout(r, ms));
                       
-                      // 1. à¸«à¸²à¸Šà¹ˆà¸­à¸‡à¹à¸Šà¸—à¸«à¸¥à¸±à¸
+                      // 1. หาช่องแชทหลัก
                       const editor = document.querySelector('[data-slate-editor="true"]') || document.querySelector('[role="textbox"]');
-                      if (!editor) return resolve({ success: false, msg: 'âŒ à¹„à¸¡à¹ˆà¸žà¸šà¸Šà¹ˆà¸­à¸‡à¸žà¸´à¸¡à¸žà¹Œà¸‚à¹‰à¸­à¸„à¸§à¸²à¸¡' });
+                      if (!editor) return resolve({ success: false, msg: '❌ ไม่พบช่องพิมพ์ข้อความ' });
 
-                      // à¸«à¸² Container à¹ƒà¸«à¸à¹ˆà¸‚à¸­à¸‡à¹à¸–à¸šà¸žà¸´à¸¡à¸žà¹Œ à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸Šà¹‰à¸™à¸±à¸šà¸£à¸¹à¸›à¸­à¸¢à¹ˆà¸²à¸‡à¹à¸¡à¹ˆà¸™à¸¢à¸³
+                      // หา Container ใหญ่ของแถบพิมพ์ เพื่อใช้นับรูปอย่างแม่นยำ
                       const inputContainer = editor.closest('div[class*="hvKLod"]') || editor.parentElement.parentElement;
                       
-                      // à¸™à¸±à¸šà¸£à¸¹à¸›à¸—à¸µà¹ˆà¸¡à¸µà¸­à¸¢à¸¹à¹ˆà¹€à¸”à¸´à¸¡à¹ƒà¸™à¹à¸–à¸šà¸žà¸´à¸¡à¸žà¹Œ (à¹„à¸¡à¹ˆà¹ƒà¸Šà¹ˆà¸—à¸±à¹‰à¸‡à¸«à¸™à¹‰à¸²à¹€à¸§à¹‡à¸š)
+                      // นับรูปที่มีอยู่เดิมในแถบพิมพ์ (ไม่ใช่ทั้งหน้าเว็บ)
                       const getThumbCount = () => inputContainer ? inputContainer.querySelectorAll('img').length : 0;
                       const initialThumbs = getThumbCount();
 
-                      // 2. à¸„à¸¥à¸´à¸à¹à¸¥à¸° Focus à¹€à¸žà¸·à¹ˆà¸­à¹€à¸•à¸£à¸µà¸¢à¸¡à¸§à¸²à¸‡à¸£à¸¹à¸›
+                      // 2. คลิกและ Focus เพื่อเตรียมวางรูป
                       editor.scrollIntoView({ behavior: 'instant', block: 'center' });
                       editor.focus();
                       editor.click();
                       await sleep(800);
 
-                      // 3. à¹€à¸•à¸£à¸µà¸¢à¸¡à¹„à¸Ÿà¸¥à¹Œ
+                      // 3. เตรียมไฟล์
                       const dataTransfer = new DataTransfer();
                       images.forEach((img) => {
                           const byteString = atob(img.dataUrl.split(',')[1]);
@@ -5112,7 +5418,7 @@ async function bananaHandleAutomation(isContinuous = false) {
                           dataTransfer.items.add(file);
                       });
 
-                      // 4. à¸§à¸²à¸‡à¸£à¸¹à¸› (Paste)
+                      // 4. วางรูป (Paste)
                       const pasteEvent = new ClipboardEvent('paste', {
                           clipboardData: dataTransfer,
                           bubbles: true,
@@ -5120,12 +5426,12 @@ async function bananaHandleAutomation(isContinuous = false) {
                       });
                       editor.dispatchEvent(pasteEvent);
                       
-                      // ðŸŸ¢ à¹€à¸žà¸´à¹ˆà¸¡à¹€à¸§à¸¥à¸²à¸£à¸­à¹ƒà¸«à¹‰à¹€à¸šà¸£à¸²à¸§à¹Œà¹€à¸‹à¸­à¸£à¹Œà¸à¸¥à¸·à¸™à¹„à¸Ÿà¸¥à¹Œà¸¥à¸‡ UI (à¸ªà¸³à¸„à¸±à¸à¸¡à¸²à¸à¸ªà¸³à¸«à¸£à¸±à¸šà¸„à¸­à¸¡à¸Šà¹‰à¸²)
+                      // 🟢 เพิ่มเวลารอให้เบราว์เซอร์กลืนไฟล์ลง UI (สำคัญมากสำหรับคอมช้า)
                       await sleep(1500); 
 
-                      // 5. à¸£à¸­à¸à¸” Save (à¸«à¸™à¹‰à¸²à¸•à¹ˆà¸²à¸‡ Crop)
+                      // 5. รอกด Save (หน้าต่าง Crop)
                       let confirmBtn = null;
-                      const confirmTexts = ['Save', 'Confirm', 'Crop and Save', 'à¸šà¸±à¸™à¸—à¸¶à¸', 'à¸¢à¸·à¸™à¸¢à¸±à¸™', 'à¹€à¸ªà¸£à¹‡à¸ˆà¸ªà¸´à¹‰à¸™', 'à¸•à¹ˆà¸­à¹„à¸›'];
+                      const confirmTexts = ['Save', 'Confirm', 'Crop and Save', 'บันทึก', 'ยืนยัน', 'เสร็จสิ้น', 'ต่อไป'];
                       
                       for (let check = 0; check < 15; check++) {
                           await sleep(500);
@@ -5141,20 +5447,20 @@ async function bananaHandleAutomation(isContinuous = false) {
                           await sleep(1500);
                       }
 
-                      // 6. â³ à¸£à¸°à¸šà¸šà¸£à¸­à¹‚à¸«à¸¥à¸”à¸£à¸¹à¸›à¸‚à¸±à¹‰à¸™à¸ªà¸¹à¸‡ (à¸£à¸­à¸ˆà¸™à¸à¸§à¹ˆà¸²à¸£à¸¹à¸›à¸ˆà¸°à¹‚à¸«à¸¥à¸”à¸„à¸£à¸š 100% à¹€à¸‚à¹‰à¸²à¸Šà¹ˆà¸­à¸‡ Prompt)
+                      // 6. ⏳ ระบบรอโหลดรูปขั้นสูง (รอจนกว่ารูปจะโหลดครบ 100% เข้าช่อง Prompt)
                       let isUploading = false;
-                      // à¸§à¸™à¸¥à¸¹à¸›à¹€à¸Šà¹‡à¸„à¸—à¸¸à¸à¹† 0.5 à¸§à¸´à¸™à¸²à¸—à¸µ à¸ªà¸¹à¸‡à¸ªà¸¸à¸” 120 à¸£à¸­à¸š = à¸£à¸­à¹„à¸”à¹‰à¸™à¸²à¸™à¸ªà¸¸à¸” 60 à¸§à¸´à¸™à¸²à¸—à¸µ!
+                      // วนลูปเช็คทุกๆ 0.5 วินาที สูงสุด 120 รอบ = รอได้นานสุด 60 วินาที!
                       for (let w = 0; w < 120; w++) { 
                           await sleep(500);
                           
-                          // à¹€à¸Šà¹‡à¸„à¸§à¹ˆà¸²à¸¡à¸µà¸£à¸¹à¸› Thumbnail à¹‚à¸œà¸¥à¹ˆà¸‚à¸¶à¹‰à¸™à¸¡à¸²à¹ƒà¸™à¸à¸¥à¹ˆà¸­à¸‡à¸žà¸´à¸¡à¸žà¹Œà¸«à¸£à¸·à¸­à¸¢à¸±à¸‡?
+                          // เช็คว่ามีรูป Thumbnail โผล่ขึ้นมาในกล่องพิมพ์หรือยัง?
                           if (getThumbCount() > initialThumbs) {
-                              // à¹ƒà¸«à¹‰à¹€à¸§à¸¥à¸²à¸ à¸²à¸žà¹€à¸£à¸™à¹€à¸”à¸­à¸£à¹Œà¹ƒà¸«à¹‰à¸ªà¸¡à¸šà¸¹à¸£à¸“à¹Œà¸­à¸µà¸à¸™à¸´à¸”
+                              // ให้เวลาภาพเรนเดอร์ให้สมบูรณ์อีกนิด
                               await sleep(1500);
-                              return resolve({ success: true, msg: 'âœ… à¸£à¸¹à¸›à¹‚à¸«à¸¥à¸” 100% à¹€à¸‚à¹‰à¸²à¸Šà¹ˆà¸­à¸‡ Prompt à¸ªà¸³à¹€à¸£à¹‡à¸ˆ' });
+                              return resolve({ success: true, msg: '✅ รูปโหลด 100% เข้าช่อง Prompt สำเร็จ' });
                           }
 
-                          // à¸–à¹‰à¸²à¸¢à¸±à¸‡à¹„à¸¡à¹ˆà¹‚à¸œà¸¥à¹ˆ à¹ƒà¸«à¹‰à¸¥à¸­à¸‡à¸”à¸¹à¸§à¹ˆà¸²à¸¡à¸µà¸•à¸±à¸§à¹€à¸¥à¸‚ % à¸§à¸´à¹ˆà¸‡à¸­à¸¢à¸¹à¹ˆà¹„à¸«à¸¡ (à¹€à¸Šà¹‡à¸„à¸ªà¸–à¸²à¸™à¸°à¸§à¹ˆà¸²à¹„à¸¡à¹ˆà¹„à¸”à¹‰à¸„à¹‰à¸²à¸‡)
+                          // ถ้ายังไม่โผล่ ให้ลองดูว่ามีตัวเลข % วิ่งอยู่ไหม (เช็คสถานะว่าไม่ได้ค้าง)
                           const allTexts = inputContainer ? inputContainer.innerText : "";
                           if (allTexts.includes('%')) {
                               isUploading = true;
@@ -5162,9 +5468,9 @@ async function bananaHandleAutomation(isContinuous = false) {
                       }
 
                       if (isUploading) {
-                          resolve({ success: false, msg: 'âŒ à¸«à¸¡à¸”à¹€à¸§à¸¥à¸²à¸£à¸­à¸­à¸±à¸›à¹‚à¸«à¸¥à¸” (à¹€à¸™à¹‡à¸•à¸­à¸²à¸ˆà¸ˆà¸°à¸Šà¹‰à¸²à¹€à¸à¸´à¸™à¹„à¸›)' });
+                          resolve({ success: false, msg: '❌ หมดเวลารออัปโหลด (เน็ตอาจจะช้าเกินไป)' });
                       } else {
-                          resolve({ success: false, msg: 'âŒ à¸§à¸²à¸‡à¸£à¸¹à¸›à¹à¸¥à¹‰à¸§à¹à¸•à¹ˆà¹€à¸§à¹‡à¸šà¹„à¸¡à¹ˆà¸•à¸­à¸šà¸ªà¸™à¸­à¸‡' });
+                          resolve({ success: false, msg: '❌ วางรูปแล้วแต่เว็บไม่ตอบสนอง' });
                       }
 
                   } catch (e) {
@@ -5175,23 +5481,23 @@ async function bananaHandleAutomation(isContinuous = false) {
             args: [singleImageData]
           });
 
-          // ðŸ›‘ à¸à¸Žà¹€à¸«à¸¥à¹‡à¸: à¸–à¹‰à¸²à¸­à¸±à¸›à¹‚à¸«à¸¥à¸”à¹„à¸¡à¹ˆà¸œà¹ˆà¸²à¸™ à¸«à¸£à¸·à¸­à¸£à¸¹à¸›à¹„à¸¡à¹ˆà¹€à¸‚à¹‰à¸² 100% à¹ƒà¸«à¹‰ "à¸¢à¸à¹€à¸¥à¸´à¸à¸£à¸­à¸šà¸™à¸µà¹‰" à¸—à¸±à¸™à¸—à¸µ à¸«à¹‰à¸²à¸¡à¹„à¸›à¸•à¹ˆà¸­à¹€à¸”à¹‡à¸”à¸‚à¸²à¸”!
+          // 🛑 กฎเหล็ก: ถ้าอัปโหลดไม่ผ่าน หรือรูปไม่เข้า 100% ให้ "ยกเลิกรอบนี้" ทันที ห้ามไปต่อเด็ดขาด!
           if (!uploadResult[0]?.result?.success) {
-              bananaAddLog(`âš ï¸ ${uploadResult[0]?.result?.msg} -> à¸‚à¹‰à¸²à¸¡à¹„à¸›à¸£à¸¹à¸›à¸–à¸±à¸”à¹„à¸›`, 'warning');
-              throw new Error("à¸­à¸±à¸›à¹‚à¸«à¸¥à¸”à¸£à¸¹à¸›à¹„à¸¡à¹ˆà¸ªà¸³à¹€à¸£à¹‡à¸ˆ"); // à¹‚à¸¢à¸™ Error à¹€à¸žà¸·à¹ˆà¸­à¸‚à¹‰à¸²à¸¡ Step 3 à¹à¸¥à¸° 4
+              bananaAddLog(`⚠️ ${uploadResult[0]?.result?.msg} -> ข้ามไปรูปถัดไป`, 'warning');
+              throw new Error("อัปโหลดรูปไม่สำเร็จ"); // โยน Error เพื่อข้าม Step 3 และ 4
           } else {
               bananaAddLog(`${uploadResult[0]?.result?.msg}`, 'success');
           }
 
-          await bananaSleep(2000); // à¸žà¸±à¸à¸£à¸­à¸£à¸°à¸šà¸šà¸™à¸´à¹ˆà¸‡à¹† à¸à¹ˆà¸­à¸™à¸žà¸´à¸¡à¸žà¹Œà¸‚à¹‰à¸­à¸„à¸§à¸²à¸¡
+          await bananaSleep(2000); // พักรอระบบนิ่งๆ ก่อนพิมพ์ข้อความ
 		  
 		  
 		  
 		// ----------------------------------------------------
-          // ðŸŸ¢ STEP 2.5: à¸­à¸±à¸žà¹‚à¸«à¸¥à¸”à¸£à¸¹à¸›à¸™à¸²à¸‡à¹à¸šà¸š (à¹à¸à¹‰à¸›à¸±à¸à¸«à¸² Pop-up à¹€à¸”à¹‰à¸‡ 100%)
+          // 🟢 STEP 2.5: อัพโหลดรูปนางแบบ (แก้ปัญหา Pop-up เด้ง 100%)
           // ----------------------------------------------------
           if (modelUploadedImages && modelUploadedImages.length > 0) {
-              bananaUpdateStatus(`ðŸ¤– ${roundLabel} [2.5/5] à¸à¸³à¸¥à¸±à¸‡à¹à¸™à¸šà¸£à¸¹à¸›à¸™à¸²à¸‡à¹à¸šà¸š...`);
+              bananaUpdateStatus(`🤖 ${roundLabel} [2.5/5] กำลังแนบรูปนางแบบ...`);
               
               const modelData = [{
                   name: modelUploadedImages[0].name, type: modelUploadedImages[0].type, dataUrl: modelUploadedImages[0].dataUrl
@@ -5205,13 +5511,13 @@ async function bananaHandleAutomation(isContinuous = false) {
                               const sleep = (ms) => new Promise(r => setTimeout(r, ms));
                               
                               const editor = document.querySelector('[data-slate-editor="true"]') || document.querySelector('[role="textbox"]');
-                              if (!editor) return resolve({ success: false, msg: 'âŒ à¹„à¸¡à¹ˆà¸žà¸šà¸Šà¹ˆà¸­à¸‡à¸žà¸´à¸¡à¸žà¹Œà¸‚à¹‰à¸­à¸„à¸§à¸²à¸¡' });
+                              if (!editor) return resolve({ success: false, msg: '❌ ไม่พบช่องพิมพ์ข้อความ' });
 
                               const inputContainer = editor.closest('div[class*="hvKLod"]') || editor.parentElement.parentElement;
                               const getThumbCount = () => inputContainer ? inputContainer.querySelectorAll('img').length : 0;
                               const initialThumbs = getThumbCount();
 
-                              // ðŸš€ à¹ƒà¸Šà¹‰à¸§à¸´à¸˜à¸µ Paste à¸£à¸¹à¸›à¸™à¸²à¸‡à¹à¸šà¸šà¸¥à¸‡à¹„à¸›à¹ƒà¸™à¸Šà¹ˆà¸­à¸‡à¹à¸Šà¸—à¸•à¸£à¸‡à¹† (à¸‚à¹‰à¸²à¸¡à¸à¸²à¸£à¸à¸”à¸›à¸¸à¹ˆà¸¡à¹ƒà¸”à¹† à¹€à¸žà¸·à¹ˆà¸­à¸›à¹‰à¸­à¸‡à¸à¸±à¸™ Popup Window à¹€à¸”à¹‰à¸‡)
+                              // 🚀 ใช้วิธี Paste รูปนางแบบลงไปในช่องแชทตรงๆ (ข้ามการกดปุ่มใดๆ เพื่อป้องกัน Popup Window เด้ง)
                               editor.scrollIntoView({ behavior: 'instant', block: 'center' });
                               editor.focus();
                               editor.click();
@@ -5234,12 +5540,12 @@ async function bananaHandleAutomation(isContinuous = false) {
                               });
                               editor.dispatchEvent(pasteEvent);
                               
-                              // ðŸŸ¢ à¸£à¸­à¸£à¸¹à¸›à¸¥à¸‡à¸Šà¹ˆà¸­à¸‡à¹à¸Šà¸— (4 à¸§à¸´à¸™à¸²à¸—à¸µ)
+                              // 🟢 รอรูปลงช่องแชท (4 วินาที)
                               await sleep(4000);
 
-                              // à¸£à¸­à¸à¸”à¸›à¸¸à¹ˆà¸¡ Save (à¸«à¸™à¹‰à¸²à¸•à¹ˆà¸²à¸‡ Crop)
+                              // รอกดปุ่ม Save (หน้าต่าง Crop)
                               let confirmBtn = null;
-                              const confirmTexts = ['Save', 'Confirm', 'Crop and Save', 'à¸šà¸±à¸™à¸—à¸¶à¸', 'à¸¢à¸·à¸™à¸¢à¸±à¸™', 'à¹€à¸ªà¸£à¹‡à¸ˆà¸ªà¸´à¹‰à¸™', 'à¸•à¹ˆà¸­à¹„à¸›'];
+                              const confirmTexts = ['Save', 'Confirm', 'Crop and Save', 'บันทึก', 'ยืนยัน', 'เสร็จสิ้น', 'ต่อไป'];
                               
                               for (let check = 0; check < 20; check++) {
                                   await sleep(500);
@@ -5255,16 +5561,16 @@ async function bananaHandleAutomation(isContinuous = false) {
                                   await sleep(4000);
                               }
 
-                              // à¸£à¸°à¸šà¸šà¸£à¸­à¹‚à¸«à¸¥à¸”à¸£à¸¹à¸›à¸‚à¸±à¹‰à¸™à¸ªà¸¹à¸‡
+                              // ระบบรอโหลดรูปขั้นสูง
                               let isUploading = false;
                               for (let w = 0; w < 120; w++) { 
                                   await sleep(500);
                                   if (getThumbCount() > initialThumbs) {
                                       await sleep(1500);
-                                      return resolve({ success: true, msg: 'âœ… à¹‚à¸«à¸¥à¸”à¸£à¸¹à¸›à¸™à¸²à¸‡à¹à¸šà¸š 100% à¸ªà¸³à¹€à¸£à¹‡à¸ˆ' });
+                                      return resolve({ success: true, msg: '✅ โหลดรูปนางแบบ 100% สำเร็จ' });
                                   }
                               }
-                              resolve({ success: false, msg: 'âŒ à¸«à¸¡à¸”à¹€à¸§à¸¥à¸²à¸£à¸­à¸­à¸±à¸›à¹‚à¸«à¸¥à¸”à¸£à¸¹à¸›à¸™à¸²à¸‡à¹à¸šà¸š' });
+                              resolve({ success: false, msg: '❌ หมดเวลารออัปโหลดรูปนางแบบ' });
 
                           } catch (e) {
                               resolve({ success: false, msg: 'Error: ' + e.message });
@@ -5275,21 +5581,21 @@ async function bananaHandleAutomation(isContinuous = false) {
               });
 
               if (!uploadModelResult[0]?.result?.success) {
-                  bananaAddLog(`âš ï¸ ${uploadModelResult[0]?.result?.msg} -> (à¸‚à¹‰à¸²à¸¡à¹„à¸›à¸ªà¸£à¹‰à¸²à¸‡à¸£à¸¹à¸›à¹€à¸¥à¸¢à¹‚à¸”à¸¢à¹„à¸¡à¹ˆà¸¡à¸µà¸™à¸²à¸‡à¹à¸šà¸š)`, 'warning');
+                  bananaAddLog(`⚠️ ${uploadModelResult[0]?.result?.msg} -> (ข้ามไปสร้างรูปเลยโดยไม่มีนางแบบ)`, 'warning');
               } else {
                   bananaAddLog(`${uploadModelResult[0]?.result?.msg}`, 'success');
               }
 
-              await bananaSleep(2000); // à¸žà¸±à¸à¸£à¸­à¸£à¸°à¸šà¸šà¸™à¸´à¹ˆà¸‡à¹†
+              await bananaSleep(2000); // พักรอระบบนิ่งๆ
           }
 		  
 		  
 		  
 
       // ----------------------------------------------------
-          // ðŸŸ¢ STEP 3: à¸à¸£à¸­à¸ Prompt (à¹€à¸ˆà¸²à¸°à¹€à¸à¸£à¸²à¸° Slate.js à¸—à¸°à¸¥à¸§à¸‡ Placeholder)
+          // 🟢 STEP 3: กรอก Prompt (เจาะเกราะ Slate.js ทะลวง Placeholder)
           // ----------------------------------------------------
-          bananaUpdateStatus(`ðŸ¤– ${roundLabel} [3/5] à¸à¸³à¸¥à¸±à¸‡à¸›à¹‰à¸­à¸™à¸‚à¹‰à¸­à¸„à¸§à¸²à¸¡ Prompt...`);
+          bananaUpdateStatus(`🤖 ${roundLabel} [3/5] กำลังป้อนข้อความ Prompt...`);
 
           await chrome.scripting.executeScript({
             target: { tabId: tab.id },
@@ -5298,14 +5604,14 @@ async function bananaHandleAutomation(isContinuous = false) {
                 const editor = document.querySelector('[data-slate-editor="true"]') || document.querySelector('[role="textbox"]');
 
                 if (editor) {
-                    // 1. à¸¥à¹‰à¸²à¸‡à¹‚à¸Ÿà¸à¸±à¸ªà¹€à¸à¹ˆà¸²à¹à¸¥à¸°à¸„à¸¥à¸´à¸à¹ƒà¸«à¸¡à¹ˆ à¹€à¸žà¸·à¹ˆà¸­à¹€à¸‹à¹‡à¸•à¹€à¸„à¸­à¸£à¹Œà¹€à¸‹à¸­à¸£à¹Œà¹ƒà¸«à¹‰à¸–à¸¹à¸à¸ˆà¸¸à¸”
+                    // 1. ล้างโฟกัสเก่าและคลิกใหม่ เพื่อเซ็ตเคอร์เซอร์ให้ถูกจุด
                     editor.blur();
                     await sleep(100);
                     editor.focus();
                     editor.click();
                     await sleep(300);
 
-                    // 2. à¹€à¸„à¸¥à¸µà¸¢à¸£à¹Œà¸Šà¹ˆà¸­à¸‡à¹à¸Šà¸—à¸—à¸´à¹‰à¸‡ (à¸¥à¸š Placeholder à¸—à¸µà¹ˆà¸„à¹‰à¸²à¸‡à¸­à¸¢à¸¹à¹ˆ)
+                    // 2. เคลียร์ช่องแชททิ้ง (ลบ Placeholder ที่ค้างอยู่)
                     editor.dispatchEvent(new KeyboardEvent('keydown', { key: 'a', ctrlKey: true, bubbles: true }));
                     document.execCommand('selectAll', false, null);
                     await sleep(100);
@@ -5313,7 +5619,7 @@ async function bananaHandleAutomation(isContinuous = false) {
                     document.execCommand('delete', false, null);
                     await sleep(300);
 
-                    // 3. âš¡ à¸¢à¸´à¸‡ Event 'beforeinput' (à¸«à¸±à¸§à¹ƒà¸ˆà¸«à¸¥à¸±à¸à¸—à¸µà¹ˆ Slate.js à¹ƒà¸Šà¹‰à¸”à¸±à¸à¸ˆà¸±à¸šà¸à¸²à¸£à¸žà¸´à¸¡à¸žà¹Œ)
+                    // 3. ⚡ ยิง Event 'beforeinput' (หัวใจหลักที่ Slate.js ใช้ดักจับการพิมพ์)
                     editor.dispatchEvent(new InputEvent('beforeinput', { 
                         inputType: 'insertText', 
                         data: text, 
@@ -5321,10 +5627,10 @@ async function bananaHandleAutomation(isContinuous = false) {
                         cancelable: true 
                     }));
 
-                   // 4. âš¡ à¸ˆà¸³à¸¥à¸­à¸‡à¸à¸²à¸£ Paste à¹‚à¸”à¸¢à¸¢à¸±à¸”à¹‚à¸„à¸£à¸‡à¸ªà¸£à¹‰à¸²à¸‡ HTML à¸«à¸¥à¸­à¸à¹€à¸§à¹‡à¸šà¹„à¸›à¸”à¹‰à¸§à¸¢
+                   // 4. ⚡ จำลองการ Paste โดยยัดโครงสร้าง HTML หลอกเว็บไปด้วย
                     const dt = new DataTransfer();
                     dt.setData('text/plain', text);
-                    dt.setData('text/html', `<p>${text}</p>`); // à¸«à¸¥à¸­à¸à¸£à¸°à¸šà¸šà¸§à¹ˆà¸²à¸à¸³à¸¥à¸±à¸‡à¸§à¸²à¸‡à¸‚à¹‰à¸­à¸„à¸§à¸²à¸¡à¸—à¸µà¹ˆà¸¡à¸µà¹‚à¸„à¸£à¸‡à¸ªà¸£à¹‰à¸²à¸‡à¸ªà¸¡à¸šà¸¹à¸£à¸“à¹Œ
+                    dt.setData('text/html', `<p>${text}</p>`); // หลอกระบบว่ากำลังวางข้อความที่มีโครงสร้างสมบูรณ์
                     
                     const pasteEvent = new ClipboardEvent('paste', {
                         clipboardData: dt,
@@ -5334,15 +5640,15 @@ async function bananaHandleAutomation(isContinuous = false) {
                     });
                     editor.dispatchEvent(pasteEvent);
                     
-                    // ðŸŸ¢ à¹€à¸›à¸¥à¸µà¹ˆà¸¢à¸™à¹€à¸§à¸¥à¸²à¸£à¸­à¸à¸¥à¸·à¸™à¸‚à¹‰à¸­à¸„à¸§à¸²à¸¡à¸¢à¸²à¸§à¹† à¹€à¸›à¹‡à¸™ 4 à¸§à¸´à¸™à¸²à¸—à¸µ
+                    // 🟢 เปลี่ยนเวลารอกลืนข้อความยาวๆ เป็น 4 วินาที
                     await sleep(4000);
 
-                    // 5. à¹€à¸Šà¹‡à¸„à¸§à¹ˆà¸²à¸‚à¹‰à¸­à¸„à¸§à¸²à¸¡à¹€à¸‚à¹‰à¸²à¸«à¸£à¸·à¸­à¸¢à¸±à¸‡ à¸–à¹‰à¸²à¸¢à¸±à¸‡à¹ƒà¸«à¹‰à¸žà¸´à¸¡à¸žà¹Œà¸¢à¸±à¸”à¸•à¸£à¸‡à¹†
+                    // 5. เช็คว่าข้อความเข้าหรือยัง ถ้ายังให้พิมพ์ยัดตรงๆ
                     if (!editor.textContent.includes(text.substring(0, 10))) {
                         document.execCommand('insertText', false, text);
                     }
 
-                    // 6. à¸à¸£à¸°à¸•à¸¸à¹‰à¸™ Event 'input' à¸¢à¸·à¸™à¸¢à¸±à¸™à¸§à¹ˆà¸²à¸žà¸´à¸¡à¸žà¹Œà¹€à¸ªà¸£à¹‡à¸ˆà¹à¸¥à¹‰à¸§
+                    // 6. กระตุ้น Event 'input' ยืนยันว่าพิมพ์เสร็จแล้ว
                     editor.dispatchEvent(new InputEvent('input', { 
                         inputType: 'insertText', 
                         data: text, 
@@ -5350,13 +5656,13 @@ async function bananaHandleAutomation(isContinuous = false) {
                         composed: true 
                     }));
 
-                    // 7. ðŸ”¥ à¸—à¹ˆà¸²à¹„à¸¡à¹‰à¸•à¸²à¸¢: à¹€à¸„à¸²à¸° Spacebar à¸›à¸´à¸”à¸—à¹‰à¸²à¸¢ 1 à¸—à¸µ à¹€à¸žà¸·à¹ˆà¸­à¸šà¸±à¸‡à¸„à¸±à¸šà¹ƒà¸«à¹‰à¸›à¸¸à¹ˆà¸¡à¸ªà¹ˆà¸‡à¸„à¸³à¸ªà¸±à¹ˆà¸‡à¸ªà¸§à¹ˆà¸²à¸‡à¸‚à¸¶à¹‰à¸™
+                    // 7. 🔥 ท่าไม้ตาย: เคาะ Spacebar ปิดท้าย 1 ที เพื่อบังคับให้ปุ่มส่งคำสั่งสว่างขึ้น
                     editor.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', code: 'Space', keyCode: 32, bubbles: true }));
                     document.execCommand('insertText', false, ' ');
                     editor.dispatchEvent(new InputEvent('input', { inputType: 'insertText', data: ' ', bubbles: true }));
                     editor.dispatchEvent(new KeyboardEvent('keyup', { key: ' ', code: 'Space', keyCode: 32, bubbles: true }));
 
-                    // à¸ªà¸¥à¸±à¸šà¸„à¸¥à¸´à¸à¸­à¸­à¸à¹à¸¥à¹‰à¸§à¸„à¸¥à¸´à¸à¹€à¸‚à¹‰à¸² à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸«à¹‰à¹€à¸§à¹‡à¸š Save à¸„à¹ˆà¸²à¸ªà¸¸à¸”à¸—à¹‰à¸²à¸¢
+                    // สลับคลิกออกแล้วคลิกเข้า เพื่อให้เว็บ Save ค่าสุดท้าย
                     editor.blur();
                     await sleep(150);
                     editor.focus();
@@ -5365,22 +5671,22 @@ async function bananaHandleAutomation(isContinuous = false) {
             args: [generatedPrompt]
           });
 
-          await bananaSleep(4000); // à¸žà¸±à¸à¸£à¸­à¸à¹ˆà¸­à¸™à¹ƒà¸«à¹‰à¸šà¸­à¸—à¸à¸”à¸›à¸¸à¹ˆà¸¡à¸ªà¸£à¹‰à¸²à¸‡
+          await bananaSleep(4000); // พักรอก่อนให้บอทกดปุ่มสร้าง
 		  
          // ============================================
-          // ðŸŸ¢ STEP 4: à¸à¸”à¸›à¸¸à¹ˆà¸¡à¸ªà¸£à¹‰à¸²à¸‡ (à¸¥à¸¹à¸à¸¨à¸£à¸‚à¸§à¸²) [MAIN World + Smart Wait à¸—à¸°à¸¥à¸§à¸‡à¹€à¸à¸£à¸²à¸°]
+          // 🟢 STEP 4: กดปุ่มสร้าง (ลูกศรขวา) [MAIN World + Smart Wait ทะลวงเกราะ]
           // ============================================
-          bananaUpdateStatus(`ðŸ¤– ${roundLabel} [4/5] à¸£à¸­à¹€à¸§à¹‡à¸šà¸›à¸£à¸°à¸¡à¸§à¸¥à¸œà¸¥à¸£à¸¹à¸›à¸ à¸²à¸žà¸ªà¸±à¸à¸„à¸£à¸¹à¹ˆ...`);
+          bananaUpdateStatus(`🤖 ${roundLabel} [4/5] รอเว็บประมวลผลรูปภาพสักครู่...`);
 
-          // ðŸ”¥ à¹€à¸žà¸´à¹ˆà¸¡à¸”à¸µà¹€à¸¥à¸¢à¹Œà¸•à¸£à¸‡à¸™à¸µà¹‰ 5 à¸§à¸´à¸™à¸²à¸—à¸µ à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸«à¹‰à¹€à¸§à¹‡à¸š React à¸­à¸±à¸›à¹‚à¸«à¸¥à¸”à¸£à¸¹à¸›à¹ƒà¸«à¹‰à¹€à¸ªà¸£à¹‡à¸ˆà¸ªà¸¡à¸šà¸¹à¸£à¸“à¹Œ 
-          // à¸›à¹‰à¸­à¸‡à¸à¸±à¸™à¸­à¸²à¸à¸²à¸£à¸ªà¹ˆà¸‡à¸„à¸³à¸ªà¸±à¹ˆà¸‡à¹„à¸§à¹„à¸›à¸ˆà¸™à¸£à¸¹à¸›à¸„à¹‰à¸²à¸‡à¸—à¸µà¹ˆà¸Šà¹ˆà¸­à¸‡à¸žà¸´à¸¡à¸žà¹Œ
+          // 🔥 เพิ่มดีเลย์ตรงนี้ 5 วินาที เพื่อให้เว็บ React อัปโหลดรูปให้เสร็จสมบูรณ์ 
+          // ป้องกันอาการส่งคำสั่งไวไปจนรูปค้างที่ช่องพิมพ์
           await bananaSleep(5000);
 
-          bananaUpdateStatus(`ðŸ¤– ${roundLabel} [4/5] à¸à¸³à¸¥à¸±à¸‡à¸ªà¹ˆà¸‡à¸„à¸³à¸ªà¸±à¹ˆà¸‡à¸ªà¸£à¹‰à¸²à¸‡...`);
+          bananaUpdateStatus(`🤖 ${roundLabel} [4/5] กำลังส่งคำสั่งสร้าง...`);
 
           const createResult = await chrome.scripting.executeScript({
             target: { tabId: tab.id },
-            world: 'MAIN', // ðŸ”¥ à¸«à¸±à¸§à¹ƒà¸ˆà¸ªà¸³à¸„à¸±à¸: à¸£à¸±à¸™à¹ƒà¸™à¹‚à¸¥à¸à¸‚à¸­à¸‡à¸«à¸™à¹‰à¸²à¹€à¸§à¹‡à¸šà¹‚à¸”à¸¢à¸•à¸£à¸‡
+            world: 'MAIN', // 🔥 หัวใจสำคัญ: รันในโลกของหน้าเว็บโดยตรง
             func: (timeoutMs) => {
               return new Promise((resolve) => {
                   const sleep = (ms) => new Promise(r => setTimeout(r, ms));
@@ -5403,10 +5709,10 @@ async function bananaHandleAutomation(isContinuous = false) {
                               const style = window.getComputedStyle(btn);
                               if (btn.disabled || style.pointerEvents === 'none' || style.opacity === '0') continue;
 
-                              if (text.includes('nano') || text.includes('pro') || text.includes('à¸­à¸±à¸›à¹€à¸à¸£à¸”')) continue;
+                              if (text.includes('nano') || text.includes('pro') || text.includes('อัปเกรด')) continue;
                               if (html.includes('add_circle') || html.includes('add ')) continue;
 
-                              if (html.includes('arrow_forward') || html.includes('send') || text === 'à¸ªà¸£à¹‰à¸²à¸‡' || text === 'create') {
+                              if (html.includes('arrow_forward') || html.includes('send') || text === 'สร้าง' || text === 'create') {
                                   targetBtn = btn;
                                   break;
                               }
@@ -5418,7 +5724,7 @@ async function bananaHandleAutomation(isContinuous = false) {
 
                               let success = false;
                               try {
-                                  // à¸—à¹ˆà¸²à¹„à¸¡à¹‰à¸•à¸²à¸¢à¸—à¸µà¹ˆ 1: à¹à¸®à¹‡à¸ React Props à¹‚à¸”à¸¢à¸•à¸£à¸‡
+                                  // ท่าไม้ตายที่ 1: แฮ็ก React Props โดยตรง
                                   const reactKey = Object.keys(targetBtn).find(k => k.startsWith('__reactProps'));
                                   if (reactKey && targetBtn[reactKey].onClick) {
                                       targetBtn[reactKey].onClick({ 
@@ -5443,7 +5749,7 @@ async function bananaHandleAutomation(isContinuous = false) {
                                   console.error("React Hack Error:", e);
                               }
 
-                              // à¸—à¹ˆà¸²à¹„à¸¡à¹‰à¸•à¸²à¸¢à¸—à¸µà¹ˆ 2: à¸ˆà¸³à¸¥à¸­à¸‡à¸à¸²à¸£à¸à¸” Enter à¸—à¸µà¹ˆà¸Šà¹ˆà¸­à¸‡à¹à¸Šà¸—
+                              // ท่าไม้ตายที่ 2: จำลองการกด Enter ที่ช่องแชท
                               const editor = document.querySelector('[data-slate-editor="true"]') || document.querySelector('[role="textbox"]');
                               if (editor) {
                                   editor.focus();
@@ -5452,16 +5758,16 @@ async function bananaHandleAutomation(isContinuous = false) {
                                   editor.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter', code: 'Enter', keyCode: 13, which: 13, bubbles: true, cancelable: true }));
                               }
 
-                              // Backup à¸–à¹‰à¸²à¸žà¸¥à¸²à¸”à¹ƒà¸«à¹‰à¸à¸”à¸„à¸¥à¸´à¸à¸›à¸à¸•à¸´
+                              // Backup ถ้าพลาดให้กดคลิกปกติ
                               if (!success) targetBtn.click();
 
-                              return resolve({ success: true, message: 'à¸à¸”à¸›à¸¸à¹ˆà¸¡à¸ªà¹ˆà¸‡à¸„à¸³à¸ªà¸±à¹ˆà¸‡à¸ªà¸³à¹€à¸£à¹‡à¸ˆ!' });
+                              return resolve({ success: true, message: 'กดปุ่มส่งคำสั่งสำเร็จ!' });
                           }
                           
                           await sleep(1000);
                       }
                       
-                      resolve({ success: false, message: 'à¸«à¸²à¸›à¸¸à¹ˆà¸¡à¸ªà¹ˆà¸‡à¸„à¸³à¸ªà¸±à¹ˆà¸‡à¹„à¸¡à¹ˆà¹€à¸ˆà¸­ à¸«à¸£à¸·à¸­à¸£à¸°à¸šà¸šà¹„à¸¡à¹ˆà¸•à¸­à¸šà¸ªà¸™à¸­à¸‡' });
+                      resolve({ success: false, message: 'หาปุ่มส่งคำสั่งไม่เจอ หรือระบบไม่ตอบสนอง' });
                   }
                   
                   trySubmit();
@@ -5471,15 +5777,15 @@ async function bananaHandleAutomation(isContinuous = false) {
           });
 
           if (!createResult[0]?.result?.success) {
-              bananaAddLog(`âš ï¸ à¸à¸”à¸›à¸¸à¹ˆà¸¡à¸ªà¸£à¹‰à¸²à¸‡à¹„à¸¡à¹ˆà¸ªà¸³à¹€à¸£à¹‡à¸ˆ: ${createResult[0]?.result?.message}`, 'warning');
-              throw new Error(`[Step 4/5] à¸ªà¹ˆà¸‡à¸„à¸³à¸ªà¸±à¹ˆà¸‡à¸¥à¹‰à¸¡à¹€à¸«à¸¥à¸§: ${createResult[0]?.result?.message}`);
+              bananaAddLog(`⚠️ กดปุ่มสร้างไม่สำเร็จ: ${createResult[0]?.result?.message}`, 'warning');
+              throw new Error(`[Step 4/5] ส่งคำสั่งล้มเหลว: ${createResult[0]?.result?.message}`);
           } else {
-              bananaAddLog(`ðŸ–±ï¸ ${roundLabel} à¸ªà¹ˆà¸‡à¸„à¸³à¸ªà¸±à¹ˆà¸‡à¸ªà¸£à¹‰à¸²à¸‡à¸ à¸²à¸žà¸ªà¸³à¹€à¸£à¹‡à¸ˆ!`, 'success');
+              bananaAddLog(`🖱ï¸ ${roundLabel} ส่งคำสั่งสร้างภาพสำเร็จ!`, 'success');
           }
 		  
 		  
        // ----------------------------------------------------
-          // ðŸŸ¢ STEP 6: à¸£à¸­à¸œà¸¥à¸¥à¸±à¸žà¸˜à¹Œ & à¸”à¸²à¸§à¸™à¹Œà¹‚à¸«à¸¥à¸”à¸­à¸±à¸•à¹‚à¸™à¸¡à¸±à¸•à¸´ (1K)
+          // 🟢 STEP 6: รอผลลัพธ์ & ดาวน์โหลดอัตโนมัติ (1K)
           // ----------------------------------------------------
           
           const autoDlBox1 = document.getElementById('banana-auto-download-checkbox');
@@ -5488,27 +5794,27 @@ async function bananaHandleAutomation(isContinuous = false) {
           const isDownloadEnabled = (autoDlBox1 && autoDlBox1.checked) || (autoDlBox2 && autoDlBox2.checked) || (autoDlBox3 && autoDlBox3.checked) || false;
 
           if (!isDownloadEnabled) {
-              // ðŸš€ Turbo Mode: à¸—à¸´à¹‰à¸‡à¸—à¸§à¸™à¸„à¸³à¸ªà¸±à¹ˆà¸‡! à¸£à¸­à¸ à¸²à¸žà¹€à¸ªà¸£à¹‡à¸ˆ 70-90% à¹à¸¥à¹‰à¸§à¹„à¸›à¸—à¸³à¸£à¸­à¸šà¹ƒà¸«à¸¡à¹ˆà¹€à¸¥à¸¢
-              const turboWait = Math.floor(Math.random() * 5000) + 10000; // à¸ªà¸¸à¹ˆà¸¡à¸£à¸­ 10-15 à¸§à¸´à¸™à¸²à¸—à¸µ
-              bananaUpdateStatus(`ðŸš€ Turbo Mode: à¸ªà¹ˆà¸‡à¸„à¸³à¸ªà¸±à¹ˆà¸‡à¹à¸¥à¹‰à¸§ à¸žà¸±à¸à¸£à¸­ ${Math.floor(turboWait/1000)} à¸§à¸´...`);
+              // 🚀 Turbo Mode: ทิ้งทวนคำสั่ง! รอภาพเสร็จ 70-90% แล้วไปทำรอบใหม่เลย
+              const turboWait = Math.floor(Math.random() * 5000) + 10000; // สุ่มรอ 10-15 วินาที
+              bananaUpdateStatus(`🚀 Turbo Mode: ส่งคำสั่งแล้ว พักรอ ${Math.floor(turboWait/1000)} วิ...`);
               await bananaSleep(turboWait);
-              bananaAddLog(`â­ï¸ Turbo Mode: à¸‚à¹‰à¸²à¸¡à¹„à¸›à¹€à¸£à¸´à¹ˆà¸¡à¸ à¸²à¸žà¸–à¸±à¸”à¹„à¸›à¹€à¸žà¸·à¹ˆà¸­à¸„à¸§à¸²à¸¡à¸£à¸§à¸”à¹€à¸£à¹‡à¸§`, 'info');
+              bananaAddLog(`⏭️ Turbo Mode: ข้ามไปเริ่มภาพถัดไปเพื่อความรวดเร็ว`, 'info');
           } else {
-              // â³ à¹‚à¸«à¸¡à¸”à¸›à¸à¸•à¸´ (à¸¡à¸µà¸”à¸²à¸§à¸™à¹Œà¹‚à¸«à¸¥à¸”): à¸£à¸­à¸ˆà¸™à¸à¸§à¹ˆà¸²à¸ à¸²à¸žà¸ˆà¸°à¹€à¸ªà¸£à¹‡à¸ˆ 100%
-              bananaUpdateStatus(`â³ ${roundLabel} [5/5] à¸£à¸­ AI à¸ªà¸£à¹‰à¸²à¸‡à¸ à¸²à¸ž...`);
+              // ⏳ โหมดปกติ (มีดาวน์โหลด): รอจนกว่าภาพจะเสร็จ 100%
+              bananaUpdateStatus(`⏳ ${roundLabel} [5/5] รอ AI สร้างภาพ...`);
               
-              // ðŸ“¸ 1. à¸–à¹ˆà¸²à¸¢ Snapshot à¸£à¸«à¸±à¸ªà¸£à¸¹à¸›à¹€à¸à¹ˆà¸²à¹„à¸§à¹‰à¹€à¸—à¸µà¸¢à¸š (à¸”à¸±à¸à¸ˆà¸±à¸šà¹€à¸‰à¸žà¸²à¸°à¸£à¸¹à¸›à¸—à¸µà¹ˆà¸ªà¸¡à¸šà¸¹à¸£à¸“à¹Œà¹à¸¥à¹‰à¸§)
+              // 📸 1. ถ่าย Snapshot รหัสรูปเก่าไว้เทียบ (ดักจับเฉพาะรูปที่สมบูรณ์แล้ว)
               const getOldImgs = await chrome.scripting.executeScript({
                   target: { tabId: tab.id },
                   func: () => Array.from(document.querySelectorAll('img')).map(img => img.src)
               });
               const oldImgSrcs = getOldImgs[0]?.result || [];
 
-              // 2. â³ à¸£à¸°à¸šà¸šà¸£à¸­à¸­à¸±à¸ˆà¸‰à¸£à¸´à¸¢à¸° + à¸•à¸£à¸§à¸ˆà¸ˆà¸±à¸šà¸„à¸§à¸²à¸¡à¸™à¸´à¹ˆà¸‡ 16 à¸§à¸´à¸™à¸²à¸—à¸µ (à¹à¸¡à¹ˆà¸™à¸¢à¸³à¸ªà¸¹à¸‡)
+              // 2. ⏳ ระบบรออัจฉริยะ + ตรวจจับความนิ่ง 16 วินาที (แม่นยำสูง)
               let isFinished = false;
               let idleCount = 0; 
               
-              for (let w = 0; w < 45; w++) { // à¸£à¸­à¸ªà¸¹à¸‡à¸ªà¸¸à¸” 90 à¸§à¸´à¸™à¸²à¸—à¸µ
+              for (let w = 0; w < 45; w++) { // รอสูงสุด 90 วินาที
                   if (bananaShouldStopAutomation) throw new Error('STOPPED');
                   await bananaSleep(2000);
                   
@@ -5526,7 +5832,7 @@ async function bananaHandleAutomation(isContinuous = false) {
                               return /^(\d+%)|(\d+\s*%)$/.test(txt); 
                           });
                           const hasProgressBar = document.querySelector('[role="progressbar"]') !== null;
-                          const hasGeneratingBtn = Array.from(document.querySelectorAll('button')).some(b => (b.textContent||'').includes('à¸à¸³à¸¥à¸±à¸‡à¸ªà¸£à¹‰à¸²à¸‡'));
+                          const hasGeneratingBtn = Array.from(document.querySelectorAll('button')).some(b => (b.textContent||'').includes('กำลังสร้าง'));
                           
                           const isWorking = progressEl !== undefined || hasProgressBar || hasGeneratingBtn;
                           
@@ -5538,17 +5844,17 @@ async function bananaHandleAutomation(isContinuous = false) {
                   const state = checkState[0]?.result;
 
                   if (state?.hasNew && !state?.working) {
-                      bananaUpdateStatus(`âœ… à¹€à¸ˆà¸­à¸ à¸²à¸žà¹ƒà¸«à¸¡à¹ˆà¹à¸¥à¹‰à¸§! à¸£à¸­à¸£à¸°à¸šà¸šà¸›à¸£à¸°à¸¡à¸§à¸¥à¸œà¸¥à¹ƒà¸«à¹‰à¸ªà¸¡à¸šà¸¹à¸£à¸“à¹Œà¸­à¸µà¸ 6 à¸§à¸´à¸™à¸²à¸—à¸µ...`);
-                      await bananaSleep(6000); // à¸à¸±à¸™à¹€à¸«à¸™à¸µà¸¢à¸§ 6 à¸§à¸´
+                      bananaUpdateStatus(`✅ เจอภาพใหม่แล้ว! รอระบบประมวลผลให้สมบูรณ์อีก 6 วินาที...`);
+                      await bananaSleep(6000); // กันเหนียว 6 วิ
                       isFinished = true;
                       break;
                   }
 
                   if (!state?.working && !state?.hasNew) {
                       idleCount++;
-                      if (idleCount >= 8) { // à¸™à¸´à¹ˆà¸‡à¸•à¸´à¸”à¸à¸±à¸™ 8 à¸£à¸­à¸š (16 à¸§à¸´à¸™à¸²à¸—à¸µ)
-                          bananaUpdateStatus(`âš ï¸ à¸£à¸°à¸šà¸šà¸™à¸´à¹ˆà¸‡à¸™à¸²à¸™à¹€à¸à¸´à¸™ 16 à¸§à¸´à¸™à¸²à¸—à¸µ à¸•à¸±à¸”à¸ˆà¸šà¸à¸²à¸£à¸£à¸­!`);
-                          bananaAddLog(`âš ï¸ à¸„à¸²à¸”à¸§à¹ˆà¸² AI à¹€à¸£à¸™à¹€à¸”à¸­à¸£à¹Œà¸¥à¹‰à¸¡à¹€à¸«à¸¥à¸§ à¸‚à¹‰à¸²à¸¡à¹„à¸›à¸£à¸­à¸šà¸–à¸±à¸”à¹„à¸›`, 'warning');
+                      if (idleCount >= 8) { // นิ่งติดกัน 8 รอบ (16 วินาที)
+                          bananaUpdateStatus(`⚠️ ระบบนิ่งนานเกิน 16 วินาที ตัดจบการรอ!`);
+                          bananaAddLog(`⚠️ คาดว่า AI เรนเดอร์ล้มเหลว ข้ามไปรอบถัดไป`, 'warning');
                           isFinished = false;
                           break;
                       }
@@ -5558,9 +5864,9 @@ async function bananaHandleAutomation(isContinuous = false) {
               }
 
               if (!isFinished) {
-                  bananaAddLog(`âš ï¸ à¸‚à¹‰à¸²à¸¡à¸à¸²à¸£à¸”à¸²à¸§à¸™à¹Œà¹‚à¸«à¸¥à¸” à¹€à¸™à¸·à¹ˆà¸­à¸‡à¸ˆà¸²à¸à¸ à¸²à¸žà¸ªà¸£à¹‰à¸²à¸‡à¹„à¸¡à¹ˆà¸ªà¸³à¹€à¸£à¹‡à¸ˆ`, 'warning');
+                  bananaAddLog(`⚠️ ข้ามการดาวน์โหลด เนื่องจากภาพสร้างไม่สำเร็จ`, 'warning');
               } else {
-                  bananaUpdateStatus(`ðŸ“¥ ${roundLabel} à¸à¸³à¸¥à¸±à¸‡à¸”à¸¹à¸”à¹„à¸Ÿà¸¥à¹Œà¸ à¸²à¸žà¸ˆà¸²à¸à¸«à¸¥à¸±à¸‡à¸šà¹‰à¸²à¸™...`);
+                  bananaUpdateStatus(`📥 ${roundLabel} กำลังดูดไฟล์ภาพจากหลังบ้าน...`);
                   
                   const downloadResult = await chrome.scripting.executeScript({
                       target: { tabId: tab.id },
@@ -5574,9 +5880,9 @@ async function bananaHandleAutomation(isContinuous = false) {
                                   const allImgs = Array.from(document.querySelectorAll('img'));
                                   const newImgs = allImgs.filter(img => {
                                       const rect = img.getBoundingClientRect();
-                                     // à¸•à¸£à¸§à¸ˆà¸ˆà¸±à¸šà¸£à¸¹à¸›à¸—à¸µà¹ˆ AI à¸ªà¸£à¹‰à¸²à¸‡ à¹‚à¸”à¸¢à¹€à¸Šà¹‡à¸„à¸—à¸±à¹‰à¸‡à¸ à¸²à¸©à¸²à¹„à¸—à¸¢à¹à¸¥à¸°à¸­à¸±à¸‡à¸à¸¤à¸© à¸«à¸£à¸·à¸­à¹€à¸Šà¹‡à¸„à¸§à¹ˆà¸²à¹„à¸¡à¹ˆà¹ƒà¸Šà¹ˆà¸£à¸¹à¸›à¸—à¸µà¹ˆà¹€à¸£à¸²à¸­à¸±à¸›à¹‚à¸«à¸¥à¸”
+                                     // ตรวจจับรูปที่ AI สร้าง โดยเช็คทั้งภาษาไทยและอังกฤษ หรือเช็คว่าไม่ใช่รูปที่เราอัปโหลด
                                       const altText = (img.getAttribute('alt') || '').toLowerCase();
-                                      const isGenerated = altText.includes('à¸ªà¸£à¹‰à¸²à¸‡à¸‚à¸¶à¹‰à¸™') || altText.includes('generated') || altText.includes('created') || altText !== '';
+                                      const isGenerated = altText.includes('สร้างขึ้น') || altText.includes('generated') || altText.includes('created') || altText !== '';
                                       const isNew = !oldSrcs.includes(img.src);
                                       const isLarge = rect.width > 150;
                                       const notInChat = !img.closest('header, nav, [role="textbox"]');
@@ -5585,14 +5891,14 @@ async function bananaHandleAutomation(isContinuous = false) {
                                       let card = img;
                                       for(let i = 0; i < 8; i++) {
                                           if(!card || card === document.body) break;
-                                          if((card.innerText || '').includes('à¸­à¸±à¸›à¹‚à¸«à¸¥à¸”') || (card.innerText || '').includes('uploaded')) isUploaded = true;
+                                          if((card.innerText || '').includes('อัปโหลด') || (card.innerText || '').includes('uploaded')) isUploaded = true;
                                           card = card.parentElement;
                                       }
                                       
                                       return isGenerated && isNew && isLarge && notInChat && !isUploaded;
                                   });
                                   
-                                  if (newImgs.length === 0) return resolve({ success: false, msg: 'à¸«à¸²à¸£à¸¹à¸›à¹ƒà¸«à¸¡à¹ˆà¸šà¸™à¸«à¸™à¹‰à¸²à¸ˆà¸­à¹„à¸¡à¹ˆà¹€à¸ˆà¸­' });
+                                  if (newImgs.length === 0) return resolve({ success: false, msg: 'หารูปใหม่บนหน้าจอไม่เจอ' });
 
                                   let downloadedCount = 0;
 
@@ -5626,14 +5932,14 @@ async function bananaHandleAutomation(isContinuous = false) {
                                           await sleep(1000); 
 
                                       } catch (fetchErr) {
-                                          console.log("à¸”à¸¹à¸”à¸ à¸²à¸žà¸¥à¹‰à¸¡à¹€à¸«à¸¥à¸§:", fetchErr);
+                                          console.log("ดูดภาพล้มเหลว:", fetchErr);
                                       }
                                   }
 
                                   if (downloadedCount > 0) {
-                                      resolve({ success: true, msg: `à¸”à¸¹à¸”à¹„à¸Ÿà¸¥à¹Œ 1K à¸ªà¸³à¹€à¸£à¹‡à¸ˆ ${downloadedCount}/${newImgs.length} à¸£à¸¹à¸›!` });
+                                      resolve({ success: true, msg: `ดูดไฟล์ 1K สำเร็จ ${downloadedCount}/${newImgs.length} รูป!` });
                                   } else {
-                                      resolve({ success: false, msg: 'à¸žà¸¢à¸²à¸¢à¸²à¸¡à¸”à¸¹à¸”à¹„à¸Ÿà¸¥à¹Œà¹à¸¥à¹‰à¸§à¹à¸•à¹ˆà¸¥à¹‰à¸¡à¹€à¸«à¸¥à¸§' });
+                                      resolve({ success: false, msg: 'พยายามดูดไฟล์แล้วแต่ล้มเหลว' });
                                   }
 
                               } catch (err) {
@@ -5645,44 +5951,44 @@ async function bananaHandleAutomation(isContinuous = false) {
                   });
 
                   if (downloadResult[0]?.result?.success) {
-                      bananaAddLog(`ðŸ“¥ ${downloadResult[0].result.msg}`, 'success');
+                      bananaAddLog(`📥 ${downloadResult[0].result.msg}`, 'success');
                   } else {
-                      bananaAddLog(`âš ï¸ à¹‚à¸«à¸¥à¸”à¸­à¸±à¸•à¹‚à¸™à¸¡à¸±à¸•à¸´à¹„à¸¡à¹ˆà¸ªà¸³à¹€à¸£à¹‡à¸ˆ: ${downloadResult[0]?.result?.msg}`, 'warning');
+                      bananaAddLog(`⚠️ โหลดอัตโนมัติไม่สำเร็จ: ${downloadResult[0]?.result?.msg}`, 'warning');
                   }
               }
           }
 
           completedRounds++;
-          bananaAddLog(`ðŸ à¸ˆà¸šà¸£à¸­à¸šà¸—à¸µà¹ˆ ${currentRound}`, 'info');
+          bananaAddLog(`🏁 จบรอบที่ ${currentRound}`, 'info');
           
-          // ðŸŸ¢ [à¹‚à¸„à¹‰à¸”à¸—à¸µà¹ˆà¹€à¸žà¸´à¹ˆà¸¡à¹ƒà¸«à¸¡à¹ˆ] COOLDOWN: à¸žà¸±à¸à¸«à¸²à¸¢à¹ƒà¸ˆà¸à¹ˆà¸­à¸™à¹€à¸£à¸´à¹ˆà¸¡à¸£à¸­à¸šà¸•à¹ˆà¸­à¹„à¸› 
-          // à¸›à¹‰à¸­à¸‡à¸à¸±à¸™ Google à¸šà¸¥à¹‡à¸­à¸ API (à¸ªà¸¸à¹ˆà¸¡à¸žà¸±à¸ 5-8 à¸§à¸´à¸™à¸²à¸—à¸µà¹ƒà¸«à¹‰à¹€à¸™à¸µà¸¢à¸™à¹€à¸›à¹‡à¸™à¸„à¸™)
+          // 🟢 [โค้ดที่เพิ่มใหม่] COOLDOWN: พักหายใจก่อนเริ่มรอบต่อไป 
+          // ป้องกัน Google บล็อก API (สุ่มพัก 5-8 วินาทีให้เนียนเป็นคน)
           if (currentRound < totalRounds) {
               const cooldownTime = Math.floor(Math.random() * 3000) + 5000; 
-              bananaUpdateStatus(`â³ à¸žà¸±à¸à¸£à¸°à¸šà¸š ${cooldownTime/1000} à¸§à¸´à¸™à¸²à¸—à¸µà¸à¹ˆà¸­à¸™à¹€à¸£à¸´à¹ˆà¸¡à¸£à¸­à¸šà¸–à¸±à¸”à¹„à¸› (à¸à¸±à¸™à¹‚à¸”à¸™à¸šà¸¥à¹‡à¸­à¸)...`);
+              bananaUpdateStatus(`⏳ พักระบบ ${cooldownTime/1000} วินาทีก่อนเริ่มรอบถัดไป (กันโดนบล็อก)...`);
               await bananaSleep(cooldownTime);
           }
 
-        } // à¸ˆà¸šà¸¥à¸¹à¸› Round
-      } // à¸ˆà¸šà¸¥à¸¹à¸› Image
+        } // จบลูป Round
+      } // จบลูป Image
 
       if (!isContinuous) {
-          bananaUpdateStatus(`ðŸŽ‰ à¹€à¸ªà¸£à¹‡à¸ˆà¸ªà¸´à¹‰à¸™!`);
+          bananaUpdateStatus(`🎉 เสร็จสิ้น!`);
           showToast('Mission Complete!', 'success');
       } else {
-          bananaUpdateStatus(`âœ… à¸ªà¸£à¹‰à¸²à¸‡à¸ à¸²à¸žà¹€à¸ªà¸£à¹‡à¸ˆà¸ªà¸´à¹‰à¸™ à¸à¸³à¸¥à¸±à¸‡à¸ªà¹ˆà¸‡à¹„à¸¡à¹‰à¸•à¹ˆà¸­à¹ƒà¸«à¹‰ Video...`);
+          bananaUpdateStatus(`✅ สร้างภาพเสร็จสิ้น กำลังส่งไม้ต่อให้ Video...`);
       }
 
   } catch (error) {
       if (error.message === 'STOPPED') {
-          bananaUpdateStatus('ðŸ›‘ à¸«à¸¢à¸¸à¸”à¸à¸²à¸£à¸—à¸³à¸‡à¸²à¸™à¹à¸¥à¹‰à¸§');
+          bananaUpdateStatus('🛑 หยุดการทำงานแล้ว');
       } else {
-          bananaUpdateStatus(`âŒ Error: ${error.message}`);
-          bananaAddLog(`âŒ Error: ${error.message}`, 'error');
+          bananaUpdateStatus(`❌ Error: ${error.message}`);
+          bananaAddLog(`❌ Error: ${error.message}`, 'error');
       }
   } finally {
       if (!isContinuous) {
-          // à¸›à¸¥à¸”à¸¥à¹‡à¸­à¸„à¹à¸¥à¸°à¸„à¸·à¸™à¸„à¹ˆà¸²à¸›à¸¸à¹ˆà¸¡à¹€à¸¡à¸·à¹ˆà¸­à¸—à¸³à¸‡à¸²à¸™à¹€à¸ªà¸£à¹‡à¸ˆ
+          // ปลดล็อคและคืนค่าปุ่มเมื่อทำงานเสร็จ
           bananaIsAutomationRunning = false;
           bananaShouldStopAutomation = false;
           if (bananaBtnAutomation) {
@@ -5693,17 +5999,17 @@ async function bananaHandleAutomation(isContinuous = false) {
           try { await toggleWebPageLock(false); } catch (e) {}
       }
   }
-} // <--- à¸›à¸´à¸”à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™ bananaHandleAutomation à¸•à¸£à¸‡à¸™à¸µà¹‰!
+} // <--- ปิดฟังก์ชัน bananaHandleAutomation ตรงนี้!
 
 
 // ============================================
-// ðŸ”’ SYSTEM LOCKER (à¸£à¸°à¸šà¸šà¸¥à¹‡à¸­à¸„à¸«à¸™à¹‰à¸²à¸ˆà¸­à¹€à¸§à¹‡à¸š - à¸›à¹‰à¸­à¸‡à¸à¸±à¸™ Error)
+// 🔒 SYSTEM LOCKER (ระบบล็อคหน้าจอเว็บ - ป้องกัน Error)
 // ============================================
 async function toggleWebPageLock(shouldLock) {
     try {
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
         
-        // ðŸ›‘ à¸›à¹‰à¸­à¸‡à¸à¸±à¸™ Error: à¸«à¹‰à¸²à¸¡à¸£à¸±à¸™à¸ªà¸„à¸£à¸´à¸›à¸•à¹Œà¹ƒà¸™à¸«à¸™à¹‰à¸²à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸² Chrome à¸«à¸£à¸·à¸­à¸«à¸™à¹‰à¸²à¹€à¸›à¸¥à¹ˆà¸²
+        // 🛑 ป้องกัน Error: ห้ามรันสคริปต์ในหน้าตั้งค่า Chrome หรือหน้าเปล่า
         if (!tab || !tab.url || !tab.url.startsWith('http')) return;
 
         await chrome.scripting.executeScript({
@@ -5734,9 +6040,9 @@ async function toggleWebPageLock(shouldLock) {
                         
                         overlay.innerHTML = `
                             <div style="background: #18181b; padding: 30px 50px; border-radius: 16px; border: 1px solid #6366f1; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
-                                <div style="font-size: 40px; margin-bottom: 15px;">ðŸ”’</div>
+                                <div style="font-size: 40px; margin-bottom: 15px;">🔒</div>
                                 <h2 style="margin: 0 0 10px 0; color: #fff; font-size: 20px;">SYSTEM WORKING</h2>
-                                <p style="margin: 0; color: #aaa; font-size: 14px;">à¸à¸£à¸¸à¸“à¸²à¸­à¸¢à¹ˆà¸²à¸„à¸¥à¸´à¸à¹ƒà¸”à¹† à¸šà¸™à¸«à¸™à¹‰à¸²à¸ˆà¸­à¸‚à¸“à¸°à¸™à¸µà¹‰</p>
+                                <p style="margin: 0; color: #aaa; font-size: 14px;">กรุณาอย่าคลิกใดๆ บนหน้าจอขณะนี้</p>
                             </div>
                         `;
 
@@ -5766,68 +6072,69 @@ async function toggleWebPageLock(shouldLock) {
 }
 
 // ============================================
-// ðŸ” URL CHECKER (à¸£à¸°à¸šà¸šà¹€à¸Šà¹‡à¸„à¹€à¸§à¹‡à¸šà¸—à¸µà¹ˆà¸–à¸¹à¸à¸•à¹‰à¸­à¸‡)
+// 🔍 URL CHECKER (ระบบเช็คเว็บที่ถูกต้อง)
 // ============================================
 async function checkCorrectWebsite() {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     
-    // à¸”à¸¶à¸‡ URL à¸¡à¸²à¹€à¸Šà¹‡à¸„ à¸–à¹‰à¸²à¹„à¸¡à¹ˆà¸¡à¸µ (à¹€à¸Šà¹ˆà¸™à¸­à¸¢à¸¹à¹ˆà¸«à¸™à¹‰à¸² New Tab) à¹ƒà¸«à¹‰à¹€à¸›à¹‡à¸™ string à¸§à¹ˆà¸²à¸‡
+    // ดึง URL มาเช็ค ถ้าไม่มี (เช่นอยู่หน้า New Tab) ให้เป็น string ว่าง
     const currentUrl = (tab && tab.url) ? tab.url.toLowerCase() : "";
 
-    // à¸•à¸£à¸§à¸ˆà¸ªà¸­à¸šà¸§à¹ˆà¸²à¸­à¸¢à¸¹à¹ˆà¸šà¸™à¸«à¸™à¹‰à¸² Google Labs Flow à¸—à¸µà¹ˆà¹‚à¸›à¸£à¹à¸à¸£à¸¡à¸£à¸­à¸‡à¸£à¸±à¸š
-    const requiredFlowUrl = "https://labs.google/fx/th/tools/flow";
-    const isFlowPage = currentUrl.startsWith(requiredFlowUrl);
+    // ตรวจสอบว่าอยู่บนหน้า Google Labs Flow ที่โปรแกรมรองรับ
+    const isFlowPage = currentUrl.startsWith('https://labs.google/fx/tools/flow')
+        || currentUrl.startsWith('https://labs.google/fx/th/tools/flow')
+        || /^https:\/\/labs\.google\/fx\/tools\/flow\/project\/[a-z0-9-]+/.test(currentUrl);
 
-    // âœ… à¸–à¹‰à¸²à¸œà¹ˆà¸²à¸™à¹€à¸‡à¸·à¹ˆà¸­à¸™à¹„à¸‚ (à¸­à¸¢à¸¹à¹ˆà¸«à¸™à¹‰à¸²à¹€à¸§à¹‡à¸šà¸–à¸¹à¸à¸•à¹‰à¸­à¸‡) à¹ƒà¸«à¹‰à¸£à¸±à¸™à¸•à¹ˆà¸­
+    // ✅ ถ้าผ่านเงื่อนไข (อยู่หน้าเว็บถูกต้อง) ให้รันต่อ
     if (isFlowPage) {
         return true; 
     }
 
-    // âŒ à¸–à¹‰à¸²à¹„à¸¡à¹ˆà¸œà¹ˆà¸²à¸™à¹€à¸‡à¸·à¹ˆà¸­à¸™à¹„à¸‚ (à¸­à¸¢à¸¹à¹ˆà¸«à¸™à¹‰à¸²à¹€à¸§à¹‡à¸šà¸­à¸·à¹ˆà¸™ à¸«à¸£à¸·à¸­à¹à¸—à¹‡à¸šà¸§à¹ˆà¸²à¸‡) à¹ƒà¸«à¹‰à¹à¸ˆà¹‰à¸‡à¹€à¸•à¸·à¸­à¸™à¸—à¸±à¸™à¸—à¸µ
-    showToast('âš ï¸ à¸œà¸´à¸”à¸«à¸™à¹‰à¸²! à¸à¸£à¸¸à¸“à¸²à¹€à¸›à¸´à¸” https://labs.google/fx/th/tools/flow à¸à¹ˆà¸­à¸™à¹€à¸£à¸´à¹ˆà¸¡à¸—à¸³à¸‡à¸²à¸™', 'error');
+    // ❌ ถ้าไม่ผ่านเงื่อนไข (อยู่หน้าเว็บอื่น หรือแท็บว่าง) ให้แจ้งเตือนทันที
+    showToast('⚠️ ผิดหน้า! กรุณาเปิดโปรเจกต์ Google Labs Flow ก่อนเริ่มทำงาน', 'error');
     
-    // à¸ªà¸±à¹ˆà¸™à¸›à¸¸à¹ˆà¸¡à¹à¸ˆà¹‰à¸‡à¹€à¸•à¸·à¸­à¸™à¹ƒà¸«à¹‰à¸œà¸¹à¹‰à¹ƒà¸Šà¹‰à¸£à¸¹à¹‰ (à¸«à¸²à¹€à¸‰à¸žà¸²à¸°à¸›à¸¸à¹ˆà¸¡à¸—à¸µà¹ˆà¹€à¸›à¹‡à¸™ Primary)
+    // สั่นปุ่มแจ้งเตือนให้ผู้ใช้รู้ (หาเฉพาะปุ่มที่เป็น Primary)
     const btns = document.querySelectorAll('.btn-primary');
     btns.forEach(btn => {
         btn.classList.add('shake');
         setTimeout(() => btn.classList.remove('shake'), 500);
     });
     
-    return false; // â›” à¹à¸ˆà¹‰à¸‡à¹€à¸•à¸·à¸­à¸™à¹€à¸ªà¸£à¹‡à¸ˆà¹à¸¥à¹‰à¸§à¸„à¹ˆà¸­à¸¢à¸ªà¸±à¹ˆà¸‡à¸«à¸¢à¸¸à¸”à¸£à¸±à¸™
+    return false; // ⛔ แจ้งเตือนเสร็จแล้วค่อยสั่งหยุดรัน
 }
 // -------------------------------------------------------
-// ðŸŸ¢ [à¹€à¸žà¸´à¹ˆà¸¡à¹ƒà¸«à¸¡à¹ˆ] à¸”à¸±à¸à¸ˆà¸±à¸šà¸„à¹ˆà¸²à¹€à¸¡à¸·à¹ˆà¸­à¸žà¸´à¸¡à¸žà¹Œà¸•à¸±à¸§à¹€à¸¥à¸‚à¹ƒà¸™à¸Šà¹ˆà¸­à¸‡ Custom (+)
+// 🟢 [เพิ่มใหม่] ดักจับค่าเมื่อพิมพ์ตัวเลขในช่อง Custom (+)
 // -------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. à¸ˆà¸±à¸”à¸à¸²à¸£à¸Šà¹ˆà¸­à¸‡ Custom à¸‚à¸­à¸‡ Video (Video Custom Input)
+    // 1. จัดการช่อง Custom ของ Video (Video Custom Input)
     const videoCustomInput = document.getElementById('video-custom-round-input');
     if (videoCustomInput) {
         videoCustomInput.addEventListener('input', function() {
-            // à¹€à¸¡à¸·à¹ˆà¸­à¸žà¸´à¸¡à¸žà¹Œà¹€à¸¥à¸‚ -> à¹„à¸¡à¹ˆà¸•à¹‰à¸­à¸‡à¹€à¸›à¸¥à¸µà¹ˆà¸¢à¸™à¸„à¹ˆà¸² Dropdown à¸«à¸¥à¸±à¸ (à¹ƒà¸«à¹‰à¸¡à¸±à¸™à¸„à¹‰à¸²à¸‡à¸„à¸³à¸§à¹ˆà¸² 'custom' à¹„à¸§à¹‰)
-            // à¹à¸•à¹ˆà¹ƒà¸«à¹‰à¸ªà¸±à¹ˆà¸‡à¸„à¸³à¸™à¸§à¸“à¸£à¸­à¸šà¹ƒà¸«à¸¡à¹ˆà¸—à¸±à¸™à¸—à¸µ
+            // เมื่อพิมพ์เลข -> ไม่ต้องเปลี่ยนค่า Dropdown หลัก (ให้มันค้างคำว่า 'custom' ไว้)
+            // แต่ให้สั่งคำนวณรอบใหม่ทันที
             if (typeof videoUpdateRoundInfo === 'function') videoUpdateRoundInfo();
         });
     }
 
-    // 2. à¸ˆà¸±à¸”à¸à¸²à¸£à¸Šà¹ˆà¸­à¸‡ Custom à¸‚à¸­à¸‡ Banana (Banana Custom Input)
+    // 2. จัดการช่อง Custom ของ Banana (Banana Custom Input)
     const bananaCustomInput = document.getElementById('banana-custom-round-input');
     if (bananaCustomInput) {
         bananaCustomInput.addEventListener('input', function() {
-            // à¸—à¸³à¹€à¸«à¸¡à¸·à¸­à¸™à¸à¸±à¸™à¸à¸±à¸š Video: à¸ªà¸±à¹ˆà¸‡à¸„à¸³à¸™à¸§à¸“à¸£à¸­à¸šà¹ƒà¸«à¸¡à¹ˆà¸—à¸±à¸™à¸—à¸µà¸—à¸µà¹ˆà¸žà¸´à¸¡à¸žà¹Œ
+            // ทำเหมือนกันกับ Video: สั่งคำนวณรอบใหม่ทันทีที่พิมพ์
             if (typeof bananaUpdateRoundInfo === 'function') bananaUpdateRoundInfo();
         });
     }
 });
 
 // ============================================
-// ðŸŸ¢ AUTO DEFAULT SETTINGS (à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸²à¹€à¸£à¸´à¹ˆà¸¡à¸•à¹‰à¸™: à¹€à¸›à¸´à¸”à¹à¸—à¹‡à¸šà¹à¸£à¸à¸‚à¸­à¸‡ Basic)
+// 🟢 AUTO DEFAULT SETTINGS (ตั้งค่าเริ่มต้น: เปิดแท็บแรกของ Basic)
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
-    // à¹€à¸žà¸´à¹ˆà¸¡à¹€à¸§à¸¥à¸²à¸«à¸™à¹ˆà¸§à¸‡à¹€à¸›à¹‡à¸™ 500ms à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸«à¹‰à¹à¸™à¹ˆà¹ƒà¸ˆà¸§à¹ˆà¸² HTML à¸§à¸²à¸”à¹€à¸ªà¸£à¹‡à¸ˆà¹à¸¥à¹‰à¸§
+    // เพิ่มเวลาหน่วงเป็น 500ms เพื่อให้แน่ใจว่า HTML วาดเสร็จแล้ว
     setTimeout(() => {
-        console.log("ðŸ”„ Setting Defaults (Basic First Tabs)...");
+        console.log("🔄 Setting Defaults (Basic First Tabs)...");
 
-        // 1. à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸² Checkbox à¸žà¸·à¹‰à¸™à¸à¸²à¸™
+        // 1. ตั้งค่า Checkbox พื้นฐาน
         const checkToTrue = [
             'video-random-voice-checkbox'
         ];
@@ -5837,10 +6144,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (box) box.checked = true; 
         });
 
-        // ðŸ›‘ à¸›à¸´à¸”à¸ªà¸¸à¹ˆà¸¡à¸ªà¹„à¸•à¸¥à¹Œà¸ à¸²à¸žà¸™à¸´à¹ˆà¸‡ (à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸«à¹‰à¸«à¸™à¹‰à¸²à¹à¸Ÿà¸™à¸•à¸²à¸‹à¸µà¸ªà¸§à¹ˆà¸²à¸‡à¹à¸¥à¸°à¹ƒà¸«à¹‰à¸„à¸™à¸à¸”à¹€à¸¥à¸·à¸­à¸à¹€à¸­à¸‡à¹„à¸”à¹‰)
+        // 🛑 ปิดสุ่มสไตล์ภาพนิ่ง (เพื่อให้หน้าแฟนตาซีสว่างและให้คนกดเลือกเองได้)
         const imgRandomStyleBox = document.getElementById('banana-random-style-switch');
         if (imgRandomStyleBox) {
-            imgRandomStyleBox.checked = false; // à¸›à¸´à¸”à¸ªà¸¸à¹ˆà¸¡à¸ªà¹„à¸•à¸¥à¹Œ (à¸ªà¸µà¹€à¸—à¸²)
+            imgRandomStyleBox.checked = false; // ปิดสุ่มสไตล์ (สีเทา)
             imgRandomStyleBox.dispatchEvent(new Event('change', { bubbles: true })); 
         }
 
@@ -5856,44 +6163,44 @@ document.addEventListener('DOMContentLoaded', () => {
             imgRandomOutfitBox.dispatchEvent(new Event('change', { bubbles: true }));
         }
 
-        // ðŸ›‘ à¸›à¸´à¸”à¸ªà¸¸à¹ˆà¸¡ Video Style 
+        // 🛑 ปิดสุ่ม Video Style 
         const vRandomStyleBox = document.getElementById('video-random-style-switch');
         if (vRandomStyleBox) {
             vRandomStyleBox.checked = false; 
             vRandomStyleBox.dispatchEvent(new Event('change', { bubbles: true })); 
         }
 
-        // ðŸ’¾ à¸›à¸´à¸”à¸£à¸°à¸šà¸šà¸šà¸±à¸™à¸—à¸¶à¸à¸„à¸¥à¸´à¸› (à¸”à¸²à¸§à¸™à¹Œà¹‚à¸«à¸¥à¸”) à¹€à¸›à¹‡à¸™à¸„à¹ˆà¸²à¹€à¸£à¸´à¹ˆà¸¡à¸•à¹‰à¸™ (Turbo Mode)
+        // 💾 ปิดระบบบันทึกคลิป (ดาวน์โหลด) เป็นค่าเริ่มต้น (Turbo Mode)
         const vDownloadCheckbox = document.getElementById('video-download-count-auto');
         if (vDownloadCheckbox) {
             vDownloadCheckbox.checked = false; 
         }
 
-        // 2. à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸ˆà¸³à¸¥à¸­à¸‡à¸à¸²à¸£à¸„à¸¥à¸´à¸ (Force Click)
+        // 2. ฟังก์ชันจำลองการคลิก (Force Click)
         function forceClick(selector) {
             const el = document.querySelector(selector);
             if(el) el.click(); 
         }
 
-        // --- ðŸŽ¨ à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸²à¹€à¸£à¸´à¹ˆà¸¡à¸•à¹‰à¸™à¸‚à¸­à¸‡à¸à¸±à¹ˆà¸‡ Banana (Images) ---
+        // --- 🎨 ตั้งค่าเริ่มต้นของฝั่ง Banana (Images) ---
         forceClick('.mascot-card[data-value="liver"]');
-        forceClick('.char-tab-btn[data-target="preset"]');
-        forceClick('.char-card[data-value="teen_girl"]');
+        forceClick('.char-tab-btn[data-target="upload"]');
         forceClick('.config-tab-btn[data-type="style"][data-group="recommended"]');
         forceClick('.config-option[data-type="style"][data-value="ugc_basic"]');
         forceClick('.config-tab-btn[data-type="bg"][data-group="popular"]');
         forceClick('.config-option[data-type="bg"][data-value="ai_match"]');
+        setDefaultBgToAiMatch();
         forceClick('.config-tab-btn[data-type="outfit"][data-group="recommended"]');
         forceClick('.config-option[data-type="outfit"][data-value="ai_match"]');
 
-      // --- ðŸš€ à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸²à¹€à¸£à¸´à¹ˆà¸¡à¸•à¹‰à¸™à¸‚à¸­à¸‡à¸à¸±à¹ˆà¸‡ VIDEO ---
-        // 2.1 à¹€à¸¥à¸·à¸­à¸à¸ªà¹„à¸•à¸¥à¹Œà¸§à¸´à¸”à¸µà¹‚à¸­à¹€à¸›à¹‡à¸™ "ðŸ¤³ à¸£à¸µà¸§à¸´à¸§à¸šà¹‰à¸²à¸™à¹† (UGC Review)"
+      // --- 🚀 ตั้งค่าเริ่มต้นของฝั่ง VIDEO ---
+        // 2.1 เลือกสไตล์วิดีโอเป็น "🤳 รีวิวบ้านๆ (UGC Review)"
         forceClick('.config-option[data-type="vstyle"][data-value="talk_ugc"]');
 
-        // 2.2 à¹€à¸¥à¸·à¸­à¸à¸ªà¸³à¹€à¸™à¸µà¸¢à¸‡à¹€à¸ªà¸µà¸¢à¸‡à¹€à¸›à¹‡à¸™ "ðŸ”Š à¸à¸¥à¸²à¸‡" (Central)
+        // 2.2 เลือกสำเนียงเสียงเป็น "🔊 กลาง" (Central)
         forceClick('.voice-btn[data-type="dialect"][data-value="central"]');
 
-        // à¹€à¸£à¸µà¸¢à¸à¹€à¸Šà¹‡à¸„à¸ªà¸–à¸²à¸™à¸° UI à¹€à¸ªà¸µà¸¢à¸‡à¸«à¸¥à¸±à¸‡à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸²
+        // เรียกเช็คสถานะ UI เสียงหลังตั้งค่า
         if (typeof checkVideoVoiceState === 'function') checkVideoVoiceState();
 
     }, 500); 
@@ -5905,7 +6212,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // ============================================
-// ðŸŸ¢ UI LOGIC: à¹€à¸Šà¹‡à¸„à¸ªà¸–à¸²à¸™à¸°à¸à¸¥à¹ˆà¸­à¸‡à¹€à¸ªà¸µà¸¢à¸‡ + à¸à¸¥à¹ˆà¸­à¸‡à¹€à¸žà¸¨
+// 🟢 UI LOGIC: เช็คสถานะกล่องเสียง + กล่องเพศ
 // ============================================
 function checkVideoVoiceState() {
     const styleInput = document.getElementById('video-style-select');
@@ -5918,18 +6225,18 @@ function checkVideoVoiceState() {
     const selectedStyle = styleInput.value;
     const isRandom = randomSwitch ? randomSwitch.checked : false;
 
-    // à¸£à¸²à¸¢à¸Šà¸·à¹ˆà¸­à¹‚à¸«à¸¡à¸”
+    // รายชื่อโหมด
   const noVoiceModes = ['broll_hero', 'broll_pan', 'broll_zoom', 'broll_cinematic', 'broll_motion_detail', 'miniature_vdo']; 
   const voiceoverModes = ['voice_promo', 'voice_soft', 'voice_docu', 'cartoon', 'voice_rant', 'voice_miniature', 'voice_news', 'voice_movie'];
 
-    // 1. à¸ˆà¸±à¸”à¸à¸²à¸£à¸„à¸§à¸²à¸¡à¸¡à¸·à¸”/à¸ªà¸§à¹ˆà¸²à¸‡à¸‚à¸­à¸‡à¸à¸¥à¹ˆà¸­à¸‡à¹€à¸ªà¸µà¸¢à¸‡à¸£à¸§à¸¡
+    // 1. จัดการความมืด/สว่างของกล่องเสียงรวม
     if (!isRandom && noVoiceModes.includes(selectedStyle)) {
         voiceContainer.classList.add('disabled-section');
     } else {
         voiceContainer.classList.remove('disabled-section');
     }
 
-    // 2. à¸ˆà¸±à¸”à¸à¸²à¸£à¸à¸²à¸£à¹‚à¸Šà¸§à¹Œ/à¸‹à¹ˆà¸­à¸™ "à¸à¸¥à¹ˆà¸­à¸‡à¹€à¸¥à¸·à¸­à¸à¹€à¸žà¸¨à¹à¸¥à¸°à¸­à¸²à¸¢à¸¸"
+    // 2. จัดการการโชว์/ซ่อน "กล่องเลือกเพศและอายุ"
     if (genderWrapper) {
         if (!isRandom && voiceoverModes.includes(selectedStyle)) {
             genderWrapper.style.display = 'block';
@@ -5942,7 +6249,7 @@ function checkVideoVoiceState() {
 
 
 
-// à¸„à¸§à¸šà¸„à¸¸à¸¡à¸à¸²à¸£à¹€à¸›à¸´à¸”/à¸›à¸´à¸”à¸Šà¹ˆà¸­à¸‡à¸à¸£à¸­à¸à¸‚à¹‰à¸­à¸„à¸§à¸²à¸¡à¸•à¸²à¸¡ Checkbox
+// ควบคุมการเปิด/ปิดช่องกรอกข้อความตาม Checkbox
 document.addEventListener('DOMContentLoaded', () => {
     const textToggle = document.getElementById('banana-text-overlay-checkbox');
     const textWrapper = document.getElementById('banana-custom-text-wrapper');
@@ -5956,7 +6263,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        // à¸£à¸±à¸™à¸„à¸£à¸±à¹‰à¸‡à¹à¸£à¸à¹€à¸žà¸·à¹ˆà¸­à¸•à¸±à¹‰à¸‡à¸„à¹ˆà¸²à¹€à¸£à¸´à¹ˆà¸¡à¸•à¹‰à¸™
+        // รันครั้งแรกเพื่อตั้งค่าเริ่มต้น
         textWrapper.style.display = textToggle.checked ? 'block' : 'none';
     }
 });
