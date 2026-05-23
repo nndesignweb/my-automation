@@ -12,6 +12,9 @@ const FeatureGate = (() => {
     customCharacter: 'ตัวละครระบุเองใช้ได้เฉพาะ Premium',
     customScene: 'ฉากระบุเองใช้ได้เฉพาะ Premium',
     customOutfit: 'ชุดระบุเองใช้ได้เฉพาะ Premium',
+    advancedStyle: 'สไตล์ขั้นสูงใช้ได้เฉพาะ Premium',
+    advancedScene: 'ฉากอื่นๆ ใช้ได้เฉพาะ Premium',
+    advancedOutfit: 'ชุดทั้งหมดใช้ได้เฉพาะ Premium',
   };
 
   const PLANS = {
@@ -27,6 +30,9 @@ const FeatureGate = (() => {
         customCharacter: false,
         customScene: false,
         customOutfit: false,
+        advancedStyle: false,
+        advancedScene: false,
+        advancedOutfit: false,
       },
     },
     vip: {
@@ -41,6 +47,9 @@ const FeatureGate = (() => {
         customCharacter: true,
         customScene: true,
         customOutfit: true,
+        advancedStyle: true,
+        advancedScene: true,
+        advancedOutfit: true,
       },
     },
   };
@@ -184,6 +193,30 @@ const FeatureGate = (() => {
     if (input) input.value = '';
   }
 
+  function activateConfigOption(type, value) {
+    const container = document.getElementById(`config-content-${type}`);
+    if (!container) return;
+
+    container.querySelectorAll('.config-option').forEach((option) => {
+      option.classList.toggle('active', option.dataset.value === value);
+    });
+  }
+
+  function activateConfigTab(type, groupName) {
+    const container = document.getElementById(`config-content-${type}`);
+    if (!container) return;
+
+    container.querySelectorAll('.config-tab-btn').forEach((button) => {
+      button.classList.toggle('active', button.dataset.group === groupName);
+    });
+
+    container.querySelectorAll(`[id^="${type}-group-"]`).forEach((group) => {
+      group.style.display = group.id === `${type}-group-${groupName}`
+        ? (groupName === 'custom' ? 'block' : 'grid')
+        : 'none';
+    });
+  }
+
   function enforceBasicCreativeLimits() {
     const modeInput = document.getElementById('current-app-mode');
     if (modeInput && modeInput.value === 'mascot' && typeof window.switchAppMode === 'function') {
@@ -191,15 +224,44 @@ const FeatureGate = (() => {
     }
 
     const characterSelect = document.getElementById('banana-character-select');
-    if (characterSelect && (characterSelect.value === 'auto' || characterSelect.value === 'custom')) {
-      characterSelect.value = 'office_lady';
+    const allowedBasicCharacters = new Set([
+      'teen_girl', 'thai_guy', 'office_lady', 'smart_man', 'seller_woman', 'seller_man',
+      'human_paa', 'human_lung', 'villager_girl', 'villager_boy', 'oppa', 'net_idol',
+      'warrior', 'princess', 'detective', 'mafia_boss', 'cyber_girl', 'traveler'
+    ]);
+    if (characterSelect && !allowedBasicCharacters.has(characterSelect.value)) {
+      characterSelect.value = 'teen_girl';
     }
+    if (typeof window.switchCharTab === 'function') {
+      window.switchCharTab('preset');
+    }
+    document.querySelectorAll('#character-source-human .char-group .char-card:not(.config-option), #workspace-human .char-group .char-card:not(.config-option)').forEach((card) => {
+      card.classList.toggle('active', card.dataset.value === (characterSelect?.value || 'teen_girl'));
+    });
 
     const bgSelect = document.getElementById('banana-bg-select');
-    if (bgSelect && bgSelect.value === 'custom') bgSelect.value = 'living_room';
+    const allowedBasicScenes = new Set(['ai_match', 'living_room', 'kitchen', 'studio', 'cafe', 'garden', 'night_market', 'live_warehouse']);
+    if (bgSelect && !allowedBasicScenes.has(bgSelect.value)) bgSelect.value = 'ai_match';
+    if (bgSelect) {
+      activateConfigTab('bg', 'popular');
+      activateConfigOption('bg', bgSelect.value);
+    }
 
     const outfitSelect = document.getElementById('banana-outfit-select');
-    if (outfitSelect && outfitSelect.value === 'custom') outfitSelect.value = 'casual';
+    const allowedBasicOutfits = new Set(['ai_match', 'casual', 'sport', 'homewear', 'sleepwear', 'polo']);
+    if (outfitSelect && !allowedBasicOutfits.has(outfitSelect.value)) outfitSelect.value = 'ai_match';
+    if (outfitSelect) {
+      activateConfigTab('outfit', 'recommended');
+      activateConfigOption('outfit', outfitSelect.value);
+    }
+
+    const styleSelect = document.getElementById('banana-style-select');
+    const allowedBasicStyles = new Set(['ugc_basic', 'studio', 'live', 'fashion', 'usage', 'funny', 'sony_product', 'shop_review', 'natural_light', 'real_ads']);
+    if (styleSelect && !allowedBasicStyles.has(styleSelect.value)) styleSelect.value = 'ugc_basic';
+    if (styleSelect) {
+      activateConfigTab('style', 'recommended');
+      activateConfigOption('style', styleSelect.value);
+    }
 
     [
       'banana-custom-character-input',

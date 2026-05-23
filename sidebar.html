@@ -9,10 +9,14 @@
 
 <div id="auth-overlay">
     <div class="login-card">
-      <div class="login-mark" aria-hidden="true"></div>
-      <div class="login-kicker">Prompt & Play Studio</div>
-      <h1>Prompt & Play Studio</h1>
-      <p class="login-subtitle">กรอก License Key เพื่อเข้าใช้งาน ระบบจะตรวจว่าเป็นรุ่น Basic หรือ Premium ให้อัตโนมัติ</p>
+      <div class="login-brand-row">
+        <div class="login-mark" aria-hidden="true"></div>
+        <div class="login-brand-copy">
+          <div class="login-kicker">Prompt & Play Studio</div>
+          <h1>Prompt & Play Studio</h1>
+          <p class="login-subtitle">กรอก License Key เพื่อเข้าใช้งาน ระบบจะตรวจว่าเป็นรุ่น Basic หรือ Premium ให้อัตโนมัติ</p>
+        </div>
+      </div>
 
       <div class="login-plan-preview">
         <div class="login-plan-card basic">
@@ -63,7 +67,7 @@
     </div>
   </header>
 
-  <div class="studio-mode-tabs">
+  <div class="studio-mode-tabs" aria-hidden="true">
     <button type="button" class="studio-mode-tab active">
       <span>Product Clip</span>
       <small>ทำคลิปขายสินค้า</small>
@@ -75,8 +79,8 @@
   </div>
 
   <nav class="nav-segment">
-    <button class="segment-btn active" data-tab="banana">สร้างรูป</button>
-    <button class="segment-btn" data-tab="video">สร้างวิดีโอ</button>
+    <button class="segment-btn active" data-tab="banana"><span class="segment-icon">🖼️</span> สร้างรูป</button>
+    <button class="segment-btn" data-tab="video"><span class="segment-icon">🎬</span> สร้างวิดีโอ</button>
   </nav>
 
   <main class="app-body">
@@ -85,6 +89,14 @@
       
       <section class="studio-section studio-section-assets">
       <div class="section-title">Assets Upload</div>
+
+      <div class="input-group product-keyword-box">
+        <div class="input-row"><label>ชื่อสินค้า / Keyword</label></div>
+        <div style="position:relative;">
+            <span style="position:absolute; left:10px; top:11px; font-size:14px;">🛍️</span>
+            <input type="text" id="banana-product-name" placeholder="เช่น เซรั่มหน้าใส, รองเท้าผ้าใบ..." style="padding-left:35px; width:100%; box-sizing: border-box;">
+        </div>
+      </div>
       
       <div class="upload-bar" id="banana-upload-zone">
         <div class="upload-left">
@@ -107,20 +119,21 @@
       </div>
       <input type="file" id="model-file-input" accept="image/*" hidden>
       <div class="preview-strip" id="model-preview-container"></div>
+      <div id="character-source-panel" class="character-source-panel">
+        <div class="character-source-head">
+          <strong>ตัวละครหลัก</strong>
+          <span>เลือกว่าจะใช้นางแบบจริง ตัวละครระบบ หรือมาสคอต</span>
+        </div>
+        <div id="character-source-mode-slot"></div>
+        <div id="character-source-human"></div>
+        <div id="character-source-mascot" style="display:none;"></div>
+      </div>
       </section>
 	  
      
 
       <section class="studio-section studio-section-config">
 	<div class="section-title">Configuration</div>
-
-      <div class="input-group">
-        <div class="input-row"><label>ชื่อสินค้า / Keyword</label></div>
-        <div style="position:relative;">
-            <span style="position:absolute; left:10px; top:11px; font-size:14px;">🛍️</span>
-            <input type="text" id="banana-product-name" placeholder="เช่น เซรั่มหน้าใส, รองเท้าผ้าใบ..." style="padding-left:35px; width:100%; box-sizing: border-box;">
-        </div>
-      </div>
 	  
 	  <div class="special-box" style="margin:10px 0; background: #27272a; border-color: #444;">
     <span style="color:#fff; font-weight:600; font-size:13px;">🔤 เพิ่มใส่ตัวหนังสือในภาพ</span>
@@ -149,67 +162,48 @@
           
           <div class="input-group">
             <div class="input-row"><label style="color:#aaa;">เลือกคาแรคเตอร์ (Human Model)</label></div>
-            <input type="hidden" id="banana-character-select" value="auto">
+            <input type="hidden" id="banana-character-select" value="teen_girl">
             
             <div class="char-tab-container">
-              <div class="char-tabs">
-                    
-                    <button class="char-tab-btn" data-target="general">👩‍🦰 ทั่วไป (ญ/ช)</button>
-                    <button class="char-tab-btn" data-target="job">👷 อาชีพ</button>
-                    <button class="char-tab-btn" data-target="senior">👴 สูงวัย</button>
-					<button class="char-tab-btn active" data-target="auto">✨ ระบุเอง</button>
+              <div class="char-tabs human-source-tabs">
+                    <button class="char-tab-btn" data-target="upload">📷 อัปโหลดเอง</button>
+                    <button class="char-tab-btn active" data-target="preset">⭐ ตัวละครสำเร็จรูป</button>
+					<button class="char-tab-btn" data-target="custom" data-feature="customCharacter">✨ ระบุเอง</button>
               </div>
 
-              <div class="input-group" style="margin: 10px 0; border-top: 1px dashed #333; padding-top: 10px;">
-                  <label class="input-label" style="font-size:11px; color:#aaa;">✎ ระบุลักษณะตัวละครเอง (ถ้ามี):</label>
-                  <input type="text" id="banana-custom-character-input" class="config-input" data-feature="customCharacter" placeholder="เช่น ผู้หญิงไทยอายุ 35 ปี...">
+              <div id="char-group-upload" class="char-group" style="display:none;">
+                  <div class="character-upload-slot"></div>
+                  <div class="character-source-note">ถ้าอัปโหลดรูปนางแบบ ระบบจะใช้รูปนี้เป็นตัวละครหลัก และลดความสำคัญของตัวละครสำเร็จรูป</div>
               </div>
 
-              <div id="char-group-general" class="char-group" style="display:none;">
+              <div id="char-group-preset" class="char-group" style="display:block;">
                   <div class="char-grid">
-                      <div class="char-card" data-value="office_lady"><span class="char-icon">👩‍💼</span> สาวออฟฟิศ(ญ)</div>
-                      <div class="char-card" data-value="net_idol"><span class="char-icon">✨</span> เน็ตไอดอล(ญ)</div>
-                      <div class="char-card" data-value="hiso_girl"><span class="char-icon">💎</span> ไฮโซ(ญ)</div>
-                      <div class="char-card" data-value="sport_girl"><span class="char-icon">🏃‍♀️</span> สายสุขภาพ(ญ)</div>
-                      <div class="char-card" data-value="real_size"><span class="char-icon">👗</span> สาวอวบ(ญ)</div>
-                      <div class="char-card" data-value="mom"><span class="char-icon">👩‍👦</span> คุณแม่(ญ)</div>
-                      <div class="char-card" data-value="hijab"><span class="char-icon">🧕</span> มุสลิม(ญ)</div>
-                      <div class="char-card" data-value="villager_girl"><span class="char-icon">🌾</span> สาวไทบ้าน(ญ)</div>
-                      <div class="char-card" data-value="thai_guy"><span class="char-icon">🧢</span> วัยรุ่น(ช)</div>
-                      <div class="char-card" data-value="smart_man"><span class="char-icon">👨‍💼</span> นักธุรกิจ(ช)</div>
-                      <div class="char-card" data-value="oppa"><span class="char-icon">🇰🇷</span> หล่อเกาหลี(ช)</div>
-                      <div class="char-card" data-value="muscle_man"><span class="char-icon">💪</span> สายกล้าม(ช)</div>
-                      <div class="char-card" data-value="street_boy"><span class="char-icon">🛹</span> สายสตรีท(ช)</div>
-                      <div class="char-card" data-value="dad"><span class="char-icon">👨‍👧</span> คุณพ่อ(ช)</div>
-                      <div class="char-card" data-value="villager_boy"><span class="char-icon">🚜</span> หนุ่มไทบ้าน(ช)</div>
-                  </div>
-              </div>
-
-              <div id="char-group-job" class="char-group" style="display:none;">
-                  <div class="char-grid">
-                      <div class="char-card" data-value="student_female"><span class="char-icon">👩‍🎓</span> นักศึกษา(ญ)</div>
-                      <div class="char-card" data-value="student_male"><span class="char-icon">👨‍🎓</span> นักศึกษา(ช)</div>
-                      <div class="char-card" data-value="seller_woman"><span class="char-icon">🗣️</span> แม่ค้า</div>
-                      <div class="char-card" data-value="seller_man"><span class="char-icon">📦</span> พ่อค้า</div>
-                      <div class="char-card" data-value="doctor_female"><span class="char-icon">👩‍⚕️</span> หมอ(ญ)</div>
-                      <div class="char-card" data-value="doctor_male"><span class="char-icon">👨‍⚕️</span> หมอ(ช)</div>
-                      <div class="char-card" data-value="nurse_female"><span class="char-icon">🏥</span> พยาบาล(ญ)</div>
-                      <div class="char-card" data-value="nurse_male"><span class="char-icon">🚑</span> พยาบาล(ช)</div>
-                      <div class="char-card" data-value="chef_female"><span class="char-icon">👩‍🍳</span> เชฟ(ญ)</div>
-                      <div class="char-card" data-value="chef_male"><span class="char-icon">👨‍🍳</span> เชฟ(ช)</div>
-                      <div class="char-card" data-value="rider_male"><span class="char-icon">🏍️</span> ไรเดอร์</div>
-                      <div class="char-card" data-value="farmer_female"><span class="char-icon">👩‍🌾</span> ชาวสวน</div>
-                  </div>
-              </div>
-
-              <div id="char-group-senior" class="char-group" style="display:none;">
-                  <div class="char-grid">
-                      <div class="char-card" data-value="grandma"><span class="char-icon">👵</span> คุณยาย</div>
-                      <div class="char-card" data-value="active_grandma"><span class="char-icon">💃</span> ยายซิ่ง</div>
-                      <div class="char-card" data-value="grandpa"><span class="char-icon">👴</span> คุณตา</div>
-                      <div class="char-card" data-value="chinese_boss"><span class="char-icon">🏮</span> เจ้าสัว</div>
+                      <div class="char-card active" data-value="teen_girl"><span class="char-icon">🌸</span> วัยรุ่นหญิง</div>
+                      <div class="char-card" data-value="thai_guy"><span class="char-icon">🧢</span> วัยรุ่นชาย</div>
+                      <div class="char-card" data-value="office_lady"><span class="char-icon">👩‍💼</span> สาวออฟฟิศ</div>
+                      <div class="char-card" data-value="smart_man"><span class="char-icon">👨‍💼</span> หนุ่มออฟฟิศ</div>
+                      <div class="char-card" data-value="seller_woman"><span class="char-icon">🗣️</span> แม่ค้าไลฟ์สด</div>
+                      <div class="char-card" data-value="seller_man"><span class="char-icon">📦</span> พ่อค้าไลฟ์สด</div>
                       <div class="char-card" data-value="human_paa"><span class="char-icon">👚</span> มนุษย์ป้า</div>
                       <div class="char-card" data-value="human_lung"><span class="char-icon">🕶️</span> มนุษย์ลุง</div>
+                      <div class="char-card" data-value="villager_girl"><span class="char-icon">🌾</span> สาวบ้านนอก</div>
+                      <div class="char-card" data-value="villager_boy"><span class="char-icon">🚜</span> หนุ่มบ้านนอก</div>
+                      <div class="char-card" data-value="oppa"><span class="char-icon">🇰🇷</span> หล่อเกาหลี</div>
+                      <div class="char-card" data-value="net_idol"><span class="char-icon">✨</span> สวยโต๊วอิน</div>
+                      <div class="char-card costume-locked" data-value="warrior"><span class="char-icon">⚔️</span> นักรบ</div>
+                      <div class="char-card costume-locked" data-value="princess"><span class="char-icon">👑</span> เจ้าหญิง</div>
+                      <div class="char-card costume-locked" data-value="detective"><span class="char-icon">🕵️</span> นักสืบ</div>
+                      <div class="char-card costume-locked" data-value="mafia_boss"><span class="char-icon">🖤</span> บอสมาเฟีย</div>
+                      <div class="char-card costume-locked" data-value="cyber_girl"><span class="char-icon">🦾</span> สาวไซเบอร์</div>
+                      <div class="char-card costume-locked" data-value="traveler"><span class="char-icon">🎒</span> นักเดินทาง</div>
+                  </div>
+              </div>
+
+              <div id="char-group-custom" class="char-group" data-feature="customCharacter" style="display:none;">
+                  <div class="custom-character-box">
+                      <label class="input-label">✎ ระบุลักษณะตัวละครเอง</label>
+                      <input type="text" id="banana-custom-character-input" class="config-input" placeholder="เช่น ผู้หญิงไทยอายุ 35 ปี สไตล์เจ้าของแบรนด์...">
+                      <div class="character-source-note">Premium เท่านั้น: ใช้เมื่ออยากกำหนดอายุ บุคลิก หน้าตา หรือสไตล์เฉพาะเอง</div>
                   </div>
               </div>
 
@@ -246,40 +240,79 @@
                   
                   <div class="char-tab-container" id="config-content-style" style="margin-top:5px;">
                       <div class="char-tabs">
-                          <button class="char-tab-btn active config-tab-btn" data-type="style" data-group="human">👤 คน+สินค้า</button>
-                          <button class="char-tab-btn config-tab-btn" data-type="style" data-group="closeup">🔍 มือ+สินค้า</button>
-                          <button class="char-tab-btn config-tab-btn" data-type="style" data-group="product">🖼️ ฉาก+สินค้า</button>
-                          <button class="char-tab-btn config-tab-btn" data-type="style" data-group="fantasy">🎨 แฟนตาซี</button>
+                          <button class="char-tab-btn active config-tab-btn" data-type="style" data-group="recommended">⭐ สไตล์แนะนำ</button>
+                          <button class="char-tab-btn config-tab-btn" data-type="style" data-group="human" data-feature="advancedStyle">👤 คน+สินค้า</button>
+                          <button class="char-tab-btn config-tab-btn" data-type="style" data-group="product" data-feature="advancedStyle">🖼️ สินค้า+ฉาก</button>
+                          <button class="char-tab-btn config-tab-btn" data-type="style" data-group="other" data-feature="advancedStyle">🧩 อื่นๆ</button>
                       </div>
                       <div class="char-content-area">
-                          <div id="style-group-human" class="char-grid" style="display:grid; grid-template-columns:1fr 1fr;">
+                          <div id="style-group-recommended" class="char-grid" style="display:grid; grid-template-columns:1fr 1fr;">
                               <div class="char-card active config-option" data-type="style" data-value="ugc_basic" data-label="💬 UGC Basic Cute"><span class="char-icon">💬</span> UGC Basic Cute</div>
-                              <div class="char-card config-option" data-type="style" data-value="model" data-label="💃 นายแบบ"><span class="char-icon">💃</span> นายแบบ (เต็มตัว)</div>
-                              <div class="char-card config-option" data-type="style" data-value="influencer" data-label="🤳 อินฟลูฯ"><span class="char-icon">🤳</span> อินฟลูฯ (Vlog)</div>        
-                              <div class="char-card config-option" data-type="style" data-value="beauty" data-label="💄 บิวตี้"><span class="char-icon">💄</span> บิวตี้ (หน้าชัด)</div>
                               <div class="char-card config-option" data-type="style" data-value="studio" data-label="🔥 โปรโมท"><span class="char-icon">🔥</span> โปรโมทขั้นสุด</div>
-                              <div class="char-card config-option" data-type="style" data-value="usage" data-label="📸 ใช้งานจริง"><span class="char-icon">📸</span> ไลฟ์สไตล์</div>
-                              <div class="char-card config-option" data-type="style" data-value="review" data-label="✋ รีวิว"><span class="char-icon">✋</span> ถือสินค้า(รีวิว)</div>
                               <div class="char-card config-option" data-type="style" data-value="live" data-label="🔴 ไลฟ์สด"><span class="char-icon">🔴</span> ไลฟ์สด</div>
-							   <div class="char-card config-option" data-type="style" data-value="fashion" data-label="👗 แฟชั่น"><span class="char-icon">👗</span> แฟชั่น (สวมใส่)</div>
-							 <div class="char-card config-option" data-type="style" data-value="mirror" data-label="🪞 หน้ากระจก"><span class="char-icon">🪞</span> หน้ากระจก (สวมใส่)</div>
+                              <div class="char-card config-option" data-type="style" data-value="fashion" data-label="👗 แฟชั่น"><span class="char-icon">👗</span> แฟชั่น (สวมใส่)</div>
+                              <div class="char-card config-option" data-type="style" data-value="usage" data-label="📸 ไลฟ์สไตล์"><span class="char-icon">📸</span> ไลฟ์สไตล์</div>
+                              <div class="char-card config-option" data-type="style" data-value="funny" data-label="🤪 หัวโต"><span class="char-icon">🤪</span> หัวโต</div>
+                              <div class="char-card config-option" data-type="style" data-value="sony_product" data-label="📷 Sony Product"><span class="char-icon">📷</span> Sony Product</div>
+                              <div class="char-card config-option" data-type="style" data-value="shop_review" data-label="🏪 รีวิวหน้าร้าน"><span class="char-icon">🏪</span> รีวิวหน้าร้าน</div>
+                              <div class="char-card config-option" data-type="style" data-value="natural_light" data-label="🌤️ แสงธรรมชาติ"><span class="char-icon">🌤️</span> แสงธรรมชาติ</div>
+                              <div class="char-card config-option" data-type="style" data-value="real_ads" data-label="🎯 โฆษณาเรียล"><span class="char-icon">🎯</span> โฆษณาเรียล</div>
                           </div>
-                          <div id="style-group-closeup" class="char-grid" style="display:none; grid-template-columns:1fr 1fr;">
+                          <div id="style-group-human" class="char-grid" style="display:none; grid-template-columns:1fr 1fr;">
+                              <div class="char-card config-option" data-type="style" data-value="model" data-label="💃 นายแบบ"><span class="char-icon">💃</span> นายแบบ (เต็มตัว)</div>
+                              <div class="char-card config-option" data-type="style" data-value="influencer" data-label="🤳 อินฟลูฯ"><span class="char-icon">🤳</span> อินฟลูฯ (Vlog)</div>
+                              <div class="char-card config-option" data-type="style" data-value="beauty" data-label="💄 บิวตี้"><span class="char-icon">💄</span> บิวตี้ (หน้าชัด)</div>
+                              <div class="char-card config-option" data-type="style" data-value="review" data-label="✋ รีวิว"><span class="char-icon">✋</span> ถือสินค้า(รีวิว)</div>
+                              <div class="char-card config-option" data-type="style" data-value="mirror" data-label="🪞 หน้ากระจก"><span class="char-icon">🪞</span> หน้ากระจก (สวมใส่)</div>
+                              <div class="char-card config-option" data-type="style" data-value="sony_portrait" data-label="📸 Sony Portrait Ads"><span class="char-icon">📸</span> Sony Portrait Ads</div>
+                              <div class="char-card config-option" data-type="style" data-value="lifestyle_review" data-label="☕ Lifestyle Review"><span class="char-icon">☕</span> Lifestyle Review</div>
+                          </div>
+                          <div id="style-group-product" class="char-grid" style="display:none; grid-template-columns:1fr 1fr;">
                               <div class="char-card config-option" data-type="style" data-value="texture" data-label="💧 เนื้อสัมผัส"><span class="char-icon">💧</span> เนื้อสัมผัส (ซูม)</div>
                               <div class="char-card config-option" data-type="style" data-value="unboxing" data-label="📦 แกะกล่อง"><span class="char-icon">📦</span> แกะกล่อง (POV)</div>
                               <div class="char-card config-option" data-type="style" data-value="shoes" data-label="👟 รองเท้า"><span class="char-icon">👟</span> รองเท้า (เห็นเท้า)</div>
                               <div class="char-card config-option" data-type="style" data-value="hands" data-label="🛠️ สาธิตมือ"><span class="char-icon">🛠️</span> สาธิต (เห็นมือ)</div>
-                          </div>
-                          <div id="style-group-product" class="char-grid" style="display:none; grid-template-columns:1fr 1fr;">
                               <div class="char-card config-option" data-type="style" data-value="decor" data-label="🛋️ ของชิ้นใหญ่"><span class="char-icon">🛋️</span> ของชิ้นใหญ่</div>
                               <div class="char-card config-option" data-type="style" data-value="showcase" data-label="🖼️ สินค้าล้วน"><span class="char-icon">🖼️</span> สินค้าล้วน</div>
+                              <div class="char-card config-option" data-type="style" data-value="catalog" data-label="🧾 Studio Catalog"><span class="char-icon">🧾</span> Studio Catalog</div>
+                              <div class="char-card config-option" data-type="style" data-value="counter_display" data-label="🛒 Counter Display"><span class="char-icon">🛒</span> Counter Display</div>
+                              <div class="char-card config-option" data-type="style" data-value="premium_closeup" data-label="🔎 Premium Close-up"><span class="char-icon">🔎</span> Premium Close-up</div>
                           </div>
-                          <div id="style-group-fantasy" class="char-grid" style="display:none; grid-template-columns:1fr 1fr;">
+                          <div id="style-group-other" class="char-grid" style="display:none; grid-template-columns:1fr 1fr;">
                               <div class="char-card config-option" data-type="style" data-value="fancy" data-label="✨ แฟนซี"><span class="char-icon">✨</span> แฟนซี (ของลอย)</div>
                               <div class="char-card config-option" data-type="style" data-value="cgi" data-label="🪐 CGI ยักษ์"><span class="char-icon">🪐</span> CGI สินค้ายักษ์</div>
-                              <div class="char-card config-option" data-type="style" data-value="funny" data-label="🤪 หัวโต"><span class="char-icon">🤪</span> หัวโต (น่ารัก)</div>
-                        <div class="char-card config-option" data-type="style" data-value="miniature" data-label="🏙️ เมืองจิ๋ว"><span class="char-icon">🏙️</span> เมืองจิ๋ว (Miniature)</div>
+                              <div class="char-card config-option" data-type="style" data-value="miniature" data-label="🏙️ เมืองจิ๋ว"><span class="char-icon">🏙️</span> เมืองจิ๋ว (Miniature)</div>
+                              <div class="char-card config-option" data-type="style" data-value="outdoor_market" data-label="⛱️ Outdoor Market"><span class="char-icon">⛱️</span> Outdoor Market</div>
 						</div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="input-group">
+                  <div class="input-row"><label>มุมกล้อง (Camera Angle)</label></div>
+                  <input type="hidden" id="banana-angle-select" value="auto">
+                  
+                  <div class="char-tab-container" id="config-content-angle" style="margin-top:5px;">
+                      <div class="char-tabs">
+                          <button class="char-tab-btn active config-tab-btn" data-type="angle" data-group="recommended">📷 มุมแนะนำ</button>
+                          <button class="char-tab-btn config-tab-btn" data-type="angle" data-group="custom" data-feature="customCameraAngle">✏️ ระบุเอง</button>
+                      </div>
+                      
+                      <div id="angle-group-custom" class="char-grid" style="display:none;">
+                          <input type="text" id="banana-custom-angle-input" data-feature="customCameraAngle" placeholder="ระบุมุมกล้อง เช่น ถ่ายเฉียงต่ำจากซ้าย 30 องศา, ซูมโลโก้สินค้า..." style="width:100%; padding:10px; background:#2e1065; border:1px solid #a855f7; color:#fff; border-radius:8px; font-size:12px; margin-top:5px;">
+                      </div>
+                      
+                      <div class="char-content-area">
+                          <div id="angle-group-recommended" class="char-grid" style="display:grid; grid-template-columns:1fr 1fr;">
+                              <div class="char-card active config-option" data-type="angle" data-value="auto" data-label="🤖 Auto"><span class="char-icon">🤖</span> Auto</div>
+                              <div class="char-card config-option" data-type="angle" data-value="front" data-label="🧍 หน้าตรง"><span class="char-icon">🧍</span> หน้าตรง</div>
+                              <div class="char-card config-option" data-type="angle" data-value="three_quarter" data-label="↗️ เฉียง 45°"><span class="char-icon">↗️</span> เฉียง 45°</div>
+                              <div class="char-card config-option" data-type="angle" data-value="low_angle" data-label="⬆️ มุมต่ำ"><span class="char-icon">⬆️</span> มุมต่ำ</div>
+                              <div class="char-card config-option" data-type="angle" data-value="high_angle" data-label="⬇️ มุมสูง"><span class="char-icon">⬇️</span> มุมสูง</div>
+                              <div class="char-card config-option" data-type="angle" data-value="close_up" data-label="🔍 ซูมสินค้า"><span class="char-icon">🔍</span> ซูมสินค้า</div>
+                              <div class="char-card config-option" data-type="angle" data-value="top_view" data-label="🧭 มุมบน"><span class="char-icon">🧭</span> มุมบน</div>
+                              <div class="char-card config-option" data-type="angle" data-value="over_shoulder" data-label="👀 ใช้งานจริง"><span class="char-icon">👀</span> ใช้งานจริง</div>
+                          </div>
                       </div>
                   </div>
               </div>
@@ -290,14 +323,13 @@
                       <span style="color:#e9d5ff; font-weight:600; font-size:13px;">🎲 สุ่มฉากหลัง (Random BG)</span>
                       <label class="switch"><input type="checkbox" id="banana-random-bg-switch"><span class="slider"></span></label>
                   </div>
-                  <input type="hidden" id="banana-bg-select" value="living_room">
+                  <input type="hidden" id="banana-bg-select" value="ai_match">
                   
                  <div class="char-tab-container" id="config-content-bg" style="margin-top:5px;">
                       <div class="char-tabs">
-                          <button class="char-tab-btn active config-tab-btn" data-type="bg" data-group="indoor">🏠 ภายใน</button>
-                          <button class="char-tab-btn config-tab-btn" data-type="bg" data-group="urban">🏙️ เมือง</button>
-                          <button class="char-tab-btn config-tab-btn" data-type="bg" data-group="outdoor">🌳 นอกสถานที่</button>
-                          <button class="char-tab-btn config-tab-btn" data-type="bg" data-group="custom">✏️ ระบุเอง</button>
+                          <button class="char-tab-btn active config-tab-btn" data-type="bg" data-group="popular">⭐ ยอดนิยม</button>
+                          <button class="char-tab-btn config-tab-btn" data-type="bg" data-group="other" data-feature="advancedScene">🧩 ฉากทั้งหมด</button>
+                          <button class="char-tab-btn config-tab-btn" data-type="bg" data-group="custom" data-feature="customScene">✏️ ระบุเอง</button>
                       </div>
                       
                       <div id="bg-group-custom" class="char-grid" style="display:none;">
@@ -305,20 +337,24 @@
                       </div>
                       
                       <div class="char-content-area">
-                          <div id="bg-group-indoor" class="char-grid" style="display:grid; grid-template-columns:1fr 1fr;">
-                              <div class="char-card active config-option" data-type="bg" data-value="living_room"><span class="char-icon">🛋️</span> ห้องนั่งเล่น</div>
-                              <div class="char-card config-option" data-type="bg" data-value="bedroom"><span class="char-icon">🛏️</span> ห้องนอน</div>
+                          <div id="bg-group-popular" class="char-grid" style="display:grid; grid-template-columns:1fr 1fr;">
+                              <div class="char-card active config-option" data-type="bg" data-value="ai_match"><span class="char-icon">🤖</span> AI คิดให้</div>
+                              <div class="char-card config-option" data-type="bg" data-value="living_room"><span class="char-icon">🛋️</span> ห้องนั่งเล่น</div>
                               <div class="char-card config-option" data-type="bg" data-value="kitchen"><span class="char-icon">🍳</span> ห้องครัว</div>
                               <div class="char-card config-option" data-type="bg" data-value="studio"><span class="char-icon">📸</span> สตูดิโอ</div>
+                              <div class="char-card config-option" data-type="bg" data-value="cafe"><span class="char-icon">☕</span> คาเฟ่</div>
+                              <div class="char-card config-option" data-type="bg" data-value="garden"><span class="char-icon">🌳</span> สวน</div>
+                              <div class="char-card config-option" data-type="bg" data-value="night_market"><span class="char-icon">🎪</span> ตลาดนัด</div>
+                              <div class="char-card config-option" data-type="bg" data-value="live_warehouse"><span class="char-icon">🏬</span> โกดังไลฟ์</div>
+                          </div>
+                          <div id="bg-group-other" class="char-grid" style="display:none; grid-template-columns:1fr 1fr;">
+                              <div class="char-card config-option" data-type="bg" data-value="bedroom"><span class="char-icon">🛏️</span> ห้องนอน</div>
                               <div class="char-card config-option" data-type="bg" data-value="classroom"><span class="char-icon">🏫</span> ห้องเรียน</div>
                               <div class="char-card config-option" data-type="bg" data-value="bathroom"><span class="char-icon">🛁</span> ห้องน้ำ</div>
                               <div class="char-card config-option" data-type="bg" data-value="dining_room"><span class="char-icon">🍽️</span> โต๊ะอาหาร</div>
                               <div class="char-card config-option" data-type="bg" data-value="closet"><span class="char-icon">👗</span> ห้องแต่งตัว</div>
                               <div class="char-card config-option" data-type="bg" data-value="luxury_hotel"><span class="char-icon">🏨</span> โรงแรมหรู</div>
                               <div class="char-card config-option" data-type="bg" data-value="meeting_room"><span class="char-icon">💼</span> ห้องประชุม</div>
-                          </div>
-                          <div id="bg-group-urban" class="char-grid" style="display:none; grid-template-columns:1fr 1fr;">
-                              <div class="char-card config-option" data-type="bg" data-value="cafe"><span class="char-icon">☕</span> คาเฟ่</div>
                               <div class="char-card config-option" data-type="bg" data-value="office"><span class="char-icon">🏢</span> ออฟฟิศ</div>
                               <div class="char-card config-option" data-type="bg" data-value="gym"><span class="char-icon">🏋️</span> ฟิตเนส</div>
                               <div class="char-card config-option" data-type="bg" data-value="supermarket"><span class="char-icon">🛒</span> ซูเปอร์ฯ</div>
@@ -328,16 +364,12 @@
                               <div class="char-card config-option" data-type="bg" data-value="airport"><span class="char-icon">✈️</span> สนามบิน</div>
                               <div class="char-card config-option" data-type="bg" data-value="in_car"><span class="char-icon">🚗</span> บนรถยนต์</div>
                               <div class="char-card config-option" data-type="bg" data-value="on_bike"><span class="char-icon">🛵</span> บนมอไซค์</div>
-                          </div>
-                          <div id="bg-group-outdoor" class="char-grid" style="display:none; grid-template-columns:1fr 1fr;">
-                              <div class="char-card config-option" data-type="bg" data-value="garden"><span class="char-icon">🌳</span> สวน</div>
                               <div class="char-card config-option" data-type="bg" data-value="beach"><span class="char-icon">🏖️</span> ทะเล</div>
                               <div class="char-card config-option" data-type="bg" data-value="mountain"><span class="char-icon">⛰️</span> ภูเขา</div>
                               <div class="char-card config-option" data-type="bg" data-value="waterfall"><span class="char-icon">🌊</span> น้ำตก</div>
                               <div class="char-card config-option" data-type="bg" data-value="rice_field"><span class="char-icon">🌾</span> ทุ่งนา</div>
-                              <div class="char-card config-option" data-type="bg" data-value="thai_house"><span class="char-icon">🏠</span> เรือนไทย</div>
+                              <div class="char-card config-option" data-type="bg" data-value="thai_house"><span class="char-icon">🏠</span> บ้านไทยโมเดิร์น</div>
                               <div class="char-card config-option" data-type="bg" data-value="market"><span class="char-icon">🍎</span> ตลาดสด</div>
-                              <div class="char-card config-option" data-type="bg" data-value="night_market"><span class="char-icon">🎪</span> ตลาดนัด</div>
                               <div class="char-card config-option" data-type="bg" data-value="win_moto"><span class="char-icon">🛵</span> ซ้อนวิน</div>
                               <div class="char-card config-option" data-type="bg" data-value="convenience_store"><span class="char-icon">🏪</span> สะดวกซื้อ</div>
                           </div>
@@ -351,14 +383,13 @@
                       <span style="color:#e9d5ff; font-weight:600; font-size:13px;">🎲 สุ่มชุด (Random Outfit)</span>
                       <label class="switch"><input type="checkbox" id="banana-random-outfit-switch"><span class="slider"></span></label>
                   </div>
-                  <input type="hidden" id="banana-outfit-select" value="casual">
+                  <input type="hidden" id="banana-outfit-select" value="ai_match">
                   
                 <div class="char-tab-container" id="config-content-outfit" style="margin-top:5px;">
                       <div class="char-tabs">
-                          <button class="char-tab-btn active config-tab-btn" data-type="outfit" data-group="daily">👕 ทั่วไป/แฟชั่น</button>
-                          <button class="char-tab-btn config-tab-btn" data-type="outfit" data-group="work">💼 ชุดทางการ</button>
-                          <button class="char-tab-btn config-tab-btn" data-type="outfit" data-group="local">🌸 ท้องถิ่น</button>
-                          <button class="char-tab-btn config-tab-btn" data-type="outfit" data-group="custom">✏️ ระบุเอง</button>
+                          <button class="char-tab-btn active config-tab-btn" data-type="outfit" data-group="recommended">👕 ชุดแนะนำ</button>
+                          <button class="char-tab-btn config-tab-btn" data-type="outfit" data-group="all" data-feature="advancedOutfit">🧥 ชุดทั้งหมด</button>
+                          <button class="char-tab-btn config-tab-btn" data-type="outfit" data-group="custom" data-feature="customOutfit">✏️ ระบุเอง</button>
                       </div>
                       
                       <div id="outfit-group-custom" class="char-grid" style="display:none;">
@@ -366,28 +397,29 @@
                       </div>
                       
                       <div class="char-content-area">
-                          <div id="outfit-group-daily" class="char-grid" style="display:grid; grid-template-columns:1fr 1fr;">
-                              <div class="char-card active config-option" data-type="outfit" data-value="casual"><span class="char-icon">👕</span> ยืด+ยีนส์</div>
+                          <div id="outfit-group-recommended" class="char-grid" style="display:grid; grid-template-columns:1fr 1fr;">
+                              <div class="char-card active config-option" data-type="outfit" data-value="ai_match"><span class="char-icon">🤖</span> AI คิดให้</div>
+                              <div class="char-card config-option" data-type="outfit" data-value="casual"><span class="char-icon">👕</span> ยืด+ยีนส์</div>
+                              <div class="char-card config-option" data-type="outfit" data-value="sport"><span class="char-icon">🏃</span> กีฬา</div>
+                              <div class="char-card config-option" data-type="outfit" data-value="homewear"><span class="char-icon">🏠</span> ชุดอยู่บ้าน</div>
+                              <div class="char-card config-option" data-type="outfit" data-value="sleepwear"><span class="char-icon">🛏️</span> ชุดนอน</div>
+                              <div class="char-card config-option" data-type="outfit" data-value="polo"><span class="char-icon">👕</span> โปโล</div>
+                          </div>
+                          <div id="outfit-group-all" class="char-grid" style="display:none; grid-template-columns:1fr 1fr;">
                               <div class="char-card config-option" data-type="outfit" data-value="polo"><span class="char-icon">👕</span> โปโล</div>
                               <div class="char-card config-option" data-type="outfit" data-value="hoodie"><span class="char-icon">🧥</span> ฮู้ดดี้</div>
                               <div class="char-card config-option" data-type="outfit" data-value="korean"><span class="char-icon">🇰🇷</span> เกาหลี</div>
                               <div class="char-card config-option" data-type="outfit" data-value="street"><span class="char-icon">🛹</span> สตรีท</div>
                               <div class="char-card config-option" data-type="outfit" data-value="oldmoney"><span class="char-icon">💎</span> คุณหนู</div>
-                              <div class="char-card config-option" data-type="outfit" data-value="sport"><span class="char-icon">🏃</span> กีฬา</div>
                               <div class="char-card config-option" data-type="outfit" data-value="vacation"><span class="char-icon">🏖️</span> ทะเล</div>
-                          </div>
-                          <div id="outfit-group-work" class="char-grid" style="display:none; grid-template-columns:1fr 1fr;">
                               <div class="char-card config-option" data-type="outfit" data-value="shirt"><span class="char-icon">👔</span> เชิ้ตสุภาพ</div>
                               <div class="char-card config-option" data-type="outfit" data-value="suit"><span class="char-icon">💼</span> สูท</div>
-                           
-                          </div>
-                          <div id="outfit-group-local" class="char-grid" style="display:none; grid-template-columns:1fr 1fr;">
-                              <div class="char-card config-option" data-type="outfit" data-value="morhom"><span class="char-icon">💙</span> หม้อฮ่อม</div>
-                              <div class="char-card config-option" data-type="outfit" data-value="isan"><span class="char-icon">🧣</span> ผ้าขาวม้า</div>
-                              <div class="char-card config-option" data-type="outfit" data-value="northern"><span class="char-icon">🌸</span> พื้นเมือง</div>
-                              <div class="char-card config-option" data-type="outfit" data-value="southern"><span class="char-icon">🌊</span> ปาเต๊ะ</div>
-                              <div class="char-card config-option" data-type="outfit" data-value="thai_dress"><span class="char-icon">👑</span> ชุดไทย(ใหม่)</div>
-                              <div class="char-card config-option" data-type="outfit" data-value="hill_tribe"><span class="char-icon">⛰️</span> ชุดชาวเขา</div>
+                              <div class="char-card config-option" data-type="outfit" data-value="morhom"><span class="char-icon">💙</span> อินดิโก้โมเดิร์น</div>
+                              <div class="char-card config-option" data-type="outfit" data-value="isan"><span class="char-icon">🧣</span> ผ้าขาวม้าโมเดิร์น</div>
+                              <div class="char-card config-option" data-type="outfit" data-value="northern"><span class="char-icon">🌸</span> เหนือโมเดิร์น</div>
+                              <div class="char-card config-option" data-type="outfit" data-value="southern"><span class="char-icon">🌊</span> บาติกโมเดิร์น</div>
+                              <div class="char-card config-option" data-type="outfit" data-value="thai_dress"><span class="char-icon">👑</span> ไทยฟิวชัน</div>
+                              <div class="char-card config-option" data-type="outfit" data-value="hill_tribe"><span class="char-icon">⛰️</span> สีสันโมเดิร์น</div>
                           </div>
                       </div>
                   </div>
@@ -564,6 +596,7 @@
               <option value="hook_secret">เล่าความลับ</option>
               <option value="broll_hero">Hero Shot ไม่มีเสียงพูด</option>
               <option value="broll_cinematic">ซีนีมาติก</option>
+              <option value="broll_motion_detail">Motion Detail ไม่มีเสียงพูด</option>
               <option value="voice_promo">พากย์โปรโมท</option>
             </select>
             <div id="banana-to-video-summary" class="pipeline-mini-status">พร้อมส่งภาพที่สร้างเสร็จไปทำวิดีโออัตโนมัติ</div>
@@ -603,6 +636,43 @@
 
     </div> 
 	
+    <div class="tab-pane" id="tab-content-angle">
+      <section class="studio-section studio-section-assets feature-vip angle-studio-panel" data-feature="angleStudio">
+        <div class="section-title">Angle Studio</div>
+        <div class="angle-studio-hero">
+          <div>
+            <strong>ปรับมุมกล้องจากภาพที่สร้างแล้ว</strong>
+            <span>แตกภาพเดิมเป็นหลายมุม เพื่อเอาไปทำคลิปให้มีช็อตหลากหลายขึ้น</span>
+          </div>
+          <span class="premium-pill">Premium</span>
+        </div>
+
+        <div class="upload-bar angle-source-card">
+          <div class="upload-left">
+            <div class="icon-box">🖼️</div>
+            <div class="upload-text">Source AI Image</div>
+          </div>
+          <span class="badge-count">0</span>
+        </div>
+
+        <div class="angle-option-grid">
+          <button class="angle-option active" type="button">🧍 หน้าตรง</button>
+          <button class="angle-option" type="button">↗️ เฉียง 45°</button>
+          <button class="angle-option" type="button">⬆️ มุมต่ำ</button>
+          <button class="angle-option" type="button">⬇️ มุมสูง</button>
+          <button class="angle-option" type="button">🔍 ซูมสินค้า</button>
+          <button class="angle-option" type="button">👀 ใช้งานจริง</button>
+        </div>
+
+        <div class="angle-studio-note">
+          ขั้นต่อไปจะให้ระบบดึงรูป AI ที่สร้างล่าสุด หรืออัปโหลดภาพเดิม แล้วสร้างมุมกล้องใหม่หลายภาพก่อนส่งต่อไปทำวิดีโอ
+        </div>
+
+        <button class="btn-primary angle-generate-btn" type="button" disabled>Generate Angles</button>
+        <div class="feature-lock-note">Premium เท่านั้น</div>
+      </section>
+    </div>
+
     <div class="tab-pane" id="tab-content-video">
       
       <section class="studio-section studio-section-assets">
@@ -689,6 +759,7 @@
                   <button class="config-option" data-type="vstyle" data-value="broll_zoom" data-label="🔍 ซูมลาย">🔍 ซูมลาย</button>
                   <button class="config-option" data-type="vstyle" data-value="broll_cinematic" data-label="✨ ซีนีมาติก">✨ ซีนีมาติก</button>
                   <button class="config-option" data-type="vstyle" data-value="miniature_vdo" data-label="🏙️ ชีวิตเมืองจิ๋ว">🏙️ ชีวิตเมืองจิ๋ว</button>
+                  <button class="config-option" data-type="vstyle" data-value="broll_motion_detail" data-label="🔁 Motion Detail">🔁 Motion Detail</button>
               </div>
 
               <div class="style-group-label" data-feature="advancedVideo" style="margin-top:15px; color:#f472b6; border-left: 3px solid #f472b6; padding-left: 8px; margin-bottom: 10px; font-weight: bold;">🎙️ พากย์เสียง (ไม่มีคน)</div>
@@ -840,8 +911,8 @@
         </div>
       </div>
 
-      <div class="settings-section-title">Story Studio</div>
-      <div class="brain-card settings-brain-card">
+      <div id="settings-story-studio-title" class="settings-section-title">Story Studio</div>
+      <div id="settings-story-studio-card" class="brain-card settings-brain-card">
         <div class="brain-card-head">
           <div>
             <div class="brain-title">Smart AI Storyboard</div>
