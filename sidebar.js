@@ -315,6 +315,7 @@ function selectCharacter(element, value) {
         try {
             modelUploadedImages = [];
             if (typeof modelUpdateUI === 'function') modelUpdateUI();
+            showToast('ล้างรูป Ref แล้ว ใช้ตัวละครสำเร็จรูปแทน', 'info');
         } catch(e) {}
     }
 }
@@ -473,14 +474,9 @@ function selectConfigOption(element) {
             if (bgRandomSwitch) { bgRandomSwitch.checked = false; bgRandomSwitch.disabled = false; }
             if (outfitRandomSwitch) { outfitRandomSwitch.checked = false; outfitRandomSwitch.disabled = true; }
 
-            const bgAutoBtn = document.querySelector('#config-content-bg .config-option[data-value="ai_match"]');
             const outfitAutoBtn = document.querySelector('#config-content-outfit .config-option[data-value="ai_match"]');
-            const characterInput = document.getElementById('banana-character-select');
             
-            if (bgAutoBtn) bgAutoBtn.click();
             if (outfitAutoBtn) outfitAutoBtn.click();
-            if (characterInput) characterInput.value = 'office_lady';
-            if (typeof switchCharTab === 'function') switchCharTab('preset');
             
             const charCustomInput = document.getElementById('banana-custom-character-input');
             if (charCustomInput) charCustomInput.value = '';
@@ -496,11 +492,8 @@ function selectConfigOption(element) {
             if (outfitRandomSwitch) { outfitRandomSwitch.checked = false; outfitRandomSwitch.disabled = true; }
 
             const outfitAutoBtn = document.querySelector('#config-content-outfit .config-option[data-value="ai_match"]');
-            const characterInput = document.getElementById('banana-character-select');
             
             if (outfitAutoBtn) outfitAutoBtn.click();
-            if (characterInput) characterInput.value = 'office_lady';
-            if (typeof switchCharTab === 'function') switchCharTab('preset');
             
             const charCustomInput = document.getElementById('banana-custom-character-input');
             if (charCustomInput) charCustomInput.value = '';
@@ -4624,7 +4617,7 @@ async function bananaHandleAutomation(isContinuous = false) {
                   'chinese_boss': 'wealthy Thai-Chinese senior boss (Jao Sua)',
                   'human_paa': 'typical middle-aged Thai auntie with a loud and strong personality',
                   'human_lung': 'typical middle-aged Thai uncle wearing sunglasses',
-                  'warrior': 'stylish fantasy warrior character wearing a complete modern armor costume, heroic confident pose',
+                  'warrior': 'authentic Thai male Bang Rachan village warrior, brave rugged Siamese defender from late Ayutthaya era, sun-tanned realistic Thai face, determined heroic expression, traditional village warrior clothing with pha khao ma waist cloth and chong kraben pants, cloth headband, handmade accessories, practical sword or spear, gritty rural battlefield spirit, heroic but realistic, not fantasy armor, not medieval knight, not samurai, not Chinese armor, not modern soldier',
                   'princess': 'elegant modern fantasy princess wearing a complete royal gown and delicate crown, graceful premium look',
                   'detective': 'cool noir detective wearing a trench coat and detective hat, sharp mysterious expression',
                   'mafia_boss': 'charismatic mafia boss wearing a sleek black suit, luxury underworld boss vibe, confident and cinematic',
